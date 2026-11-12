@@ -1,17 +1,17 @@
 spaces : 164
 spaces_by_level : {'L1': 52, 'B1': 2, 'L2': 51, 'L3': 51, 'L4': 8}
-edges : Counter({'door': 146, 'stair': 20, 'open': 16, 'elevator': 8})
+edges : Counter({'open': 88, 'door': 74, 'stair': 20, 'elevator': 8})
 reachable_from_plaza : 164
 unreached_from_plaza : []
 reachable_from_pyramid_entrance_only : 163
 unreached_pyramid_only : []
 reachable_stairs_only_no_elevator : 163
 unreached_no_elevator : []
-doors : 146
-doors_cut_ok : 146
-doors_wall_beside_ok : 146
-doors_lintel_ok : 146
-doors_floor_ok : 146
+doors : 74
+doors_cut_ok : 74
+doors_wall_beside_ok : 74
+doors_lintel_ok : 74
+doors_floor_ok : 74
 stairs : 20
 stairs_ok : 20
 max_riser_m : 0.16666666666666666
@@ -19,6 +19,7 @@ min_tread_m : 0.3
 min_headroom_m : 2.6
 total_steps_checked : 912
 windows : {'cuts': 270, 'glass_blocked': 270, 'open_through': 270, 'glass_fail': [], 'open_fail': []}
+open_rooms : {'opened_walls': 72, 'rays': 14868, 'ok': True, 'failed_rooms': 0, 'fails': [], 'partitions_room_to_room': 42, 'side_walls_room_to_hall': 60, 'art_wall_faces': 144, 'art_wall_length_m': 1094.4}
 panes : {'panes': 371, 'ok': 371, 'by_kind': {'facade_L1': [82, 82], 'facade_L2': [84, 84], 'facade_L3': [84, 84], 'facade_L4': [20, 20], 'gable': [1, 1], 'dormer_tower': [40, 40], 'dormer_wing': [36, 36], 'dormer_nwing': [24, 24]}, 'fails': []}
 stair_wells_checked : 20
 stair_wells_ok : 20

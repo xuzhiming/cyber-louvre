@@ -12,8 +12,8 @@ MATS = {
  'stair':       ('stair_albedo', 'stair_emit', 0.8, 0.6, 0.0, 1.0, 3.0),
  'plaza':       ('plaza_albedo', 'plaza_emit', 1.0, 0.35, 0.0, 1.0, 8.0),
  'ground':      ('ground_albedo', 'ground_emit', 1.0, 0.9, 0.0, 1.0, 12.0),
- 'roof_metal':  ('slate_grey_albedo', None, 0, 0.6, 0.15, 1.0, 5.0),   # dark slate blue-grey (#2A2E37 mean), same hue family as the walls
- 'roof_cap':    ((0.0343, 0.0409, 0.0595), None, 0, 0.5, 0.3, 1.0, 4.0),   # copings / lanterns / dome rings ~#343945
+ 'roof_metal':  ('slate_grey_albedo', None, 0, 0.6, 0.15, 1.0, 5.0),   # #4C4D52 mean: 0.725 x the #696A71 walls (same hue family, darker)
+ 'roof_cap':    ((0.1095, 0.1119, 0.1301), None, 0, 0.5, 0.3, 1.0, 4.0),   # copings / lanterns / dome rings #5D5E65 (0.89 x walls)
  # window glass: default (= day look) is dark grey tinted glass ~#3a3d42; the web night mode swaps in the light tint (0.70,0.83,0.92 a=.38 / 0.72,0.88,0.82 a=.42)
  'win_glass':   ((0.042, 0.047, 0.054), None, 0, 0.08, 0.15, 0.55, 4.0),
  'win_glass_g': ((0.044, 0.052, 0.052), None, 0, 0.08, 0.15, 0.50, 4.0),

@@ -8,8 +8,8 @@
   "L4": 8
  },
  "edges": {
-  "open": 16,
-  "door": 146,
+  "open": 88,
+  "door": 74,
   "stair": 20,
   "elevator": 8
  },
@@ -19,11 +19,11 @@
  "unreached_pyramid_only": [],
  "reachable_stairs_only_no_elevator": 163,
  "unreached_no_elevator": [],
- "doors": 146,
- "doors_cut_ok": 146,
- "doors_wall_beside_ok": 146,
- "doors_lintel_ok": 146,
- "doors_floor_ok": 146,
+ "doors": 74,
+ "doors_cut_ok": 74,
+ "doors_wall_beside_ok": 74,
+ "doors_lintel_ok": 74,
+ "doors_floor_ok": 74,
  "door_failures": [],
  "stairs": 20,
  "stairs_ok": 20,
@@ -166,6 +166,17 @@
   "open_through": 270,
   "glass_fail": [],
   "open_fail": []
+ },
+ "open_rooms": {
+  "opened_walls": 72,
+  "rays": 14868,
+  "ok": true,
+  "failed_rooms": 0,
+  "fails": [],
+  "partitions_room_to_room": 42,
+  "side_walls_room_to_hall": 60,
+  "art_wall_faces": 144,
+  "art_wall_length_m": 1094.4
  },
  "panes": {
   "panes": 371,

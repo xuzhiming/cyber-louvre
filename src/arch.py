@@ -94,10 +94,14 @@ def build_walls(acc, report=None):
                     for pc in ((a0, wa0, z0, z1), (wa1, a1, z0, z1), (wa0, wa1, z0, wz0), (wa0, wa1, wz1, z1)):
                         if pc[1] - pc[0] > 1e-4 and pc[3] - pc[2] > 1e-4: npcs.append(pc)
                 pieces = npcs
+        # a wall that ends on a removed (opened) door-wall line stops flush with that line (clean capped partition end)
+        def _open_end(u):
+            return any(o.get('room_open') and o['axis'] != axis and abs(o['coord'] - u) < 1e-3 and band in o['bands']
+                       and o['a0'] - 1e-6 <= coord <= o['a1'] + 1e-6 for o in OPENS)
         for a0, a1, z0, z1 in pieces:
             if z1 - z0 < 1e-3: continue
-            e0 = a0 - (t / 2 if a0 <= p + 1e-6 else 0)
-            e1 = a1 + (t / 2 if a1 >= q - 1e-6 else 0)
+            e0 = a0 - (t / 2 if a0 <= p + 1e-6 and not _open_end(a0) else 0)
+            e1 = a1 + (t / 2 if a1 >= q - 1e-6 and not _open_end(a1) else 0)
             if axis == 'y': acc.box(group, mat, e0, coord - t / 2, z0, e1, coord + t / 2, z1)
             else: acc.box(group, mat, coord - t / 2, e0, z0, coord + t / 2, e1, z1)
     if report is not None: report['door_cuts'] = n_cut; report['window_cuts'] = n_win; report['wall_segments'] = len(segs)

@@ -84,8 +84,9 @@ def props(acc, seed=5):
                 acc.box(G, 'stone_trim_in', px - 0.5, py - 0.5, z0, px + 0.5, py + 0.5, z0 + 1.1)
                 m = ex_mats[rng.randrange(4)]
                 acc.box(G, m, px - 0.3, py - 0.3, z0 + 1.1, px + 0.3, py + 0.3, z0 + 1.7)
-            # wall art on the far wall
-            if lx >= ly:
+            # wall art on the far wall (halls only: gallery rooms are open bays now - their partitions stay clean for art)
+            if sp['kind'] == 'gallery': pass
+            elif lx >= ly:
                 acc.box(G, 'exhibit_art', cx - 1.2, y1 - 0.45, z0 + 2.3, cx + 1.2, y1 - 0.35, z0 + 3.9)
             else:
                 acc.box(G, 'exhibit_art', x1 - 0.45, cy - 1.2, z0 + 2.3, x1 - 0.35, cy + 1.2, z0 + 3.9)

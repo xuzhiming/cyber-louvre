@@ -108,3 +108,18 @@ def _solid_dormers():
     roof = {k: v for k, v in r['by_kind'].items() if not k.startswith('facade')}
     print('NEGATIVE CONTROL (solid dormers / gable): panes ok', r['ok'], 'of', r['panes'], '| roof panes [total, ok]:', roof)
 _solid_dormers()
+
+
+# ---- negative control for the open-room check: rebuild with the OLD door walls (OPEN_ROOMS=False) and run the remnant
+# check against the opened-wall registry of the current design; every old door wall must be flagged
+def _door_walls_back():
+    import spec as sp
+    sp.OPEN_ROOMS = True; sp.build(); reg = list(sp.OPENED)
+    sp.OPEN_ROOMS = False
+    try:
+        bvh, acc = verify.build_bvh()
+        r = verify.check_open_rooms(bvh, reg)
+    finally:
+        sp.OPEN_ROOMS = True; sp.build()
+    print('NEGATIVE CONTROL (old door walls kept): open-room check ok =', r['ok'], '| flagged', r['failed_rooms'], 'of', len(reg), 'opened walls | e.g.', r['fails'][:2])
+_door_walls_back()

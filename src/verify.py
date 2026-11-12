@@ -288,6 +288,10 @@ def _edge_path(bvh, u, v, e):
         pa = c + n * side_a * 1.3; pb = c - n * side_a * 1.3
         pa[2] = sa['z0']; pb[2] = sb['z0']
         P = [aa, pa, c, pb, bb]
+    elif e['type'] == 'open' and e['open'].get('room_open'):
+        o = e['open']; n = np.array(o['n'] + (0,), float)       # n: corridor -> room
+        c = np.array([o['coord'], o['center'], sa['z0']] if o['axis'] == 'x' else [o['center'], o['coord'], sa['z0']], float)
+        P = [aa, c - n * 1.3, c + n * 1.3, bb]
     elif e['type'] == 'open':
         P = [aa, bb]
     elif e['type'] == 'stair':
@@ -444,6 +448,42 @@ def check_fixtures():
     return dict(fixtures=n, by_level=dict(by_space), violations=len(bad), min_margin_to_host_walls_m=round(minm, 2),
                 min_plan_distance_to_stair_m=round(minst, 2), details=bad[:10])
 
+def check_open_rooms(bvh, opened=None):
+    """small gallery rooms with the door wall removed: nothing may remain on the old door-wall line (wall, lintel, frame,
+    door leaf), floors must be continuous and step-free across it; also count the kept partitions usable for art."""
+    opened = spec.OPENED if opened is None else opened
+    bad = []; n_rays = 0
+    for o in opened:
+        n = np.array(o['n'] + (0,), float); z0 = BAND_Z[o['band']][0]
+        zc = SPACES[o['room']]['z1'] - SLAB
+        for k in range(int((o['a1'] - o['a0'] - 0.8) / 0.5) + 1):
+            u = o['a0'] + 0.4 + 0.5 * k
+            c = np.array([o['coord'], u, z0] if o['axis'] == 'x' else [u, o['coord'], z0], float)
+            for h in (0.15, 1.0, 2.0, 3.2, 3.5, 5.0, zc - z0 - 0.3):
+                n_rays += 1
+                r = first_hit(bvh, c - n * 0.9 + np.array([0, 0, h]), n, 1.8)
+                if r is not None: bad.append((o['room'], round(u, 2), h, 'remnant', tuple(np.round(r[0], 2)))); break
+            for s_ in (-0.5, -0.05, 0.05, 0.5):
+                p = c + n * s_; z = floor_z(bvh, p[0], p[1], z0 + 1.0, 2.0)
+                if z is None or abs(z - z0) > 0.01: bad.append((o['room'], round(u, 2), s_, 'floor', z)); break
+    # partitions: room side walls perpendicular to the removed door wall
+    rooms = {o['room']: o for o in opened}
+    parts = {}
+    for o in opened:
+        r = SPACES[o['room']]['rect']
+        if o['axis'] == 'x': sides = [('y', r[1]), ('y', r[3])]; depth = r[2] - r[0]
+        else: sides = [('x', r[0]), ('x', r[2])]; depth = r[3] - r[1]
+        for ax, c in sides:
+            key = (ax, round(c, 3), o['band'], round(o['coord'], 3))
+            parts.setdefault(key, []).append((o['room'], depth))
+    shared = {k: v for k, v in parts.items() if len(v) == 2}
+    single = {k: v for k, v in parts.items() if len(v) == 1}
+    net = lambda d: d - arch.T_EXT / 2                       # door-wall line -> inner face of the exterior wall
+    faces_len = sum(net(d) for v in parts.values() for _, d in v)
+    return dict(opened_walls=len(opened), rays=n_rays, ok=(len(bad) == 0), failed_rooms=len(set((b[0]) for b in bad)), fails=bad[:10],
+                partitions_room_to_room=len(shared), side_walls_room_to_hall=len(single),
+                art_wall_faces=sum(len(v) for v in parts.values()), art_wall_length_m=round(faces_len, 1))
+
 def main():
     bvh, acc = build_bvh()
     res = dict()
@@ -482,6 +522,7 @@ def main():
     res['stair_failures'] = [s for s in stairs if not s['ok']][:8]
     res['entrances'] = check_entrances(bvh)
     res['windows'] = check_windows(bvh, acc)
+    res['open_rooms'] = check_open_rooms(bvh)
     res['panes'] = check_panes(acc)
     wells = check_stair_wells(bvh)
     res['stair_wells_checked'] = len(wells); res['stair_wells_ok'] = sum(1 for w in wells if w['ok'])

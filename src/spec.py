@@ -54,6 +54,8 @@ EDGES = []      # graph edges: dict(type, a, b, ...)
 STAIRS = []
 HOLES = {}      # z -> list of rects
 HOLE_META = []  # dict(z, rect, access) for guardrails around slab openings
+OPEN_ROOMS = True   # small gallery rooms off the wing / north-wing corridors: whole door wall removed (open alcove bays)
+OPENED = []         # registry of removed door walls: dict(room, corr, axis, coord, a0, a1, band, n)
 
 def add_space(id, level, rect, **kw):
     z0 = LEVELS[level]
@@ -153,8 +155,21 @@ def straight_flights(x, y0, z0, dy, w, total_n, riser, tread, nf, ldepth):
     return flights, landings
 
 # ------------------------------------------------------------------ build all spaces
+def room_link(cid, rid, axis, coord, center, width, height, band):
+    """corridor <-> small gallery room: a door (old design) or, with OPEN_ROOMS, the whole door wall removed"""
+    if not OPEN_ROOMS:
+        return add_door(cid, rid, axis, coord, center, width, height, band)
+    r = SPACES[rid]['rect']
+    a0, a1 = (r[1], r[3]) if axis == 'x' else (r[0], r[2])
+    rc = ((r[0] + r[2]) / 2, (r[1] + r[3]) / 2)
+    n = (1 if rc[0] > coord else -1, 0) if axis == 'x' else (0, 1 if rc[1] > coord else -1)   # corridor -> room
+    o = add_open(cid, rid, axis, coord, a0, a1, [band])
+    o['room_open'] = True; o['center'] = center; o['n'] = n
+    OPENED.append(dict(room=rid, corr=cid, axis=axis, coord=coord, a0=a0, a1=a1, band=band, n=n))
+    return o
+
 def build():
-    SPACES.clear(); DOORS.clear(); OPENS.clear(); EDGES.clear(); STAIRS.clear(); HOLES.clear(); HOLE_META.clear()
+    SPACES.clear(); DOORS.clear(); OPENS.clear(); EDGES.clear(); STAIRS.clear(); HOLES.clear(); HOLE_META.clear(); OPENED.clear()
     L3 = ['L1', 'L2', 'L3']
 
     # ---------------- outdoor plaza (courtyard)
@@ -261,13 +276,13 @@ def build():
                 rid = '%s_IN%d_%s' % (s, k, lv)
                 add_space(rid, lv, R((-62, y0, -54, y1)), kind='gallery', zone='wing' + s)
                 xin = mirror_rect((-62, 0, -62, 1), sx, 1)[0]
-                add_door(cid, rid, 'x', xin, yc, 2.4, 3.2, lv)
+                room_link(cid, rid, 'x', xin, yc, 2.4, 3.2, lv)
             for k in (0, 3):
                 y0, y1 = ys[k], ys[k + 1]; yc = (y0 + y1) / 2
                 rid = '%s_OUT%d_%s' % (s, k, lv)
                 add_space(rid, lv, R((-74, y0, -66, y1)), kind='gallery', zone='wing' + s)
                 xo = mirror_rect((-66, 0, -66, 1), sx, 1)[0]
-                add_door(cid, rid, 'x', xo, yc, 2.4, 3.2, lv)
+                room_link(cid, rid, 'x', xo, yc, 2.4, 3.2, lv)
             if True:
                 hid = '%s_BUMP_%s' % (s, lv)
                 add_space(hid, lv, R((-90, -17, -66, 17)), kind='hall', zone='wing' + s)
@@ -296,7 +311,7 @@ def build():
                     rid = 'N%s_%s%d_%s' % (s, row, k, lv)
                     add_space(rid, lv, R((x0, y0, x1, y1)), kind='gallery', zone='nwing' + s)
                     cx = mirror_pt(xc, 0, sx, 1)[0]
-                    add_door(cid, rid, 'y', ycor, cx, 2.4, 3.2, lv)
+                    room_link(cid, rid, 'y', ycor, cx, 2.4, 3.2, lv)
 
     # ---------------- corner pavilions
     for (sx, sy), q in QN.items():

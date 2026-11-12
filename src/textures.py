@@ -122,8 +122,8 @@ def tint_lavender():
         ne = na * ratio * np.array([0.92, 0.88, 1.0])
         save(name + '_albedo', na); save(name + '_emit', ne)
 
-def tint_exterior_slate(target_hex=(0x3a, 0x3f, 0x4b)):
-    """exterior wall + facade trim -> dark slate blue-grey #3A3F4B (mean sRGB albedo == target), same luminance pattern.
+def tint_exterior_slate(target_hex=(0x69, 0x6a, 0x71)):
+    """exterior wall + facade trim -> warm-neutral grey #696A71 (was #3A3F4B) (mean sRGB albedo == target), same luminance pattern.
     The light-purple trim texture is kept as trim_in_* for interior props. Run after tint_lavender()."""
     import shutil
     for n in ('trim_albedo', 'trim_emit'):
@@ -138,8 +138,8 @@ def tint_exterior_slate(target_hex=(0x3a, 0x3f, 0x4b)):
         ne = na * ratio * np.array([0.9, 0.95, 1.0])
         save(name + '_albedo', na); save(name + '_emit', ne)
 
-def tint_roof_dark(target_hex=(0x2a, 0x2e, 0x37)):
-    """roof slate -> dark slate blue-grey (same hue family as the #3A3F4B walls, darker): mean sRGB albedo == target."""
+def tint_roof_dark(target_hex=(0x4c, 0x4d, 0x52)):
+    """roof slate -> #4C4D52 = 0.725 x the #696A71 wall colour (same hue family, darker; same ratio as the old #2A2E37 / #3A3F4B): mean sRGB albedo == target."""
     a = np.asarray(Image.open(os.path.join(OUT, 'slate_grey_albedo.png')).convert('RGB')).astype(float) / 255
     la = (a @ np.array([0.2126, 0.7152, 0.0722]))[..., None]
     save('slate_grey_albedo', la / la.mean() * (np.array(target_hex) / 255.0))
