@@ -1,0 +1,471 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Cyber Louvre – 赛博卢浮宫 Preview</title>
+<style>
+  html,body{margin:0;height:100%;overflow:hidden;font-family:system-ui,-apple-system,"Segoe UI",sans-serif;background:#050810}
+  canvas{display:block}
+  #ui{position:fixed;left:12px;top:12px;display:flex;flex-wrap:wrap;gap:6px;max-width:calc(100vw - 24px);z-index:2;align-items:center}
+  #ui button{border:1px solid rgba(190,110,255,.6);background:rgba(12,10,28,.78);color:#eaf;padding:7px 12px;border-radius:6px;font-size:13px;cursor:pointer}
+  #ui button:hover{background:rgba(60,30,90,.9)}
+  #ui button.on{background:#4a1f7a;border-color:#ff7bf0}
+  #ui .sep{width:1px;height:22px;background:rgba(255,255,255,.25);margin:0 4px}
+  #ui .lbl{color:#9ab;font-size:12px}
+  #loading{position:fixed;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:14px;background:#070a14;color:#dbf;z-index:3;transition:opacity .5s}
+  #loading.hide{opacity:0;pointer-events:none}
+  .spin{width:46px;height:46px;border:4px solid rgba(190,110,255,.2);border-top-color:#ff7bf0;border-radius:50%;animation:s 1s linear infinite}
+  @keyframes s{to{transform:rotate(360deg)}}
+  #err{color:#f88;max-width:80vw;text-align:center;font-size:13px}
+  #cross{position:fixed;left:50%;top:50%;width:18px;height:18px;margin:-9px 0 0 -9px;z-index:2;pointer-events:none;display:none}
+  #cross:before,#cross:after{content:"";position:absolute;background:rgba(255,255,255,.85);box-shadow:0 0 3px #000}
+  #cross:before{left:8px;top:0;width:2px;height:18px}#cross:after{top:8px;left:0;height:2px;width:18px}
+  #hud{position:fixed;left:12px;bottom:12px;z-index:2;color:#eaf;background:rgba(12,10,28,.72);border:1px solid rgba(190,110,255,.5);border-radius:8px;padding:8px 12px;font:13px/1.5 system-ui,"Microsoft YaHei",sans-serif;display:none;pointer-events:none}
+  #help{position:fixed;right:12px;bottom:12px;z-index:2;color:#dde;background:rgba(12,10,28,.78);border:1px solid rgba(190,110,255,.5);border-radius:8px;padding:10px 14px;font:13px/1.65 system-ui,"Microsoft YaHei",sans-serif;display:none;max-width:290px}
+  #help b{color:#ff9bf0}#help kbd{background:#2a2050;border:1px solid #6a50a0;border-radius:4px;padding:0 5px;font-family:inherit;color:#fff}
+  #tp{position:fixed;left:12px;top:56px;z-index:2;display:none;flex-wrap:wrap;gap:6px;max-width:calc(100vw - 340px)}
+  #tp button{border:1px solid rgba(110,220,255,.6);background:rgba(10,24,34,.78);color:#cfeeff;padding:6px 10px;border-radius:6px;font-size:13px;cursor:pointer}
+  #tp button:hover{background:rgba(20,60,80,.9)}
+  #lockmsg{position:fixed;left:50%;top:62%;transform:translateX(-50%);z-index:2;color:#fff;background:rgba(0,0,0,.55);padding:8px 16px;border-radius:8px;font:15px system-ui,"Microsoft YaHei",sans-serif;display:none;pointer-events:none}
+  body.walk canvas{cursor:crosshair}
+  @media (max-width:600px){#ui button{padding:6px 8px;font-size:12px}}
+</style>
+<script type="importmap">
+{"imports":{
+  "three":"https://cdn.jsdelivr.net/npm/three@0.170.0/build/three.module.js",
+  "three/addons/":"https://cdn.jsdelivr.net/npm/three@0.170.0/examples/jsm/",
+  "three-mesh-bvh":"https://cdn.jsdelivr.net/npm/three-mesh-bvh@0.8.3/build/index.module.js"
+}}
+</script>
+</head>
+<body>
+<div id="loading"><div class="spin"></div><div id="msg">Loading model…</div><div id="err"></div></div>
+<div id="cross"></div><div id="hud"></div><div id="lockmsg">点击画面开启鼠标视角(Esc 释放鼠标)</div>
+<div id="help"><b>漫游模式操作</b><br><kbd>W</kbd><kbd>A</kbd><kbd>S</kbd><kbd>D</kbd> / 方向键:前后左右移动<br>鼠标:转动视角(先点击画面锁定鼠标,<kbd>Esc</kbd>释放;未锁定时可按住左键拖动)<br><kbd>Shift</kbd> 奔跑 &nbsp; <kbd>Space</kbd> 跳跃<br><kbd>G</kbd> 飞行模式开/关:<kbd>Space</kbd>/<kbd>E</kbd> 上升,<kbd>C</kbd>/<kbd>Q</kbd> 下降<br><kbd>1</kbd>-<kbd>7</kbd> 传送点 &nbsp; <kbd>H</kbd> 显示/隐藏帮助<br><kbd>F</kbd> 切换 漫游 / 轨道 模式<br>走近玻璃门(约4.5米内)会自动对开;楼梯可直接走上去。<hr style="border:0;border-top:1px solid #6a50a0;margin:6px 0"><b>显示效果(轨道/漫游均可用)</b><br><kbd>N</kbd> 白天 / 夜晚 切换(白天:天空+日光+阴影,发光减弱;夜晚:暗天空+霓虹+灯具+泛光)<br><kbd>L</kbd> 灯光开/关(霓虹发光条、室内灯具、灯光)<br><kbd>B</kbd> 泛光(Bloom)开/关<br><kbd>H</kbd> 显示/隐藏本帮助</div>
+<div id="tp"><button data-tp="plaza">1 广场(金字塔前)</button><button data-tp="lobby">2 大堂</button><button data-tp="stairs">3 大楼梯</button><button data-tp="f2">4 二楼</button><button data-tp="f3">5 三楼</button><button data-tp="pav">6 转角塔楼</button><button data-tp="b1">7 地下B1</button></div>
+<div id="ui">
+  <button id="walkBtn">漫游模式 (F)</button>
+  <button id="fxMode" title="昼夜切换 (N)">🌙 夜景 (N)</button>
+  <button id="fxLights" class="on" title="灯光/霓虹/灯具 开关 (L)">灯光 (L)</button>
+  <button id="fxBloom" class="on" title="泛光 开关 (B)">泛光 (B)</button>
+  <span class="sep"></span>
+  <span class="lbl">View</span>
+  <button data-view="hero">Hero</button>
+  <button data-view="front">Front</button>
+  <button data-view="back">Back</button>
+  <button data-view="left">Left</button>
+  <button data-view="right">Right</button>
+  <button data-view="top">Top</button>
+  <button data-view="atrium">Atrium (inside)</button>
+  <button data-view="hall">Grand stairs (inside)</button>
+  <span class="sep"></span>
+  <span class="lbl">Show</span>
+  <button data-grp="roof" class="on">Roofs+Dome</button>
+  <button data-grp="facade" class="on">Facade</button>
+  <button data-grp="extw" class="on">Ext. walls</button>
+  <button data-grp="interior" class="on">Interior</button>
+  <button data-grp="pyr" class="on">Pyramids</button>
+  <span class="sep"></span>
+  <span class="lbl">Floors</span>
+  <button data-cut="999" class="on">All</button>
+  <button data-cut="cut">Roof cutaway</button>
+  <button data-cut="23.5">≤3F</button>
+  <button data-cut="15.5">≤2F</button>
+  <button data-cut="7.5">1F only</button>
+  <span class="sep"></span>
+  <button id="rot">Auto-rotate</button>
+</div>
+<script id="glb" type="application/octet-stream">__GLB_BASE64__</script>
+<script type="module">
+import * as THREE from 'three';
+import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
+import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
+import { MeshoptDecoder } from 'three/addons/libs/meshopt_decoder.module.js';
+import { EffectComposer } from 'three/addons/postprocessing/EffectComposer.js';
+import { RenderPass } from 'three/addons/postprocessing/RenderPass.js';
+import { UnrealBloomPass } from 'three/addons/postprocessing/UnrealBloomPass.js';
+import { PointerLockControls } from 'three/addons/controls/PointerLockControls.js';
+import { OutputPass } from 'three/addons/postprocessing/OutputPass.js';
+const $ = (id) => document.getElementById(id);
+const Q = new URLSearchParams(location.search);
+const renderer = new THREE.WebGLRenderer({ antialias: true });
+renderer.setPixelRatio(Math.min(devicePixelRatio, 2));
+renderer.setSize(innerWidth, innerHeight);
+renderer.toneMapping = THREE.ACESFilmicToneMapping;
+renderer.toneMappingExposure = +(Q.get('exp') ?? 0.7);
+const clip = new THREE.Plane(new THREE.Vector3(0, -1, 0), 999);
+renderer.clippingPlanes = [clip];
+document.body.appendChild(renderer.domElement);
+
+const scene = new THREE.Scene();
+scene.background = new THREE.Color(0x050914);
+scene.fog = new THREE.FogExp2(0x050914, 0.0016);
+const hemi = new THREE.HemisphereLight(0x6a78c8, 0x20162e, 0.3); scene.add(hemi);
+const moon = new THREE.DirectionalLight(0xaab8ff, 0.5); moon.position.set(-80, 120, 90); scene.add(moon);
+const warm = new THREE.DirectionalLight(0xffc890, 0.15); warm.position.set(90, 40, 120); scene.add(warm);
+// interior fill lights (blender xy -> three x,-y); no shadows
+const il = [[0,-20,10],[0,-46,4],[0,-46,12],[0,-46,22],[-64,0,4],[64,0,4],[-64,0,12],[64,0,12],[-64,0,20],[64,0,20],[-40,-40,4],[40,-40,4],[-40,-40,12],[40,-40,12]];
+const fixLights = [];
+for (const [x,z,y] of il) { const p = new THREE.PointLight(0xffc890, 250, 40, 1.8); p.position.set(x, y, z); p.userData.base = 250; scene.add(p); fixLights.push(p); }
+const pl = new THREE.PointLight(0xa070ff, 1500, 70, 1.5); pl.position.set(0, 36, -46); pl.userData.base = 1500; scene.add(pl); fixLights.push(pl);
+
+const camera = new THREE.PerspectiveCamera(35, innerWidth / innerHeight, 0.3, 900);
+const controls = new OrbitControls(camera, renderer.domElement);
+controls.enableDamping = true; controls.target.set(0, 12, 0);
+controls.autoRotate = false; controls.autoRotateSpeed = 0.5;
+controls.maxPolarAngle = Math.PI * 0.495; controls.minDistance = 2; controls.maxDistance = 420;
+
+const composer = new EffectComposer(renderer);
+composer.addPass(new RenderPass(scene, camera));
+const bloomPass = new UnrealBloomPass(new THREE.Vector2(innerWidth, innerHeight), +(Q.get('bloom') ?? 0.3), 0.25, +(Q.get('thr') ?? 1.1));
+composer.addPass(bloomPass);
+composer.addPass(new OutputPass());
+
+// Blender (x,y,z) -> three (x, z, -y)
+const views = {
+  hero:  { p: [135, 78, 150], t: [0, 12, 0] },
+  front: { p: [0, 20, 230], t: [0, 17, 0] },
+  back:  { p: [0, 20, -230], t: [0, 17, 0] },
+  left:  { p: [-260, 20, 0], t: [0, 17, 0] },
+  right: { p: [260, 20, 0], t: [0, 17, 0] },
+  top:   { p: [0, 290, 1], t: [0, 0, 0] },
+  atrium:{ p: [9, 1.7, -34.5], t: [-2, 20, -49], inside: true, fov: 75 },
+  hall:  { p: [0, 2, -12.5], t: [0, 14, -46], inside: true, fov: 75 },
+};
+const fitScale = () => Math.max(1, 1.5 / camera.aspect);
+const fitPos = (v) => { const t = new THREE.Vector3(...v.t); const d = new THREE.Vector3(...v.p).sub(t); if (!v.inside) d.multiplyScalar(fitScale()); return d.add(t); };
+camera.position.copy(fitPos(views.hero));
+var tween = null;
+function goTo(name) {
+  const v = views[name]; if (!v) return;
+  if (WALK.on) exitWalk();
+  controls.maxPolarAngle = v.inside ? Math.PI : Math.PI * 0.495;
+  controls.minDistance = v.inside ? 0.5 : 2;
+  camera.fov = v.fov || 35; camera.updateProjectionMatrix();
+  tween = { t0: performance.now(), dur: 1200, p0: camera.position.clone(), p1: fitPos(v), c0: controls.target.clone(), c1: new THREE.Vector3(...v.t) };
+  setRotate(false);
+}
+document.querySelectorAll('[data-view]').forEach(b => b.onclick = () => goTo(b.dataset.view));
+function setRotate(on) { controls.autoRotate = on; $('rot').classList.toggle('on', on); }
+$('rot').onclick = () => setRotate(!controls.autoRotate);
+
+const groups = { roof: ['Roofs', 'Dome'], facade: ['Facade', 'Windows', 'Screens', 'AutoDoor_LOBBY_L', 'AutoDoor_LOBBY_R'], extw: ['Walls_Exterior'], interior: ['Walls_Interior','Slabs','Stairs','Rails','Props','Hologram'], pyr: ['Pyramids', 'AutoDoor_PYR_MAIN_L', 'AutoDoor_PYR_MAIN_R', 'AutoDoor_PYR_SL_L', 'AutoDoor_PYR_SL_R', 'AutoDoor_PYR_SR_L', 'AutoDoor_PYR_SR_R'] };
+const byName = {}; let cutHide = false;
+function applyGroups() {
+  document.querySelectorAll('[data-grp]').forEach(b => { const on = b.classList.contains('on');
+    for (const n of groups[b.dataset.grp]) if (byName[n]) byName[n].visible = on && !(b.dataset.grp === 'roof' && cutHide); });
+}
+document.querySelectorAll('[data-grp]').forEach(b => b.onclick = () => { b.classList.toggle('on'); applyGroups(); });
+function setCut(v) {
+  document.querySelectorAll('[data-cut]').forEach(b => b.classList.toggle('on', b.dataset.cut === v));
+  clip.constant = v === 'cut' ? 23.5 : +v;      // roof cutaway = clip above 3F and hide roofs/dome
+  cutHide = (v === 'cut' || +v < 100); applyGroups();
+}
+document.querySelectorAll('[data-cut]').forEach(b => b.onclick = () => setCut(b.dataset.cut));
+
+
+
+// ===================== 自动门:横向对开玻璃门(AutoDoor_*_L / _R) =====================
+const DOORS = []; const DOOR_TRIGGER = 4.5, DOOR_TIME = 0.6;
+function initDoors(root) {
+  const groups = {};
+  root.traverse(o => { const m = /^AutoDoor_(.+)_([LR])$/.exec(o.name || ''); if (m) { (groups[m[1]] = groups[m[1]] || {})[m[2]] = o; } });
+  root.updateMatrixWorld(true);
+  for (const id in groups) {
+    const g = groups[id]; if (!g.L || !g.R) continue;
+    const box = new THREE.Box3().setFromObject(g.L).union(new THREE.Box3().setFromObject(g.R));
+    const meshes = []; for (const n of [g.L, g.R]) n.traverse(o => { if (o.isMesh) { meshes.push(o); o.material.side = THREE.DoubleSide; } });
+    const bl = new THREE.Box3().setFromObject(g.L), br = new THREE.Box3().setFromObject(g.R);
+    DOORS.push({ id, L: g.L, R: g.R, l0: g.L.position.clone(), r0: g.R.position.clone(), slide: Math.max(bl.max.x - bl.min.x, br.max.x - br.min.x),
+      cx: (box.min.x + box.max.x) / 2, cz: (box.min.z + box.max.z) / 2, t: 0, target: 0, meshes });
+  }
+}
+function updateDoors(dt) {
+  const px = WALK.on ? WALK.pos.x : camera.position.x, pz = WALK.on ? WALK.pos.z : camera.position.z;
+  for (const d of DOORS) {
+    const near = Math.hypot(px - d.cx, pz - d.cz) < DOOR_TRIGGER;
+    d.target = near ? 1 : 0;
+    if (d.t !== d.target) {
+      d.t += Math.sign(d.target - d.t) * Math.min(Math.abs(d.target - d.t), dt / DOOR_TIME);
+      const e = d.t * d.t * (3 - 2 * d.t);      // ease in-out
+      d.L.position.x = d.l0.x - d.slide * e; d.R.position.x = d.r0.x + d.slide * e;
+      d.L.updateMatrixWorld(true); d.R.updateMatrixWorld(true);
+    }
+  }
+}
+window.__doors = () => DOORS.map(d => ({ id: d.id, open: +d.t.toFixed(3), cx: +d.cx.toFixed(2), z: +(-d.cz).toFixed(2), slide: +d.slide.toFixed(2) }));
+// ===========================================================
+
+// ===================== 第一人称漫游模式 =====================
+// Blender (x,y,z) -> three (x, z, -y)
+const WALK = { on: false, fly: false, pos: new THREE.Vector3(), vel: new THREE.Vector3(), vy: 0, grounded: false, keys: new Set(), col: null,
+  saved: null, first: true, drag: false, jump: false, hudT: 0, bvh: false, hits: 0 };
+const EYE = 1.7, RAD = 0.35, STEP = 0.35, WALK_SPEED = 2.0, RUN_SPEED = 5.0;
+const SPAWN = { plaza: [0, -69, 0, 0], lobby: [0, 12, 0, 0], stairs: [-10.7, 9.9, 0, 0], f2: [0, 28, 8, 0], f3: [0, 28, 16, 0], pav: [62, 47, 0, Math.PI / 2], b1: [0, -20, -6, 0] };
+const TP_ORDER = ['plaza', 'lobby', 'stairs', 'f2', 'f3', 'pav', 'b1'];
+const plc = new PointerLockControls(camera, renderer.domElement);
+camera.rotation.order = 'YXZ'; scene.add(camera);
+const lamp = new THREE.PointLight(0xffe6c8, 30, 14, 1.6); lamp.visible = false; camera.add(lamp);
+const rc = new THREE.Raycaster(); rc.firstHitOnly = true;
+const V = { o: new THREE.Vector3(), d: new THREE.Vector3(), down: new THREE.Vector3(0, -1, 0), up: new THREE.Vector3(0, 1, 0) };
+function cast(o, d, far) {
+  if (!WALK.col) return null; rc.set(o, d); rc.near = 0; rc.far = far;
+  let best = null; const h = rc.intersectObject(WALK.col, false); if (h.length) best = h[0];
+  for (const dr of DOORS) {                       // sliding door leaves: dynamic collision that follows the leaf position
+    if (Math.abs(dr.cx - o.x) > 9 || Math.abs(dr.cz - o.z) > 9) continue;
+    const hh = rc.intersectObjects(dr.meshes, false); if (hh.length && (!best || hh[0].distance < best.distance)) best = hh[0];
+  }
+  return best;
+}
+
+async function buildCollision(root) {
+  root.updateMatrixWorld(true);
+  const names = ['Walls_Exterior', 'Walls_Interior', 'Slabs', 'Stairs', 'Rails', 'Pyramids', 'Ground'];
+  const arrs = []; let n = 0; const v = new THREE.Vector3();
+  for (const name of names) {
+    const node = byName[name]; if (!node) continue;
+    node.traverse(o => {
+      if (!o.isMesh) return;
+      const g = o.geometry, pa = g.attributes.position, idx = g.index, m = o.matrixWorld;
+      const cnt = idx ? idx.count : pa.count, out = new Float32Array(cnt * 3);
+      for (let i = 0; i < cnt; i++) { const k = idx ? idx.getX(i) : i; v.set(pa.getX(k), pa.getY(k), pa.getZ(k)).applyMatrix4(m); out[i * 3] = v.x; out[i * 3 + 1] = v.y; out[i * 3 + 2] = v.z; }
+      arrs.push(out); n += cnt / 3;
+    });
+  }
+  let tot = 0; for (const a of arrs) tot += a.length;
+  const all = new Float32Array(tot); let off = 0; for (const a of arrs) { all.set(a, off); off += a.length; }
+  const geo = new THREE.BufferGeometry(); geo.setAttribute('position', new THREE.BufferAttribute(all, 3));
+  const mesh = new THREE.Mesh(geo, new THREE.MeshBasicMaterial({ side: THREE.DoubleSide }));
+  try {
+    const B = await import('three-mesh-bvh');
+    geo.computeBoundsTree = B.computeBoundsTree; geo.computeBoundsTree();
+    mesh.raycast = B.acceleratedRaycast; WALK.bvh = true;
+  } catch (e) { console.warn('three-mesh-bvh unavailable, falling back to brute-force raycast', e); }
+  WALK.col = mesh; WALK.tris = n;
+}
+
+function setLook(yaw, pitch) { camera.rotation.set(pitch, yaw, 0, 'YXZ'); }
+function floorName(y) { return y < -3 ? 'B1 地下' : y < 4 ? '1F' : y < 12 ? '2F' : y < 20 ? '3F' : '屋顶机房层'; }
+function teleport(name) {
+  const s = SPAWN[name]; if (!s) return;
+  WALK.pos.set(s[0], s[2] + 0.05, -s[1]); WALK.vel.set(0, 0, 0); WALK.vy = 0; WALK.grounded = false;
+  setLook(s[3], 0); syncCam();
+}
+function syncCam() { camera.position.set(WALK.pos.x, WALK.pos.y + EYE, WALK.pos.z); }
+
+const DIRS = []; for (let k = 0; k < 8; k++) DIRS.push(new THREE.Vector3(Math.cos(k * Math.PI / 4), 0, Math.sin(k * Math.PI / 4)));
+const HEIGHTS = [0.38, 0.95, 1.45];
+function pushOut() {
+  for (let it = 0; it < 2; it++) {
+    let moved = false;
+    for (const d of DIRS) for (const h of HEIGHTS) {
+      V.o.set(WALK.pos.x, WALK.pos.y + h, WALK.pos.z);
+      const hit = cast(V.o, d, RAD);
+      if (hit) { const pen = RAD - hit.distance; WALK.pos.x -= d.x * pen; WALK.pos.z -= d.z * pen; moved = true; WALK.hits++; }
+    }
+    if (!moved) break;
+  }
+}
+function walkStep(dt) {
+  const k = WALK.keys, P = WALK.pos, fly = WALK.fly;
+  const fwd = (k.has('KeyW') || k.has('ArrowUp') ? 1 : 0) - (k.has('KeyS') || k.has('ArrowDown') ? 1 : 0);
+  const str = (k.has('KeyD') || k.has('ArrowRight') ? 1 : 0) - (k.has('KeyA') || k.has('ArrowLeft') ? 1 : 0);
+  const yaw = camera.rotation.y, sn = Math.sin(yaw), cs = Math.cos(yaw);
+  let wx = -sn * fwd + cs * str, wz = -cs * fwd - sn * str; const wl = Math.hypot(wx, wz); if (wl > 0) { wx /= wl; wz /= wl; }
+  const run = k.has('ShiftLeft') || k.has('ShiftRight');
+  const speed = (run ? RUN_SPEED : WALK_SPEED) * (fly ? 2.5 : 1);
+  const a = 1 - Math.exp(-((WALK.grounded || fly) ? 10 : 2.5) * dt);
+  WALK.vel.x += (wx * speed - WALK.vel.x) * a; WALK.vel.z += (wz * speed - WALK.vel.z) * a;
+  P.x += WALK.vel.x * dt; P.z += WALK.vel.z * dt;
+  if (fly) {
+    const up = (k.has('Space') || k.has('KeyE') ? 1 : 0) - (k.has('KeyC') || k.has('KeyQ') ? 1 : 0);
+    WALK.vy += (up * speed - WALK.vy) * (1 - Math.exp(-8 * dt)); P.y += WALK.vy * dt; WALK.grounded = false;
+  } else {
+    if (WALK.jump && WALK.grounded) { WALK.vy = 4.2; WALK.grounded = false; }
+    WALK.jump = false;
+    if (!WALK.grounded) WALK.vy -= 9.8 * dt;
+    if (!WALK.grounded || WALK.vy > 0) P.y += WALK.vy * dt;
+    // head clearance
+    if (WALK.vy > 0) { V.o.set(P.x, P.y + 1.0, P.z); const h = cast(V.o, V.up, 0.8 + 0.05); if (h) { P.y = Math.min(P.y, h.point.y - 1.8); WALK.vy = 0; } }
+    // ground snapping / step-up (<= STEP) / step-down
+    if (WALK.vy <= 0) {
+      V.o.set(P.x, P.y + STEP, P.z);
+      const far = STEP + (WALK.grounded ? 0.45 : 0) + (WALK.vy < 0 ? -WALK.vy * dt : 0) + 0.02;
+      const hit = cast(V.o, V.down, far);
+      if (hit && Math.abs(hit.face.normal.y) > 0.75) { const gy = V.o.y - hit.distance; if (WALK.grounded || gy >= P.y - 0.02) { P.y = gy; WALK.vy = 0; WALK.grounded = true; } }   // slopes steeper than ~40deg (pyramid glass) are not walkable
+      else WALK.grounded = false;
+    }
+  }
+  pushOut();
+  if (P.y < -40) teleport('plaza');
+}
+function updateWalk(dtReal) {
+  let dt = Math.min(dtReal, 0.3);
+  while (dt > 1e-6) { const s = Math.min(dt, 1 / 60); walkStep(s); dt -= s; }
+  syncCam();
+  WALK.hudT -= dtReal;
+  if (WALK.hudT <= 0) { WALK.hudT = 0.1; updateHud(); }
+}
+function updateHud() {
+  const p = WALK.pos;
+  $('hud').innerHTML = `楼层:<b>${floorName(p.y)}</b> &nbsp; 坐标(米) X ${p.x.toFixed(1)} &nbsp; Y ${(-p.z).toFixed(1)} &nbsp; 高度 ${p.y.toFixed(2)}<br>` +
+    `${WALK.fly ? '飞行模式' : (WALK.grounded ? '步行' : '空中')} &nbsp; ${WALK.keys.has('ShiftLeft') || WALK.keys.has('ShiftRight') ? '奔跑' : ''} &nbsp; <span style="opacity:.7">F 切换模式 · H 帮助</span>`;
+}
+function enterWalk() {
+  if (WALK.on) return;
+  WALK.saved = { p: camera.position.clone(), t: controls.target.clone(), fov: camera.fov, near: camera.near, rot: controls.autoRotate };
+  tween = null; setRotate(false); controls.enabled = false;
+  WALK.on = true; document.body.classList.add('walk');
+  camera.fov = 75; camera.near = 0.08; camera.updateProjectionMatrix(); lamp.visible = true;
+  scene.fog.density = FX.fogBase * 0.5;
+  if (WALK.first) { teleport('plaza'); WALK.first = false; } else syncCam();
+  for (const id of ['cross', 'hud', 'help']) $(id).style.display = 'block';
+  $('tp').style.display = 'flex'; placeTp(); $('walkBtn').classList.add('on'); $('lockmsg').style.display = 'block';
+  updateHud();
+}
+function placeTp() { $('tp').style.top = ($('ui').getBoundingClientRect().bottom + 6) + 'px'; }
+addEventListener('resize', placeTp);
+function exitWalk() {
+  if (!WALK.on) return;
+  if (plc.isLocked) plc.unlock();
+  WALK.on = false; WALK.keys.clear(); document.body.classList.remove('walk');
+  const s = WALK.saved; camera.fov = s.fov; camera.near = s.near; camera.updateProjectionMatrix(); lamp.visible = false;
+  scene.fog.density = FX.fogBase;
+  camera.position.copy(s.p); controls.target.copy(s.t); camera.rotation.order = 'YXZ'; camera.lookAt(s.t);
+  controls.enabled = true;
+  for (const id of ['cross', 'hud', 'help', 'tp', 'lockmsg']) $(id).style.display = 'none';
+  $('walkBtn').classList.remove('on');
+  controls.update();
+}
+function toggleWalk() { WALK.on ? exitWalk() : enterWalk(); }
+$('walkBtn').onclick = () => { toggleWalk(); };
+document.querySelectorAll('[data-tp]').forEach(b => b.onclick = () => teleport(b.dataset.tp));
+document.querySelectorAll('#ui button, #tp button').forEach(b => b.addEventListener('click', () => b.blur()));
+plc.addEventListener('lock', () => { $('lockmsg').style.display = 'none'; });
+plc.addEventListener('unlock', () => { if (WALK.on) $('lockmsg').style.display = 'block'; });
+renderer.domElement.addEventListener('pointerdown', (e) => {
+  if (!WALK.on) return;
+  WALK.drag = true; if (!plc.isLocked) { try { plc.lock(); } catch (_) {} }
+});
+addEventListener('pointerup', () => { WALK.drag = false; });
+addEventListener('pointermove', (e) => {
+  if (!WALK.on || plc.isLocked || !WALK.drag) return;           // fallback: drag-to-look when pointer lock is unavailable
+  const eu = camera.rotation; setLook(eu.y - e.movementX * 0.003, Math.max(-1.5, Math.min(1.5, eu.x - e.movementY * 0.003)));
+});
+addEventListener('blur', () => WALK.keys.clear());
+addEventListener('keydown', (e) => {
+  if (e.code === 'KeyF' && !e.repeat && !e.ctrlKey && !e.metaKey) { toggleWalk(); return; }
+  if (!e.repeat && !e.ctrlKey && !e.metaKey && !e.altKey) {
+    if (e.code === 'KeyN') { toggleMode(); return; }
+    if (e.code === 'KeyL') { setLights(!FX.lights); return; }
+    if (e.code === 'KeyB') { setBloom(!FX.bloom); return; }
+    if (e.code === 'KeyH' && !WALK.on) { $('help').style.display = $('help').style.display === 'block' ? 'none' : 'block'; return; }
+  }
+  if (!WALK.on) return;
+  if (['Space', 'ArrowUp', 'ArrowDown', 'ArrowLeft', 'ArrowRight', 'Tab'].includes(e.code)) e.preventDefault();
+  if (!e.repeat) {
+    if (e.code === 'Space') WALK.jump = true;
+    if (e.code === 'KeyG') { WALK.fly = !WALK.fly; WALK.vy = 0; }
+    if (e.code === 'KeyH') $('help').style.display = $('help').style.display === 'none' ? 'block' : 'none';
+    const m = /^Digit([1-7])$/.exec(e.code); if (m) teleport(TP_ORDER[+m[1] - 1]);
+  }
+  WALK.keys.add(e.code);
+});
+addEventListener('keyup', (e) => { if (WALK.on && e.code === 'Space') e.preventDefault(); WALK.keys.delete(e.code); });
+window.__walk = { enter: enterWalk, exit: exitWalk, teleport, setLook, place: (x, y, z, yaw) => { WALK.pos.set(x, z + 0.05, -y); WALK.vel.set(0, 0, 0); WALK.vy = 0; WALK.grounded = false; setLook(yaw || 0, 0); syncCam(); }, state: () => ({ on: WALK.on, fly: WALK.fly, grounded: WALK.grounded, x: WALK.pos.x, y: -WALK.pos.z, z: WALK.pos.y, yaw: camera.rotation.y, floor: floorName(WALK.pos.y), bvh: WALK.bvh, tris: WALK.tris, hits: WALK.hits, ready: !!WALK.col }),
+  setPos: (x, y, z) => { WALK.pos.set(x, z, -y); WALK.vel.set(0, 0, 0); WALK.vy = 0; syncCam(); } };
+// ===========================================================
+
+
+// ===================== lighting effects + day / night =====================
+const FX = { mode: (Q.get('mode') === 'day') ? 'day' : 'night', lights: Q.get('lights') !== '0', bloom: Q.get('bloomon') !== '0', fogBase: 0.0016, emissives: [], glass: [] };
+const sun = new THREE.DirectionalLight(0xfff0d4, 3.2); sun.position.set(130, 210, 100); sun.visible = false;
+sun.castShadow = true; sun.shadow.mapSize.set(2048, 2048);
+Object.assign(sun.shadow.camera, { left: -170, right: 170, top: 170, bottom: -170, near: 20, far: 600 });
+sun.shadow.bias = -0.0004; sun.shadow.normalBias = 0.06; scene.add(sun); scene.add(sun.target);
+renderer.shadowMap.enabled = true; renderer.shadowMap.type = THREE.PCFSoftShadowMap;
+function makeSkyTexture() {   // equirect gradient sky with a sun glow: used as background + image based light (HDR-like)
+  const c = document.createElement('canvas'); c.width = 1024; c.height = 512; const g = c.getContext('2d');
+  const gr = g.createLinearGradient(0, 0, 0, 512);
+  gr.addColorStop(0, '#3f78c9'); gr.addColorStop(0.35, '#7fb0e6'); gr.addColorStop(0.5, '#cfe2f6'); gr.addColorStop(0.52, '#9fb4cc'); gr.addColorStop(1, '#5d6b7c');
+  g.fillStyle = gr; g.fillRect(0, 0, 1024, 512);
+  const sx = 1024 * (0.5 + Math.atan2(130, -100) / (2 * Math.PI)), sy = 512 * (0.5 - Math.asin(210 / Math.hypot(130, 210, 100)) / Math.PI);
+  const rg = g.createRadialGradient(sx, sy, 2, sx, sy, 90); rg.addColorStop(0, 'rgba(255,250,225,1)'); rg.addColorStop(0.15, 'rgba(255,240,200,.75)'); rg.addColorStop(1, 'rgba(255,240,200,0)');
+  g.fillStyle = rg; g.fillRect(0, 0, 1024, 512);
+  const t = new THREE.CanvasTexture(c); t.colorSpace = THREE.SRGBColorSpace; t.mapping = THREE.EquirectangularReflectionMapping; return t;
+}
+const skyTex = makeSkyTexture();
+const pmrem = new THREE.PMREMGenerator(renderer); const dayEnv = pmrem.fromEquirectangular(skyTex).texture;
+const nightBg = new THREE.Color(0x050914);
+function applyFx() {
+  const day = FX.mode === 'day', on = FX.lights;
+  scene.background = day ? skyTex : nightBg;
+  scene.environment = day ? dayEnv : null; scene.environmentIntensity = day ? 0.85 : 0;
+  scene.fog.color.set(day ? 0xc4d9ef : 0x050914); FX.fogBase = day ? 0.0007 : 0.0016; scene.fog.density = WALK.on ? FX.fogBase * 0.5 : FX.fogBase;
+  hemi.color.set(day ? 0xcfe3ff : 0x6a78c8); hemi.groundColor.set(day ? 0xa89b86 : 0x20162e); hemi.intensity = day ? 0.8 : 0.3;
+  moon.visible = !day; warm.visible = !day; sun.visible = day;
+  renderer.toneMappingExposure = +(Q.get('exp') ?? (day ? 0.95 : 0.7));
+  for (const p of fixLights) p.intensity = on ? p.userData.base * (day ? 0.35 : 1) : 0;      // interior fixtures' light
+  const k = on ? (day ? 0.12 : 1) : 0;                                                         // neon / emissive strips + fixture panels
+  for (const e of FX.emissives) e.m.emissiveIntensity = e.base * k;
+  for (const g of FX.glass) { const s = day ? g.day : g.night; g.m.color.copy(s.color); g.m.opacity = s.opacity; g.m.roughness = s.rough; g.m.metalness = s.metal; }   // day: dark grey tinted glass (model default); night: light glass showing the lit interior
+  bloomPass.enabled = FX.bloom && on; bloomPass.strength = day ? 0.06 : +(Q.get('bloom') ?? 0.3);
+  $('fxMode').textContent = day ? '☀ 白天 (N)' : '🌙 夜景 (N)'; $('fxMode').classList.toggle('on', day);
+  $('fxLights').classList.toggle('on', on); $('fxBloom').classList.toggle('on', FX.bloom);
+}
+function collectEmissives(root) {
+  const seen = new Set();
+  const NIGHT_GLASS = { win_glass: [0.70, 0.83, 0.92, 0.38], win_glass_g: [0.72, 0.88, 0.82, 0.42] };
+  root.traverse(o => { if (!o.isMesh) return; const m = o.material; if (!m || seen.has(m) || !m.emissive) return; seen.add(m);
+    const ng = NIGHT_GLASS[m.name]; if (ng && !FX.glass.some(g => g.m === m)) FX.glass.push({ m,
+      day: { color: m.color.clone(), opacity: m.opacity, rough: m.roughness, metal: m.metalness },
+      night: { color: new THREE.Color().setRGB(ng[0], ng[1], ng[2]), opacity: ng[3], rough: 0.04, metal: 0 } });
+    if (m.emissive.getHex() !== 0 && m.emissiveIntensity > 0) FX.emissives.push({ m, base: m.emissiveIntensity });
+    if (!o.userData.fxShadow) { o.userData.fxShadow = 1; if (!m.transparent) { o.castShadow = true; o.receiveShadow = true; } else o.receiveShadow = true; } });
+  root.traverse(o => { if (o.isMesh && !o.userData.fxShadow) { o.userData.fxShadow = 1; const m = o.material; if (m && !m.transparent) { o.castShadow = true; o.receiveShadow = true; } } });
+}
+const setMode = (m) => { FX.mode = m; applyFx(); };
+const setLights = (v) => { FX.lights = v; applyFx(); };
+const setBloom = (v) => { FX.bloom = v; applyFx(); };
+const toggleMode = () => setMode(FX.mode === 'day' ? 'night' : 'day');
+$('fxMode').onclick = toggleMode; $('fxLights').onclick = () => setLights(!FX.lights); $('fxBloom').onclick = () => setBloom(!FX.bloom);
+applyFx();
+window.__fx = { setMode, setLights, setBloom, state: () => ({ mode: FX.mode, lights: FX.lights, bloom: FX.bloom, bloomEnabled: bloomPass.enabled, emissives: FX.emissives.length, glass: FX.glass.map(g => ({ name: g.m.name, hex: g.m.color.getHexString(), opacity: +g.m.opacity.toFixed(2) })), fixLights: fixLights.map(p => p.intensity).reduce((a, b) => a + b, 0), sun: sun.visible, exposure: renderer.toneMappingExposure }) };
+
+function b64ToBuffer(b64) { const bin = atob(b64.replace(/\s+/g, '')); const u = new Uint8Array(bin.length); for (let i = 0; i < bin.length; i++) u[i] = bin.charCodeAt(i); return u.buffer; }
+const loader = new GLTFLoader(); loader.setMeshoptDecoder(MeshoptDecoder);
+try {
+  const buf = b64ToBuffer($('glb').textContent); $('glb').remove();
+  loader.parse(buf, '', (gltf) => {
+    gltf.scene.traverse(o => {
+      if (o.name && !byName[o.name]) byName[o.name] = o;
+      if (o.isMesh && o.material) { for (let p = o; p; p = p.parent) if (p.name === 'Hologram') { o.material = o.material.clone(); o.material.emissiveIntensity = 0.3; } const m = o.material; m.clippingPlanes = null; if (m.transparent) m.depthWrite = false; }
+    });
+    scene.add(gltf.scene); applyGroups(); collectEmissives(gltf.scene); applyFx();
+    $('loading').classList.add('hide'); window.__ready = true;
+    window.__byName = byName;
+    initDoors(gltf.scene);
+    buildCollision(gltf.scene).then(() => { window.__collisionReady = true; });
+    if (Q.get('cut')) setCut(Q.get('cut'));
+    if (Q.get('view')) { goTo(Q.get('view')); tween.dur = 1; }
+  }, (e) => { $('msg').textContent = 'Failed to load model'; $('err').textContent = String(e && e.message || e); console.error(e); });
+} catch (e) { $('msg').textContent = 'Failed to load model'; $('err').textContent = String(e); }
+
+addEventListener('resize', () => { camera.aspect = innerWidth / innerHeight; camera.updateProjectionMatrix(); renderer.setSize(innerWidth, innerHeight); composer.setSize(innerWidth, innerHeight); });
+const ease = (x) => x < .5 ? 4*x*x*x : 1 - Math.pow(-2*x + 2, 3) / 2;
+let lastT = performance.now();
+renderer.setAnimationLoop(() => {
+  const nowT = performance.now(), dtR = (nowT - lastT) / 1000; lastT = nowT;
+  updateDoors(Math.min(dtR, 0.3));
+  if (WALK.on && WALK.col) updateWalk(dtR);
+  if (tween) { const k = Math.min(1, (performance.now() - tween.t0) / tween.dur), e = ease(k);
+    camera.position.lerpVectors(tween.p0, tween.p1, e); controls.target.lerpVectors(tween.c0, tween.c1, e); if (k >= 1) tween = null; }
+  if (!WALK.on) controls.update();
+  composer.render();
+});
+window.__cam = (p, t, fov) => { if (WALK.on) exitWalk(); controls.minDistance = 0.1; controls.maxPolarAngle = Math.PI; camera.fov = fov || 35; camera.updateProjectionMatrix(); camera.position.set(...p); controls.target.set(...t); controls.update(); setRotate(false); tween = null; };
+window.__goTo = goTo; window.__setCut = setCut; window.__setRotate = setRotate;
+</script>
+</body>
+</html>

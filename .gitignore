@@ -1,0 +1,14 @@
+# backups / snapshots
+src_before*/
+tex_before*/
+*_backup.html
+*.blend1
+*.blend@
+# large intermediate renders & comparison images (regenerable)
+renders/
+compare/
+# python / misc
+__pycache__/
+*.pyc
+dist/
+.DS_Store

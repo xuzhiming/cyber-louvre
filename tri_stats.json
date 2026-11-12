@@ -1,0 +1,28 @@
+{
+ "tris": 201628,
+ "by_group": {
+  "Walls_Interior": 5352,
+  "Walls_Exterior": 34224,
+  "Ground": 660,
+  "Slabs": 3060,
+  "Stairs": 10944,
+  "Rails": 4752,
+  "Facade": 86736,
+  "Windows": 9451,
+  "AutoDoor_LOBBY_L": 50,
+  "AutoDoor_LOBBY_R": 50,
+  "Roofs": 12409,
+  "Dome": 5204,
+  "Pyramids": 4676,
+  "AutoDoor_PYR_MAIN_L": 50,
+  "AutoDoor_PYR_MAIN_R": 50,
+  "Neon": 420,
+  "AutoDoor_PYR_SL_L": 50,
+  "AutoDoor_PYR_SL_R": 50,
+  "AutoDoor_PYR_SR_L": 50,
+  "AutoDoor_PYR_SR_R": 50,
+  "Screens": 228,
+  "Props": 19944,
+  "Hologram": 3168
+ }
+}

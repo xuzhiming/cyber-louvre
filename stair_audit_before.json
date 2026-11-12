@@ -1,0 +1,2416 @@
+{
+ "rows": [
+  {
+   "id": "S_PM",
+   "cls": "public",
+   "w": 3.0,
+   "flights": 1,
+   "riser": 0.167,
+   "tread": 0.3,
+   "2R+T": 0.633,
+   "max_risers": 36,
+   "landings": [],
+   "min_wall_gap": null,
+   "slots": [],
+   "gaps_flight0": [
+    99
+   ],
+   "zone_start": 15.0,
+   "zone_end": 15.0,
+   "zone_req": 3.0,
+   "headroom": 2.43,
+   "rails_missing": 0,
+   "door_conflicts": [],
+   "issues": [
+    "36 risers in one flight"
+   ]
+  },
+  {
+   "id": "S_PSL",
+   "cls": "public",
+   "w": 2.0,
+   "flights": 2,
+   "riser": 0.167,
+   "tread": 0.28,
+   "2R+T": 0.613,
+   "max_risers": 18,
+   "landings": [
+    [
+     "turn",
+     2.4
+    ]
+   ],
+   "min_wall_gap": 1.54,
+   "slots": [],
+   "gaps_flight0": [
+    1.54,
+    1.83,
+    2.11,
+    2.4,
+    2.45,
+    5.4,
+    6.34,
+    6.63,
+    6.91,
+    7.2,
+    7.25,
+    99
+   ],
+   "zone_start": 3.7,
+   "zone_end": 4.79,
+   "zone_req": 2.0,
+   "headroom": 2.43,
+   "rails_missing": 0,
+   "door_conflicts": [],
+   "issues": [
+    "tread 0.28"
+   ]
+  },
+  {
+   "id": "S_PSR",
+   "cls": "public",
+   "w": 2.0,
+   "flights": 2,
+   "riser": 0.167,
+   "tread": 0.28,
+   "2R+T": 0.613,
+   "max_risers": 18,
+   "landings": [
+    [
+     "turn",
+     2.4
+    ]
+   ],
+   "min_wall_gap": 1.54,
+   "slots": [],
+   "gaps_flight0": [
+    1.54,
+    1.83,
+    2.11,
+    2.4,
+    2.45,
+    5.4,
+    6.34,
+    6.63,
+    6.91,
+    7.2,
+    7.25,
+    99
+   ],
+   "zone_start": 3.7,
+   "zone_end": 4.79,
+   "zone_req": 2.0,
+   "headroom": 2.43,
+   "rails_missing": 0,
+   "door_conflicts": [],
+   "issues": [
+    "tread 0.28"
+   ]
+  },
+  {
+   "id": "S_LOBBY",
+   "cls": "public",
+   "w": 3.0,
+   "flights": 1,
+   "riser": 0.167,
+   "tread": 0.3,
+   "2R+T": 0.633,
+   "max_risers": 36,
+   "landings": [],
+   "min_wall_gap": 3.3,
+   "slots": [],
+   "gaps_flight0": [
+    3.3,
+    12.1
+   ],
+   "zone_start": 15.0,
+   "zone_end": 15.0,
+   "zone_req": 3.0,
+   "headroom": 2.6,
+   "rails_missing": 0,
+   "door_conflicts": [],
+   "issues": [
+    "36 risers in one flight"
+   ]
+  },
+  {
+   "id": "S_GR1W",
+   "cls": "grand",
+   "w": 3.5,
+   "flights": 1,
+   "riser": 0.167,
+   "tread": 0.3,
+   "2R+T": 0.633,
+   "max_risers": 48,
+   "landings": [],
+   "min_wall_gap": 0.1,
+   "slots": [],
+   "gaps_flight0": [
+    0.1,
+    99
+   ],
+   "zone_start": 0.59,
+   "zone_end": 15.0,
+   "zone_req": 3.5,
+   "headroom": 23.6,
+   "rails_missing": 0,
+   "door_conflicts": [],
+   "issues": [
+    "48 risers in one flight",
+    "start zone 0.59 < 3.50"
+   ]
+  },
+  {
+   "id": "S_GR2W",
+   "cls": "grand",
+   "w": 3.4,
+   "flights": 2,
+   "riser": 0.167,
+   "tread": 0.3,
+   "2R+T": 0.633,
+   "max_risers": 24,
+   "landings": [
+    [
+     "turn",
+     3.2
+    ]
+   ],
+   "min_wall_gap": 3.9,
+   "slots": [],
+   "gaps_flight0": [
+    3.9,
+    99
+   ],
+   "zone_start": 12.56,
+   "zone_end": 12.56,
+   "zone_req": 3.4,
+   "headroom": 15.6,
+   "rails_missing": 0,
+   "door_conflicts": [],
+   "issues": [
+    "24 risers in one flight",
+    "landing 0 depth 3.20 < 3.40"
+   ]
+  },
+  {
+   "id": "S_GR1E",
+   "cls": "grand",
+   "w": 3.5,
+   "flights": 1,
+   "riser": 0.167,
+   "tread": 0.3,
+   "2R+T": 0.633,
+   "max_risers": 48,
+   "landings": [],
+   "min_wall_gap": 0.1,
+   "slots": [],
+   "gaps_flight0": [
+    0.1,
+    99
+   ],
+   "zone_start": 0.59,
+   "zone_end": 15.0,
+   "zone_req": 3.5,
+   "headroom": 23.6,
+   "rails_missing": 0,
+   "door_conflicts": [],
+   "issues": [
+    "48 risers in one flight",
+    "start zone 0.59 < 3.50"
+   ]
+  },
+  {
+   "id": "S_GR2E",
+   "cls": "grand",
+   "w": 3.4,
+   "flights": 2,
+   "riser": 0.167,
+   "tread": 0.3,
+   "2R+T": 0.633,
+   "max_risers": 24,
+   "landings": [
+    [
+     "turn",
+     3.2
+    ]
+   ],
+   "min_wall_gap": 3.9,
+   "slots": [],
+   "gaps_flight0": [
+    3.9,
+    99
+   ],
+   "zone_start": 12.56,
+   "zone_end": 12.56,
+   "zone_req": 3.4,
+   "headroom": 15.6,
+   "rails_missing": 0,
+   "door_conflicts": [],
+   "issues": [
+    "24 risers in one flight",
+    "landing 0 depth 3.20 < 3.40"
+   ]
+  },
+  {
+   "id": "S_PAV_NW_L1",
+   "cls": "public",
+   "w": 3.4,
+   "flights": 2,
+   "riser": 0.167,
+   "tread": 0.28,
+   "2R+T": 0.613,
+   "max_risers": 24,
+   "landings": [
+    [
+     "turn",
+     4.98
+    ]
+   ],
+   "min_wall_gap": 0.7,
+   "slots": [
+    [
+     "flight0",
+     -1,
+     0.9
+    ],
+    [
+     "flight0",
+     -1,
+     0.9
+    ],
+    [
+     "flight0",
+     -1,
+     0.9
+    ],
+    [
+     "flight0",
+     -1,
+     0.9
+    ],
+    [
+     "flight0",
+     -1,
+     0.9
+    ],
+    [
+     "flight0",
+     -1,
+     0.9
+    ],
+    [
+     "flight0",
+     -1,
+     0.9
+    ],
+    [
+     "flight0",
+     -1,
+     0.9
+    ],
+    [
+     "flight0",
+     -1,
+     0.9
+    ],
+    [
+     "flight0",
+     -1,
+     0.9
+    ],
+    [
+     "flight0",
+     -1,
+     0.9
+    ],
+    [
+     "flight0",
+     -1,
+     0.9
+    ],
+    [
+     "flight1",
+     1,
+     1.1
+    ],
+    [
+     "flight1",
+     1,
+     1.1
+    ],
+    [
+     "flight1",
+     1,
+     1.1
+    ],
+    [
+     "flight1",
+     1,
+     1.1
+    ],
+    [
+     "flight1",
+     1,
+     1.1
+    ],
+    [
+     "flight1",
+     1,
+     1.1
+    ],
+    [
+     "flight1",
+     1,
+     1.1
+    ],
+    [
+     "flight1",
+     1,
+     1.1
+    ],
+    [
+     "flight1",
+     1,
+     1.1
+    ],
+    [
+     "flight1",
+     1,
+     1.1
+    ],
+    [
+     "flight1",
+     1,
+     1.1
+    ],
+    [
+     "flight1",
+     1,
+     1.1
+    ],
+    [
+     "landing0",
+     [
+      1,
+      0
+     ],
+     1.1
+    ],
+    [
+     "landing0",
+     [
+      -1,
+      0
+     ],
+     0.9
+    ],
+    [
+     "landing0",
+     [
+      0,
+      1
+     ],
+     0.7
+    ]
+   ],
+   "gaps_flight0": [
+    0.9,
+    5.1
+   ],
+   "zone_start": 1.99,
+   "zone_end": 1.99,
+   "zone_req": 3.4,
+   "headroom": 7.53,
+   "rails_missing": 0,
+   "door_conflicts": [],
+   "issues": [
+    "tread 0.28",
+    "24 risers in one flight",
+    "wall slot [0.7, 0.9, 1.1]",
+    "start zone 1.99 < 3.40",
+    "end zone 1.99 < 3.40"
+   ]
+  },
+  {
+   "id": "S_PAV_NW_L2",
+   "cls": "public",
+   "w": 3.4,
+   "flights": 2,
+   "riser": 0.167,
+   "tread": 0.28,
+   "2R+T": 0.613,
+   "max_risers": 24,
+   "landings": [
+    [
+     "turn",
+     4.98
+    ]
+   ],
+   "min_wall_gap": 0.7,
+   "slots": [
+    [
+     "flight0",
+     -1,
+     0.9
+    ],
+    [
+     "flight0",
+     -1,
+     0.9
+    ],
+    [
+     "flight0",
+     -1,
+     0.9
+    ],
+    [
+     "flight0",
+     -1,
+     0.9
+    ],
+    [
+     "flight0",
+     -1,
+     0.9
+    ],
+    [
+     "flight0",
+     -1,
+     0.9
+    ],
+    [
+     "flight0",
+     -1,
+     0.9
+    ],
+    [
+     "flight0",
+     -1,
+     0.9
+    ],
+    [
+     "flight0",
+     -1,
+     0.9
+    ],
+    [
+     "flight0",
+     -1,
+     0.9
+    ],
+    [
+     "flight0",
+     -1,
+     0.9
+    ],
+    [
+     "flight0",
+     -1,
+     0.9
+    ],
+    [
+     "flight1",
+     1,
+     1.1
+    ],
+    [
+     "flight1",
+     1,
+     1.1
+    ],
+    [
+     "flight1",
+     1,
+     1.1
+    ],
+    [
+     "flight1",
+     1,
+     1.1
+    ],
+    [
+     "flight1",
+     1,
+     1.1
+    ],
+    [
+     "flight1",
+     1,
+     1.1
+    ],
+    [
+     "flight1",
+     1,
+     1.1
+    ],
+    [
+     "flight1",
+     1,
+     1.1
+    ],
+    [
+     "flight1",
+     1,
+     1.1
+    ],
+    [
+     "flight1",
+     1,
+     1.1
+    ],
+    [
+     "flight1",
+     1,
+     1.1
+    ],
+    [
+     "flight1",
+     1,
+     1.1
+    ],
+    [
+     "landing0",
+     [
+      1,
+      0
+     ],
+     1.1
+    ],
+    [
+     "landing0",
+     [
+      -1,
+      0
+     ],
+     0.9
+    ],
+    [
+     "landing0",
+     [
+      0,
+      1
+     ],
+     0.7
+    ]
+   ],
+   "gaps_flight0": [
+    0.9,
+    5.1
+   ],
+   "zone_start": 1.99,
+   "zone_end": 1.99,
+   "zone_req": 3.4,
+   "headroom": 7.53,
+   "rails_missing": 0,
+   "door_conflicts": [],
+   "issues": [
+    "tread 0.28",
+    "24 risers in one flight",
+    "wall slot [0.7, 0.9, 1.1]",
+    "start zone 1.99 < 3.40",
+    "end zone 1.99 < 3.40"
+   ]
+  },
+  {
+   "id": "S_PAV_NW_L3",
+   "cls": "public",
+   "w": 3.4,
+   "flights": 2,
+   "riser": 0.167,
+   "tread": 0.28,
+   "2R+T": 0.613,
+   "max_risers": 24,
+   "landings": [
+    [
+     "turn",
+     4.98
+    ]
+   ],
+   "min_wall_gap": 0.7,
+   "slots": [
+    [
+     "flight0",
+     -1,
+     0.9
+    ],
+    [
+     "flight0",
+     -1,
+     0.9
+    ],
+    [
+     "flight0",
+     -1,
+     0.9
+    ],
+    [
+     "flight0",
+     -1,
+     0.9
+    ],
+    [
+     "flight0",
+     -1,
+     0.9
+    ],
+    [
+     "flight0",
+     -1,
+     0.9
+    ],
+    [
+     "flight0",
+     -1,
+     0.9
+    ],
+    [
+     "flight0",
+     -1,
+     0.9
+    ],
+    [
+     "flight0",
+     -1,
+     0.9
+    ],
+    [
+     "flight0",
+     -1,
+     0.9
+    ],
+    [
+     "flight0",
+     -1,
+     0.9
+    ],
+    [
+     "flight0",
+     -1,
+     0.9
+    ],
+    [
+     "flight1",
+     1,
+     1.1
+    ],
+    [
+     "flight1",
+     1,
+     1.1
+    ],
+    [
+     "flight1",
+     1,
+     1.1
+    ],
+    [
+     "flight1",
+     1,
+     1.1
+    ],
+    [
+     "flight1",
+     1,
+     1.1
+    ],
+    [
+     "flight1",
+     1,
+     1.1
+    ],
+    [
+     "flight1",
+     1,
+     1.1
+    ],
+    [
+     "flight1",
+     1,
+     1.1
+    ],
+    [
+     "flight1",
+     1,
+     1.1
+    ],
+    [
+     "flight1",
+     1,
+     1.1
+    ],
+    [
+     "flight1",
+     1,
+     1.1
+    ],
+    [
+     "flight1",
+     1,
+     1.1
+    ],
+    [
+     "landing0",
+     [
+      1,
+      0
+     ],
+     1.1
+    ],
+    [
+     "landing0",
+     [
+      -1,
+      0
+     ],
+     0.9
+    ],
+    [
+     "landing0",
+     [
+      0,
+      1
+     ],
+     0.7
+    ]
+   ],
+   "gaps_flight0": [
+    0.9,
+    5.1
+   ],
+   "zone_start": 1.99,
+   "zone_end": 1.79,
+   "zone_req": 3.4,
+   "headroom": 99,
+   "rails_missing": 0,
+   "door_conflicts": [],
+   "issues": [
+    "tread 0.28",
+    "24 risers in one flight",
+    "wall slot [0.7, 0.9, 1.1]",
+    "start zone 1.99 < 3.40",
+    "end zone 1.79 < 3.40"
+   ]
+  },
+  {
+   "id": "S_PAV_NE_L1",
+   "cls": "public",
+   "w": 3.4,
+   "flights": 2,
+   "riser": 0.167,
+   "tread": 0.28,
+   "2R+T": 0.613,
+   "max_risers": 24,
+   "landings": [
+    [
+     "turn",
+     4.98
+    ]
+   ],
+   "min_wall_gap": 0.7,
+   "slots": [
+    [
+     "flight0",
+     1,
+     0.9
+    ],
+    [
+     "flight0",
+     1,
+     0.9
+    ],
+    [
+     "flight0",
+     1,
+     0.9
+    ],
+    [
+     "flight0",
+     1,
+     0.9
+    ],
+    [
+     "flight0",
+     1,
+     0.9
+    ],
+    [
+     "flight0",
+     1,
+     0.9
+    ],
+    [
+     "flight0",
+     1,
+     0.9
+    ],
+    [
+     "flight0",
+     1,
+     0.9
+    ],
+    [
+     "flight0",
+     1,
+     0.9
+    ],
+    [
+     "flight0",
+     1,
+     0.9
+    ],
+    [
+     "flight0",
+     1,
+     0.9
+    ],
+    [
+     "flight0",
+     1,
+     0.9
+    ],
+    [
+     "flight1",
+     -1,
+     1.1
+    ],
+    [
+     "flight1",
+     -1,
+     1.1
+    ],
+    [
+     "flight1",
+     -1,
+     1.1
+    ],
+    [
+     "flight1",
+     -1,
+     1.1
+    ],
+    [
+     "flight1",
+     -1,
+     1.1
+    ],
+    [
+     "flight1",
+     -1,
+     1.1
+    ],
+    [
+     "flight1",
+     -1,
+     1.1
+    ],
+    [
+     "flight1",
+     -1,
+     1.1
+    ],
+    [
+     "flight1",
+     -1,
+     1.1
+    ],
+    [
+     "flight1",
+     -1,
+     1.1
+    ],
+    [
+     "flight1",
+     -1,
+     1.1
+    ],
+    [
+     "flight1",
+     -1,
+     1.1
+    ],
+    [
+     "landing0",
+     [
+      1,
+      0
+     ],
+     0.9
+    ],
+    [
+     "landing0",
+     [
+      -1,
+      0
+     ],
+     1.1
+    ],
+    [
+     "landing0",
+     [
+      0,
+      1
+     ],
+     0.7
+    ]
+   ],
+   "gaps_flight0": [
+    0.9,
+    5.1
+   ],
+   "zone_start": 1.99,
+   "zone_end": 1.99,
+   "zone_req": 3.4,
+   "headroom": 7.53,
+   "rails_missing": 0,
+   "door_conflicts": [],
+   "issues": [
+    "tread 0.28",
+    "24 risers in one flight",
+    "wall slot [0.7, 0.9, 1.1]",
+    "start zone 1.99 < 3.40",
+    "end zone 1.99 < 3.40"
+   ]
+  },
+  {
+   "id": "S_PAV_NE_L2",
+   "cls": "public",
+   "w": 3.4,
+   "flights": 2,
+   "riser": 0.167,
+   "tread": 0.28,
+   "2R+T": 0.613,
+   "max_risers": 24,
+   "landings": [
+    [
+     "turn",
+     4.98
+    ]
+   ],
+   "min_wall_gap": 0.7,
+   "slots": [
+    [
+     "flight0",
+     1,
+     0.9
+    ],
+    [
+     "flight0",
+     1,
+     0.9
+    ],
+    [
+     "flight0",
+     1,
+     0.9
+    ],
+    [
+     "flight0",
+     1,
+     0.9
+    ],
+    [
+     "flight0",
+     1,
+     0.9
+    ],
+    [
+     "flight0",
+     1,
+     0.9
+    ],
+    [
+     "flight0",
+     1,
+     0.9
+    ],
+    [
+     "flight0",
+     1,
+     0.9
+    ],
+    [
+     "flight0",
+     1,
+     0.9
+    ],
+    [
+     "flight0",
+     1,
+     0.9
+    ],
+    [
+     "flight0",
+     1,
+     0.9
+    ],
+    [
+     "flight0",
+     1,
+     0.9
+    ],
+    [
+     "flight1",
+     -1,
+     1.1
+    ],
+    [
+     "flight1",
+     -1,
+     1.1
+    ],
+    [
+     "flight1",
+     -1,
+     1.1
+    ],
+    [
+     "flight1",
+     -1,
+     1.1
+    ],
+    [
+     "flight1",
+     -1,
+     1.1
+    ],
+    [
+     "flight1",
+     -1,
+     1.1
+    ],
+    [
+     "flight1",
+     -1,
+     1.1
+    ],
+    [
+     "flight1",
+     -1,
+     1.1
+    ],
+    [
+     "flight1",
+     -1,
+     1.1
+    ],
+    [
+     "flight1",
+     -1,
+     1.1
+    ],
+    [
+     "flight1",
+     -1,
+     1.1
+    ],
+    [
+     "flight1",
+     -1,
+     1.1
+    ],
+    [
+     "landing0",
+     [
+      1,
+      0
+     ],
+     0.9
+    ],
+    [
+     "landing0",
+     [
+      -1,
+      0
+     ],
+     1.1
+    ],
+    [
+     "landing0",
+     [
+      0,
+      1
+     ],
+     0.7
+    ]
+   ],
+   "gaps_flight0": [
+    0.9,
+    5.1
+   ],
+   "zone_start": 1.99,
+   "zone_end": 1.99,
+   "zone_req": 3.4,
+   "headroom": 7.53,
+   "rails_missing": 0,
+   "door_conflicts": [],
+   "issues": [
+    "tread 0.28",
+    "24 risers in one flight",
+    "wall slot [0.7, 0.9, 1.1]",
+    "start zone 1.99 < 3.40",
+    "end zone 1.99 < 3.40"
+   ]
+  },
+  {
+   "id": "S_PAV_NE_L3",
+   "cls": "public",
+   "w": 3.4,
+   "flights": 2,
+   "riser": 0.167,
+   "tread": 0.28,
+   "2R+T": 0.613,
+   "max_risers": 24,
+   "landings": [
+    [
+     "turn",
+     4.98
+    ]
+   ],
+   "min_wall_gap": 0.7,
+   "slots": [
+    [
+     "flight0",
+     1,
+     0.9
+    ],
+    [
+     "flight0",
+     1,
+     0.9
+    ],
+    [
+     "flight0",
+     1,
+     0.9
+    ],
+    [
+     "flight0",
+     1,
+     0.9
+    ],
+    [
+     "flight0",
+     1,
+     0.9
+    ],
+    [
+     "flight0",
+     1,
+     0.9
+    ],
+    [
+     "flight0",
+     1,
+     0.9
+    ],
+    [
+     "flight0",
+     1,
+     0.9
+    ],
+    [
+     "flight0",
+     1,
+     0.9
+    ],
+    [
+     "flight0",
+     1,
+     0.9
+    ],
+    [
+     "flight0",
+     1,
+     0.9
+    ],
+    [
+     "flight0",
+     1,
+     0.9
+    ],
+    [
+     "flight1",
+     -1,
+     1.1
+    ],
+    [
+     "flight1",
+     -1,
+     1.1
+    ],
+    [
+     "flight1",
+     -1,
+     1.1
+    ],
+    [
+     "flight1",
+     -1,
+     1.1
+    ],
+    [
+     "flight1",
+     -1,
+     1.1
+    ],
+    [
+     "flight1",
+     -1,
+     1.1
+    ],
+    [
+     "flight1",
+     -1,
+     1.1
+    ],
+    [
+     "flight1",
+     -1,
+     1.1
+    ],
+    [
+     "flight1",
+     -1,
+     1.1
+    ],
+    [
+     "flight1",
+     -1,
+     1.1
+    ],
+    [
+     "flight1",
+     -1,
+     1.1
+    ],
+    [
+     "flight1",
+     -1,
+     1.1
+    ],
+    [
+     "landing0",
+     [
+      1,
+      0
+     ],
+     0.9
+    ],
+    [
+     "landing0",
+     [
+      -1,
+      0
+     ],
+     1.1
+    ],
+    [
+     "landing0",
+     [
+      0,
+      1
+     ],
+     0.7
+    ]
+   ],
+   "gaps_flight0": [
+    0.9,
+    5.1
+   ],
+   "zone_start": 1.99,
+   "zone_end": 1.79,
+   "zone_req": 3.4,
+   "headroom": 99,
+   "rails_missing": 0,
+   "door_conflicts": [],
+   "issues": [
+    "tread 0.28",
+    "24 risers in one flight",
+    "wall slot [0.7, 0.9, 1.1]",
+    "start zone 1.99 < 3.40",
+    "end zone 1.79 < 3.40"
+   ]
+  },
+  {
+   "id": "S_PAV_SW_L1",
+   "cls": "public",
+   "w": 3.4,
+   "flights": 2,
+   "riser": 0.167,
+   "tread": 0.28,
+   "2R+T": 0.613,
+   "max_risers": 24,
+   "landings": [
+    [
+     "turn",
+     4.98
+    ]
+   ],
+   "min_wall_gap": 0.7,
+   "slots": [
+    [
+     "flight0",
+     -1,
+     0.9
+    ],
+    [
+     "flight0",
+     -1,
+     0.9
+    ],
+    [
+     "flight0",
+     -1,
+     0.9
+    ],
+    [
+     "flight0",
+     -1,
+     0.9
+    ],
+    [
+     "flight0",
+     -1,
+     0.9
+    ],
+    [
+     "flight0",
+     -1,
+     0.9
+    ],
+    [
+     "flight0",
+     -1,
+     0.9
+    ],
+    [
+     "flight0",
+     -1,
+     0.9
+    ],
+    [
+     "flight0",
+     -1,
+     0.9
+    ],
+    [
+     "flight0",
+     -1,
+     0.9
+    ],
+    [
+     "flight0",
+     -1,
+     0.9
+    ],
+    [
+     "flight0",
+     -1,
+     0.9
+    ],
+    [
+     "flight1",
+     1,
+     1.1
+    ],
+    [
+     "flight1",
+     1,
+     1.1
+    ],
+    [
+     "flight1",
+     1,
+     1.1
+    ],
+    [
+     "flight1",
+     1,
+     1.1
+    ],
+    [
+     "flight1",
+     1,
+     1.1
+    ],
+    [
+     "flight1",
+     1,
+     1.1
+    ],
+    [
+     "flight1",
+     1,
+     1.1
+    ],
+    [
+     "flight1",
+     1,
+     1.1
+    ],
+    [
+     "flight1",
+     1,
+     1.1
+    ],
+    [
+     "flight1",
+     1,
+     1.1
+    ],
+    [
+     "flight1",
+     1,
+     1.1
+    ],
+    [
+     "flight1",
+     1,
+     1.1
+    ],
+    [
+     "landing0",
+     [
+      1,
+      0
+     ],
+     1.1
+    ],
+    [
+     "landing0",
+     [
+      -1,
+      0
+     ],
+     0.9
+    ],
+    [
+     "landing0",
+     [
+      0,
+      -1
+     ],
+     0.7
+    ]
+   ],
+   "gaps_flight0": [
+    0.9,
+    5.1
+   ],
+   "zone_start": 1.99,
+   "zone_end": 1.99,
+   "zone_req": 3.4,
+   "headroom": 7.53,
+   "rails_missing": 0,
+   "door_conflicts": [],
+   "issues": [
+    "tread 0.28",
+    "24 risers in one flight",
+    "wall slot [0.7, 0.9, 1.1]",
+    "start zone 1.99 < 3.40",
+    "end zone 1.99 < 3.40"
+   ]
+  },
+  {
+   "id": "S_PAV_SW_L2",
+   "cls": "public",
+   "w": 3.4,
+   "flights": 2,
+   "riser": 0.167,
+   "tread": 0.28,
+   "2R+T": 0.613,
+   "max_risers": 24,
+   "landings": [
+    [
+     "turn",
+     4.98
+    ]
+   ],
+   "min_wall_gap": 0.7,
+   "slots": [
+    [
+     "flight0",
+     -1,
+     0.9
+    ],
+    [
+     "flight0",
+     -1,
+     0.9
+    ],
+    [
+     "flight0",
+     -1,
+     0.9
+    ],
+    [
+     "flight0",
+     -1,
+     0.9
+    ],
+    [
+     "flight0",
+     -1,
+     0.9
+    ],
+    [
+     "flight0",
+     -1,
+     0.9
+    ],
+    [
+     "flight0",
+     -1,
+     0.9
+    ],
+    [
+     "flight0",
+     -1,
+     0.9
+    ],
+    [
+     "flight0",
+     -1,
+     0.9
+    ],
+    [
+     "flight0",
+     -1,
+     0.9
+    ],
+    [
+     "flight0",
+     -1,
+     0.9
+    ],
+    [
+     "flight0",
+     -1,
+     0.9
+    ],
+    [
+     "flight1",
+     1,
+     1.1
+    ],
+    [
+     "flight1",
+     1,
+     1.1
+    ],
+    [
+     "flight1",
+     1,
+     1.1
+    ],
+    [
+     "flight1",
+     1,
+     1.1
+    ],
+    [
+     "flight1",
+     1,
+     1.1
+    ],
+    [
+     "flight1",
+     1,
+     1.1
+    ],
+    [
+     "flight1",
+     1,
+     1.1
+    ],
+    [
+     "flight1",
+     1,
+     1.1
+    ],
+    [
+     "flight1",
+     1,
+     1.1
+    ],
+    [
+     "flight1",
+     1,
+     1.1
+    ],
+    [
+     "flight1",
+     1,
+     1.1
+    ],
+    [
+     "flight1",
+     1,
+     1.1
+    ],
+    [
+     "landing0",
+     [
+      1,
+      0
+     ],
+     1.1
+    ],
+    [
+     "landing0",
+     [
+      -1,
+      0
+     ],
+     0.9
+    ],
+    [
+     "landing0",
+     [
+      0,
+      -1
+     ],
+     0.7
+    ]
+   ],
+   "gaps_flight0": [
+    0.9,
+    5.1
+   ],
+   "zone_start": 1.99,
+   "zone_end": 1.99,
+   "zone_req": 3.4,
+   "headroom": 7.53,
+   "rails_missing": 0,
+   "door_conflicts": [],
+   "issues": [
+    "tread 0.28",
+    "24 risers in one flight",
+    "wall slot [0.7, 0.9, 1.1]",
+    "start zone 1.99 < 3.40",
+    "end zone 1.99 < 3.40"
+   ]
+  },
+  {
+   "id": "S_PAV_SW_L3",
+   "cls": "public",
+   "w": 3.4,
+   "flights": 2,
+   "riser": 0.167,
+   "tread": 0.28,
+   "2R+T": 0.613,
+   "max_risers": 24,
+   "landings": [
+    [
+     "turn",
+     4.98
+    ]
+   ],
+   "min_wall_gap": 0.7,
+   "slots": [
+    [
+     "flight0",
+     -1,
+     0.9
+    ],
+    [
+     "flight0",
+     -1,
+     0.9
+    ],
+    [
+     "flight0",
+     -1,
+     0.9
+    ],
+    [
+     "flight0",
+     -1,
+     0.9
+    ],
+    [
+     "flight0",
+     -1,
+     0.9
+    ],
+    [
+     "flight0",
+     -1,
+     0.9
+    ],
+    [
+     "flight0",
+     -1,
+     0.9
+    ],
+    [
+     "flight0",
+     -1,
+     0.9
+    ],
+    [
+     "flight0",
+     -1,
+     0.9
+    ],
+    [
+     "flight0",
+     -1,
+     0.9
+    ],
+    [
+     "flight0",
+     -1,
+     0.9
+    ],
+    [
+     "flight0",
+     -1,
+     0.9
+    ],
+    [
+     "flight1",
+     1,
+     1.1
+    ],
+    [
+     "flight1",
+     1,
+     1.1
+    ],
+    [
+     "flight1",
+     1,
+     1.1
+    ],
+    [
+     "flight1",
+     1,
+     1.1
+    ],
+    [
+     "flight1",
+     1,
+     1.1
+    ],
+    [
+     "flight1",
+     1,
+     1.1
+    ],
+    [
+     "flight1",
+     1,
+     1.1
+    ],
+    [
+     "flight1",
+     1,
+     1.1
+    ],
+    [
+     "flight1",
+     1,
+     1.1
+    ],
+    [
+     "flight1",
+     1,
+     1.1
+    ],
+    [
+     "flight1",
+     1,
+     1.1
+    ],
+    [
+     "flight1",
+     1,
+     1.1
+    ],
+    [
+     "landing0",
+     [
+      1,
+      0
+     ],
+     1.1
+    ],
+    [
+     "landing0",
+     [
+      -1,
+      0
+     ],
+     0.9
+    ],
+    [
+     "landing0",
+     [
+      0,
+      -1
+     ],
+     0.7
+    ]
+   ],
+   "gaps_flight0": [
+    0.9,
+    5.1
+   ],
+   "zone_start": 1.99,
+   "zone_end": 1.79,
+   "zone_req": 3.4,
+   "headroom": 99,
+   "rails_missing": 0,
+   "door_conflicts": [],
+   "issues": [
+    "tread 0.28",
+    "24 risers in one flight",
+    "wall slot [0.7, 0.9, 1.1]",
+    "start zone 1.99 < 3.40",
+    "end zone 1.79 < 3.40"
+   ]
+  },
+  {
+   "id": "S_PAV_SE_L1",
+   "cls": "public",
+   "w": 3.4,
+   "flights": 2,
+   "riser": 0.167,
+   "tread": 0.28,
+   "2R+T": 0.613,
+   "max_risers": 24,
+   "landings": [
+    [
+     "turn",
+     4.98
+    ]
+   ],
+   "min_wall_gap": 0.7,
+   "slots": [
+    [
+     "flight0",
+     1,
+     0.9
+    ],
+    [
+     "flight0",
+     1,
+     0.9
+    ],
+    [
+     "flight0",
+     1,
+     0.9
+    ],
+    [
+     "flight0",
+     1,
+     0.9
+    ],
+    [
+     "flight0",
+     1,
+     0.9
+    ],
+    [
+     "flight0",
+     1,
+     0.9
+    ],
+    [
+     "flight0",
+     1,
+     0.9
+    ],
+    [
+     "flight0",
+     1,
+     0.9
+    ],
+    [
+     "flight0",
+     1,
+     0.9
+    ],
+    [
+     "flight0",
+     1,
+     0.9
+    ],
+    [
+     "flight0",
+     1,
+     0.9
+    ],
+    [
+     "flight0",
+     1,
+     0.9
+    ],
+    [
+     "flight1",
+     -1,
+     1.1
+    ],
+    [
+     "flight1",
+     -1,
+     1.1
+    ],
+    [
+     "flight1",
+     -1,
+     1.1
+    ],
+    [
+     "flight1",
+     -1,
+     1.1
+    ],
+    [
+     "flight1",
+     -1,
+     1.1
+    ],
+    [
+     "flight1",
+     -1,
+     1.1
+    ],
+    [
+     "flight1",
+     -1,
+     1.1
+    ],
+    [
+     "flight1",
+     -1,
+     1.1
+    ],
+    [
+     "flight1",
+     -1,
+     1.1
+    ],
+    [
+     "flight1",
+     -1,
+     1.1
+    ],
+    [
+     "flight1",
+     -1,
+     1.1
+    ],
+    [
+     "flight1",
+     -1,
+     1.1
+    ],
+    [
+     "landing0",
+     [
+      1,
+      0
+     ],
+     0.9
+    ],
+    [
+     "landing0",
+     [
+      -1,
+      0
+     ],
+     1.1
+    ],
+    [
+     "landing0",
+     [
+      0,
+      -1
+     ],
+     0.7
+    ]
+   ],
+   "gaps_flight0": [
+    0.9,
+    5.1
+   ],
+   "zone_start": 1.99,
+   "zone_end": 1.99,
+   "zone_req": 3.4,
+   "headroom": 7.53,
+   "rails_missing": 0,
+   "door_conflicts": [],
+   "issues": [
+    "tread 0.28",
+    "24 risers in one flight",
+    "wall slot [0.7, 0.9, 1.1]",
+    "start zone 1.99 < 3.40",
+    "end zone 1.99 < 3.40"
+   ]
+  },
+  {
+   "id": "S_PAV_SE_L2",
+   "cls": "public",
+   "w": 3.4,
+   "flights": 2,
+   "riser": 0.167,
+   "tread": 0.28,
+   "2R+T": 0.613,
+   "max_risers": 24,
+   "landings": [
+    [
+     "turn",
+     4.98
+    ]
+   ],
+   "min_wall_gap": 0.7,
+   "slots": [
+    [
+     "flight0",
+     1,
+     0.9
+    ],
+    [
+     "flight0",
+     1,
+     0.9
+    ],
+    [
+     "flight0",
+     1,
+     0.9
+    ],
+    [
+     "flight0",
+     1,
+     0.9
+    ],
+    [
+     "flight0",
+     1,
+     0.9
+    ],
+    [
+     "flight0",
+     1,
+     0.9
+    ],
+    [
+     "flight0",
+     1,
+     0.9
+    ],
+    [
+     "flight0",
+     1,
+     0.9
+    ],
+    [
+     "flight0",
+     1,
+     0.9
+    ],
+    [
+     "flight0",
+     1,
+     0.9
+    ],
+    [
+     "flight0",
+     1,
+     0.9
+    ],
+    [
+     "flight0",
+     1,
+     0.9
+    ],
+    [
+     "flight1",
+     -1,
+     1.1
+    ],
+    [
+     "flight1",
+     -1,
+     1.1
+    ],
+    [
+     "flight1",
+     -1,
+     1.1
+    ],
+    [
+     "flight1",
+     -1,
+     1.1
+    ],
+    [
+     "flight1",
+     -1,
+     1.1
+    ],
+    [
+     "flight1",
+     -1,
+     1.1
+    ],
+    [
+     "flight1",
+     -1,
+     1.1
+    ],
+    [
+     "flight1",
+     -1,
+     1.1
+    ],
+    [
+     "flight1",
+     -1,
+     1.1
+    ],
+    [
+     "flight1",
+     -1,
+     1.1
+    ],
+    [
+     "flight1",
+     -1,
+     1.1
+    ],
+    [
+     "flight1",
+     -1,
+     1.1
+    ],
+    [
+     "landing0",
+     [
+      1,
+      0
+     ],
+     0.9
+    ],
+    [
+     "landing0",
+     [
+      -1,
+      0
+     ],
+     1.1
+    ],
+    [
+     "landing0",
+     [
+      0,
+      -1
+     ],
+     0.7
+    ]
+   ],
+   "gaps_flight0": [
+    0.9,
+    5.1
+   ],
+   "zone_start": 1.99,
+   "zone_end": 1.99,
+   "zone_req": 3.4,
+   "headroom": 7.53,
+   "rails_missing": 0,
+   "door_conflicts": [],
+   "issues": [
+    "tread 0.28",
+    "24 risers in one flight",
+    "wall slot [0.7, 0.9, 1.1]",
+    "start zone 1.99 < 3.40",
+    "end zone 1.99 < 3.40"
+   ]
+  },
+  {
+   "id": "S_PAV_SE_L3",
+   "cls": "public",
+   "w": 3.4,
+   "flights": 2,
+   "riser": 0.167,
+   "tread": 0.28,
+   "2R+T": 0.613,
+   "max_risers": 24,
+   "landings": [
+    [
+     "turn",
+     4.98
+    ]
+   ],
+   "min_wall_gap": 0.7,
+   "slots": [
+    [
+     "flight0",
+     1,
+     0.9
+    ],
+    [
+     "flight0",
+     1,
+     0.9
+    ],
+    [
+     "flight0",
+     1,
+     0.9
+    ],
+    [
+     "flight0",
+     1,
+     0.9
+    ],
+    [
+     "flight0",
+     1,
+     0.9
+    ],
+    [
+     "flight0",
+     1,
+     0.9
+    ],
+    [
+     "flight0",
+     1,
+     0.9
+    ],
+    [
+     "flight0",
+     1,
+     0.9
+    ],
+    [
+     "flight0",
+     1,
+     0.9
+    ],
+    [
+     "flight0",
+     1,
+     0.9
+    ],
+    [
+     "flight0",
+     1,
+     0.9
+    ],
+    [
+     "flight0",
+     1,
+     0.9
+    ],
+    [
+     "flight1",
+     -1,
+     1.1
+    ],
+    [
+     "flight1",
+     -1,
+     1.1
+    ],
+    [
+     "flight1",
+     -1,
+     1.1
+    ],
+    [
+     "flight1",
+     -1,
+     1.1
+    ],
+    [
+     "flight1",
+     -1,
+     1.1
+    ],
+    [
+     "flight1",
+     -1,
+     1.1
+    ],
+    [
+     "flight1",
+     -1,
+     1.1
+    ],
+    [
+     "flight1",
+     -1,
+     1.1
+    ],
+    [
+     "flight1",
+     -1,
+     1.1
+    ],
+    [
+     "flight1",
+     -1,
+     1.1
+    ],
+    [
+     "flight1",
+     -1,
+     1.1
+    ],
+    [
+     "flight1",
+     -1,
+     1.1
+    ],
+    [
+     "landing0",
+     [
+      1,
+      0
+     ],
+     0.9
+    ],
+    [
+     "landing0",
+     [
+      -1,
+      0
+     ],
+     1.1
+    ],
+    [
+     "landing0",
+     [
+      0,
+      -1
+     ],
+     0.7
+    ]
+   ],
+   "gaps_flight0": [
+    0.9,
+    5.1
+   ],
+   "zone_start": 1.99,
+   "zone_end": 1.79,
+   "zone_req": 3.4,
+   "headroom": 99,
+   "rails_missing": 0,
+   "door_conflicts": [],
+   "issues": [
+    "tread 0.28",
+    "24 risers in one flight",
+    "wall slot [0.7, 0.9, 1.1]",
+    "start zone 1.99 < 3.40",
+    "end zone 1.79 < 3.40"
+   ]
+  }
+ ],
+ "holes": []
+}

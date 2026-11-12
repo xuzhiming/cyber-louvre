@@ -1,0 +1,14 @@
+NEGATIVE CONTROL (walls without openings): doors reported cut = 3 of 146
+walk paths ok 5 of 164
+NEGATIVE CONTROL (old long B1 light strips): fixture violations = 2 | e.g. [{'space': 'B1_HALL', 'bbox': [-44.8, -48.35, -0.45, 44.8, -47.65, -0.39], 'why': ['intersects stair volume / headroom', 'within 0.5 m of a stair opening / doorway']}, {'space': 'B1_SPINE', 'bbox': [-0.35, -36.8, -0.45, 0.35, 22.8, -0.39], 'why': ['intersects stair volume / headroom', 'within 0.5 m of a stair opening / doorway']}]
+STAIR RULES control (current design): violations = 0
+NEGATIVE CONTROL (old lobby stair + pavilion stair leg 0.5 m off the wall): flagged 2 stairs:
+    ('S_GR1W', ['48 risers in one flight', 'start zone 0.59 < 3.50', 'end zone 0.30 < 3.50'])
+    ('S_PAV_NW_L1', ['wall slot [0.55]'])
+NEGATIVE CONTROL (closed mansard cap over the corner-tower stairs): flagged 4 of 20 stairs:
+    ('S_PAV_NW_L3', 0.17, (-71.8, 48.7, 23.83))
+    ('S_PAV_NE_L3', 0.17, (71.8, 48.7, 23.83))
+    ('S_PAV_SW_L3', 0.17, (-71.8, -48.7, 23.83))
+    ('S_PAV_SE_L3', 0.17, (71.8, -48.7, 23.83))
+NEGATIVE CONTROL (windows without wall openings): open_through 2 of 984 | e.g. [('y', 34, -78.1, 3.4), ('y', 34, -78.1, 5.7)]
+NEGATIVE CONTROL (solid dormers / gable): panes ok 746 of 847 | roof panes [total, ok]: {'gable': [1, 0], 'dormer_tower': [40, 0], 'dormer_wing': [36, 0], 'dormer_nwing': [24, 0]}

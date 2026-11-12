@@ -1,0 +1,790 @@
+{
+ "rows": [
+  {
+   "id": "S_PM",
+   "cls": "public",
+   "w": 3.4,
+   "flights": 2,
+   "riser": 0.167,
+   "tread": 0.3,
+   "2R+T": 0.633,
+   "max_risers": 18,
+   "landings": [
+    [
+     "straight",
+     3.0
+    ]
+   ],
+   "min_wall_gap": 11.2,
+   "slots": [],
+   "gaps_flight0": [
+    99
+   ],
+   "zone_start": 15.0,
+   "zone_end": 15.0,
+   "zone_req": 3.4,
+   "headroom": 2.6,
+   "rails_missing": 0,
+   "door_conflicts": [],
+   "issues": []
+  },
+  {
+   "id": "S_PSL",
+   "cls": "public",
+   "w": 2.0,
+   "flights": 2,
+   "riser": 0.167,
+   "tread": 0.3,
+   "2R+T": 0.633,
+   "max_risers": 18,
+   "landings": [
+    [
+     "turn",
+     2.4
+    ]
+   ],
+   "min_wall_gap": 1.54,
+   "slots": [],
+   "gaps_flight0": [
+    1.54,
+    1.83,
+    2.11,
+    2.4,
+    2.45,
+    5.4,
+    6.34,
+    6.63,
+    6.91,
+    7.2,
+    7.25,
+    99
+   ],
+   "zone_start": 3.7,
+   "zone_end": 4.79,
+   "zone_req": 2.0,
+   "headroom": 2.6,
+   "rails_missing": 0,
+   "door_conflicts": [],
+   "issues": []
+  },
+  {
+   "id": "S_PSR",
+   "cls": "public",
+   "w": 2.0,
+   "flights": 2,
+   "riser": 0.167,
+   "tread": 0.3,
+   "2R+T": 0.633,
+   "max_risers": 18,
+   "landings": [
+    [
+     "turn",
+     2.4
+    ]
+   ],
+   "min_wall_gap": 1.54,
+   "slots": [],
+   "gaps_flight0": [
+    1.54,
+    1.83,
+    2.11,
+    2.4,
+    2.45,
+    5.4,
+    6.34,
+    6.63,
+    6.91,
+    7.2,
+    7.25,
+    99
+   ],
+   "zone_start": 3.7,
+   "zone_end": 4.79,
+   "zone_req": 2.0,
+   "headroom": 2.6,
+   "rails_missing": 0,
+   "door_conflicts": [],
+   "issues": []
+  },
+  {
+   "id": "S_LOBBY",
+   "cls": "public",
+   "w": 3.4,
+   "flights": 2,
+   "riser": 0.167,
+   "tread": 0.3,
+   "2R+T": 0.633,
+   "max_risers": 18,
+   "landings": [
+    [
+     "straight",
+     3.0
+    ]
+   ],
+   "min_wall_gap": 3.1,
+   "slots": [],
+   "gaps_flight0": [
+    3.1
+   ],
+   "zone_start": 15.0,
+   "zone_end": 15.0,
+   "zone_req": 3.4,
+   "headroom": 2.6,
+   "rails_missing": 0,
+   "door_conflicts": [],
+   "issues": []
+  },
+  {
+   "id": "S_GR1W",
+   "cls": "grand",
+   "w": 3.2,
+   "flights": 3,
+   "riser": 0.167,
+   "tread": 0.3,
+   "2R+T": 0.633,
+   "max_risers": 16,
+   "landings": [
+    [
+     "straight",
+     1.8
+    ],
+    [
+     "straight",
+     1.8
+    ]
+   ],
+   "min_wall_gap": 1.3,
+   "slots": [],
+   "gaps_flight0": [
+    1.3,
+    99
+   ],
+   "zone_start": 3.29,
+   "zone_end": 6.26,
+   "zone_req": 3.2,
+   "headroom": 3.55,
+   "rails_missing": 0,
+   "door_conflicts": [],
+   "issues": []
+  },
+  {
+   "id": "S_GR2W",
+   "cls": "grand",
+   "w": 3.2,
+   "flights": 4,
+   "riser": 0.167,
+   "tread": 0.3,
+   "2R+T": 0.633,
+   "max_risers": 12,
+   "landings": [
+    [
+     "straight",
+     1.2
+    ],
+    [
+     "turn",
+     3.2
+    ],
+    [
+     "straight",
+     1.2
+    ]
+   ],
+   "min_wall_gap": 5.0,
+   "slots": [],
+   "gaps_flight0": [
+    5.4,
+    99
+   ],
+   "zone_start": 10.96,
+   "zone_end": 10.96,
+   "zone_req": 3.2,
+   "headroom": 15.6,
+   "rails_missing": 0,
+   "door_conflicts": [],
+   "issues": []
+  },
+  {
+   "id": "S_GR1E",
+   "cls": "grand",
+   "w": 3.2,
+   "flights": 3,
+   "riser": 0.167,
+   "tread": 0.3,
+   "2R+T": 0.633,
+   "max_risers": 16,
+   "landings": [
+    [
+     "straight",
+     1.8
+    ],
+    [
+     "straight",
+     1.8
+    ]
+   ],
+   "min_wall_gap": 1.3,
+   "slots": [],
+   "gaps_flight0": [
+    1.3,
+    99
+   ],
+   "zone_start": 3.29,
+   "zone_end": 6.26,
+   "zone_req": 3.2,
+   "headroom": 3.55,
+   "rails_missing": 0,
+   "door_conflicts": [],
+   "issues": []
+  },
+  {
+   "id": "S_GR2E",
+   "cls": "grand",
+   "w": 3.2,
+   "flights": 4,
+   "riser": 0.167,
+   "tread": 0.3,
+   "2R+T": 0.633,
+   "max_risers": 12,
+   "landings": [
+    [
+     "straight",
+     1.2
+    ],
+    [
+     "turn",
+     3.2
+    ],
+    [
+     "straight",
+     1.2
+    ]
+   ],
+   "min_wall_gap": 5.0,
+   "slots": [],
+   "gaps_flight0": [
+    5.4,
+    99
+   ],
+   "zone_start": 10.96,
+   "zone_end": 10.96,
+   "zone_req": 3.2,
+   "headroom": 15.6,
+   "rails_missing": 0,
+   "door_conflicts": [],
+   "issues": []
+  },
+  {
+   "id": "S_PAV_NW_L1",
+   "cls": "public",
+   "w": 3.0,
+   "flights": 4,
+   "riser": 0.167,
+   "tread": 0.3,
+   "2R+T": 0.633,
+   "max_risers": 12,
+   "landings": [
+    [
+     "straight",
+     1.2
+    ],
+    [
+     "turn",
+     3.0
+    ],
+    [
+     "straight",
+     1.2
+    ]
+   ],
+   "min_wall_gap": 0.0,
+   "slots": [],
+   "gaps_flight0": [
+    0.05,
+    6.35
+   ],
+   "zone_start": 2.99,
+   "zone_end": 2.99,
+   "zone_req": 3.0,
+   "headroom": 7.53,
+   "rails_missing": 0,
+   "door_conflicts": [],
+   "issues": []
+  },
+  {
+   "id": "S_PAV_NW_L2",
+   "cls": "public",
+   "w": 3.0,
+   "flights": 4,
+   "riser": 0.167,
+   "tread": 0.3,
+   "2R+T": 0.633,
+   "max_risers": 12,
+   "landings": [
+    [
+     "straight",
+     1.2
+    ],
+    [
+     "turn",
+     3.0
+    ],
+    [
+     "straight",
+     1.2
+    ]
+   ],
+   "min_wall_gap": 0.0,
+   "slots": [],
+   "gaps_flight0": [
+    0.05,
+    6.35
+   ],
+   "zone_start": 2.99,
+   "zone_end": 2.99,
+   "zone_req": 3.0,
+   "headroom": 7.53,
+   "rails_missing": 0,
+   "door_conflicts": [],
+   "issues": []
+  },
+  {
+   "id": "S_PAV_NW_L3",
+   "cls": "public",
+   "w": 3.0,
+   "flights": 4,
+   "riser": 0.167,
+   "tread": 0.3,
+   "2R+T": 0.633,
+   "max_risers": 12,
+   "landings": [
+    [
+     "straight",
+     1.2
+    ],
+    [
+     "turn",
+     3.0
+    ],
+    [
+     "straight",
+     1.2
+    ]
+   ],
+   "min_wall_gap": 0.0,
+   "slots": [],
+   "gaps_flight0": [
+    0.05,
+    6.35
+   ],
+   "zone_start": 2.99,
+   "zone_end": 3.19,
+   "zone_req": 3.0,
+   "headroom": 3.6,
+   "rails_missing": 0,
+   "door_conflicts": [],
+   "issues": []
+  },
+  {
+   "id": "S_PAV_NE_L1",
+   "cls": "public",
+   "w": 3.0,
+   "flights": 4,
+   "riser": 0.167,
+   "tread": 0.3,
+   "2R+T": 0.633,
+   "max_risers": 12,
+   "landings": [
+    [
+     "straight",
+     1.2
+    ],
+    [
+     "turn",
+     3.0
+    ],
+    [
+     "straight",
+     1.2
+    ]
+   ],
+   "min_wall_gap": 0.0,
+   "slots": [],
+   "gaps_flight0": [
+    0.05,
+    6.35
+   ],
+   "zone_start": 2.99,
+   "zone_end": 2.99,
+   "zone_req": 3.0,
+   "headroom": 7.53,
+   "rails_missing": 0,
+   "door_conflicts": [],
+   "issues": []
+  },
+  {
+   "id": "S_PAV_NE_L2",
+   "cls": "public",
+   "w": 3.0,
+   "flights": 4,
+   "riser": 0.167,
+   "tread": 0.3,
+   "2R+T": 0.633,
+   "max_risers": 12,
+   "landings": [
+    [
+     "straight",
+     1.2
+    ],
+    [
+     "turn",
+     3.0
+    ],
+    [
+     "straight",
+     1.2
+    ]
+   ],
+   "min_wall_gap": 0.0,
+   "slots": [],
+   "gaps_flight0": [
+    0.05,
+    6.35
+   ],
+   "zone_start": 2.99,
+   "zone_end": 2.99,
+   "zone_req": 3.0,
+   "headroom": 7.53,
+   "rails_missing": 0,
+   "door_conflicts": [],
+   "issues": []
+  },
+  {
+   "id": "S_PAV_NE_L3",
+   "cls": "public",
+   "w": 3.0,
+   "flights": 4,
+   "riser": 0.167,
+   "tread": 0.3,
+   "2R+T": 0.633,
+   "max_risers": 12,
+   "landings": [
+    [
+     "straight",
+     1.2
+    ],
+    [
+     "turn",
+     3.0
+    ],
+    [
+     "straight",
+     1.2
+    ]
+   ],
+   "min_wall_gap": 0.0,
+   "slots": [],
+   "gaps_flight0": [
+    0.05,
+    6.35
+   ],
+   "zone_start": 2.99,
+   "zone_end": 3.19,
+   "zone_req": 3.0,
+   "headroom": 3.6,
+   "rails_missing": 0,
+   "door_conflicts": [],
+   "issues": []
+  },
+  {
+   "id": "S_PAV_SW_L1",
+   "cls": "public",
+   "w": 3.0,
+   "flights": 4,
+   "riser": 0.167,
+   "tread": 0.3,
+   "2R+T": 0.633,
+   "max_risers": 12,
+   "landings": [
+    [
+     "straight",
+     1.2
+    ],
+    [
+     "turn",
+     3.0
+    ],
+    [
+     "straight",
+     1.2
+    ]
+   ],
+   "min_wall_gap": 0.0,
+   "slots": [],
+   "gaps_flight0": [
+    0.05,
+    6.35
+   ],
+   "zone_start": 2.99,
+   "zone_end": 2.99,
+   "zone_req": 3.0,
+   "headroom": 7.53,
+   "rails_missing": 0,
+   "door_conflicts": [],
+   "issues": []
+  },
+  {
+   "id": "S_PAV_SW_L2",
+   "cls": "public",
+   "w": 3.0,
+   "flights": 4,
+   "riser": 0.167,
+   "tread": 0.3,
+   "2R+T": 0.633,
+   "max_risers": 12,
+   "landings": [
+    [
+     "straight",
+     1.2
+    ],
+    [
+     "turn",
+     3.0
+    ],
+    [
+     "straight",
+     1.2
+    ]
+   ],
+   "min_wall_gap": 0.0,
+   "slots": [],
+   "gaps_flight0": [
+    0.05,
+    6.35
+   ],
+   "zone_start": 2.99,
+   "zone_end": 2.99,
+   "zone_req": 3.0,
+   "headroom": 7.53,
+   "rails_missing": 0,
+   "door_conflicts": [],
+   "issues": []
+  },
+  {
+   "id": "S_PAV_SW_L3",
+   "cls": "public",
+   "w": 3.0,
+   "flights": 4,
+   "riser": 0.167,
+   "tread": 0.3,
+   "2R+T": 0.633,
+   "max_risers": 12,
+   "landings": [
+    [
+     "straight",
+     1.2
+    ],
+    [
+     "turn",
+     3.0
+    ],
+    [
+     "straight",
+     1.2
+    ]
+   ],
+   "min_wall_gap": 0.0,
+   "slots": [],
+   "gaps_flight0": [
+    0.05,
+    6.35
+   ],
+   "zone_start": 2.99,
+   "zone_end": 3.19,
+   "zone_req": 3.0,
+   "headroom": 3.6,
+   "rails_missing": 0,
+   "door_conflicts": [],
+   "issues": []
+  },
+  {
+   "id": "S_PAV_SE_L1",
+   "cls": "public",
+   "w": 3.0,
+   "flights": 4,
+   "riser": 0.167,
+   "tread": 0.3,
+   "2R+T": 0.633,
+   "max_risers": 12,
+   "landings": [
+    [
+     "straight",
+     1.2
+    ],
+    [
+     "turn",
+     3.0
+    ],
+    [
+     "straight",
+     1.2
+    ]
+   ],
+   "min_wall_gap": 0.0,
+   "slots": [],
+   "gaps_flight0": [
+    0.05,
+    6.35
+   ],
+   "zone_start": 2.99,
+   "zone_end": 2.99,
+   "zone_req": 3.0,
+   "headroom": 7.53,
+   "rails_missing": 0,
+   "door_conflicts": [],
+   "issues": []
+  },
+  {
+   "id": "S_PAV_SE_L2",
+   "cls": "public",
+   "w": 3.0,
+   "flights": 4,
+   "riser": 0.167,
+   "tread": 0.3,
+   "2R+T": 0.633,
+   "max_risers": 12,
+   "landings": [
+    [
+     "straight",
+     1.2
+    ],
+    [
+     "turn",
+     3.0
+    ],
+    [
+     "straight",
+     1.2
+    ]
+   ],
+   "min_wall_gap": 0.0,
+   "slots": [],
+   "gaps_flight0": [
+    0.05,
+    6.35
+   ],
+   "zone_start": 2.99,
+   "zone_end": 2.99,
+   "zone_req": 3.0,
+   "headroom": 7.53,
+   "rails_missing": 0,
+   "door_conflicts": [],
+   "issues": []
+  },
+  {
+   "id": "S_PAV_SE_L3",
+   "cls": "public",
+   "w": 3.0,
+   "flights": 4,
+   "riser": 0.167,
+   "tread": 0.3,
+   "2R+T": 0.633,
+   "max_risers": 12,
+   "landings": [
+    [
+     "straight",
+     1.2
+    ],
+    [
+     "turn",
+     3.0
+    ],
+    [
+     "straight",
+     1.2
+    ]
+   ],
+   "min_wall_gap": 0.0,
+   "slots": [],
+   "gaps_flight0": [
+    0.05,
+    6.35
+   ],
+   "zone_start": 2.99,
+   "zone_end": 3.19,
+   "zone_req": 3.0,
+   "headroom": 3.6,
+   "rails_missing": 0,
+   "door_conflicts": [],
+   "issues": []
+  }
+ ],
+ "holes": [
+  {
+   "z": 0.0,
+   "rect": [
+    -1.7,
+    -52.25,
+    1.7,
+    -46.9
+   ],
+   "access": "S",
+   "unguarded": []
+  },
+  {
+   "z": 0.0,
+   "rect": [
+    -40.4,
+    -53.25,
+    -38.4,
+    -47.9
+   ],
+   "access": "S",
+   "unguarded": []
+  },
+  {
+   "z": 0.0,
+   "rect": [
+    38.4,
+    -53.25,
+    40.4,
+    -47.9
+   ],
+   "access": "S",
+   "unguarded": []
+  },
+  {
+   "z": 0.0,
+   "rect": [
+    -1.7,
+    15.15,
+    1.7,
+    20.8
+   ],
+   "access": "N",
+   "unguarded": []
+  },
+  {
+   "z": 8.0,
+   "rect": [
+    -12.3,
+    24.65,
+    -9.1,
+    29.7
+   ],
+   "access": "N",
+   "unguarded": []
+  },
+  {
+   "z": 8.0,
+   "rect": [
+    9.1,
+    24.65,
+    12.3,
+    29.7
+   ],
+   "access": "N",
+   "unguarded": []
+  }
+ ]
+}
