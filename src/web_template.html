@@ -512,9 +512,45 @@ function loadArtistCard(it) {
   im.onerror = () => ART.errors.push('avatar ' + w.avatar.slice(0, 80));
   im.src = w.avatar.startsWith('https://image.bidder.art/') ? 'https://wsrv.nl/?url=' + encodeURIComponent(w.avatar.replace(/^https?:\/\//, '')) + '&w=320&h=320&fit=cover&output=webp' : w.avatar;
 }
+// plain-text works (text/plain inscriptions): the text itself on a paper-like card - line breaks kept, long lines wrapped
+// (at spaces / punctuation, else per character - CJK safe), font size auto-fitted (binary search) to fill the frame
+function wrapLines(g, text, maxW) {
+  const out = [];
+  for (const para of String(text).replace(/\r\n?/g, '\n').split('\n')) {
+    if (!para) { out.push(''); continue; }
+    const toks = para.match(/[^\s,，、;；:：)）\]】。.!！?？]+[\s,，、;；:：)）\]】。.!！?？]*|[\s,，、;；:：)）\]】。.!！?？]+/g) || [para];
+    let line = '';
+    for (let t of toks) {
+      if (g.measureText(line + t).width <= maxW) { line += t; continue; }
+      if (line) { out.push(line.replace(/\s+$/, '')); line = ''; }
+      while (g.measureText(t).width > maxW) {          // a single token longer than the line: break per character
+        let k = 1; const ch = [...t]; while (k < ch.length && g.measureText(ch.slice(0, k + 1).join('')).width <= maxW) k++;
+        out.push(ch.slice(0, k).join('')); t = ch.slice(k).join('');
+      }
+      line = t.replace(/^\s+/, '');
+    }
+    out.push(line);
+  }
+  return out;
+}
+function plainTextTex(w) {
+  const W = 2048, H = 1536, pad = 70, foot = 70;
+  return canvasTex((g) => {
+    g.fillStyle = '#f4f0e6'; g.fillRect(0, 0, W, H); g.strokeStyle = 'rgba(60,50,40,.25)'; g.lineWidth = 4; g.strokeRect(24, 24, W - 48, H - 48);
+    const fam = '"Noto Sans Mono CJK SC","Sarasa Mono SC",Menlo,Consolas,"DejaVu Sans Mono","Microsoft YaHei",monospace';
+    const fit = (px) => { g.font = px + 'px ' + fam; const L = wrapLines(g, w.text || '', W - 2 * pad); return [L, L.length * px * 1.25 <= H - 2 * pad - foot]; };
+    let lo = 4, hi = 120, best = null;
+    while (hi - lo > 0.25) { const m = (lo + hi) / 2, r = fit(m); if (r[1]) { lo = m; best = r[0]; } else hi = m; }
+    if (!best) best = fit(lo)[0];
+    g.font = lo + 'px ' + fam; g.fillStyle = '#1d1a16'; g.textBaseline = 'top';
+    best.forEach((l, i) => g.fillText(l, pad, pad + i * lo * 1.25));
+    g.font = '30px system-ui,"Microsoft YaHei",sans-serif'; g.fillStyle = 'rgba(40,35,30,.6)'; g.textBaseline = 'alphabetic';
+    g.fillText('纯文本作品 · text/plain · ' + [...(w.title || '')].slice(0, 40).join(''), pad, H - pad + 10);
+  }, W, H);
+}
 function labelTex(w) {
   return canvasTex((g, W, H) => { g.fillStyle = 'rgba(10,8,20,.92)'; g.fillRect(0, 0, W, H);
-    g.fillStyle = '#f2ecff'; g.font = '600 34px system-ui,"Microsoft YaHei",sans-serif'; g.fillText(([...(w.title || '')].slice(0, 26).join('')) + ({ video: '  ▶', audio: '  ♪', text: '  ❝' }[w.media] || ''), 18, 42);
+    g.fillStyle = '#f2ecff'; g.font = '600 34px system-ui,"Microsoft YaHei",sans-serif'; g.fillText(([...(w.title || '')].slice(0, 26).join('')) + ({ video: '  ▶', audio: '  ♪', text: '  ❝', plaintext: '  ¶' }[w.media] || ''), 18, 42);
     g.fillStyle = '#b9a8e6'; g.font = '26px system-ui,"Microsoft YaHei",sans-serif'; g.fillText(w.media === 'artist' ? '艺术家 · ' + (w.n || 0) + ' 件作品   ·   按 E 打开主页' : [...(w.artist || '')].slice(0, 40).join('') + '   ·   按 E 查看详情', 18, 82); }, 1024, 100);
 }
 function fitPlane(it, aspect) {
@@ -609,17 +645,43 @@ function tickAnim(it, now) {
 function stopAnim(it) { if (!it.anim) return; try { it.anim.dec.close(); } catch (_) {} it.anim = null; ART.anims--; }
 let HLS = null;
 async function hlsLib() { if (HLS) return HLS; ART.req.hlsjs++; HLS = (await import('https://cdn.jsdelivr.net/npm/hls.js@1.5.17/dist/hls.mjs')).default; return HLS; }
+// direct (non-HLS) video files: bidder MP4s live on image.bidder.art, which sends no CORS header -> a cross-origin <video>
+// taints WebGL, so they go through the same-origin /media Pages Function (HTTP Range pass-through).  HEVC sources get an
+// H.264 transcode shipped with the site (video_local), HEVC itself is tried only where the browser says it can decode it.
+let HEVC_OK = null;
+function directVideoSources(w) {
+  if (!w.video || w.video_id) return [];
+  const c = [], web = /^https?:$/.test(location.protocol);
+  if (w.video_local && web) c.push(new URL(w.video_local, location.href).href);
+  if (HEVC_OK === null) HEVC_OK = !!document.createElement('video').canPlayType('video/mp4; codecs="hvc1.1.6.L120.90"');
+  const hevcOK = w.video_codec !== 'hevc' || HEVC_OK;
+  if (w.video.startsWith('https://image.bidder.art/')) { if (web && w.video_path && hevcOK) c.push(location.origin + '/media' + w.video_path); }
+  else if (hevcOK) c.push(w.video);
+  return c;
+}
+const hasVideo = (w) => !!(w && (w.video_id || directVideoSources(w).length));
 async function startVideo(it) {
-  const w = it.work; if (!w.video_id || it.video || ART.videos >= ART.MAXVID) return;
+  const w = it.work; if (!hasVideo(w) || it.video || it.vfail || ART.videos >= ART.MAXVID) return;
   ART.videos++; it.vstate = 'starting';
   const v = document.createElement('video'); v.muted = true; v.loop = true; v.playsInline = true; v.crossOrigin = 'anonymous'; v.preload = 'auto';
   it.video = v; ART.req.video++;
+  const onData = () => { if (it.video !== v) return; const t = new THREE.VideoTexture(v); t.colorSpace = THREE.SRGBColorSpace; setMediaTex(it, t, (v.videoWidth / v.videoHeight) || w.aspect || 16 / 9, 'video'); it.vstate = 'playing'; };
   try {
-    const H = await hlsLib();
-    if (!it.video) return;
-    if (H.isSupported()) { it.hls = new H({ maxBufferLength: 10, capLevelToPlayerSize: false, startLevel: 0 }); it.hls.loadSource(w.video); it.hls.attachMedia(v); }
-    else v.src = w.video;
-    v.addEventListener('loadeddata', () => { if (!it.video) return; const t = new THREE.VideoTexture(v); t.colorSpace = THREE.SRGBColorSpace; setMediaTex(it, t, (v.videoWidth / v.videoHeight) || w.aspect || 16 / 9, 'video'); it.vstate = 'playing'; }, { once: true });
+    if (w.video_id) {
+      const H = await hlsLib();
+      if (it.video !== v) return;
+      if (H.isSupported()) {
+        it.hls = new H({ maxBufferLength: 10, capLevelToPlayerSize: false, startLevel: 0 }); it.hls.loadSource(w.video); it.hls.attachMedia(v);
+        it.hls.on(H.Events.ERROR, (_, d) => { if (d && d.fatal) { ART.errors.push('hls ' + w.id + ' ' + d.details); it.vfail = true; stopVideo(it); } });
+      } else v.src = w.video;
+    } else {
+      const src = directVideoSources(w); let k = 0;
+      const next = () => { if (it.video !== v) return; if (k >= src.length) { ART.errors.push('video ' + w.id + ' no playable source'); it.vfail = true; stopVideo(it); return; }
+        it.vsrc = src[k]; ART.log.push({ t: +performance.now().toFixed(0), slot: it.slot.id, url: src[k].slice(0, 120), video: 1 }); v.src = src[k++]; v.play().catch(() => {}); };
+      v.addEventListener('error', () => { if (it.video !== v) return; ART.errors.push('video ' + w.id + ' ' + (v.error && v.error.code) + ' ' + (it.vsrc || '').slice(0, 80)); next(); });
+      next();
+    }
+    v.addEventListener('loadeddata', onData, { once: true });
     await v.play().catch(() => {});
   } catch (e) { ART.errors.push('video ' + w.id + ' ' + e); stopVideo(it); }
 }
@@ -630,13 +692,14 @@ function stopVideo(it) {
   if (it.kind === 'video') { it.kind = null; it.state = 'idle'; }      // poster is re-loaded by the scheduler
 }
 function unloadItem(it) {
-  stopVideo(it); stopAnim(it); it.tok = (it.tok || 0) + 1; dropLabel(it);
+  stopVideo(it); stopAnim(it); it.vfail = false; it.tok = (it.tok || 0) + 1; dropLabel(it);
   if (it.state !== 'idle' || it.kind !== 'reserved') { it.state = 'idle'; setMediaTex(it, reservedTex(), it.slot.inner[0] / it.slot.inner[1], 'reserved'); }
 }
 function loadItem(it) {
   const w = it.work; ensureLabel(it);
   if (!w) { it.state = 'empty'; return; }
   if (w.media === 'text') { it.state = 'loaded'; setMediaTex(it, textCardTex(w), 4 / 3, 'card'); return; }
+  if (w.media === 'plaintext') { it.state = 'loaded'; setMediaTex(it, plainTextTex(w), 4 / 3, 'plaintext'); return; }
   if (w.media === 'artist') { loadArtistCard(it); return; }
   if (w.media === 'image' && isAnimCandidate(w) && typeof ImageDecoder !== 'undefined' && ART.anims < ART.MAXANIM) { loadAnimated(it); return; }
   const urls = w.media === 'video' && w.thumbnail && w.thumbnail.startsWith('https://videodelivery.net/') ? [w.thumbnail].concat(imageCandidates(w)) : imageCandidates(w);
@@ -647,7 +710,7 @@ function updateArt() {
   if (!ART.ready) return;
   const eye = camera.position, now = performance.now();
   camera.updateMatrixWorld(); ART.mat4.multiplyMatrices(camera.projectionMatrix, camera.matrixWorldInverse); ART.frustum.setFromProjectionMatrix(ART.mat4);
-  const cand = [];
+  const cand = [], vcand = [];
   for (const it of ART.items) {
     const d = eye.distanceTo(it.center), sameFloor = Math.abs(eye.y - it.center.y) < 5.5;
     const facing = it.normal.dot(new THREE.Vector3().subVectors(eye, it.center)) > 0;
@@ -655,10 +718,23 @@ function updateArt() {
     if (it.video && (d > ART.VFAR || !facing)) stopVideo(it);
     const inView = d < ART.NEAR && facing && ART.frustum.intersectsSphere(_sph.set(it.center, 1.3));
     if (it.anim && inView) tickAnim(it, now);          // animations only advance while visible
+    it.vd = d; it.inView = inView;
     if (inView) {
       if (it.state === 'idle') cand.push([d, it]);
-      else if (it.state === 'loaded' && it.work && it.work.video_id && !it.video && d < ART.VNEAR) startVideo(it);
+      else if (it.state === 'loaded' && !it.video && !it.vfail && d < ART.VNEAR && hasVideo(it.work)) vcand.push(it);
     }
+  }
+  // video streams (max MAXVID): nearest in-view first; when the cap is full, a nearer in-view video takes over the stream of
+  // a playing one that is out of view or clearly (>1.5 m) farther - so the closest video never stays a still thumbnail
+  vcand.sort((a, b) => a.vd - b.vd);
+  for (const it of vcand) {
+    if (ART.videos >= ART.MAXVID) {
+      const playing = ART.items.filter(o => o.video).sort((a, b) => (a.inView - b.inView) || (b.vd - a.vd));
+      const victim = playing[0];
+      if (!victim || (victim.inView && victim.vd < it.vd + 1.5)) break;
+      stopVideo(victim); ART.preempted = (ART.preempted || 0) + 1;
+    }
+    startVideo(it);
   }
   cand.sort((a, b) => a[0] - b[0]);
   for (const [, it] of cand) { if (ART.loading >= ART.MAXLOAD) break; loadItem(it); }
@@ -674,7 +750,8 @@ const esc = (s) => String(s ?? '').replace(/[&<>"]/g, c => ({ '&': '&amp;', '<':
 function showInfo(it) {
   const w = it.work, o = $('artinfo'); if (!w) return;
   o.innerHTML = `<div class="t">${esc(w.title)}</div><div class="a">${esc(w.artist)}</div>` +
-    `<div class="m">${esc({ image: '图片', video: '视频', audio: '音频', text: '文本 / 语录', artist: '艺术家 · ' + (w.n || 0) + ' 件作品' }[w.media] || w.media)}${w.edition ? ' · ' + esc(w.edition) : ''}${w.price ? ' · 价格 ' + esc(w.price) : ''}</div>` +
+    `<div class="m">${esc({ image: '图片', video: '视频', audio: '音频', text: '文本 / 语录', plaintext: '纯文本', artist: '艺术家 · ' + (w.n || 0) + ' 件作品' }[w.media] || w.media)}${w.edition ? ' · ' + esc(w.edition) : ''}${w.price ? ' · 价格 ' + esc(w.price) : ''}</div>` +
+    (w.media === 'plaintext' && w.text ? `<pre class="q" style="max-height:30vh;overflow:auto;white-space:pre-wrap;word-break:break-all;font-size:11px">${esc(w.text.slice(0, 4000))}${w.text.length > 4000 ? '…' : ''}</pre>` : '') +
     (w.headline ? `<div class="q"><b>${esc(w.headline)}</b></div>` : '') + (w.quote ? `<div class="q">“${esc(w.quote)}”</div>` : '') +
     (w.media === 'artist' ? `<a href="${esc(w.artist_url)}" target="_blank" rel="noopener">打开艺术家主页 ↗</a>` :
       `<a href="${esc(w.detail_url)}" target="_blank" rel="noopener">在 bidder.art 查看作品 ↗</a>` +
@@ -696,6 +773,8 @@ window.__art = { state: () => ({ slots: ART.slots.length, works: ART.works.lengt
     labels: ART.items.filter(i => i.label).length, videos: ART.videos, anims: ART.anims, animating: ART.items.filter(i => i.anim).length, imageDecoder: typeof ImageDecoder !== 'undefined', playing: ART.items.filter(i => i.vstate === 'playing').length,
     kinds: ART.items.reduce((a, i) => (a[i.kind] = (a[i.kind] || 0) + 1, a), {}), req: { ...ART.req }, errors: ART.errors.slice(-10) }),
   log: () => ART.log.slice(),
+  video: (id) => { const it = ART.items.find(i => i.slot.id === id); const v = it && it.video; return v ? { t: +v.currentTime.toFixed(2), paused: v.paused, ready: v.readyState, w: v.videoWidth, h: v.videoHeight, err: v.error && v.error.code, src: (it.vsrc || (it.work && it.work.video) || '').slice(0, 100), vstate: it.vstate } : (it ? { none: true, vfail: !!it.vfail } : null); },
+  videos: () => ART.items.filter(i => i.video).map(i => ({ slot: i.slot.id, d: +(i.vd || 0).toFixed(1), inView: !!i.inView, t: +i.video.currentTime.toFixed(2) })), preempted: () => ART.preempted || 0, cap: (n) => (n ? (ART.MAXVID = n) : ART.MAXVID),
   slot: (id) => { const it = ART.items.find(i => i.slot.id === id); return it && { id, work: it.work && it.work.id, artist: it.work && it.work.artist, media: it.work && it.work.media, state: it.state, kind: it.kind, anim: it.anim ? { frames: it.anim.n, shown: it.anim.frames, i: it.anim.i, src: it.anim.src.slice(0, 90) } : null }; }, nearest: () => { const it = nearestItem(8); return it && { slot: it.slot.id, id: it.work.id, title: it.work.title }; },
   info: () => ART.open && { slot: ART.open.slot.id, href: $('artinfo').querySelector('a').href }, showSlot: (id) => { const it = ART.items.find(i => i.slot.id === id); if (it) showInfo(it); }, hide: hideInfo };
 // ===========================================================

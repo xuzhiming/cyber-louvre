@@ -17,13 +17,15 @@ for a in A:
         wid = r['artworkId']
         if wid in seen: notes.append(('duplicate', wid)); continue
         seen.add(wid)
-        if wid in old: w = dict(old[wid])
+        if wid in old and not (int(r['type']) == 6 and old[wid].get('media') != 'plaintext'): w = dict(old[wid])
         elif r.get('ipfsHash') in by_img:          # same media, re-listed under a new artwork id
             w = dict(by_img[r['ipfsHash']]); notes.append(('same_media_new_id', wid, w['id'])); w['id'] = wid
-        elif int(r['type']) == 6:                  # ordinal text inscription: an RGB pixel array (28x28) -> rendered offline
-            w = dict(id=wid, type=6, media='image', image=IMG + r['cover'], image_path=r['cover'], thumbnail=IMG + r['cover'],
-                     local_thumb='thumbs/%s.png' % wid, width=28, height=28, aspect=1.0, source=r['ipfsHash'])
-            notes.append(('type6_pixel_text_rendered', wid))
+        elif int(r['type']) == 6:                  # plain-text inscription (text/plain): the text itself is shown as a text card (t32u)
+            import urllib.request
+            q = urllib.request.urlopen(urllib.request.Request(r['ipfsHash'], headers={'User-Agent': 'Mozilla/5.0'}), timeout=30)
+            w = dict(id=wid, type=6, media='plaintext', text=q.read().decode('utf-8'), text_source=r['ipfsHash'],
+                     text_content_type=(q.headers.get('Content-Type') or 'text/plain').split(';')[0])
+            notes.append(('type6_plain_text', wid))
         else:
             raise SystemExit('unknown new work %s type %s - normalise it' % (wid, r['type']))
         w.update(title=r['artworkName'], artist=rec['name'], artist_id=aid, artist_url=rec['profile_url'],
