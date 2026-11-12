@@ -30,6 +30,8 @@ for a in A:
             raise SystemExit('unknown new work %s type %s - normalise it' % (wid, r['type']))
         w.update(title=r['artworkName'], artist=rec['name'], artist_id=aid, artist_url=rec['profile_url'],
                  detail_url='https://bidder.art/work/' + wid)
+        if w.get('audio') and w['audio'].startswith(IMG + '/') and not w.get('audio_path'):   # proximity audio via same-origin /media (t33u)
+            w['audio_path'] = w['audio'][len(IMG):]
         works.append(w); rec['n'] += 1
     artists.append(rec)
 dropped = [w['id'] for w in prev['artworks'] if w['id'] not in seen]

@@ -33,6 +33,10 @@
   #artinfo{position:fixed;right:16px;top:70px;width:min(380px,calc(100vw - 32px));z-index:4;display:none;color:#eee;background:rgba(14,10,30,.94);border:1px solid rgba(255,123,240,.6);border-radius:10px;padding:14px 16px;font:14px/1.55 system-ui,"Microsoft YaHei",sans-serif}
   #artinfo .t{font-size:18px;font-weight:700;color:#ffb6f6}#artinfo .a{color:#c9b8ff;margin-bottom:6px}#artinfo .m{color:#9fb;font-size:12px}#artinfo .q{margin:8px 0;color:#ddd;font-size:13px}
   #artinfo a{display:inline-block;margin-top:8px;color:#7ee7ff}#artinfo .x{margin-top:8px;color:#889;font-size:12px}
+  #mm{position:fixed;left:12px;bottom:12px;z-index:2;width:min(300px,40vw);background:rgba(10,8,24,.66);border:1px solid rgba(190,110,255,.55);border-radius:8px;padding:4px;box-sizing:border-box;pointer-events:auto;cursor:pointer;user-select:none;display:none}
+  #mm canvas{display:block;width:100%;height:auto;border-radius:5px}
+  body.day #mm{background:rgba(18,22,40,.6);border-color:rgba(120,170,255,.6)}
+  #audiohint{position:fixed;left:50%;bottom:86px;transform:translateX(-50%);z-index:3;color:#fff;background:rgba(40,10,60,.82);border:1px solid #ff7bf0;padding:7px 14px;border-radius:8px;font:14px system-ui,"Microsoft YaHei",sans-serif;display:none;cursor:pointer}
   @media (max-width:600px){#ui button{padding:6px 8px;font-size:12px}}
 </style>
 <script type="importmap">
@@ -45,8 +49,8 @@
 </head>
 <body>
 <div id="loading"><div class="spin"></div><div id="msg">Loading model…</div><div id="err"></div></div>
-<div id="cross"></div><div id="hud"></div><div id="lockmsg">点击画面开启鼠标视角(Esc 释放鼠标)</div>
-<div id="help"><b>漫游模式操作</b><br><kbd>W</kbd><kbd>A</kbd><kbd>S</kbd><kbd>D</kbd> / 方向键:前后左右移动<br>鼠标:转动视角(先点击画面锁定鼠标,<kbd>Esc</kbd>释放;未锁定时可按住左键拖动)<br><kbd>Shift</kbd> 奔跑 &nbsp; <kbd>Space</kbd> 跳跃<br><kbd>G</kbd> 飞行模式开/关:<kbd>Space</kbd>/<kbd>E</kbd> 上升,<kbd>C</kbd>/<kbd>Q</kbd> 下降<br><kbd>1</kbd>-<kbd>7</kbd> 传送点 &nbsp; <kbd>H</kbd> 显示/隐藏帮助<br><kbd>F</kbd> 切换 漫游 / 轨道 模式<br>走近玻璃门(约4.5米内)会自动对开;楼梯可直接走上去。<hr style="border:0;border-top:1px solid #6a50a0;margin:6px 0"><b>显示效果(轨道/漫游均可用)</b><br><kbd>N</kbd> 白天 / 夜晚 切换(白天:天空+日光+阴影,发光减弱;夜晚:暗天空+霓虹+灯具+泛光)<br><kbd>L</kbd> 灯光开/关(霓虹发光条、室内灯具、灯光)<br><kbd>B</kbd> 泛光(Bloom)开/关<br><kbd>H</kbd> 显示/隐藏本帮助</div>
+<div id="cross"></div><div id="mm" title="小地图 (M 显示/隐藏,点击切换 全层 / 局部放大)"><canvas id="mmc" width="560" height="420"></canvas></div><div id="audiohint">🔊 附近有音频作品 · 点击此处或画面开启声音</div><div id="hud"></div><div id="lockmsg">点击画面开启鼠标视角(Esc 释放鼠标)</div>
+<div id="help"><b>漫游模式操作</b><br><kbd>W</kbd><kbd>A</kbd><kbd>S</kbd><kbd>D</kbd> / 方向键:前后左右移动<br>鼠标:转动视角(先点击画面锁定鼠标,<kbd>Esc</kbd>释放;未锁定时可按住左键拖动)<br><kbd>Shift</kbd> 奔跑 &nbsp; <kbd>Space</kbd> 跳跃<br><kbd>G</kbd> 飞行模式开/关:<kbd>Space</kbd>/<kbd>E</kbd> 上升,<kbd>C</kbd>/<kbd>Q</kbd> 下降<br><kbd>1</kbd>-<kbd>7</kbd> 传送点 &nbsp; <kbd>H</kbd> 显示/隐藏帮助<br><kbd>F</kbd> 切换 漫游 / 轨道 模式<br><kbd>M</kbd> 左下角小地图 显示/隐藏(点击地图:全层 / 局部放大)<br>音频作品(♪):走近约 6 米自动播放,离开约 8 米停止,音量随距离变化。<br>走近玻璃门(约4.5米内)会自动对开;楼梯可直接走上去。<hr style="border:0;border-top:1px solid #6a50a0;margin:6px 0"><b>显示效果(轨道/漫游均可用)</b><br><kbd>N</kbd> 白天 / 夜晚 切换(白天:天空+日光+阴影,发光减弱;夜晚:暗天空+霓虹+灯具+泛光)<br><kbd>L</kbd> 灯光开/关(霓虹发光条、室内灯具、灯光)<br><kbd>B</kbd> 泛光(Bloom)开/关<br><kbd>H</kbd> 显示/隐藏本帮助</div>
 <div id="tp"><button data-tp="plaza">1 广场(金字塔前)</button><button data-tp="lobby">2 大堂</button><button data-tp="stairs">3 大楼梯</button><button data-tp="f2">4 二楼</button><button data-tp="f3">5 三楼</button><button data-tp="pav">6 转角塔楼</button><button data-tp="b1">7 地下B1</button></div>
 <div id="ui">
   <button id="walkBtn">漫游模式 (F)</button>
@@ -83,6 +87,7 @@
 <div id="artinfo"></div>
 <script id="artdata" type="application/json">__ART_JSON__</script>
 <script id="slotdata" type="application/json">__SLOTS_JSON__</script>
+<script id="plandata" type="application/json">__PLAN_JSON__</script>
 <script id="glb" type="application/octet-stream">__GLB_BASE64__</script>
 <script type="module">
 import * as THREE from 'three';
@@ -116,6 +121,7 @@ const il = [[0,-20,10],[0,-46,4],[0,-46,12],[0,-46,22],[-64,0,4],[64,0,4],[-64,0
 const fixLights = [];
 for (const [x,z,y] of il) { const p = new THREE.PointLight(0xffc890, 250, 40, 1.8); p.position.set(x, y, z); p.userData.base = 250; scene.add(p); fixLights.push(p); }
 const pl = new THREE.PointLight(0xa070ff, 1500, 70, 1.5); pl.position.set(0, 36, -46); pl.userData.base = 1500; scene.add(pl); fixLights.push(pl);
+for (const p of fixLights) p.userData.dayColor = p.color.getHex();
 
 const camera = new THREE.PerspectiveCamera(35, innerWidth / innerHeight, 0.3, 900);
 const controls = new OrbitControls(camera, renderer.domElement);
@@ -404,20 +410,32 @@ function makeSkyTexture() {   // equirect gradient sky with a sun glow: used as 
 }
 const skyTex = makeSkyTexture();
 const pmrem = new THREE.PMREMGenerator(renderer); const dayEnv = pmrem.fromEquirectangular(skyTex).texture;
-const nightBg = new THREE.Color(0x050914);
+const nightBg = new THREE.Color(0x07070a);
+// night palette (t34u): pale warm yellow dominates - interior fixtures + their light, window glow, roof outlines, ambient tint;
+// cyberpunk neon kept only as dimmed accents (cyan plaza / pyramid lines, holograms, screens).  Day mode keeps the model colours.
+const NIGHT = { fixture: 0xffe9b0, atrium: 0xffe6b0, panel: 0xfff1c8, hemiSky: 0xffe3a8, hemiGround: 0x2a2216, moon: 0xe8dcc0, warm: 0xffe9b0, lamp: 0xfff1c8, fog: 0x07070a };
+const NIGHT_EMIS = {           // material -> [night emissive colour (null = keep), intensity factor]
+  light_panel: [0xfff1c8, 1], window_warm: [0xffe9b0, 1], window_cyan: [0xfff1c8, 0.9], glass_dome: [0xffe9b0, 1],
+  neon_magenta: [0xffe9b0, 0.7], neon_purple: [0xffe2a0, 0.55],                 // roof / dome outlines -> pale yellow
+  neon_cyan: [null, 0.3], holo_purple: [null, 0.5], holo_cyan: [null, 0.5] };   // accents, toned down
 function applyFx() {
   const day = FX.mode === 'day', on = FX.lights;
   scene.background = day ? skyTex : nightBg;
   scene.environment = day ? dayEnv : null; scene.environmentIntensity = day ? 0.85 : 0;
-  scene.fog.color.set(day ? 0xc4d9ef : 0x050914); FX.fogBase = day ? 0.0007 : 0.0016; scene.fog.density = WALK.on ? FX.fogBase * 0.5 : FX.fogBase;
-  hemi.color.set(day ? 0xcfe3ff : 0x6a78c8); hemi.groundColor.set(day ? 0xa89b86 : 0x20162e); hemi.intensity = day ? 0.8 : 0.3;
+  scene.fog.color.set(day ? 0xc4d9ef : NIGHT.fog); FX.fogBase = day ? 0.0007 : 0.0016; scene.fog.density = WALK.on ? FX.fogBase * 0.5 : FX.fogBase;
+  hemi.color.set(day ? 0xcfe3ff : NIGHT.hemiSky); hemi.groundColor.set(day ? 0xa89b86 : NIGHT.hemiGround); hemi.intensity = day ? 0.8 : 0.3;
   moon.visible = !day; warm.visible = !day; sun.visible = day;
+  moon.color.set(NIGHT.moon); moon.intensity = 0.35; warm.color.set(NIGHT.warm); lamp.color.set(day ? 0xffe6c8 : NIGHT.lamp);
+  for (const p of fixLights) p.color.set(day ? p.userData.dayColor : (p === pl ? NIGHT.atrium : NIGHT.fixture));
   renderer.toneMappingExposure = +(Q.get('exp') ?? (day ? 0.95 : 0.7));
   for (const p of fixLights) p.intensity = on ? p.userData.base * (day ? 0.35 : 1) : 0;      // interior fixtures' light
   const k = on ? (day ? 0.12 : 1) : 0;                                                         // neon / emissive strips + fixture panels
-  for (const e of FX.emissives) e.m.emissiveIntensity = e.base * k;
+  for (const e of FX.emissives) { const n = !day && NIGHT_EMIS[e.m.name];
+    if (n && n[0] !== null) e.m.emissive.setHex(n[0]); else e.m.emissive.copy(e.c0);
+    e.m.emissiveIntensity = e.base * k * (n ? n[1] : 1); }
   for (const g of FX.glass) { const s = day ? g.day : g.night; g.m.color.copy(s.color); g.m.opacity = s.opacity; g.m.roughness = s.rough; g.m.metalness = s.metal; }   // day: dark grey tinted glass (model default); night: light glass showing the lit interior
   bloomPass.enabled = FX.bloom && on; bloomPass.strength = day ? 0.06 : +(Q.get('bloom') ?? 0.3);
+  document.body.classList.toggle('day', day);
   $('fxMode').textContent = day ? '☀ 白天 (N)' : '🌙 夜景 (N)'; $('fxMode').classList.toggle('on', day);
   $('fxLights').classList.toggle('on', on); $('fxBloom').classList.toggle('on', FX.bloom);
 }
@@ -428,7 +446,7 @@ function collectEmissives(root) {
     const ng = NIGHT_GLASS[m.name]; if (ng && !FX.glass.some(g => g.m === m)) FX.glass.push({ m,
       day: { color: m.color.clone(), opacity: m.opacity, rough: m.roughness, metal: m.metalness },
       night: { color: new THREE.Color().setRGB(ng[0], ng[1], ng[2]), opacity: ng[3], rough: 0.04, metal: 0 } });
-    if (m.emissive.getHex() !== 0 && m.emissiveIntensity > 0) FX.emissives.push({ m, base: m.emissiveIntensity });
+    if (m.emissive.getHex() !== 0 && m.emissiveIntensity > 0) FX.emissives.push({ m, base: m.emissiveIntensity, c0: m.emissive.clone() });
     if (!o.userData.fxShadow) { o.userData.fxShadow = 1; if (!m.transparent) { o.castShadow = true; o.receiveShadow = true; } else o.receiveShadow = true; } });
   root.traverse(o => { if (o.isMesh && !o.userData.fxShadow) { o.userData.fxShadow = 1; const m = o.material; if (m && !m.transparent) { o.castShadow = true; o.receiveShadow = true; } } });
 }
@@ -692,7 +710,7 @@ function stopVideo(it) {
   if (it.kind === 'video') { it.kind = null; it.state = 'idle'; }      // poster is re-loaded by the scheduler
 }
 function unloadItem(it) {
-  stopVideo(it); stopAnim(it); it.vfail = false; it.tok = (it.tok || 0) + 1; dropLabel(it);
+  stopVideo(it); stopAudio(it); dropAudioViz(it); stopAnim(it); it.vfail = false; it.tok = (it.tok || 0) + 1; dropLabel(it);
   if (it.state !== 'idle' || it.kind !== 'reserved') { it.state = 'idle'; setMediaTex(it, reservedTex(), it.slot.inner[0] / it.slot.inner[1], 'reserved'); }
 }
 function loadItem(it) {
@@ -714,6 +732,7 @@ function updateArt() {
   for (const it of ART.items) {
     const d = eye.distanceTo(it.center), sameFloor = Math.abs(eye.y - it.center.y) < 5.5;
     const facing = it.normal.dot(new THREE.Vector3().subVectors(eye, it.center)) > 0;
+    if (it.work && it.work.media === 'audio') { tickAudio(it, d, sameFloor); if (it.state !== 'idle' && it.kind !== 'reserved') drawAudioViz(it, now); else if (it.aviz) dropAudioViz(it); }
     if (d > ART.FAR || !sameFloor) { if (it.state !== 'idle' || it.label) unloadItem(it); continue; }
     if (it.video && (d > ART.VFAR || !facing)) stopVideo(it);
     const inView = d < ART.NEAR && facing && ART.frustum.intersectsSphere(_sph.set(it.center, 1.3));
@@ -738,7 +757,136 @@ function updateArt() {
   }
   cand.sort((a, b) => a[0] - b[0]);
   for (const [, it] of cand) { if (ART.loading >= ART.MAXLOAD) break; loadItem(it); }
+  audioHint();
 }
+// ===================== 音频作品: proximity playback (t33u) =====================
+// bidder audio works (type 2, e.g. mp3 on image.bidder.art - no CORS header) play through the same-origin /media proxy
+// (Range) so the element can feed a WebAudio graph (distance gain + analyser for the on-frame visualiser).  Starts when the
+// viewer is within AUD.NEAR m on the same floor, stops (fade out + pause) beyond AUD.FAR m (hysteresis).  Browsers only allow
+// sound after a user gesture: the AudioContext is created / resumed on the first click / key (walk mode needs a click anyway);
+// if playback is still blocked a small hint asks for a click.
+const AUD = { NEAR: 6, FAR: 8, ctx: null, locked: false, gesture: false, req: 0, errors: [] };
+function audioSources(w) {
+  const c = [], web = /^https?:$/.test(location.protocol);
+  if (w.audio.startsWith('https://image.bidder.art/') && w.audio_path && web) c.push({ url: location.origin + '/media' + w.audio_path, graph: true });
+  c.push({ url: w.audio, graph: false });             // direct (no CORS): plays, but can't be routed through WebAudio (would be silent)
+  return c;
+}
+function audioCtx() {
+  if (!AUD.ctx) { try { AUD.ctx = new (window.AudioContext || window.webkitAudioContext)(); } catch (_) { AUD.ctx = null; } }
+  return AUD.ctx;
+}
+function audioGain(d) { return d <= 2 ? 1 : Math.max(0, Math.min(1, 1 - (d - 2) / (AUD.FAR - 2))) ** 1.3; }
+function attachGraph(a) {
+  const ctx = AUD.ctx; if (!a.graphOK || a.g || !ctx || ctx.state !== 'running') return;
+  try {
+    const src = ctx.createMediaElementSource(a.el), g = ctx.createGain(), an = ctx.createAnalyser();
+    an.fftSize = 64; an.smoothingTimeConstant = 0.75; g.gain.value = a.vol; src.connect(g); g.connect(an); an.connect(ctx.destination);
+    a.g = g; a.an = an; a.bins = new Uint8Array(an.frequencyBinCount); a.el.volume = 1;
+  } catch (e) { AUD.errors.push('graph ' + e); a.graphOK = false; }
+}
+function audioPlay(it) {
+  const a = it.aud; if (!a || !a.want) return;
+  const p = a.el.play(); a.tries = (a.tries || 0) + 1;
+  if (p && p.catch) p.then(() => { AUD.locked = false; attachGraph(a); }).catch((e) => { if (e && e.name === 'NotAllowedError') AUD.locked = true; else if (e && e.name !== 'AbortError') AUD.errors.push('play ' + e.name); });
+}
+function startAudio(it) {
+  const w = it.work;
+  if (!it.aud) {
+    const srcs = audioSources(w); let k = 0;
+    const a = it.aud = { el: null, want: true, vol: 0, src: null, graphOK: false, g: null, an: null, bins: null, k: 0 };
+    const make = () => {
+      if (it.aud !== a) return;
+      if (k >= srcs.length) { AUD.errors.push('audio ' + w.id + ' no playable source'); a.fail = true; return; }
+      const s = srcs[k++]; if (a.el) { a.el.pause(); a.el.removeAttribute('src'); a.el.load(); }
+      const el = new Audio(); el.preload = 'auto'; el.loop = true; if (s.graph) el.crossOrigin = 'anonymous';
+      el.addEventListener('error', () => { if (it.aud === a && a.el === el) { AUD.errors.push('audio ' + w.id + ' err ' + (el.error && el.error.code) + ' ' + s.url.slice(0, 70)); a.g = null; a.an = null; make(); } });
+      a.el = el; a.src = s.url; a.graphOK = s.graph; a.g = null; a.an = null; el.volume = 0; el.src = s.url; AUD.req++;
+      ART.log.push({ t: +performance.now().toFixed(0), slot: it.slot.id, url: s.url.slice(0, 120), audio: 1 });
+      attachGraph(a); audioPlay(it);
+    };
+    make();
+  } else { it.aud.want = true; if (!it.aud.fail && it.aud.el.paused) audioPlay(it); }
+}
+function setAudioVol(a, v) {
+  a.vol = v;
+  if (a.g) { a.g.gain.setTargetAtTime(v, AUD.ctx.currentTime, 0.12); a.el.volume = 1; }
+  else a.el.volume = Math.max(0, Math.min(1, a.el.volume + (v - a.el.volume) * 0.15));   // per-frame smoothing (no WebAudio)
+}
+function tickAudio(it, d, sameFloor) {
+  const a = it.aud, near = sameFloor && d < AUD.NEAR, far = !sameFloor || d > AUD.FAR;
+  it.ad = d;
+  if (!a || !a.want) { if (near && !document.hidden) startAudio(it); }
+  else if (far) { a.want = false; a.fadeT = performance.now(); setAudioVol(a, 0);
+    setTimeout(() => { if (it.aud === a && !a.want) a.el.pause(); }, 450); }     // fade out, then stop (independent of the frame rate)
+  const b = it.aud; if (!b || b.fail) return;
+  if (b.want) {
+    if (b.el.paused && !AUD.locked && (b.tries || 0) < 400 && !document.hidden) { if (!b.retryT || performance.now() - b.retryT > 1500) { b.retryT = performance.now(); audioPlay(it); } }
+    if (b.graphOK && !b.g && !b.el.paused && AUD.ctx && AUD.ctx.state === 'running') attachGraph(b);
+    setAudioVol(b, audioGain(d));
+  } else if (!b.el.paused) {
+    setAudioVol(b, 0);
+    if (performance.now() - b.fadeT > 450) b.el.pause();     // stop after a short fade-out (position kept; resumes when near again)
+  }
+}
+function stopAudio(it) {          // release the element (slot unloaded / far away)
+  const a = it.aud; if (!a) return; it.aud = null;
+  try { a.el.pause(); a.el.removeAttribute('src'); a.el.load(); } catch (_) {}
+  try { if (a.g) a.g.disconnect(); if (a.an) a.an.disconnect(); } catch (_) {}
+  dropAudioViz(it);
+}
+function unlockAudio() {
+  AUD.gesture = true;
+  const ctx = audioCtx();       // created inside the gesture -> allowed to run
+  const go = () => { for (const it of ART.items) if (it.aud && it.aud.want && !it.aud.fail) { attachGraph(it.aud); if (it.aud.el.paused) audioPlay(it); } };
+  if (ctx && ctx.state !== 'running') ctx.resume().then(go, go); else go();
+  if (AUD.locked) AUD.locked = false;
+}
+addEventListener('pointerdown', unlockAudio, true);
+addEventListener('keydown', (e) => { if (!e.repeat) unlockAudio(); }, true);
+$('audiohint').addEventListener('click', unlockAudio);
+document.addEventListener('visibilitychange', () => { if (document.hidden) for (const it of ART.items) if (it.aud) it.aud.el.pause(); });
+// on-frame indicator: a strip along the bottom edge of the cover with state text + spectrum bars (analyser, or a gentle
+// synthetic pulse when the element can't be routed through WebAudio)
+function ensureAudioViz(it) {
+  if (it.aviz) return it.aviz;
+  const c = document.createElement('canvas'); c.width = 768; c.height = 96;
+  const tex = new THREE.CanvasTexture(c); tex.colorSpace = THREE.SRGBColorSpace;
+  const m = new THREE.Mesh(new THREE.PlaneGeometry(1, 1), new THREE.MeshBasicMaterial({ map: tex, transparent: true, toneMapped: false, depthWrite: false }));
+  ART.group.add(m); it.aviz = { m, c, g: c.getContext('2d'), tex, t: 0 }; return it.aviz;
+}
+function dropAudioViz(it) { const z = it.aviz; if (!z) return; z.tex.dispose(); z.m.material.dispose(); z.m.geometry.dispose(); ART.group.remove(z.m); it.aviz = null; }
+const fmtT = (t) => { t = Math.max(0, t | 0); return (t / 60 | 0) + ':' + String(t % 60).padStart(2, '0'); };
+function drawAudioViz(it, now) {
+  const z = ensureAudioViz(it), a = it.aud, playing = !!(a && a.el && !a.el.paused && a.want);
+  if (!playing && z.idle === (AUD.locked ? 2 : 1) && now - z.t < 1000) return;
+  if (playing && now - z.t < 60) return;
+  z.t = now; z.idle = playing ? 0 : (AUD.locked ? 2 : 1);
+  const sw = it.media.scale.x, sh = it.media.scale.y, hh = Math.min(0.26, sh * 0.2);      // place along the bottom edge of the cover
+  z.m.scale.set(sw, hh, 1); z.m.position.copy(it.center).addScaledVector(it.normal, 0.008); z.m.position.y += -sh / 2 + hh / 2;
+  z.m.lookAt(z.m.position.clone().add(it.normal));
+  const g = z.g, W = z.c.width, H = z.c.height;
+  g.clearRect(0, 0, W, H); g.fillStyle = 'rgba(8,6,20,.72)'; g.fillRect(0, 0, W, H);
+  const n = 28, x0 = 250, bw = (W - x0 - 16) / n;
+  if (a && a.an && playing) a.an.getByteFrequencyData(a.bins);
+  for (let i = 0; i < n; i++) {
+    let v;
+    if (!playing) v = 0.06;
+    else if (a.an) v = a.bins[Math.min(a.bins.length - 1, Math.floor(i * a.bins.length / n * 0.8))] / 255;
+    else v = 0.25 + 0.55 * Math.abs(Math.sin(now / 300 + i * 0.7) * Math.sin(now / 770 + i * 0.31));
+    const h = Math.max(4, v * (H - 18)); g.fillStyle = `hsl(${290 - i * 4},90%,${playing ? 62 : 45}%)`; g.fillRect(x0 + i * bw + 2, H - 9 - h, bw - 4, h);
+  }
+  g.fillStyle = playing ? '#ff9bf0' : '#cbb8ff'; g.font = '700 46px system-ui,"Microsoft YaHei",sans-serif'; g.fillText(playing ? '♪ ▶' : '♪', 18, 60);
+  g.font = '28px system-ui,"Microsoft YaHei",sans-serif'; g.fillStyle = '#eee';
+  const txt = playing ? fmtT(a.el.currentTime) + (isFinite(a.el.duration) ? ' / ' + fmtT(a.el.duration) : '') : AUD.locked ? '点击开启声音' : '靠近播放';
+  g.fillText(txt, playing ? 112 : 70, 58);
+  z.tex.needsUpdate = true;
+}
+function audioHint() {
+  const need = AUD.locked && ART.items.some(it => it.aud && it.aud.want && it.aud.el && it.aud.el.paused);
+  const el = $('audiohint'); const v = need ? 'block' : 'none'; if (el.style.display !== v) el.style.display = v;
+}
+// ===========================================================
 // info overlay (E near a work, or click a work in orbit view)
 function nearestItem(maxD) {
   let best = null, bd = maxD; const eye = camera.position, fwd = new THREE.Vector3(); camera.getWorldDirection(fwd);
@@ -776,7 +924,131 @@ window.__art = { state: () => ({ slots: ART.slots.length, works: ART.works.lengt
   video: (id) => { const it = ART.items.find(i => i.slot.id === id); const v = it && it.video; return v ? { t: +v.currentTime.toFixed(2), paused: v.paused, ready: v.readyState, w: v.videoWidth, h: v.videoHeight, err: v.error && v.error.code, src: (it.vsrc || (it.work && it.work.video) || '').slice(0, 100), vstate: it.vstate } : (it ? { none: true, vfail: !!it.vfail } : null); },
   videos: () => ART.items.filter(i => i.video).map(i => ({ slot: i.slot.id, d: +(i.vd || 0).toFixed(1), inView: !!i.inView, t: +i.video.currentTime.toFixed(2) })), preempted: () => ART.preempted || 0, cap: (n) => (n ? (ART.MAXVID = n) : ART.MAXVID),
   slot: (id) => { const it = ART.items.find(i => i.slot.id === id); return it && { id, work: it.work && it.work.id, artist: it.work && it.work.artist, media: it.work && it.work.media, state: it.state, kind: it.kind, anim: it.anim ? { frames: it.anim.n, shown: it.anim.frames, i: it.anim.i, src: it.anim.src.slice(0, 90) } : null }; }, nearest: () => { const it = nearestItem(8); return it && { slot: it.slot.id, id: it.work.id, title: it.work.title }; },
+  audio: (id) => { const it = ART.items.find(i => i.slot.id === id); const a = it && it.aud; return a ? { t: +a.el.currentTime.toFixed(2), paused: a.el.paused, want: a.want, ready: a.el.readyState, dur: +(a.el.duration || 0).toFixed(1), vol: +a.vol.toFixed(2), gain: a.g ? +a.g.gain.value.toFixed(2) : null, elVol: +a.el.volume.toFixed(2), graph: !!a.g, src: (a.src || '').slice(0, 100), d: +(it.ad || 0).toFixed(1), fail: !!a.fail, viz: !!it.aviz } : (it ? { none: true, d: +(it.ad || 0).toFixed(1), viz: !!it.aviz } : null); },
+  audioState: () => ({ locked: AUD.locked, gesture: AUD.gesture, ctx: AUD.ctx ? AUD.ctx.state : null, req: AUD.req, errors: AUD.errors.slice(-5), hint: $('audiohint').style.display }),
   info: () => ART.open && { slot: ART.open.slot.id, href: $('artinfo').querySelector('a').href }, showSlot: (id) => { const it = ART.items.find(i => i.slot.id === id); if (it) showInfo(it); }, hide: hideInfo };
+// ===========================================================
+
+// ===================== 小地图 minimap (t33u) =====================
+// bottom-left, north-up plan of the current floor: room rects + stairs from the spec (plandata, inlined), walls / glass /
+// pyramids sliced from the loaded model at 1.3 m above each floor, art slots as dots (♪ audio pink, video cyan); the viewer is
+// an arrow with a view cone.  Floor follows the walker's height (orbit view: camera position, floor of the orbit target).
+// M shows / hides; a click on the map switches whole floor / zoomed (60 m around the viewer).  Per-floor plans are
+// pre-rendered once to offscreen canvases; per frame only one drawImage + the marker (throttled to ~20 fps).
+const MM = { on: Q.get('minimap') !== '0', zoom: false, plan: readJSON('plandata'), PPM: 5, cv: {}, walls: null, t: 0, level: null, lastKey: '' };
+const MM_LV = ['B1', 'L1', 'L2', 'L3', 'L4'], MM_NAME = { B1: 'B1', L1: '1F', L2: '2F', L3: '3F', L4: '4F' };
+const MM_FILL = { g: 'rgba(150,110,255,.20)', p: 'rgba(150,110,255,.14)', c: 'rgba(170,180,210,.16)', v: 'rgba(255,190,90,.18)', k: 'rgba(120,220,255,.16)',
+  e: 'rgba(90,170,255,.40)', s: 'rgba(255,160,60,.28)', m: 'rgba(160,160,160,.22)', y: 'rgba(120,230,255,.10)', b: 'rgba(140,200,255,.16)', h: 'rgba(255,150,220,.16)',
+  o: 'rgba(90,150,110,.12)', l: 'rgba(255,120,240,.20)', a: 'rgba(255,240,140,.16)' };
+const MM_LABEL = { l: '大堂', a: '中庭', v: '塔楼', b: '地下大厅', h: '大厅', o: '广场', m: '机房' };
+const mmLevel = (y) => y < -3 ? 'B1' : y < 4 ? 'L1' : y < 12 ? 'L2' : y < 20 ? 'L3' : 'L4';
+function mmSliceWalls(root) {        // horizontal section of the wall / window / pyramid meshes at floor + 1.3 m
+  if (!MM.plan) return;
+  const H = MM_LV.map(k => MM.plan.levels[k].z + 1.3), out = MM_LV.map(() => []);
+  const v = [new THREE.Vector3(), new THREE.Vector3(), new THREE.Vector3()];
+  root.updateMatrixWorld(true);
+  for (const name of ['Walls_Exterior', 'Walls_Interior', 'Windows', 'Pyramids', 'Rails']) {
+    const node = byName[name]; if (!node) continue; const kind = name === 'Windows' || name === 'Pyramids' ? 1 : name === 'Rails' ? 2 : 0;
+    node.traverse(o => {
+      if (!o.isMesh) return;
+      const g = o.geometry, pa = g.attributes.position, idx = g.index, m = o.matrixWorld, cnt = idx ? idx.count : pa.count;
+      for (let i = 0; i + 2 < cnt; i += 3) {
+        for (let j = 0; j < 3; j++) { const k = idx ? idx.getX(i + j) : i + j; v[j].set(pa.getX(k), pa.getY(k), pa.getZ(k)).applyMatrix4(m); }
+        const lo = Math.min(v[0].y, v[1].y, v[2].y), hi = Math.max(v[0].y, v[1].y, v[2].y);
+        for (let L = 0; L < H.length; L++) {
+          const h = H[L]; if (h <= lo || h >= hi) continue;
+          const pts = [];
+          for (let j = 0; j < 3; j++) { const a = v[j], b = v[(j + 1) % 3]; if ((a.y - h) * (b.y - h) < 0) { const t = (h - a.y) / (b.y - a.y); pts.push(a.x + (b.x - a.x) * t, -(a.z + (b.z - a.z) * t)); } }
+          if (pts.length === 4) out[L].push(pts[0], pts[1], pts[2], pts[3], kind);
+        }
+      }
+    });
+  }
+  MM.walls = {}; MM_LV.forEach((k, L) => { MM.walls[k] = out[L]; });
+  MM.cv = {};                         // re-render plans with walls
+}
+function mmRender(k) {                 // pre-render one floor plan (world metres -> PPM px, north up)
+  const [bx0, by0, bx1, by1] = MM.plan.bounds, P = MM.PPM, W = Math.ceil((bx1 - bx0) * P), Hh = Math.ceil((by1 - by0) * P);
+  const c = document.createElement('canvas'); c.width = W; c.height = Hh; const g = c.getContext('2d');
+  const X = (x) => (x - bx0) * P, Y = (y) => (by1 - y) * P, L = MM.plan.levels[k];
+  for (const q of L.sp) { if (q[4] === 'y') continue; g.fillStyle = MM_FILL[q[4]] || MM_FILL.g; g.fillRect(X(q[0]), Y(q[3]), (q[2] - q[0]) * P, (q[3] - q[1]) * P); }
+  g.lineWidth = 1; g.strokeStyle = 'rgba(255,255,255,.10)'; for (const q of L.sp) if ('gpcvk'.includes(q[4])) g.strokeRect(X(q[0]), Y(q[3]), (q[2] - q[0]) * P, (q[3] - q[1]) * P);
+  for (const q of L.st) {                // stairs: flights striped orange, landings flat
+    g.fillStyle = q[4] || q[5] ? 'rgba(255,170,70,.75)' : 'rgba(255,170,70,.45)'; g.fillRect(X(q[0]), Y(q[3]), (q[2] - q[0]) * P, (q[3] - q[1]) * P);
+    if (q[4] || q[5]) { g.strokeStyle = 'rgba(80,40,0,.55)'; g.lineWidth = 1; g.beginPath();
+      if (q[5]) for (let y = q[1]; y <= q[3]; y += 0.6) { g.moveTo(X(q[0]), Y(y)); g.lineTo(X(q[2]), Y(y)); }
+      else for (let x = q[0]; x <= q[2]; x += 0.6) { g.moveTo(X(x), Y(q[1])); g.lineTo(X(x), Y(q[3])); }
+      g.stroke(); }
+  }
+  const S = MM.walls && MM.walls[k];
+  if (S) for (const kind of [2, 1, 0]) {
+    g.strokeStyle = kind === 0 ? 'rgba(235,230,255,.95)' : kind === 1 ? 'rgba(120,230,255,.9)' : 'rgba(255,150,240,.55)'; g.lineWidth = kind === 0 ? 2.2 : 1.4; g.beginPath();
+    for (let i = 0; i < S.length; i += 5) if (S[i + 4] === kind) { g.moveTo(X(S[i]), Y(S[i + 1])); g.lineTo(X(S[i + 2]), Y(S[i + 3])); }
+    g.stroke();
+  }
+  const zb = L.z;                        // art slots on this floor
+  for (const it of ART.items) { const p = it.slot.pos; if (p[2] < zb - 0.5 || p[2] >= zb + 7.5 || !it.work) continue;
+    const md = it.work.media; g.fillStyle = md === 'audio' ? '#ff5be6' : md === 'video' ? '#5be3ff' : 'rgba(255,230,150,.85)';
+    g.beginPath(); g.arc(X(p[0]), Y(p[1]), md === 'audio' ? 4.5 : 2.4, 0, 7); g.fill(); }
+  return (MM.cv[k] = c);
+}
+function mmLevelBounds(k) {          // whole-floor view: fit this floor's rooms (+3 m)
+  if (MM.lb && MM.lb[k]) return MM.lb[k];
+  let x0 = 1e9, y0 = 1e9, x1 = -1e9, y1 = -1e9;
+  for (const q of MM.plan.levels[k].sp) { x0 = Math.min(x0, q[0]); y0 = Math.min(y0, q[1]); x1 = Math.max(x1, q[2]); y1 = Math.max(y1, q[3]); }
+  if (x0 > x1) [x0, y0, x1, y1] = MM.plan.bounds; else { x0 -= 3; y0 -= 3; x1 += 3; y1 += 3; }
+  return ((MM.lb = MM.lb || {})[k] = [x0, y0, x1, y1]);
+}
+function mmDraw(now) {
+  const box = $('mm');
+  const show = MM.on && !!MM.plan && window.__ready;
+  if (box.style.display !== (show ? 'block' : 'none')) box.style.display = show ? 'block' : 'none';
+  if (!show || now - MM.t < 50) return; MM.t = now;
+  const hud = $('hud'), hb = hud.style.display === 'block' ? hud.offsetHeight + 20 : 12;
+  if (box.style.bottom !== hb + 'px') box.style.bottom = hb + 'px';
+  const px = camera.position.x, py = -camera.position.z;
+  const [gx0, gy0, gx1, gy1] = MM.plan.bounds, inB = px > gx0 && px < gx1 && py > gy0 && py < gy1;
+  const ly = WALK.on ? WALK.pos.y : (camera.position.y < 30 && inB ? camera.position.y - 1.6 : 0);     // orbit from outside / above: ground floor
+  const k = mmLevel(ly), plan = MM.cv[k] || mmRender(k), [bx0, by0, bx1, by1] = MM.plan.bounds, P = MM.PPM;
+  const c = $('mmc'), g = c.getContext('2d'), W = c.width, H = c.height;
+  let vx0, vy1, vs;                     // visible world window: left x, top y, metres per canvas px
+  if (MM.zoom) { vs = 60 / W; vx0 = px - 30; vy1 = py + 30 * H / W; }
+  else { const lb = mmLevelBounds(k); vs = Math.max((lb[2] - lb[0]) / W, (lb[3] - lb[1]) / (H - 34)); vx0 = (lb[0] + lb[2]) / 2 - vs * W / 2; vy1 = (lb[1] + lb[3]) / 2 + vs * (H + 34) / 2; }
+  g.clearRect(0, 0, W, H); g.fillStyle = FX.mode === 'day' ? 'rgba(14,20,38,.55)' : 'rgba(6,4,16,.5)'; g.fillRect(0, 0, W, H);
+  g.imageSmoothingEnabled = true;
+  g.drawImage(plan, (vx0 - bx0) * P, (by1 - vy1) * P, W * vs * P, H * vs * P, 0, 0, W, H);
+  const X = (x) => (x - vx0) / vs, Y = (y) => (vy1 - y) / vs;
+  if (!MM.zoom) { g.font = '600 17px system-ui,"Microsoft YaHei",sans-serif'; g.textAlign = 'center'; g.fillStyle = 'rgba(255,255,255,.7)';
+    const done = new Set();
+    for (const q of MM.plan.levels[k].sp) { const t = MM_LABEL[q[4]]; if (!t) continue; const key = t + Math.round((q[0] + q[2]) / 40) + Math.round((q[1] + q[3]) / 40); if (done.has(key)) continue; done.add(key);
+      g.fillText(t, X((q[0] + q[2]) / 2), Y((q[1] + q[3]) / 2) + 5); }
+    g.textAlign = 'left'; }
+  // viewer: view cone + arrow (clamped to the map edge when outside, e.g. orbit camera)
+  let mx = X(px), my = Y(py); const out = mx < 8 || my < 8 || mx > W - 8 || my > H - 8; mx = Math.max(8, Math.min(W - 8, mx)); my = Math.max(8, Math.min(H - 8, my));
+  const yaw = WALK.on ? camera.rotation.y : Math.atan2(-(controls.target.x - camera.position.x), -(controls.target.z - camera.position.z));
+  const dx = -Math.sin(yaw), dy = -Math.cos(yaw), ang = Math.atan2(dy, dx);    // canvas angle (y down): world (-sin, +cos)
+  g.save(); g.translate(mx, my); g.rotate(ang);
+  const cone = g.createRadialGradient(0, 0, 2, 0, 0, 46); cone.addColorStop(0, 'rgba(255,240,120,.55)'); cone.addColorStop(1, 'rgba(255,240,120,0)');
+  g.fillStyle = cone; g.beginPath(); g.moveTo(0, 0); g.arc(0, 0, 46, -0.62, 0.62); g.closePath(); g.fill();
+  g.fillStyle = out ? 'rgba(255,90,200,.6)' : '#ff4fd8'; g.strokeStyle = '#fff'; g.lineWidth = 2;
+  g.beginPath(); g.moveTo(13, 0); g.lineTo(-8, -8); g.lineTo(-4, 0); g.lineTo(-8, 8); g.closePath(); g.fill(); g.stroke(); g.restore();
+  // header: floor + mode, north arrow, scale bar
+  g.fillStyle = 'rgba(0,0,0,.6)'; g.fillRect(0, 0, W, 34);
+  g.font = '800 28px system-ui,"Microsoft YaHei",sans-serif'; g.fillStyle = '#ff9bf0'; g.fillText(MM_NAME[k], 10, 27);
+  g.font = '19px system-ui,"Microsoft YaHei",sans-serif'; g.fillStyle = '#dde';
+  g.fillText((WALK.on ? '漫游' : '轨道视角') + (MM.zoom ? ' · 局部' : ' · 全层') + ' · X ' + px.toFixed(0) + ' Y ' + py.toFixed(0) + (out ? ' (图外)' : ''), 62, 25);
+  g.textAlign = 'right'; g.fillStyle = '#9fe'; g.fillText('N↑', W - 10, 25); g.textAlign = 'left';
+  const sm = MM.zoom ? 10 : 20, sl = sm / vs; g.strokeStyle = '#fff'; g.lineWidth = 2; g.beginPath(); g.moveTo(10, H - 12); g.lineTo(10 + sl, H - 12); g.moveTo(10, H - 17); g.lineTo(10, H - 7); g.moveTo(10 + sl, H - 17); g.lineTo(10 + sl, H - 7); g.stroke();
+  g.font = '17px system-ui,sans-serif'; g.fillStyle = '#fff'; g.fillText(sm + ' m', 16 + sl, H - 6);
+  MM.level = k; MM.last = { k, x: +px.toFixed(1), y: +py.toFixed(1), mx: +mx.toFixed(1), my: +my.toFixed(1), yaw: +yaw.toFixed(2), out };
+}
+$('mm').addEventListener('pointerdown', (e) => { e.stopPropagation(); });
+$('mm').addEventListener('click', (e) => { e.stopPropagation(); MM.zoom = !MM.zoom; MM.t = 0; mmDraw(performance.now()); });
+function mmToggle(v) { MM.on = v === undefined ? !MM.on : !!v; MM.t = 0; if (!MM.on) $('mm').style.display = 'none'; else mmDraw(performance.now()); }
+addEventListener('keydown', (e) => { if (e.code === 'KeyM' && !e.repeat && !e.ctrlKey && !e.metaKey && !e.altKey) mmToggle(); });
+window.__mm = { state: () => ({ on: MM.on, zoom: MM.zoom, level: MM.level, name: MM.level && MM_NAME[MM.level], walls: MM.walls ? Object.fromEntries(MM_LV.map(k => [k, MM.walls[k].length / 5])) : null, last: MM.last,
+  rect: (() => { const r = $('mm').getBoundingClientRect(); return [Math.round(r.left), Math.round(r.top), Math.round(r.width), Math.round(r.height)]; })(), display: $('mm').style.display }),
+  toggle: (v) => mmToggle(v), zoom: (v) => { MM.zoom = v === undefined ? !MM.zoom : !!v; MM.t = 0; mmDraw(performance.now()); }, draw: () => { MM.t = 0; mmDraw(performance.now()); return MM.last; } };
 // ===========================================================
 
 function b64ToBuffer(b64) { const bin = atob(b64.replace(/\s+/g, '')); const u = new Uint8Array(bin.length); for (let i = 0; i < bin.length; i++) u[i] = bin.charCodeAt(i); return u.buffer; }
@@ -793,6 +1065,7 @@ try {
     window.__byName = byName;
     initDoors(gltf.scene);
     initArt(gltf.scene);
+    try { mmSliceWalls(gltf.scene); } catch (e) { console.warn('minimap walls', e); }
     buildCollision(gltf.scene).then(() => { window.__collisionReady = true; });
     if (Q.get('cut')) setCut(Q.get('cut'));
     if (Q.get('view')) { goTo(Q.get('view')); tween.dur = 1; }
@@ -807,6 +1080,7 @@ renderer.setAnimationLoop(() => {
   updateDoors(Math.min(dtR, 0.3));
   updateArt();
   if (WALK.on && WALK.col) updateWalk(dtR);
+  mmDraw(nowT);
   if (tween) { const k = Math.min(1, (performance.now() - tween.t0) / tween.dur), e = ease(k);
     camera.position.lerpVectors(tween.p0, tween.p1, e); controls.target.lerpVectors(tween.c0, tween.c1, e); if (k >= 1) tween = null; }
   if (!WALK.on) controls.update();

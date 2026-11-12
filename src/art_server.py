@@ -2,7 +2,7 @@
 /media/rare/<hash>.<ext> (functions/media/[[path]].js), incl. Range pass-through for mp4/webm."""
 import http.server, urllib.request, urllib.error, re, sys, os, shutil
 ROOT = '/workspace/outputs/cyber_louvre/web'
-MEDIA = re.compile(r'^/media/(rare/[A-Za-z0-9]{20,80}\.(?:jpe?g|png|gif|webp|avif|mp4|m4v|webm))$', re.I)
+MEDIA = re.compile(r'^/media/(rare/[A-Za-z0-9]{20,80}\.(?:jpe?g|png|gif|webp|avif|mp4|m4v|webm|mp3|m4a|aac|ogg|oga|opus|wav|flac))$', re.I)
 class H(http.server.SimpleHTTPRequestHandler):
     def __init__(s, *a, **k): super().__init__(*a, directory=ROOT, **k)
     def log_message(s, *a): pass

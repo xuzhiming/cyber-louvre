@@ -3819,7 +3819,10 @@
    "width": 1306,
    "height": 1326,
    "aspect": 0.9849,
-   "artist_url": "https://bidder.art/artist/1755556964965945344"
+   "artist_url": "https://bidder.art/artist/1755556964965945344",
+   "audio_path": "/rare/QmSSHXYA8U15CC6YBSjum1kbt4Ju7Tx2EENKu3XpjPuKtj.mp3",
+   "audio_codec": "mp3 160k 44.1kHz stereo",
+   "audio_duration": 1124.1
   },
   {
    "id": "1765677559665790976",
