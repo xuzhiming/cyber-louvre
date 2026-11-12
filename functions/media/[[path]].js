@@ -2,16 +2,20 @@
 // so WebGL cannot use those images / videos directly). Only /media/rare/<ipfs-hash>.<ext> is allowed (not an open proxy).
 // Videos (mp4/webm) and audio (mp3/m4a/ogg/wav/flac) are streamed with HTTP Range support (206 partial content), which <video>/<audio> need to start, seek and loop.
 const RE = /^rare\/[A-Za-z0-9]{20,80}\.(jpe?g|png|gif|webp|avif|mp4|m4v|webm|mp3|m4a|aac|ogg|oga|opus|wav|flac)$/i;
+// bidder.top images (t36u): /media/top/<digits>/[scale/]<digits>.<img-ext> -> https://api.bidder.top/file/getFile/<same> (fallback only;
+// that host reflects CORS, the page tries it directly / via wsrv first).  Nothing else is forwarded.
+const RE_TOP = /^top\/(\d{10,25}\/(?:scale\/)?\d{10,25}\.(?:jpe?g|png|gif|webp))$/i;
 const PASS = ['Content-Type', 'Content-Length', 'Content-Range', 'Accept-Ranges', 'ETag', 'Last-Modified'];
 export async function onRequest({ request, params }) {
   if (request.method !== 'GET' && request.method !== 'HEAD') return new Response('method not allowed', { status: 405 });
   const path = Array.isArray(params.path) ? params.path.join('/') : String(params.path || '');
-  if (!RE.test(path)) return new Response('not allowed', { status: 400 });
+  const top = RE_TOP.exec(path);
+  if (!top && !RE.test(path)) return new Response('not allowed', { status: 400 });
   const isVideo = /\.(mp4|m4v|webm)$/i.test(path), isAudio = /\.(mp3|m4a|aac|ogg|oga|opus|wav|flac)$/i.test(path), isAV = isVideo || isAudio;
   const fh = new Headers();
   const range = request.headers.get('Range');
   if (range) fh.set('Range', range);
-  const r = await fetch('https://image.bidder.art/' + path, { method: request.method, headers: fh, cf: { cacheEverything: true, cacheTtl: 604800 } });
+  const r = await fetch(top ? 'https://api.bidder.top/file/getFile/' + top[1] : 'https://image.bidder.art/' + path, { method: request.method, headers: fh, cf: { cacheEverything: true, cacheTtl: 604800 } });
   const h = new Headers();
   for (const k of PASS) { const v = r.headers.get(k); if (v) h.set(k, v); }
   if (!h.get('Content-Type')) h.set('Content-Type', isVideo ? 'video/mp4' : isAudio ? 'audio/mpeg' : 'application/octet-stream');

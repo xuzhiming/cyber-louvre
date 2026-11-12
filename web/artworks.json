@@ -4,7 +4,7 @@
  "order": "artist-list order (opt=Active, as the page), each artist's works in profile order (opt=Newest)",
  "media_base": "https://image.bidder.art",
  "fetched": "2026-11-12",
- "count": 137,
+ "count": 159,
  "artists": [
   {
    "id": "1754128548970500096",
@@ -761,6 +761,166 @@
    "works_total": 0,
    "first": 137,
    "n": 0
+  },
+  {
+   "id": "1554738555497091072",
+   "name": "cyberbose",
+   "avatar": "https://api.bidder.top/file/getFile/1555146981788225536/1555146981788225536.jpg",
+   "profile_url": "https://bidder.top/#/center/1554738555497091072",
+   "source": "bidder.top",
+   "works_total": 2,
+   "first": 137,
+   "n": 2
+  },
+  {
+   "id": "1554750030156533760",
+   "name": "Chenghao_He",
+   "avatar": "https://api.bidder.top/file/getFile/1555513218565279744/1555513218565279744.jpg",
+   "profile_url": "https://bidder.top/#/center/1554750030156533760",
+   "source": "bidder.top",
+   "works_total": 1,
+   "first": 139,
+   "n": 1
+  },
+  {
+   "id": "1554836002097467392",
+   "name": "HiiDEN",
+   "avatar": "https://api.bidder.top/file/getFile/1554876079515242496/1554876079515242496.png",
+   "profile_url": "https://bidder.top/#/center/1554836002097467392",
+   "source": "bidder.top",
+   "works_total": 1,
+   "first": 140,
+   "n": 1
+  },
+  {
+   "id": "1554876778177236992",
+   "name": "BingQing",
+   "avatar": "https://api.bidder.top/file/getFile/1555503386688884736/1555503386688884736.jpg",
+   "profile_url": "https://bidder.top/#/center/1554876778177236992",
+   "source": "bidder.top",
+   "works_total": 1,
+   "first": 141,
+   "n": 1
+  },
+  {
+   "id": "1541006043495141376",
+   "name": "Loxel",
+   "avatar": "https://api.bidder.top/file/getFile/1541017336696410112/1541017336696410112.PNG",
+   "profile_url": "https://bidder.top/#/center/1541006043495141376",
+   "source": "bidder.top",
+   "works_total": 2,
+   "first": 142,
+   "n": 2
+  },
+  {
+   "id": "1539207597775785984",
+   "name": "RuiHuang",
+   "avatar": "https://api.bidder.top/file/getFile/1539916001548832768/1539916001548832768.jpg",
+   "profile_url": "https://bidder.top/#/center/1539207597775785984",
+   "source": "bidder.top",
+   "works_total": 1,
+   "first": 144,
+   "n": 1
+  },
+  {
+   "id": "1548841913153622016",
+   "name": "shaunhu",
+   "avatar": "https://api.bidder.top/file/getFile/1555445739444899840/1555445739444899840.jpg",
+   "profile_url": "https://bidder.top/#/center/1548841913153622016",
+   "source": "bidder.top",
+   "works_total": 1,
+   "first": 145,
+   "n": 1
+  },
+  {
+   "id": "1541381955139014656",
+   "name": "YITIAN_AI",
+   "avatar": "https://api.bidder.top/file/getFile/1541670497387941888/1541670497387941888.jpg",
+   "profile_url": "https://bidder.top/#/center/1541381955139014656",
+   "source": "bidder.top",
+   "works_total": 2,
+   "first": 146,
+   "n": 2
+  },
+  {
+   "id": "1554815932336050176",
+   "name": "Zhangyongji",
+   "avatar": "https://api.bidder.top/file/getFile/1554820038161207296/1554820038161207296.jpg",
+   "profile_url": "https://bidder.top/#/center/1554815932336050176",
+   "source": "bidder.top",
+   "works_total": 1,
+   "first": 148,
+   "n": 1
+  },
+  {
+   "id": "1544168195118731264",
+   "name": "Lijing_amuz",
+   "avatar": "https://api.bidder.top/file/getFile/1544179185940041728/1544179185940041728.jpg",
+   "profile_url": "https://bidder.top/#/center/1544168195118731264",
+   "source": "bidder.top",
+   "works_total": 1,
+   "first": 149,
+   "n": 1
+  },
+  {
+   "id": "1544170144601870336",
+   "name": "Sanji_Yang",
+   "avatar": "https://api.bidder.top/file/getFile/1550102572956782592/1550102572956782592.jpg",
+   "profile_url": "https://bidder.top/#/center/1544170144601870336",
+   "source": "bidder.top",
+   "works_total": 3,
+   "first": 150,
+   "n": 3
+  },
+  {
+   "id": "1536592438662139904",
+   "name": "LEDYan",
+   "avatar": "https://api.bidder.top/file/getFile/1536594042488492032/1536594042488492032.jpg",
+   "profile_url": "https://bidder.top/#/center/1536592438662139904",
+   "source": "bidder.top",
+   "works_total": 1,
+   "first": 153,
+   "n": 1
+  },
+  {
+   "id": "1536634780785971200",
+   "name": "guooooog",
+   "avatar": "https://api.bidder.top/file/getFile/1536636505332781056/1536636505332781056.png",
+   "profile_url": "https://bidder.top/#/center/1536634780785971200",
+   "source": "bidder.top",
+   "works_total": 1,
+   "first": 154,
+   "n": 1
+  },
+  {
+   "id": "1540591364436267008",
+   "name": "zhoudaxi",
+   "avatar": "https://api.bidder.top/file/getFile/1540591749838278656/1540591749838278656.png",
+   "profile_url": "https://bidder.top/#/center/1540591364436267008",
+   "source": "bidder.top",
+   "works_total": 1,
+   "first": 155,
+   "n": 1
+  },
+  {
+   "id": "1540641959738216448",
+   "name": "YICAI",
+   "avatar": "https://api.bidder.top/file/getFile/1540805252687728640/1540805252687728640.png",
+   "profile_url": "https://bidder.top/#/center/1540641959738216448",
+   "source": "bidder.top",
+   "works_total": 1,
+   "first": 156,
+   "n": 1
+  },
+  {
+   "id": "1536635639074787328",
+   "name": "hotsunbird",
+   "avatar": "https://api.bidder.top/file/getFile/1536638523279544320/1536638523279544320.jpg",
+   "profile_url": "https://bidder.top/#/center/1536635639074787328",
+   "source": "bidder.top",
+   "works_total": 2,
+   "first": 157,
+   "n": 2
   }
  ],
  "artworks": [
@@ -4046,6 +4206,484 @@
    "height": 4096,
    "aspect": 1.0,
    "artist_url": "https://bidder.art/artist/1760264677188833280"
+  },
+  {
+   "id": "1555540672050761728",
+   "source": "bidder.top",
+   "title": "Meridian经络2",
+   "artist": "cyberbose",
+   "artist_id": "1554738555497091072",
+   "type": 1,
+   "detail_url": "https://bidder.top/#/product/1555540672050761728",
+   "artist_url": "https://bidder.top/#/center/1554738555497091072",
+   "ipfs": [
+    "QmS3rGZ5PtcACKPpRqNTof3jBUgn7QTmNpezHBrzxwEawq"
+   ],
+   "media": "image",
+   "image": "https://api.bidder.top/file/getFile/1555540472334782464/scale/1555540472334782464.png",
+   "image_full": "https://api.bidder.top/file/getFile/1555540472334782464/1555540472334782464.png",
+   "width": 3100,
+   "height": 4133,
+   "aspect": 0.7501,
+   "intro": "《经络》\n\n人体经络活动的信息全部数字化之后由计算机网络来管理，既意识形态上传，思维意识由经络进行链接交流，翅膀既个人思想意识的拟态。x",
+   "local_thumb": "thumbs/top_1555540672050761728.jpg"
+  },
+  {
+   "id": "1555505265732882432",
+   "source": "bidder.top",
+   "title": "Meridian经络",
+   "artist": "cyberbose",
+   "artist_id": "1554738555497091072",
+   "type": 3,
+   "detail_url": "https://bidder.top/#/product/1555505265732882432",
+   "artist_url": "https://bidder.top/#/center/1554738555497091072",
+   "ipfs": [
+    "QmeJkqKTSU3vHXt4898RCWp5b73bLv6ABrN4wyozHp1436"
+   ],
+   "media": "video",
+   "video_id": "13604d3022594ccd176edb1c418919df",
+   "video": "https://videodelivery.net/13604d3022594ccd176edb1c418919df/manifest/video.m3u8",
+   "thumbnail": "https://videodelivery.net/13604d3022594ccd176edb1c418919df/thumbnails/thumbnail.jpg?height=480",
+   "has_audio": false,
+   "image": "https://api.bidder.top/file/getFile/1555503839413669888/scale/1555503839413669888.png",
+   "width": 2500,
+   "height": 2500,
+   "aspect": 1.0,
+   "intro": "《经络》\n\n人体经络活动的信息全部数字化之后由计算机网络来管理，既意识形态上传，思维意识由经络进行链接交流，翅膀既个人思想意识的拟态。",
+   "local_thumb": "thumbs/top_1555505265732882432.jpg"
+  },
+  {
+   "id": "1555512546885242880",
+   "source": "bidder.top",
+   "title": "言  ( chapter1)",
+   "artist": "Chenghao_He",
+   "artist_id": "1554750030156533760",
+   "type": 3,
+   "detail_url": "https://bidder.top/#/product/1555512546885242880",
+   "artist_url": "https://bidder.top/#/center/1554750030156533760",
+   "ipfs": [
+    "Qme8h3yPFevhNtAXc5CxSNjXpURzS3nGH6BDcvLV7iTcr9"
+   ],
+   "media": "video",
+   "video_id": "643d85019f09d857bb8bec2d9d2534f4",
+   "video": "https://videodelivery.net/643d85019f09d857bb8bec2d9d2534f4/manifest/video.m3u8",
+   "thumbnail": "https://videodelivery.net/643d85019f09d857bb8bec2d9d2534f4/thumbnails/thumbnail.jpg?height=480",
+   "has_audio": true,
+   "image": "https://api.bidder.top/file/getFile/1555510902994898944/scale/1555510902994898944.jpg",
+   "width": 2560,
+   "height": 1440,
+   "aspect": 1.7778,
+   "intro": "言   以环境叙事的方法将AI学习人类语言的过程具象化为一场探索之旅。\n玩家将成为懵懂的AI男孩深入人类的语言世界，以孩童般的视角感受不断弱化的语义和极端的语言如何一步步哺育AI男孩并最终将他塑造为一个“完整的人类”。\n我们对语义通货膨胀的脉络发展、本质原因、以及未来影响进行研究梳理，使用AI自然语言处理模型-GPT3生成文本作为创作依据并运用游戏化设计的方法将其具象提取，以探索这场以AI为主角蓝本的数字叙事可能性。"
+  },
+  {
+   "id": "1555508665266606080",
+   "source": "bidder.top",
+   "title": "Melting Myth 附行",
+   "artist": "HiiDEN",
+   "artist_id": "1554836002097467392",
+   "type": 3,
+   "detail_url": "https://bidder.top/#/product/1555508665266606080",
+   "artist_url": "https://bidder.top/#/center/1554836002097467392",
+   "ipfs": [
+    "QmVSoNHjE7ETTyzzqPK4c2F3s9RGwQQGa5dCnYryLgfbcN"
+   ],
+   "media": "video",
+   "video_id": "e309bd9fad5c2698fb76fc49ce97a0d6",
+   "video": "https://videodelivery.net/e309bd9fad5c2698fb76fc49ce97a0d6/manifest/video.m3u8",
+   "thumbnail": "https://videodelivery.net/e309bd9fad5c2698fb76fc49ce97a0d6/thumbnails/thumbnail.jpg?height=480",
+   "has_audio": false,
+   "image": "https://videodelivery.net/e309bd9fad5c2698fb76fc49ce97a0d6/thumbnails/thumbnail.jpg?height=480",
+   "width": 1920,
+   "height": 1080,
+   "aspect": 1.7778,
+   "intro": "当人造物初次突兀的在平原上伫立，我们的文明在蔓延和成长的同时，植物也在用他们的方式予以回应。他们以独特的，静谧的，温柔且有力的方式攀爬于我们的文明间，重新刻画我们的痕迹。自然与工业以不可逆的趋势彼此纠缠，或许他们之间不再是塑造与被塑造的关系，而是拥抱与被拥抱的温柔。作品通过记录和实验的方式探索自然与工业日益模糊的边界，以此反思以及想象二者可能的未来图景。\n现代家庭植物培养基质中参杂了大量的工业甚至家装通用材质，此时，泥土不再是自然的泥土，人造物也不是自然的威胁，形成了一种源于日常的合成自然。我们现在所看到的环保与生态材料往往是由易降解为目的设计，而在现实中，混合的状态成为日常，甚至更优。作品试着提供一种新的视角去面对渗透日常生活的，人工与自然深度共生的可能。"
+  },
+  {
+   "id": "1555488716406001664",
+   "source": "bidder.top",
+   "title": "Lil Roll in your area 小绒初登场",
+   "artist": "BingQing",
+   "artist_id": "1554876778177236992",
+   "type": 3,
+   "detail_url": "https://bidder.top/#/product/1555488716406001664",
+   "artist_url": "https://bidder.top/#/center/1554876778177236992",
+   "ipfs": [
+    "QmfY6NRa31CZy69q37Wj8uzywfBZhgmHZYUxdmd5gkiiFv"
+   ],
+   "media": "video",
+   "video_id": "02761fce6fa624a60f29f4383f91ce19",
+   "video": "https://videodelivery.net/02761fce6fa624a60f29f4383f91ce19/manifest/video.m3u8",
+   "thumbnail": "https://videodelivery.net/02761fce6fa624a60f29f4383f91ce19/thumbnails/thumbnail.jpg?height=480",
+   "has_audio": true,
+   "image": "https://api.bidder.top/file/getFile/1555483762614210560/scale/1555483762614210560.jpg",
+   "width": 4000,
+   "height": 4000,
+   "aspect": 1.0,
+   "intro": "生活与死亡，爱与浪漫\n我的青春和怒火\n想象中的疆土和我栖居的寸隅\n衰败的容颜以及从未抵达过的故乡\n \nEveryday life and death, love and romance.\nMy youth and my anger.\nThe territory I have dreamed of,\nThe den where I live.\nThe decaying appearance,\nAnd the hometown that I have never been to.\n\n我们在此相遇\n我们终将分离\n但我会珍惜和你在一起的每一分每一秒\n每一个让我感到活着的瞬间\n  \nHere we encounter.\nDestined to separate.\nEven though,\nI would treasure each minute, each second being with you"
+  },
+  {
+   "id": "1555486666418950144",
+   "source": "bidder.top",
+   "title": "游走在不同时代的变形羊",
+   "artist": "Loxel",
+   "artist_id": "1541006043495141376",
+   "type": 3,
+   "detail_url": "https://bidder.top/#/product/1555486666418950144",
+   "artist_url": "https://bidder.top/#/center/1541006043495141376",
+   "ipfs": [
+    "QmbGoGS8Ge8xPUUmRdZexaa6zKhEik3zZd7byqVDwmAc2c"
+   ],
+   "media": "video",
+   "video_id": "d4b3d4244aec39ac80c5a05784301ad7",
+   "video": "https://videodelivery.net/d4b3d4244aec39ac80c5a05784301ad7/manifest/video.m3u8",
+   "thumbnail": "https://videodelivery.net/d4b3d4244aec39ac80c5a05784301ad7/thumbnails/thumbnail.jpg?height=480",
+   "has_audio": true,
+   "image": "https://api.bidder.top/file/getFile/1555461847220621312/scale/1555461847220621312.png",
+   "width": 1808,
+   "height": 1810,
+   "aspect": 0.9989,
+   "intro": "远追溯到上古，神话中的物种游走于现实中用身体的质变去获取他们想要的意义 没有人知晓他们的面貌 他们只活在维基百科中的引用辞典。文字中写道：他们是战神的实体化，即便没有食物供给仍然有一具打不死的身躯。",
+   "local_thumb": "thumbs/top_1555486666418950144.jpg"
+  },
+  {
+   "id": "1541015258620104704",
+   "source": "bidder.top",
+   "title": "机械音符编织的柔软",
+   "artist": "Loxel",
+   "artist_id": "1541006043495141376",
+   "type": 3,
+   "detail_url": "https://bidder.top/#/product/1541015258620104704",
+   "artist_url": "https://bidder.top/#/center/1541006043495141376",
+   "ipfs": [
+    "QmQNaEU8RhB8kKkwi86sXfzLFTEg4DqTm4dxegBk4X1Yx3"
+   ],
+   "media": "video",
+   "video_id": "37f433d29e7b52c70b702436d7cb4618",
+   "video": "https://videodelivery.net/37f433d29e7b52c70b702436d7cb4618/manifest/video.m3u8",
+   "thumbnail": "https://videodelivery.net/37f433d29e7b52c70b702436d7cb4618/thumbnails/thumbnail.jpg?height=480",
+   "has_audio": true,
+   "image": "https://api.bidder.top/file/getFile/1541013114068275200/1541013114068275200.PNG",
+   "width": 362,
+   "height": 368,
+   "aspect": 0.9837,
+   "intro": "与大海共舞，披上丝绒战衣\n想了解她，却又无法靠近\n不是掏空丰富的空壳，而是在躯体上就有像肥沃土壤孕育的植被一般的闪闪黄金\n如果你用心，会发现她为你写的诗"
+  },
+  {
+   "id": "1555484298629484544",
+   "source": "bidder.top",
+   "title": "Planet Nova 永夜漂流",
+   "artist": "RuiHuang",
+   "artist_id": "1539207597775785984",
+   "type": 3,
+   "detail_url": "https://bidder.top/#/product/1555484298629484544",
+   "artist_url": "https://bidder.top/#/center/1539207597775785984",
+   "ipfs": [
+    "QmP3nvi8o5btjHhLz6RjGH6QPRR6jQpDp8VvZzxM5vqdB3"
+   ],
+   "media": "video",
+   "video_id": "ea3e7d1a8e2765e91dfb78b44c71399b",
+   "video": "https://videodelivery.net/ea3e7d1a8e2765e91dfb78b44c71399b/manifest/video.m3u8",
+   "thumbnail": "https://videodelivery.net/ea3e7d1a8e2765e91dfb78b44c71399b/thumbnails/thumbnail.jpg?height=480",
+   "has_audio": true,
+   "image": "https://api.bidder.top/file/getFile/1555483378067836928/scale/1555483378067836928.jpg",
+   "width": 1590,
+   "height": 680,
+   "aspect": 2.3382,
+   "intro": "Fly through gas giant-Planet Nova\n1min looping animation"
+  },
+  {
+   "id": "1555447717696770048",
+   "source": "bidder.top",
+   "title": "Islands",
+   "artist": "shaunhu",
+   "artist_id": "1548841913153622016",
+   "type": 3,
+   "detail_url": "https://bidder.top/#/product/1555447717696770048",
+   "artist_url": "https://bidder.top/#/center/1548841913153622016",
+   "ipfs": [
+    "QmUyE5gDM477XgnG8pAvoMbCgKKgFyfA5rPHSHy6o3Hm1d"
+   ],
+   "media": "video",
+   "video_id": "bb70a2fac00491b5f433eea85d99f9f4",
+   "video": "https://videodelivery.net/bb70a2fac00491b5f433eea85d99f9f4/manifest/video.m3u8",
+   "thumbnail": "https://videodelivery.net/bb70a2fac00491b5f433eea85d99f9f4/thumbnails/thumbnail.jpg?height=480",
+   "has_audio": true,
+   "image": "https://api.bidder.top/file/getFile/1555447529569652736/scale/1555447529569652736.png",
+   "width": 775,
+   "height": 435,
+   "aspect": 1.7816,
+   "intro": "Islands in the metaverse, where cyborgs, plants, and humans are connected by data.",
+   "local_thumb": "thumbs/top_1555447717696770048.jpg"
+  },
+  {
+   "id": "1555443725470142464",
+   "source": "bidder.top",
+   "title": "Honey Killers系列-罗嘉莉",
+   "artist": "YITIAN_AI",
+   "artist_id": "1541381955139014656",
+   "type": 1,
+   "detail_url": "https://bidder.top/#/product/1555443725470142464",
+   "artist_url": "https://bidder.top/#/center/1541381955139014656",
+   "ipfs": [
+    "QmWfwd1AV9yMJSmxyo4vZ9hT28QRdZCYbv18WULWF8TiKp"
+   ],
+   "media": "image",
+   "image": "https://api.bidder.top/file/getFile/1555439504976908288/scale/1555439504976908288.jpg",
+   "image_full": "https://api.bidder.top/file/getFile/1555439504976908288/1555439504976908288.jpg",
+   "width": 2370,
+   "height": 2160,
+   "aspect": 1.0972,
+   "intro": "角色卡信息\n姓名：罗嘉莉\n性别：女\n生日：7月24日\n身高：175\n性格：三心二意\n癖好：拖延症\n\n类型：Vert a Mate 虚拟人\n格式：数据包"
+  },
+  {
+   "id": "1541674572921835520",
+   "source": "bidder.top",
+   "title": "Honey Killers 系列-Barshia Fork",
+   "artist": "YITIAN_AI",
+   "artist_id": "1541381955139014656",
+   "type": 1,
+   "detail_url": "https://bidder.top/#/product/1541674572921835520",
+   "artist_url": "https://bidder.top/#/center/1541381955139014656",
+   "ipfs": [
+    "QmcuHRwhUQX62i6eYpMo9TJtbrGFG5pyBm64BNP7DFPnd8"
+   ],
+   "media": "image",
+   "image": "https://api.bidder.top/file/getFile/1541673196170907648/scale/1541673196170907648.png",
+   "image_full": "https://api.bidder.top/file/getFile/1541673196170907648/1541673196170907648.png",
+   "width": 2856,
+   "height": 2158,
+   "aspect": 1.3234,
+   "intro": "Honey Killers 系列是基于一款可以塑造角色的成人游戏Honey Select 2所创作的虚拟角色卡。在这款游戏中，创造的角色可以互动，并可生成角色卡进行交易，是一种虚拟的人口贩卖。",
+   "local_thumb": "thumbs/top_1541674572921835520.jpg"
+  },
+  {
+   "id": "1554824402183524352",
+   "source": "bidder.top",
+   "title": "CPPU-SP",
+   "artist": "Zhangyongji",
+   "artist_id": "1554815932336050176",
+   "type": 3,
+   "detail_url": "https://bidder.top/#/product/1554824402183524352",
+   "artist_url": "https://bidder.top/#/center/1554815932336050176",
+   "ipfs": [
+    "QmUqafTwKX6BAWho26neZcHGrw9xPdbU6s8N71n5dkzX7s"
+   ],
+   "media": "video",
+   "video_id": "ec2cf3bb8ef4546b86c8655d19e2da71",
+   "video": "https://videodelivery.net/ec2cf3bb8ef4546b86c8655d19e2da71/manifest/video.m3u8",
+   "thumbnail": "https://videodelivery.net/ec2cf3bb8ef4546b86c8655d19e2da71/thumbnails/thumbnail.jpg?height=480",
+   "has_audio": true,
+   "image": "https://videodelivery.net/ec2cf3bb8ef4546b86c8655d19e2da71/thumbnails/thumbnail.jpg?height=480",
+   "width": 720,
+   "height": 1080,
+   "aspect": 0.6667,
+   "intro": "蔬果作为我们日常饮⻝的必备品，它本源自于大自然,是自然的产物。在消费主义逻辑里，它变成了人工膨大的商品，变成精美的图像。"
+  },
+  {
+   "id": "1544201272159244288",
+   "source": "bidder.top",
+   "title": "和王子在夏夜的邂逅",
+   "artist": "Lijing_amuz",
+   "artist_id": "1544168195118731264",
+   "type": 1,
+   "detail_url": "https://bidder.top/#/product/1544201272159244288",
+   "artist_url": "https://bidder.top/#/center/1544168195118731264",
+   "ipfs": [
+    "QmSNc1Ga6Rfn4ZEVacys1d3Kn1unu4Xth2Jo65xrUKVeug"
+   ],
+   "media": "image",
+   "image": "https://api.bidder.top/file/getFile/1544183870323298304/scale/1544183870323298304.jpg",
+   "image_full": "https://api.bidder.top/file/getFile/1544183870323298304/1544183870323298304.jpg",
+   "width": 7085,
+   "height": 10521,
+   "aspect": 0.6734,
+   "intro": "如梦境窥视般的一个场景，女孩抓到一只戴王冠的青蛙，此刻其他青蛙包围了上来，闪光灯拍下了这一幕……",
+   "local_thumb": "thumbs/top_1544201272159244288.jpg"
+  },
+  {
+   "id": "1544187016021938176",
+   "source": "bidder.top",
+   "title": "Exhibition Site",
+   "artist": "Sanji_Yang",
+   "artist_id": "1544170144601870336",
+   "type": 1,
+   "detail_url": "https://bidder.top/#/product/1544187016021938176",
+   "artist_url": "https://bidder.top/#/center/1544170144601870336",
+   "ipfs": [
+    "QmdCgQHo2kP5MCSEySBypmW3kyeoqpFYfVJBsNk841KLwE"
+   ],
+   "media": "image",
+   "image": "https://api.bidder.top/file/getFile/1544186456174628864/scale/1544186456174628864.jpg",
+   "image_full": "https://api.bidder.top/file/getFile/1544186456174628864/1544186456174628864.jpg",
+   "width": 2160,
+   "height": 2700,
+   "aspect": 0.8,
+   "intro": "The original photo was taken by me in UCCA, Beijing. I made a digitally secondary creation with it. Digital sculpture creation."
+  },
+  {
+   "id": "1544186255548485632",
+   "source": "bidder.top",
+   "title": "Winter Fireworks",
+   "artist": "Sanji_Yang",
+   "artist_id": "1544170144601870336",
+   "type": 1,
+   "detail_url": "https://bidder.top/#/product/1544186255548485632",
+   "artist_url": "https://bidder.top/#/center/1544170144601870336",
+   "ipfs": [
+    "QmNrMDtynjodP9rcfQBZ1yRjYPC69M8685KN8KZ7GGrq1t"
+   ],
+   "media": "image",
+   "image": "https://api.bidder.top/file/getFile/1544185309858762752/scale/1544185309858762752.jpg",
+   "image_full": "https://api.bidder.top/file/getFile/1544185309858762752/1544185309858762752.jpg",
+   "width": 2160,
+   "height": 2700,
+   "aspect": 0.8,
+   "intro": "The original photo was taken by my friend Zixiong Wei in Qingbang Island, Zhoushan. I made a digitally secondary creation with it. Digital synthetic picture landscape."
+  },
+  {
+   "id": "1544184788305448960",
+   "source": "bidder.top",
+   "title": "Minimalism",
+   "artist": "Sanji_Yang",
+   "artist_id": "1544170144601870336",
+   "type": 1,
+   "detail_url": "https://bidder.top/#/product/1544184788305448960",
+   "artist_url": "https://bidder.top/#/center/1544170144601870336",
+   "ipfs": [
+    "QmNau5dLXDuaHkPCpddzMCHCFbTWPkpLP56kGcR8ePLxs1"
+   ],
+   "media": "image",
+   "image": "https://api.bidder.top/file/getFile/1544183074936459264/scale/1544183074936459264.jpg",
+   "image_full": "https://api.bidder.top/file/getFile/1544183074936459264/1544183074936459264.jpg",
+   "width": 2160,
+   "height": 2700,
+   "aspect": 0.8,
+   "intro": "The original photo was taken by my friend Dongtian Zheng in Sihui, Beijing. I made a digitally secondary creation with it. Exploration of urban surreal minimalism."
+  },
+  {
+   "id": "1543871373397594112",
+   "source": "bidder.top",
+   "title": "生草 pixel-001",
+   "artist": "LEDYan",
+   "artist_id": "1536592438662139904",
+   "type": 1,
+   "detail_url": "https://bidder.top/#/product/1543871373397594112",
+   "artist_url": "https://bidder.top/#/center/1536592438662139904",
+   "ipfs": [
+    "QmU1gYqY6N4VAoSwZYJ78154egSGxBgzYN9xu7rU6R523v"
+   ],
+   "media": "image",
+   "image": "https://api.bidder.top/file/getFile/1543871007285186560/scale/1543871007285186560.jpg",
+   "image_full": "https://api.bidder.top/file/getFile/1543871007285186560/1543871007285186560.jpg",
+   "width": 640,
+   "height": 640,
+   "aspect": 1.0,
+   "intro": "A meme grass lives all over the web.「生草」，a popular term on the Internet, derived from the Japanese word \"草生 える\".\n一颗迷因草生长在网络中各个地方。\n「生草」网络用语，源于日语“草生える”。"
+  },
+  {
+   "id": "1543396236667785216",
+   "source": "bidder.top",
+   "title": "无尽空间的光-黑白版",
+   "artist": "guooooog",
+   "artist_id": "1536634780785971200",
+   "type": 1,
+   "detail_url": "https://bidder.top/#/product/1543396236667785216",
+   "artist_url": "https://bidder.top/#/center/1536634780785971200",
+   "ipfs": [
+    "QmUtbA1Q2Q5PGoDbX8WzskLKy5nnkjnxzVpujjQDRxbaF6"
+   ],
+   "media": "image",
+   "image": "https://api.bidder.top/file/getFile/1543395493684580352/scale/1543395493684580352.jpg",
+   "image_full": "https://api.bidder.top/file/getFile/1543395493684580352/1543395493684580352.jpg",
+   "width": 3650,
+   "height": 3650,
+   "aspect": 1.0,
+   "intro": "光系列-生成艺术作品\n\n尺寸：3650x3650",
+   "local_thumb": "thumbs/top_1543396236667785216.jpg"
+  },
+  {
+   "id": "1541300115048894464",
+   "source": "bidder.top",
+   "title": "GIRL FACE pt.3",
+   "artist": "zhoudaxi",
+   "artist_id": "1540591364436267008",
+   "type": 1,
+   "detail_url": "https://bidder.top/#/product/1541300115048894464",
+   "artist_url": "https://bidder.top/#/center/1540591364436267008",
+   "ipfs": [
+    "QmbSify5DVi4Fi3RLNDp8yHR48Cv7jf6sXg8XbqBSBFtvG"
+   ],
+   "media": "image",
+   "image": "https://api.bidder.top/file/getFile/1541299592505724928/scale/1541299592505724928.jpg",
+   "image_full": "https://api.bidder.top/file/getFile/1541299592505724928/1541299592505724928.jpg",
+   "width": 2480,
+   "height": 3508,
+   "aspect": 0.707,
+   "intro": "这次的作品是来自插画系列《GIRL FACE》中的第三作。这是一位生活在都市的pop girl，戴着墨镜，留着渐变短发，身上充满了能量和和对世界的向往。她爱好是喝橘子汽水和听摇滚演出，对星星元素有着极大的爱好，认为每个人都是一个星星，都会散发着自己的光和吸引力。"
+  },
+  {
+   "id": "1540974559480647680",
+   "source": "bidder.top",
+   "title": "罗浮山 UFO Mountain",
+   "artist": "YICAI",
+   "artist_id": "1540641959738216448",
+   "type": 1,
+   "detail_url": "https://bidder.top/#/product/1540974559480647680",
+   "artist_url": "https://bidder.top/#/center/1540641959738216448",
+   "ipfs": [
+    "QmRvKDobM3aodD4o8Qg7xtZmFxMSvCg4vMdud7TGxCx2gy"
+   ],
+   "media": "image",
+   "image": "https://api.bidder.top/file/getFile/1540974155430760448/scale/1540974155430760448.png",
+   "image_full": "https://api.bidder.top/file/getFile/1540974155430760448/1540974155430760448.png",
+   "width": 1668,
+   "height": 2388,
+   "aspect": 0.6985,
+   "intro": "“君言罗浮上，容易见九垠。疑其有巨灵，怪物尽来宾。世人信耳目，方寸度大均。知小天地大，安能识其真。”",
+   "local_thumb": "thumbs/top_1540974559480647680.jpg"
+  },
+  {
+   "id": "1539246339391623168",
+   "source": "bidder.top",
+   "title": "Inferno",
+   "artist": "hotsunbird",
+   "artist_id": "1536635639074787328",
+   "type": 1,
+   "detail_url": "https://bidder.top/#/product/1539246339391623168",
+   "artist_url": "https://bidder.top/#/center/1536635639074787328",
+   "ipfs": [
+    "QmZpNpuAEh444sdMqxUpPHZ5Bx6d453JMmsDDg89eqhn3U"
+   ],
+   "media": "image",
+   "image": "https://api.bidder.top/file/getFile/1539244644649537536/scale/1539244644649537536.jpg",
+   "image_full": "https://api.bidder.top/file/getFile/1539244644649537536/1539244644649537536.jpg",
+   "width": 1500,
+   "height": 780,
+   "aspect": 1.9231,
+   "intro": "画作结果由AI训练所得。神曲：地狱篇，拿着死神镰刀的十字军，降临此地。AI将与人类共存，敬请见证。All the paintings are generated by the AI I trained.The crusader with the sickle of death comes here, AI will coexist with human beings, please witness."
+  },
+  {
+   "id": "1536974397875818496",
+   "source": "bidder.top",
+   "title": "oxygen-free processes",
+   "artist": "hotsunbird",
+   "artist_id": "1536635639074787328",
+   "type": 3,
+   "detail_url": "https://bidder.top/#/product/1536974397875818496",
+   "artist_url": "https://bidder.top/#/center/1536635639074787328",
+   "ipfs": [
+    "QmSaP5qu2k6Pqz3Qe2wZHXxFaso8vCfTkDMHRJQErj37kB"
+   ],
+   "media": "video",
+   "video_id": "94297bad787c5abd219d37d1b7a9f046",
+   "video": "https://videodelivery.net/94297bad787c5abd219d37d1b7a9f046/manifest/video.m3u8",
+   "thumbnail": "https://videodelivery.net/94297bad787c5abd219d37d1b7a9f046/thumbnails/thumbnail.jpg?height=480",
+   "has_audio": true,
+   "image": "https://api.bidder.top/file/getFile/1536972032531632128/scale/1536972032531632128.jpg",
+   "width": 2560,
+   "height": 1440,
+   "aspect": 1.7778,
+   "intro": "湿地，无氧过程，在世界的一角沉淀、净化。\n\nWetlands, oxygen-free processes, In a corner of the world, Precipitate and then purify."
   }
  ],
  "notes": [
@@ -4195,28 +4833,28 @@
   134,
   135,
   136,
-  null,
-  null,
-  null,
-  null,
-  null,
-  null,
-  null,
-  null,
-  null,
-  null,
-  null,
-  null,
-  null,
-  null,
-  null,
-  null,
-  null,
-  null,
-  null,
-  null,
-  null,
-  null,
+  137,
+  138,
+  139,
+  140,
+  141,
+  142,
+  143,
+  144,
+  145,
+  146,
+  147,
+  148,
+  149,
+  150,
+  151,
+  152,
+  153,
+  154,
+  155,
+  156,
+  157,
+  158,
   null,
   null,
   null,
@@ -4277,8 +4915,8 @@
  ],
  "placement_report": {
   "slots": 216,
-  "used": 137,
-  "empty": 79,
+  "used": 159,
+  "empty": 57,
   "overflow": [],
   "per_artist": [
    {
@@ -5129,7 +5767,179 @@
     "floors": [
      "L2"
     ]
+   },
+   {
+    "artist": "cyberbose",
+    "works": 2,
+    "slots": [
+     "S137",
+     "S138"
+    ],
+    "floors": [
+     "L2"
+    ]
+   },
+   {
+    "artist": "Chenghao_He",
+    "works": 1,
+    "slots": [
+     "S139"
+    ],
+    "floors": [
+     "L2"
+    ]
+   },
+   {
+    "artist": "HiiDEN",
+    "works": 1,
+    "slots": [
+     "S140"
+    ],
+    "floors": [
+     "L2"
+    ]
+   },
+   {
+    "artist": "BingQing",
+    "works": 1,
+    "slots": [
+     "S141"
+    ],
+    "floors": [
+     "L2"
+    ]
+   },
+   {
+    "artist": "Loxel",
+    "works": 2,
+    "slots": [
+     "S142",
+     "S143"
+    ],
+    "floors": [
+     "L2"
+    ]
+   },
+   {
+    "artist": "RuiHuang",
+    "works": 1,
+    "slots": [
+     "S144"
+    ],
+    "floors": [
+     "L3"
+    ]
+   },
+   {
+    "artist": "shaunhu",
+    "works": 1,
+    "slots": [
+     "S145"
+    ],
+    "floors": [
+     "L3"
+    ]
+   },
+   {
+    "artist": "YITIAN_AI",
+    "works": 2,
+    "slots": [
+     "S146",
+     "S147"
+    ],
+    "floors": [
+     "L3"
+    ]
+   },
+   {
+    "artist": "Zhangyongji",
+    "works": 1,
+    "slots": [
+     "S148"
+    ],
+    "floors": [
+     "L3"
+    ]
+   },
+   {
+    "artist": "Lijing_amuz",
+    "works": 1,
+    "slots": [
+     "S149"
+    ],
+    "floors": [
+     "L3"
+    ]
+   },
+   {
+    "artist": "Sanji_Yang",
+    "works": 3,
+    "slots": [
+     "S150",
+     "S151",
+     "S152"
+    ],
+    "floors": [
+     "L3"
+    ]
+   },
+   {
+    "artist": "LEDYan",
+    "works": 1,
+    "slots": [
+     "S153"
+    ],
+    "floors": [
+     "L3"
+    ]
+   },
+   {
+    "artist": "guooooog",
+    "works": 1,
+    "slots": [
+     "S154"
+    ],
+    "floors": [
+     "L3"
+    ]
+   },
+   {
+    "artist": "zhoudaxi",
+    "works": 1,
+    "slots": [
+     "S155"
+    ],
+    "floors": [
+     "L3"
+    ]
+   },
+   {
+    "artist": "YICAI",
+    "works": 1,
+    "slots": [
+     "S156"
+    ],
+    "floors": [
+     "L3"
+    ]
+   },
+   {
+    "artist": "hotsunbird",
+    "works": 2,
+    "slots": [
+     "S157",
+     "S158"
+    ],
+    "floors": [
+     "L3"
+    ]
    }
   ]
+ },
+ "bidder_top": {
+  "api": "https://api.bidder.top/artwork/list",
+  "total": 22,
+  "added": 22,
+  "overlaps": []
  }
 }

@@ -485,6 +485,9 @@ function imageCandidates(w) {
   if (u.startsWith('https://image.bidder.art/')) {          // bidder image CDN sends no CORS header -> resize/CORS proxy first
     if (!big) c.push(WSRV(u));
     if (/^https?:$/.test(location.protocol) && !big) c.push(location.origin + '/media' + w.image_path);   // same-origin Pages Function (deploy)
+  } else if (u.startsWith('https://api.bidder.top/file/getFile/')) {     // bidder.top: CORS (origin reflected) + Range
+    c.push(u);                                                          // (wsrv.nl blocks the .top TLD; big covers ship as local_thumb)
+    const k = u.slice('https://api.bidder.top/file/getFile/'.length); if (/^https?:$/.test(location.protocol) && /^\d{10,25}\/(scale\/)?\d{10,25}\.(jpe?g|png|gif|webp)$/i.test(k)) c.push(location.origin + '/media/top/' + k);
   } else if (u.startsWith('https://ordinals.com/')) { c.push(WSRV(u)); c.push(u); }   // ordinals.com: no CORS on some inscriptions -> proxy first
   else { c.push(u); c.push(WSRV(u)); }                      // unisat content: CORS ok (or via proxy)
   return c;
@@ -569,7 +572,7 @@ function plainTextTex(w) {
 function labelTex(w) {
   return canvasTex((g, W, H) => { g.fillStyle = 'rgba(10,8,20,.92)'; g.fillRect(0, 0, W, H);
     g.fillStyle = '#f2ecff'; g.font = '600 34px system-ui,"Microsoft YaHei",sans-serif'; g.fillText(([...(w.title || '')].slice(0, 26).join('')) + ({ video: '  ▶', audio: '  ♪', text: '  ❝', plaintext: '  ¶' }[w.media] || ''), 18, 42);
-    g.fillStyle = '#b9a8e6'; g.font = '26px system-ui,"Microsoft YaHei",sans-serif'; g.fillText(w.media === 'artist' ? '艺术家 · ' + (w.n || 0) + ' 件作品   ·   按 E 打开主页' : [...(w.artist || '')].slice(0, 40).join('') + '   ·   按 E 查看详情', 18, 82); }, 1024, 100);
+    g.fillStyle = '#b9a8e6'; g.font = '26px system-ui,"Microsoft YaHei",sans-serif'; g.fillText(w.media === 'artist' ? '艺术家 · ' + (w.n || 0) + ' 件作品   ·   按 E 打开主页' : [...(w.artist || '')].slice(0, 34).join('') + '   ·   ' + (w.source === 'bidder.top' ? 'bidder.top' : 'bidder.art') + '   ·   按 E 查看详情', 18, 82); }, 1024, 100);
 }
 function fitPlane(it, aspect) {
   const [IW, IH] = it.slot.inner; let w = IW, h = IH;
@@ -938,8 +941,9 @@ function showInfo(it) {
     (w.media === 'plaintext' && w.text ? `<pre class="q" style="max-height:30vh;overflow:auto;white-space:pre-wrap;word-break:break-all;font-size:11px">${esc(w.text.slice(0, 4000))}${w.text.length > 4000 ? '…' : ''}</pre>` : '') +
     (w.headline ? `<div class="q"><b>${esc(w.headline)}</b></div>` : '') + (w.quote ? `<div class="q">“${esc(w.quote)}”</div>` : '') +
     (w.media === 'artist' ? `<a href="${esc(w.artist_url)}" target="_blank" rel="noopener">打开艺术家主页 ↗</a>` :
-      `<a href="${esc(w.detail_url)}" target="_blank" rel="noopener">在 bidder.art 查看作品 ↗</a>` +
-      (w.artist_url ? `<br><a href="${esc(w.artist_url)}" target="_blank" rel="noopener">艺术家 ${esc(w.artist)} 的主页 ↗</a>` : '')) + `<div class="x">E / Esc 关闭 · 展位 ${esc(it.slot.id)}</div>`;
+      (w.intro ? `<div class="q" style="max-height:18vh;overflow:auto;font-size:12px">${esc(w.intro)}</div>` : '') +
+      `<a href="${esc(w.detail_url)}" target="_blank" rel="noopener">在 ${w.source === 'bidder.top' ? 'bidder.top' : 'bidder.art'} 查看作品 ↗</a>` +
+      (w.artist_url ? `<br><a href="${esc(w.artist_url)}" target="_blank" rel="noopener">艺术家 ${esc(w.artist)} 的主页 ↗</a>` : '')) + `<div class="x">来源 ${w.source === 'bidder.top' ? 'bidder.top' : 'bidder.art'} · E / Esc 关闭 · 展位 ${esc(it.slot.id)}</div>`;
   o.style.display = 'block'; ART.open = it;
 }
 function hideInfo() { $('artinfo').style.display = 'none'; ART.open = null; }

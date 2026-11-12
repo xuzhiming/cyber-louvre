@@ -39,5 +39,9 @@ out = dict(source='https://api.bidder.art/rare/artist/artistList + /rare/artist/
            order='artist-list order (opt=Active, as the page), each artist\'s works in profile order (opt=Newest)',
            media_base=IMG, fetched=prev.get('fetched'), count=len(works), artists=artists, artworks=works,
            notes=notes, previous_ids_not_listed=dropped)
+import os, sys as _s; _s.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+if os.path.exists(R + '/data/bidder_top_raw.json'):        # t36u: bidder.top works appended after the bidder.art ones
+    import fetch_bidder_top as T
+    out = T.merge(out, *T.normalize(json.load(open(R + '/data/bidder_top_raw.json'))))
 json.dump(out, open(R + '/web/artworks.json', 'w'), ensure_ascii=False, indent=1)
 print('artists', len(artists), 'with works', sum(1 for a in artists if a['n']), 'works', len(works), 'notes', notes, 'dropped', dropped)

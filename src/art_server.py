@@ -3,14 +3,15 @@
 import http.server, urllib.request, urllib.error, re, sys, os, shutil
 ROOT = '/workspace/outputs/cyber_louvre/web'
 MEDIA = re.compile(r'^/media/(rare/[A-Za-z0-9]{20,80}\.(?:jpe?g|png|gif|webp|avif|mp4|m4v|webm|mp3|m4a|aac|ogg|oga|opus|wav|flac))$', re.I)
+MEDIA_TOP = re.compile(r'^/media/top/(\d{10,25}/(?:scale/)?\d{10,25}\.(?:jpe?g|png|gif|webp))$', re.I)   # bidder.top images (t36u)
 class H(http.server.SimpleHTTPRequestHandler):
     def __init__(s, *a, **k): super().__init__(*a, directory=ROOT, **k)
     def log_message(s, *a): pass
-    def _media(s, m):
+    def _media(s, m, base='https://image.bidder.art/'):
         hd = {'User-Agent': 'Mozilla/5.0'}
         if s.headers.get('Range'): hd['Range'] = s.headers['Range']
         try:
-            r = urllib.request.urlopen(urllib.request.Request('https://image.bidder.art/' + m.group(1), headers=hd), timeout=60)
+            r = urllib.request.urlopen(urllib.request.Request(base + m.group(1), headers=hd), timeout=60)
         except urllib.error.HTTPError as e: r = e
         except Exception as e: s.send_error(502, str(e)[:60]); return
         s.send_response(r.status)
@@ -39,6 +40,8 @@ class H(http.server.SimpleHTTPRequestHandler):
         return True
     def do_GET(s):
         if s.path.startswith('/media/'):
+            mt = MEDIA_TOP.match(s.path)
+            if mt: return s._media(mt, 'https://api.bidder.top/file/getFile/')
             m = MEDIA.match(s.path)
             if not m: s.send_error(400); return
             return s._media(m)

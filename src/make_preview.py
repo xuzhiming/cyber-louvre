@@ -6,7 +6,7 @@ g = base64.b64encode(open(r + 'web/model_web.glb', 'rb').read()).decode()
 A = json.load(open(r + 'web/artworks.json'))
 keep = ('id', 'title', 'artist', 'media', 'detail_url', 'price', 'edition', 'compilation', 'headline', 'quote', 'image', 'image_path',
         'video', 'video_id', 'thumbnail', 'width', 'height', 'aspect', 'animated', 'frames', 'poster_frame', 'local_thumb', 'video_path', 'video_codec', 'video_local', 'text', 'text_source')
-keep = keep + ('artist_id', 'artist_url', 'audio', 'audio_path', 'audio_duration', 'has_audio')
+keep = keep + ('artist_id', 'artist_url', 'audio', 'audio_path', 'audio_duration', 'has_audio', 'source', 'image_full', 'intro')
 S = json.load(open(r + 'web/slots.json'))
 import sys; sys.path.insert(0, r + 'src')
 # ---- minimap plan data (t33u): per floor room rects + stair flights / landings from spec (walls are sliced from the model in the page)
@@ -40,7 +40,7 @@ from art_assign import place
 placement, rep = place(A, S['slots'])
 A['placement'] = placement; A['placement_report'] = rep          # kept in web/artworks.json too (published next to the page)
 json.dump(A, open(r + 'web/artworks.json', 'w'), ensure_ascii=False, indent=1)
-artists = [{k: a[k] for k in ('id', 'name', 'avatar', 'profile_url', 'n', 'works_total') if a.get(k) not in (None, '')} for a in A['artists']]
+artists = [{k: a[k] for k in ('id', 'name', 'avatar', 'profile_url', 'n', 'works_total', 'source') if a.get(k) not in (None, '')} for a in A['artists']]
 art = dict(source=A['source'], count=A['count'], artworks=[{k: w[k] for k in keep if w.get(k) not in (None, '')} for w in A['artworks']],
            artists=artists, placement=placement)
 if rep['overflow']: print('ART OVERFLOW (no free wall face):', rep['overflow'])
