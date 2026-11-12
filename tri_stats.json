@@ -1,5 +1,5 @@
 {
- "tris": 138014,
+ "tris": 147302,
  "by_group": {
   "Walls_Interior": 3408,
   "Walls_Exterior": 11472,
@@ -22,7 +22,8 @@
   "AutoDoor_PYR_SR_L": 50,
   "AutoDoor_PYR_SR_R": 50,
   "Screens": 228,
-  "Props": 16488,
-  "Hologram": 3168
+  "Props": 8496,
+  "Hologram": 3168,
+  "ArtFrames": 17280
  }
 }

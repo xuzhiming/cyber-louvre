@@ -251,11 +251,22 @@ def facades(acc, rng):
                     top = (zt == h)
                     if b == 'L1':
                         if not door_here:
+                            def plinth(pa, pb):
+                                # only where this side is really exposed (a bay can be half covered by an adjoining wing: the
+                                # plinth used to run on into that wing's room - found by the art-slot check)
+                                k = max(1, int((pb - pa) / 0.1)); us = [pa + (pb - pa) * i / k for i in range(k + 1)]
+                                okv = [visible(mass, name, nrm, coord, min(max((us[i] + us[i + 1]) / 2, a0 + 1e-3), a1 - 1e-3), 'L1') for i in range(k)]
+                                i = 0
+                                while i < k:
+                                    if not okv[i]: i += 1; continue
+                                    j = i
+                                    while j < k and okv[j]: j += 1
+                                    S.box(acc, G, 'stone_trim', us[i], us[j], 0.0, 0.18, 0.0, 1.2); i = j
                             cur = u0
                             for w in sorted([w for w in side_wins if w['band'] == 'L1' and w['u1'] > u0 and w['u0'] < u1], key=lambda w: w['u0']):
-                                if w['u0'] - 0.15 > cur: S.box(acc, G, 'stone_trim', cur, w['u0'] - 0.15, 0.0, 0.18, 0.0, 1.2)
+                                if w['u0'] - 0.15 > cur: plinth(cur, w['u0'] - 0.15)
                                 cur = max(cur, w['u1'] + 0.15)
-                            if u1 > cur: S.box(acc, G, 'stone_trim', cur, u1, 0.0, 0.18, 0.0, 1.2)  # plinth (omitted in the doorway and under floor-to-ceiling glass)
+                            if u1 > cur: plinth(cur, u1)  # plinth (omitted in the doorway and under floor-to-ceiling glass)
                         if not door_here and wok['L1']:
                             w = 2.2
                             zs = 5.2

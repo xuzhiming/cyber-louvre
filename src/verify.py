@@ -6,7 +6,7 @@ sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 import spec
 from spec import *
 from geom import Acc
-import arch, exterior, props
+import arch, exterior, props, art
 from mathutils import Vector
 from mathutils.bvhtree import BVHTree
 
@@ -484,6 +484,51 @@ def check_open_rooms(bvh, opened=None):
                 partitions_room_to_room=len(shared), side_walls_room_to_hall=len(single),
                 art_wall_faces=sum(len(v) for v in parts.values()), art_wall_length_m=round(faces_len, 1))
 
+def check_slots(bvh, slots=None):
+    """display slots: whole frame on a wall face (corner/edge rays hit the wall right behind it), nothing in front of it,
+    clear of windows / doors / opened door-wall lines / face ends, no two slots overlapping"""
+    slots = art.build_slots() if slots is None else slots
+    hw, hh = art.SLOT_W / 2, art.SLOT_H / 2
+    bad = []
+    for s in slots:
+        p = np.array(s['pos'], float); n = np.array(s['normal'], float)
+        t = np.array([-n[1], n[0], 0.0]); why = []
+        for du in (-hw + 0.03, 0.0, hw - 0.03):
+            for dz in (-hh + 0.03, 0.0, hh - 0.03):
+                o = p + t * du + np.array([0, 0, dz]) + n * 0.3
+                r = first_hit(bvh, o, -n, 0.3 + art.DEPTH + 0.03)
+                if r is None or abs((r[0] - Vector(o)).length - (0.3 + art.DEPTH)) > 0.015: why.append(('off_wall', du, dz)); break
+            if why: break
+        r = first_hit(bvh, p + n * 0.01, n, 1.0)
+        if r is not None: why.append(('blocked_in_front', round(r[3], 2)))
+        u0, u1 = s['u'] - hw, s['u'] + hw; z0 = s['pos'][2] - hh; z1 = s['pos'][2] + hh
+        for w in arch.WINDOW_CUTS:
+            if w['axis'] == s['wall_axis'] and abs(w['coord'] - s['wall_coord']) < 0.5 and w['a0'] < u1 and w['a1'] > u0 and w['z0'] < z1 and w['z1'] > z0: why.append('window')
+        for d in DOORS:
+            if d['axis'] == s['wall_axis'] and d['band'] == s['band'] and abs(d['coord'] - s['wall_coord']) < 0.5 and d['center'] - d['width'] / 2 - 0.3 < u1 and d['center'] + d['width'] / 2 + 0.3 > u0: why.append(('door', d['a'], d['b']))
+        for o in spec.OPENED:
+            if o['axis'] != s['wall_axis'] and o['band'] == s['band'] and u0 - 0.3 < o['coord'] < u1 + 0.3 and o['a0'] - 1e-6 <= s['wall_coord'] <= o['a1'] + 1e-6: why.append('opened_line')
+        if why: bad.append((s['id'], s['room'], why[:3]))
+    ov = 0
+    for i, a in enumerate(slots):
+        for b in slots[i + 1:]:
+            if a['wall_axis'] == b['wall_axis'] and abs(a['face_coord'] - b['face_coord']) < 1e-3 and a['band'] == b['band'] and a['normal'] == b['normal'] and abs(a['u'] - b['u']) < art.SLOT_W + 0.2: ov += 1
+    return dict(slots=len(slots), ok=len(slots) - len(bad), overlaps=ov, size=[art.SLOT_W, art.SLOT_H], fails=bad[:10])
+
+def check_floor_props():
+    """no small models / plinths on room floors any more (only ceiling lights, the atrium hologram and the L4 mech cabinet remain)"""
+    spec.build(); a = Acc(); props.props(a)
+    floors = [-6.0, 0.0, 8.0, 16.0, 24.0]
+    left = collections.Counter(); bad_mats = []
+    for m, (V, F) in a.g.get('Props', {}).items():
+        if m in props.FLOOR_PROP_MATS: bad_mats.append(m)
+        Vn = np.array(V) if V else np.zeros((0, 3))
+        for f in F:
+            zs = Vn[list(f), 2]
+            if any(abs(zs.min() - fl) < 0.02 for fl in floors) and zs.max() - zs.min() < 3.0: left[m] += 1
+    ok = not bad_mats and set(left) <= {'frame_dark', 'gold'}     # frame_dark / gold faces on a floor = door jambs + the L4 mech cabinet
+    return dict(ok=ok, exhibit_materials_left=bad_mats, floor_touching_prop_faces=dict(left), removed=dict(props.REMOVED))
+
 def main():
     bvh, acc = build_bvh()
     res = dict()
@@ -523,6 +568,8 @@ def main():
     res['entrances'] = check_entrances(bvh)
     res['windows'] = check_windows(bvh, acc)
     res['open_rooms'] = check_open_rooms(bvh)
+    res['slots'] = check_slots(bvh)
+    res['floor_props'] = check_floor_props()
     res['panes'] = check_panes(acc)
     wells = check_stair_wells(bvh)
     res['stair_wells_checked'] = len(wells); res['stair_wells_ok'] = sum(1 for w in wells if w['ok'])

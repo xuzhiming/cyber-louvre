@@ -2,6 +2,7 @@
 <html lang="zh-CN">
 <head>
 <meta charset="utf-8">
+<link rel="icon" href="data:,">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Cyber Louvre – 赛博卢浮宫 Preview</title>
 <style>
@@ -29,6 +30,9 @@
   #tp button:hover{background:rgba(20,60,80,.9)}
   #lockmsg{position:fixed;left:50%;top:62%;transform:translateX(-50%);z-index:2;color:#fff;background:rgba(0,0,0,.55);padding:8px 16px;border-radius:8px;font:15px system-ui,"Microsoft YaHei",sans-serif;display:none;pointer-events:none}
   body.walk canvas{cursor:crosshair}
+  #artinfo{position:fixed;right:16px;top:70px;width:min(380px,calc(100vw - 32px));z-index:4;display:none;color:#eee;background:rgba(14,10,30,.94);border:1px solid rgba(255,123,240,.6);border-radius:10px;padding:14px 16px;font:14px/1.55 system-ui,"Microsoft YaHei",sans-serif}
+  #artinfo .t{font-size:18px;font-weight:700;color:#ffb6f6}#artinfo .a{color:#c9b8ff;margin-bottom:6px}#artinfo .m{color:#9fb;font-size:12px}#artinfo .q{margin:8px 0;color:#ddd;font-size:13px}
+  #artinfo a{display:inline-block;margin-top:8px;color:#7ee7ff}#artinfo .x{margin-top:8px;color:#889;font-size:12px}
   @media (max-width:600px){#ui button{padding:6px 8px;font-size:12px}}
 </style>
 <script type="importmap">
@@ -76,6 +80,9 @@
   <span class="sep"></span>
   <button id="rot">Auto-rotate</button>
 </div>
+<div id="artinfo"></div>
+<script id="artdata" type="application/json">__ART_JSON__</script>
+<script id="slotdata" type="application/json">__SLOTS_JSON__</script>
 <script id="glb" type="application/octet-stream">__GLB_BASE64__</script>
 <script type="module">
 import * as THREE from 'three';
@@ -150,7 +157,7 @@ document.querySelectorAll('[data-view]').forEach(b => b.onclick = () => goTo(b.d
 function setRotate(on) { controls.autoRotate = on; $('rot').classList.toggle('on', on); }
 $('rot').onclick = () => setRotate(!controls.autoRotate);
 
-const groups = { roof: ['Roofs', 'Dome'], facade: ['Facade', 'Windows', 'Screens', 'AutoDoor_LOBBY_L', 'AutoDoor_LOBBY_R'], extw: ['Walls_Exterior'], interior: ['Walls_Interior','Slabs','Stairs','Rails','Props','Hologram'], pyr: ['Pyramids', 'AutoDoor_PYR_MAIN_L', 'AutoDoor_PYR_MAIN_R', 'AutoDoor_PYR_SL_L', 'AutoDoor_PYR_SL_R', 'AutoDoor_PYR_SR_L', 'AutoDoor_PYR_SR_R'] };
+const groups = { roof: ['Roofs', 'Dome'], facade: ['Facade', 'Windows', 'Screens', 'AutoDoor_LOBBY_L', 'AutoDoor_LOBBY_R'], extw: ['Walls_Exterior'], interior: ['Walls_Interior','Slabs','Stairs','Rails','Props','Hologram','ArtFrames'], pyr: ['Pyramids', 'AutoDoor_PYR_MAIN_L', 'AutoDoor_PYR_MAIN_R', 'AutoDoor_PYR_SL_L', 'AutoDoor_PYR_SL_R', 'AutoDoor_PYR_SR_L', 'AutoDoor_PYR_SR_R'] };
 const byName = {}; let cutHide = false;
 function applyGroups() {
   document.querySelectorAll('[data-grp]').forEach(b => { const on = b.classList.contains('on');
@@ -433,6 +440,179 @@ $('fxMode').onclick = toggleMode; $('fxLights').onclick = () => setLights(!FX.li
 applyFx();
 window.__fx = { setMode, setLights, setBloom, state: () => ({ mode: FX.mode, lights: FX.lights, bloom: FX.bloom, bloomEnabled: bloomPass.enabled, emissives: FX.emissives.length, glass: FX.glass.map(g => ({ name: g.m.name, hex: g.m.color.getHexString(), opacity: +g.m.opacity.toFixed(2) })), fixLights: fixLights.map(p => p.intensity).reduce((a, b) => a + b, 0), sun: sun.visible, exposure: renderer.toneMappingExposure }) };
 
+// ===================== 艺术品展位: bidder.art works hung in the fixed display slots =====================
+// data: artworks (web/artworks.json, inlined copy as fallback) + slots (web/slots.json, from art.py). Media are loaded
+// lazily online only for slots that are near (< ART.NEAR m, same floor) and in the view frustum; far ones are unloaded.
+const ART = { NEAR: 15, FAR: 24, VNEAR: 10, VFAR: 14, MAXLOAD: 4, MAXVID: 3, slots: [], works: [], items: [], loading: 0, videos: 0,
+  req: { image: 0, video: 0, hlsjs: 0, data: 0 }, log: [], errors: [], ready: false, frustum: new THREE.Frustum(), mat4: new THREE.Matrix4() };
+const W2T = (p) => new THREE.Vector3(p[0], p[2], -p[1]);                     // world (z up) -> three
+function readJSON(id) { try { return JSON.parse($(id).textContent); } catch (e) { return null; } }
+const WSRV = (u) => 'https://wsrv.nl/?url=' + encodeURIComponent(u.replace(/^https?:\/\//, '')) + '&w=1024&h=1024&fit=inside&we&output=webp';
+function imageCandidates(w) {
+  const u = w.image; if (!u) return [];
+  const big = (w.width || 0) * (w.height || 0) > 60e6;
+  const c = [];
+  if (u.startsWith('https://image.bidder.art/')) {          // bidder image CDN sends no CORS header -> resize/CORS proxy first
+    if (!big) c.push(WSRV(u));
+    if (/^https?:$/.test(location.protocol) && !big) c.push(location.origin + '/media' + w.image_path);   // same-origin Pages Function (deploy)
+  } else { c.push(u); c.push(WSRV(u)); }                    // ordinals / unisat content: CORS ok (or via proxy)
+  return c;
+}
+function canvasTex(draw, wpx, hpx) {
+  const c = document.createElement('canvas'); c.width = wpx; c.height = hpx; draw(c.getContext('2d'), wpx, hpx);
+  const t = new THREE.CanvasTexture(c); t.colorSpace = THREE.SRGBColorSpace; t.anisotropy = 4; return t;
+}
+function wrapText(g, text, x, y, maxW, lh, maxLines) {
+  const chars = [...(text || '')]; let line = '', n = 0;
+  for (const ch of chars) { const t = line + ch; if (g.measureText(t).width > maxW && line) { g.fillText(line, x, y + n * lh); line = ch; if (++n >= maxLines) return; } else line = t; }
+  if (line && n < maxLines) g.fillText(line, x, y + n * lh);
+}
+let RESERVED_TEX = null;
+function reservedTex() {
+  return RESERVED_TEX || (RESERVED_TEX = canvasTex((g, w, h) => { g.fillStyle = '#16141f'; g.fillRect(0, 0, w, h); g.strokeStyle = 'rgba(200,170,255,.35)'; g.setLineDash([14, 10]); g.lineWidth = 4; g.strokeRect(18, 18, w - 36, h - 36);
+    g.fillStyle = 'rgba(220,200,255,.55)'; g.font = '600 40px system-ui,"Microsoft YaHei",sans-serif'; g.textAlign = 'center'; g.fillText('展位预留 · Reserved', w / 2, h / 2 + 14); }, 512, 384));
+}
+function textCardTex(w, note) {
+  return canvasTex((g, W, H) => { const gr = g.createLinearGradient(0, 0, W, H); gr.addColorStop(0, '#1b1030'); gr.addColorStop(1, '#0c1a2a'); g.fillStyle = gr; g.fillRect(0, 0, W, H);
+    g.fillStyle = '#ff9bf0'; g.font = '700 46px system-ui,"Microsoft YaHei",sans-serif'; wrapText(g, w.headline || w.title, 40, 80, W - 80, 54, 3);
+    g.fillStyle = '#e8e4ff'; g.font = 'italic 32px Georgia,"Microsoft YaHei",serif'; wrapText(g, w.quote ? '“' + w.quote + '”' : (note || ''), 40, 260, W - 80, 42, 6);
+    g.fillStyle = '#9fd8ff'; g.font = '28px system-ui,sans-serif'; g.fillText((w.compilation || '') + (w.edition ? '  ·  ' + w.edition : ''), 40, H - 40); }, 1024, 768);
+}
+function labelTex(w) {
+  return canvasTex((g, W, H) => { g.fillStyle = 'rgba(10,8,20,.92)'; g.fillRect(0, 0, W, H);
+    g.fillStyle = '#f2ecff'; g.font = '600 34px system-ui,"Microsoft YaHei",sans-serif'; g.fillText(([...(w.title || '')].slice(0, 26).join('')) + ({ video: '  ▶', audio: '  ♪', text: '  ❝' }[w.media] || ''), 18, 42);
+    g.fillStyle = '#b9a8e6'; g.font = '26px system-ui,"Microsoft YaHei",sans-serif'; g.fillText([...(w.artist || '')].slice(0, 40).join('') + '   ·   按 E 查看详情', 18, 82); }, 1024, 100);
+}
+function fitPlane(it, aspect) {
+  const [IW, IH] = it.slot.inner; let w = IW, h = IH;
+  if (aspect > IW / IH) h = IW / aspect; else w = IH * aspect;
+  it.media.scale.set(w, h, 1);
+}
+function setMediaTex(it, tex, aspect, kind) {
+  const m = it.media.material; if (m.map && m.map !== RESERVED_TEX && m.map !== tex) m.map.dispose();
+  m.map = tex; m.color.setScalar(kind === 'reserved' ? 1 : 0.92); m.needsUpdate = true; fitPlane(it, aspect || (it.slot.inner[0] / it.slot.inner[1])); it.kind = kind;
+}
+function initArt(root) {
+  const S = readJSON('slotdata'), A = readJSON('artdata');
+  ART.slots = (S && S.slots) || []; ART.works = (A && A.artworks) || [];
+  const g = new THREE.Group(); g.name = 'ArtMedia'; scene.add(g); ART.group = g;
+  ART.slots.forEach((s, i) => {
+    const w = ART.works[i] || null;                    // deterministic: i-th work -> i-th slot (slots ordered 1F->3F, W wing, NW, NE, E wing)
+    const n = new THREE.Vector3(s.normal[0], 0, -s.normal[1]);
+    const c = W2T(s.pos).addScaledVector(n, 0.004);
+    const media = new THREE.Mesh(new THREE.PlaneGeometry(1, 1), new THREE.MeshBasicMaterial({ color: 0xffffff, toneMapped: true }));
+    media.position.copy(c); media.lookAt(c.clone().add(n)); media.userData.slot = i; g.add(media);
+    const it = { slot: s, work: w, media, label: null, state: 'idle', kind: null, center: c, normal: n, try: 0, video: null, hls: null };
+    setMediaTex(it, reservedTex(), s.inner[0] / s.inner[1], 'reserved');
+    ART.items.push(it);
+  });
+  ART.ready = true;
+  ART.assigned = Math.min(ART.slots.length, ART.works.length);
+  ART.unplaced = Math.max(0, ART.works.length - ART.slots.length);
+  if (ART.unplaced) console.warn('art: ' + ART.unplaced + ' works have no free slot');
+}
+function ensureLabel(it) {
+  if (it.label || !it.work) return;
+  const L = new THREE.Mesh(new THREE.PlaneGeometry(1.84, 0.18), new THREE.MeshBasicMaterial({ map: labelTex(it.work), toneMapped: true }));
+  L.position.copy(it.center).add(new THREE.Vector3(0, -it.slot.size[1] / 2 - 0.2, 0)); L.lookAt(L.position.clone().add(it.normal)); ART.group.add(L); it.label = L;
+}
+function dropLabel(it) { if (!it.label) return; it.label.material.map.dispose(); it.label.material.dispose(); it.label.geometry.dispose(); ART.group.remove(it.label); it.label = null; }
+function loadImage(it, urls, k) {
+  if (k >= urls.length) { it.state = 'failed'; ART.loading--; setMediaTex(it, textCardTex(it.work, '图片暂无法在线加载 · 按 E 打开 bidder.art'), 4 / 3, 'card'); return; }
+  ART.req.image++; ART.log.push({ t: +performance.now().toFixed(0), slot: it.slot.id, url: urls[k].slice(0, 120) });
+  new THREE.TextureLoader().setCrossOrigin('anonymous').load(urls[k], (tex) => {
+    ART.loading--; if (it.state !== 'loading') { tex.dispose(); return; }
+    tex.colorSpace = THREE.SRGBColorSpace; tex.anisotropy = 4;
+    const im = tex.image; if (Math.max(im.width, im.height) <= 300) { tex.magFilter = THREE.NearestFilter; tex.minFilter = THREE.NearestFilter; tex.generateMipmaps = false; }   // pixel-art inscriptions
+    it.state = 'loaded'; setMediaTex(it, tex, im.width / im.height, 'image');
+  }, undefined, () => { ART.errors.push(urls[k].slice(0, 100)); if (it.state === 'loading') loadImage(it, urls, k + 1); else ART.loading--; });
+}
+let HLS = null;
+async function hlsLib() { if (HLS) return HLS; ART.req.hlsjs++; HLS = (await import('https://cdn.jsdelivr.net/npm/hls.js@1.5.17/dist/hls.mjs')).default; return HLS; }
+async function startVideo(it) {
+  const w = it.work; if (!w.video_id || it.video || ART.videos >= ART.MAXVID) return;
+  ART.videos++; it.vstate = 'starting';
+  const v = document.createElement('video'); v.muted = true; v.loop = true; v.playsInline = true; v.crossOrigin = 'anonymous'; v.preload = 'auto';
+  it.video = v; ART.req.video++;
+  try {
+    const H = await hlsLib();
+    if (!it.video) return;
+    if (H.isSupported()) { it.hls = new H({ maxBufferLength: 10, capLevelToPlayerSize: false, startLevel: 0 }); it.hls.loadSource(w.video); it.hls.attachMedia(v); }
+    else v.src = w.video;
+    v.addEventListener('loadeddata', () => { if (!it.video) return; const t = new THREE.VideoTexture(v); t.colorSpace = THREE.SRGBColorSpace; setMediaTex(it, t, (v.videoWidth / v.videoHeight) || w.aspect || 16 / 9, 'video'); it.vstate = 'playing'; }, { once: true });
+    await v.play().catch(() => {});
+  } catch (e) { ART.errors.push('video ' + w.id + ' ' + e); stopVideo(it); }
+}
+function stopVideo(it) {
+  if (!it.video) return;
+  try { it.video.pause(); } catch (_) {} if (it.hls) { it.hls.destroy(); it.hls = null; }
+  it.video.removeAttribute('src'); it.video.load(); it.video = null; ART.videos--; it.vstate = null;
+  if (it.kind === 'video') { it.kind = null; it.state = 'idle'; }      // poster is re-loaded by the scheduler
+}
+function unloadItem(it) {
+  stopVideo(it); dropLabel(it);
+  if (it.state !== 'idle' || it.kind !== 'reserved') { it.state = 'idle'; setMediaTex(it, reservedTex(), it.slot.inner[0] / it.slot.inner[1], 'reserved'); }
+}
+function loadItem(it) {
+  const w = it.work; ensureLabel(it);
+  if (!w) { it.state = 'empty'; return; }
+  if (w.media === 'text') { it.state = 'loaded'; setMediaTex(it, textCardTex(w), 4 / 3, 'card'); return; }
+  const urls = w.media === 'video' && w.thumbnail && w.thumbnail.startsWith('https://videodelivery.net/') ? [w.thumbnail].concat(imageCandidates(w)) : imageCandidates(w);
+  it.state = 'loading'; ART.loading++; loadImage(it, urls, 0);
+}
+const _sph = new THREE.Sphere();
+function updateArt() {
+  if (!ART.ready) return;
+  const eye = camera.position;
+  camera.updateMatrixWorld(); ART.mat4.multiplyMatrices(camera.projectionMatrix, camera.matrixWorldInverse); ART.frustum.setFromProjectionMatrix(ART.mat4);
+  const cand = [];
+  for (const it of ART.items) {
+    const d = eye.distanceTo(it.center), sameFloor = Math.abs(eye.y - it.center.y) < 5.5;
+    const facing = it.normal.dot(new THREE.Vector3().subVectors(eye, it.center)) > 0;
+    if (d > ART.FAR || !sameFloor) { if (it.state !== 'idle' || it.label) unloadItem(it); continue; }
+    if (it.video && (d > ART.VFAR || !facing)) stopVideo(it);
+    if (d < ART.NEAR && facing && ART.frustum.intersectsSphere(_sph.set(it.center, 1.3))) {
+      if (it.state === 'idle') cand.push([d, it]);
+      else if (it.state === 'loaded' && it.work && it.work.video_id && !it.video && d < ART.VNEAR) startVideo(it);
+    }
+  }
+  cand.sort((a, b) => a[0] - b[0]);
+  for (const [, it] of cand) { if (ART.loading >= ART.MAXLOAD) break; loadItem(it); }
+}
+// info overlay (E near a work, or click a work in orbit view)
+function nearestItem(maxD) {
+  let best = null, bd = maxD; const eye = camera.position, fwd = new THREE.Vector3(); camera.getWorldDirection(fwd);
+  for (const it of ART.items) { if (!it.work) continue; const v = new THREE.Vector3().subVectors(it.center, eye); const d = v.length();
+    if (d < bd && v.normalize().dot(fwd) > 0.55 && it.normal.dot(new THREE.Vector3().subVectors(eye, it.center)) > 0) { bd = d; best = it; } }
+  return best;
+}
+const esc = (s) => String(s ?? '').replace(/[&<>"]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
+function showInfo(it) {
+  const w = it.work, o = $('artinfo'); if (!w) return;
+  o.innerHTML = `<div class="t">${esc(w.title)}</div><div class="a">${esc(w.artist)}</div>` +
+    `<div class="m">${esc({ image: '图片', video: '视频', audio: '音频', text: '文本 / 语录' }[w.media] || w.media)}${w.edition ? ' · ' + esc(w.edition) : ''}${w.price ? ' · 价格 ' + esc(w.price) : ''}</div>` +
+    (w.headline ? `<div class="q"><b>${esc(w.headline)}</b></div>` : '') + (w.quote ? `<div class="q">“${esc(w.quote)}”</div>` : '') +
+    `<a href="${esc(w.detail_url)}" target="_blank" rel="noopener">在 bidder.art 查看作品 ↗</a><div class="x">E / Esc 关闭 · 展位 ${esc(it.slot.id)}</div>`;
+  o.style.display = 'block'; ART.open = it;
+}
+function hideInfo() { $('artinfo').style.display = 'none'; ART.open = null; }
+addEventListener('keydown', (e) => {
+  if (e.code === 'KeyE' && !e.repeat) { if (ART.open) hideInfo(); else { const it = nearestItem(8); if (it) { showInfo(it); if (plc.isLocked) plc.unlock(); } } }
+  if (e.code === 'Escape' && ART.open) hideInfo();
+});
+renderer.domElement.addEventListener('click', (e) => {
+  if (WALK.on || !ART.ready) return;
+  const r = new THREE.Raycaster(), p = new THREE.Vector2((e.clientX / innerWidth) * 2 - 1, -(e.clientY / innerHeight) * 2 + 1); r.setFromCamera(p, camera);
+  const h = r.intersectObjects(ART.items.map(i => i.media), false)[0]; if (h && h.distance < 30) showInfo(ART.items[h.object.userData.slot]);
+});
+window.__art = { state: () => ({ slots: ART.slots.length, works: ART.works.length, assigned: ART.assigned, unplaced: ART.unplaced,
+    loaded: ART.items.filter(i => i.state === 'loaded').length, loading: ART.loading, failed: ART.items.filter(i => i.state === 'failed').length,
+    labels: ART.items.filter(i => i.label).length, videos: ART.videos, playing: ART.items.filter(i => i.vstate === 'playing').length,
+    kinds: ART.items.reduce((a, i) => (a[i.kind] = (a[i.kind] || 0) + 1, a), {}), req: { ...ART.req }, errors: ART.errors.slice(-10) }),
+  log: () => ART.log.slice(), nearest: () => { const it = nearestItem(8); return it && { slot: it.slot.id, id: it.work.id, title: it.work.title }; },
+  info: () => ART.open && { slot: ART.open.slot.id, href: $('artinfo').querySelector('a').href }, showSlot: (id) => { const it = ART.items.find(i => i.slot.id === id); if (it) showInfo(it); }, hide: hideInfo };
+// ===========================================================
+
 function b64ToBuffer(b64) { const bin = atob(b64.replace(/\s+/g, '')); const u = new Uint8Array(bin.length); for (let i = 0; i < bin.length; i++) u[i] = bin.charCodeAt(i); return u.buffer; }
 const loader = new GLTFLoader(); loader.setMeshoptDecoder(MeshoptDecoder);
 try {
@@ -446,6 +626,7 @@ try {
     $('loading').classList.add('hide'); window.__ready = true;
     window.__byName = byName;
     initDoors(gltf.scene);
+    initArt(gltf.scene);
     buildCollision(gltf.scene).then(() => { window.__collisionReady = true; });
     if (Q.get('cut')) setCut(Q.get('cut'));
     if (Q.get('view')) { goTo(Q.get('view')); tween.dur = 1; }
@@ -458,6 +639,7 @@ let lastT = performance.now();
 renderer.setAnimationLoop(() => {
   const nowT = performance.now(), dtR = (nowT - lastT) / 1000; lastT = nowT;
   updateDoors(Math.min(dtR, 0.3));
+  updateArt();
   if (WALK.on && WALK.col) updateWalk(dtR);
   if (tween) { const k = Math.min(1, (performance.now() - tween.t0) / tween.dur), e = ease(k);
     camera.position.lerpVectors(tween.p0, tween.p1, e); controls.target.lerpVectors(tween.c0, tween.c1, e); if (k >= 1) tween = null; }

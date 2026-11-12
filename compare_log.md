@@ -29,3 +29,4 @@ r14 (hollow dormers + gable window opening; blocked facade windows dropped): IoU
 - r16 (windows simplified: one centred floor-to-ceiling window per room, halls every 2nd/3rd bay symmetric; 746 -> 270 facade windows): IoU 0.899 / 0.930 / 0.851 / 0.849 / 0.928 (unchanged); windows 270/270, panes 371/371, doors 146/146, stairs 20/20, walk 164/164 x3
 - r17 (open rooms: 72 small-gallery door walls removed, partitions kept): IoU 0.899 / 0.930 / 0.851 / 0.849 / 0.928 (unchanged); doors 74/74 (was 146), open-room remnant check 72/72, windows 270/270, panes 371/371, walk 164/164 x3
 - r18 (exterior walls #696A71, roofs #4C4D52, copings #5D5E65): IoU unchanged
+- r19 (art walls: 288 display slots 2.0x1.5 m, floor exhibits removed): IoU unchanged; slots 288/288, floor_props ok, doors 74/74, walk 164/164 x3

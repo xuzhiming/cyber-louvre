@@ -21,12 +21,14 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - name: Build site (web/ -> dist/, preview.html served as index.html)
+      - name: Build site (web/ -> dist/, preview.html served as index.html; functions/ = Pages Functions, picked up by wrangler from the repo root)
         run: |
           mkdir -p dist
           cp web/preview.html dist/index.html
           cp web/preview.html dist/preview.html
           cp web/model_web.glb dist/model_web.glb
+          cp web/artworks.json dist/artworks.json
+          cp web/slots.json dist/slots.json
           find dist -type f -size +25M -print -exec false {} + || { echo "::error::file exceeds Cloudflare Pages 25 MiB limit"; exit 1; }
           ls -la dist
 

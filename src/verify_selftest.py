@@ -123,3 +123,20 @@ def _door_walls_back():
         sp.OPEN_ROOMS = True; sp.build()
     print('NEGATIVE CONTROL (old door walls kept): open-room check ok =', r['ok'], '| flagged', r['failed_rooms'], 'of', len(reg), 'opened walls | e.g.', r['fails'][:2])
 _door_walls_back()
+
+# ---- negative control for the display-slot check: slide every slot 2.5 m towards the corridor (frames now hang past the
+# old door-wall line / partition end) and 1 copy onto the next slot; the slot check must flag them
+def _bad_slots():
+    import copy, art
+    bvh, acc = verify.build_bvh()
+    S = copy.deepcopy(art.build_slots())
+    import spec as sp
+    rooms = {o['room']: o for o in sp.OPENED}
+    for s in S:
+        o = rooms[s['room']]; k = 1 if o['coord'] > s['u'] else -1
+        s['u'] += k * 2.5
+        if s['wall_axis'] == 'y': s['pos'][0] = s['u']
+        else: s['pos'][1] = s['u']
+    r = verify.check_slots(bvh, S)
+    print('NEGATIVE CONTROL (slots slid 2.5 m past the bay edge): slots ok', r['ok'], 'of', r['slots'], '| overlaps', r['overlaps'], '| e.g.', r['fails'][:2])
+_bad_slots()

@@ -20,6 +20,8 @@ min_headroom_m : 2.6
 total_steps_checked : 912
 windows : {'cuts': 270, 'glass_blocked': 270, 'open_through': 270, 'glass_fail': [], 'open_fail': []}
 open_rooms : {'opened_walls': 72, 'rays': 14868, 'ok': True, 'failed_rooms': 0, 'fails': [], 'partitions_room_to_room': 42, 'side_walls_room_to_hall': 60, 'art_wall_faces': 144, 'art_wall_length_m': 1094.4}
+slots : {'slots': 288, 'ok': 288, 'overlaps': 0, 'size': [2.0, 1.5], 'fails': []}
+floor_props : {'ok': True, 'exhibit_materials_left': [], 'floor_touching_prop_faces': {'frame_dark': 204, 'gold': 86}, 'removed': {'plinth': 324, 'exhibit_model': 324, 'hall_placeholder_art': 18}}
 panes : {'panes': 371, 'ok': 371, 'by_kind': {'facade_L1': [82, 82], 'facade_L2': [84, 84], 'facade_L3': [84, 84], 'facade_L4': [20, 20], 'gable': [1, 1], 'dormer_tower': [40, 40], 'dormer_wing': [36, 36], 'dormer_nwing': [24, 24]}, 'fails': []}
 stair_wells_checked : 20
 stair_wells_ok : 20

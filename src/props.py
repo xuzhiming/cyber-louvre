@@ -1,4 +1,5 @@
 """Interior props (visual only, not part of the walk-BVH): ceiling lights, exhibits, hologram, door frames."""
+import collections
 import math, random
 import numpy as np
 import spec
@@ -58,8 +59,11 @@ def ceiling_fixtures(sp, zc):
         res.append(bb)
     return res
 
+REMOVED = collections.Counter()   # what the old version placed on the floor (bookkeeping for the report / verify)
+FLOOR_PROP_MATS = ('exhibit_a', 'exhibit_b', 'exhibit_c', 'exhibit_d', 'exhibit_art')
+
 def props(acc, seed=5):
-    FIXTURES.clear()
+    FIXTURES.clear(); REMOVED.clear()
     rng = random.Random(seed)
     G = 'Props'
     ex_mats = ['exhibit_a', 'exhibit_b', 'exhibit_c', 'exhibit_d']
@@ -74,22 +78,12 @@ def props(acc, seed=5):
             for bb in ceiling_fixtures(sp, zc):
                 acc.box(G, 'light_panel', bb[0], bb[1], bb[2], bb[3], bb[4], bb[5])
                 FIXTURES.append(dict(space=sp['id'], bbox=bb, mat='light_panel', kind='ceiling_panel'))
+        # (round 'art walls') floor exhibits removed: no more plinths / mini models on the floor of any room, and the old
+        # placeholder wall-art boxes are gone too - works now hang in the fixed display slots (art.py, web/slots.json)
         if sp['kind'] in ('gallery', 'hall', 'pavilion_hall'):
-            n = 3 if sp['kind'] == 'gallery' else 6
-            for k in range(n):
-                if lx >= ly:
-                    px = x0 + lx * (k + 0.5) / n; py = cy + (ly * 0.28) * (1 if k % 2 else -1)
-                else:
-                    py = y0 + ly * (k + 0.5) / n; px = cx + (lx * 0.28) * (1 if k % 2 else -1)
-                acc.box(G, 'stone_trim_in', px - 0.5, py - 0.5, z0, px + 0.5, py + 0.5, z0 + 1.1)
-                m = ex_mats[rng.randrange(4)]
-                acc.box(G, m, px - 0.3, py - 0.3, z0 + 1.1, px + 0.3, py + 0.3, z0 + 1.7)
-            # wall art on the far wall (halls only: gallery rooms are open bays now - their partitions stay clean for art)
-            if sp['kind'] == 'gallery': pass
-            elif lx >= ly:
-                acc.box(G, 'exhibit_art', cx - 1.2, y1 - 0.45, z0 + 2.3, cx + 1.2, y1 - 0.35, z0 + 3.9)
-            else:
-                acc.box(G, 'exhibit_art', x1 - 0.45, cy - 1.2, z0 + 2.3, x1 - 0.35, cy + 1.2, z0 + 3.9)
+            REMOVED['plinth'] += 3 if sp['kind'] == 'gallery' else 6
+            REMOVED['exhibit_model'] += 3 if sp['kind'] == 'gallery' else 6
+            if sp['kind'] != 'gallery': REMOVED['hall_placeholder_art'] += 1
         if sp['kind'] == 'mech':
             acc.box(G, 'frame_dark', x0 + 1, y0 + 1, z0, x0 + 3, y0 + 3.5, z0 + 2.2)
             acc.box(G, 'window_cyan', x0 + 1.2, y0 + 3.5, z0 + 1.0, x0 + 2.8, y0 + 3.55, z0 + 1.8)

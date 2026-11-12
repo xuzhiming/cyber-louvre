@@ -178,6 +178,29 @@
   "art_wall_faces": 144,
   "art_wall_length_m": 1094.4
  },
+ "slots": {
+  "slots": 288,
+  "ok": 288,
+  "overlaps": 0,
+  "size": [
+   2.0,
+   1.5
+  ],
+  "fails": []
+ },
+ "floor_props": {
+  "ok": true,
+  "exhibit_materials_left": [],
+  "floor_touching_prop_faces": {
+   "frame_dark": 204,
+   "gold": 86
+  },
+  "removed": {
+   "plinth": 324,
+   "exhibit_model": 324,
+   "hall_placeholder_art": 18
+  }
+ },
  "panes": {
   "panes": 371,
   "ok": 371,

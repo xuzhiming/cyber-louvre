@@ -2,7 +2,7 @@ import sys, os, math, json, time
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 import numpy as np
 import bpy
-import spec, arch, exterior, props
+import spec, arch, exterior, props, art
 from geom import Acc
 import mats
 
@@ -13,6 +13,7 @@ def make_acc(xclip=None):
     arch.build_arch(acc)
     exterior.build_exterior(acc)
     props.props(acc)
+    art.build_frames(acc, write=xclip is None)
     return acc
 
 def to_blender(acc):
