@@ -10,6 +10,7 @@ ARCH_GROUPS = ['Walls_Exterior', 'Walls_Interior', 'Slabs', 'Stairs']   # includ
 def _inside(r, x, y, eps=1e-6):
     return r[0] + eps < x < r[2] - eps and r[1] + eps < y < r[3] - eps
 
+UNDERSTAIR_CLOSE = 2.1   # m; flights whose soffit is lower than this above the storey floor get a solid base
 _WINS = []
 WINDOW_CUTS = []   # openings actually cut through exterior walls (filled by build_walls)
 def _windows():
@@ -122,9 +123,15 @@ def build_slabs(acc):
 def build_stairs(acc):
     for st in STAIRS:
         for f in st['flights']:
+            # storey floor under this flight; where the flight's soffit is < 2.1 m above it, the void under the stair is
+            # closed (solid stair base) - otherwise a walker could wander under the low end of a flight and get wedged
+            zlo = min(f['z0'], f['z0'] + f['riser'] * f['n'])
+            zfl = max([l for l in (-6.0, 0.0, 8.0, 16.0, 24.0) if l <= zlo + 1e-6] or [zlo])
             for i in range(1, f['n'] + 1):
                 r, zt = flight_step_rect(f, i)
-                acc.rect('Stairs', 'stair', r, zt - abs(f['riser']) - 0.3, zt)
+                zb = zt - abs(f['riser']) - 0.3
+                if zfl + 1e-6 < zb < zfl + UNDERSTAIR_CLOSE: zb = zfl
+                acc.rect('Stairs', 'stair', r, zb, zt)
             # handrails (outer sides) as slanted bars
             ex = flight_end(f)
             for sgn in (-1, 1):

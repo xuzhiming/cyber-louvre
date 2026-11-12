@@ -525,7 +525,7 @@
    "zone_start": 2.99,
    "zone_end": 2.99,
    "zone_req": 3.0,
-   "headroom": 7.53,
+   "headroom": 5.5,
    "rails_missing": 0,
    "door_conflicts": [],
    "issues": []
@@ -563,7 +563,7 @@
    "zone_start": 2.99,
    "zone_end": 2.99,
    "zone_req": 3.0,
-   "headroom": 7.53,
+   "headroom": 5.5,
    "rails_missing": 0,
    "door_conflicts": [],
    "issues": []
@@ -639,7 +639,7 @@
    "zone_start": 2.99,
    "zone_end": 2.99,
    "zone_req": 3.0,
-   "headroom": 7.53,
+   "headroom": 5.5,
    "rails_missing": 0,
    "door_conflicts": [],
    "issues": []
@@ -677,7 +677,7 @@
    "zone_start": 2.99,
    "zone_end": 2.99,
    "zone_req": 3.0,
-   "headroom": 7.53,
+   "headroom": 5.5,
    "rails_missing": 0,
    "door_conflicts": [],
    "issues": []
@@ -753,7 +753,7 @@
    "zone_start": 2.99,
    "zone_end": 2.99,
    "zone_req": 3.0,
-   "headroom": 7.53,
+   "headroom": 5.5,
    "rails_missing": 0,
    "door_conflicts": [],
    "issues": []
@@ -791,7 +791,7 @@
    "zone_start": 2.99,
    "zone_end": 2.99,
    "zone_req": 3.0,
-   "headroom": 7.53,
+   "headroom": 5.5,
    "rails_missing": 0,
    "door_conflicts": [],
    "issues": []
@@ -867,7 +867,7 @@
    "zone_start": 2.99,
    "zone_end": 2.99,
    "zone_req": 3.0,
-   "headroom": 7.53,
+   "headroom": 5.5,
    "rails_missing": 0,
    "door_conflicts": [],
    "issues": []
@@ -905,7 +905,7 @@
    "zone_start": 2.99,
    "zone_end": 2.99,
    "zone_req": 3.0,
-   "headroom": 7.53,
+   "headroom": 5.5,
    "rails_missing": 0,
    "door_conflicts": [],
    "issues": []

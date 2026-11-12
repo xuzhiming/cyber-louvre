@@ -221,7 +221,7 @@ function cast(o, d, far) {
 
 async function buildCollision(root) {
   root.updateMatrixWorld(true);
-  const names = ['Walls_Exterior', 'Walls_Interior', 'Slabs', 'Stairs', 'Rails', 'Pyramids', 'Ground'];
+  const names = ['Walls_Exterior', 'Walls_Interior', 'Slabs', 'Stairs', 'Rails', 'Pyramids', 'Ground', 'Windows'];   // Windows = window glass panes (solid)
   const arrs = []; let n = 0; const v = new THREE.Vector3();
   for (const name of names) {
     const node = byName[name]; if (!node) continue;
