@@ -6,7 +6,7 @@ g = base64.b64encode(open(r + 'web/model_web.glb', 'rb').read()).decode()
 A = json.load(open(r + 'web/artworks.json'))
 keep = ('id', 'title', 'artist', 'media', 'detail_url', 'price', 'edition', 'compilation', 'headline', 'quote', 'image', 'image_path',
         'video', 'video_id', 'thumbnail', 'width', 'height', 'aspect', 'animated', 'frames', 'poster_frame', 'local_thumb', 'video_path', 'video_codec', 'video_local', 'text', 'text_source')
-keep = keep + ('artist_id', 'artist_url', 'audio', 'audio_path', 'audio_duration')
+keep = keep + ('artist_id', 'artist_url', 'audio', 'audio_path', 'audio_duration', 'has_audio')
 S = json.load(open(r + 'web/slots.json'))
 import sys; sys.path.insert(0, r + 'src')
 # ---- minimap plan data (t33u): per floor room rects + stair flights / landings from spec (walls are sliced from the model in the page)

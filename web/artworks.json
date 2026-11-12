@@ -1410,7 +1410,8 @@
    "height": 1080,
    "aspect": 1.7778,
    "video_id": "e93253ce4b77b0391f4996886d1801d3",
-   "artist_url": "https://bidder.art/artist/1851535135908958208"
+   "artist_url": "https://bidder.art/artist/1851535135908958208",
+   "has_audio": true
   },
   {
    "id": "1849241310708502528",
@@ -1434,7 +1435,8 @@
    "height": 360,
    "aspect": 1.0,
    "video_id": "4617999eaa1047df4803e953e18d828f",
-   "artist_url": "https://bidder.art/artist/1847339285729120256"
+   "artist_url": "https://bidder.art/artist/1847339285729120256",
+   "has_audio": true
   },
   {
    "id": "1848434786163625984",
@@ -1458,7 +1460,8 @@
    "height": 1920,
    "aspect": 1.0,
    "video_id": "f9cadd6a571d2e53a1099f241387e2bc",
-   "artist_url": "https://bidder.art/artist/1832390380436459520"
+   "artist_url": "https://bidder.art/artist/1832390380436459520",
+   "has_audio": true
   },
   {
    "id": "1846214466740555776",
@@ -1551,7 +1554,8 @@
    "height": 1164,
    "aspect": 5.1194,
    "video_id": "816c8c7ca28265ecaccbd9f952304826",
-   "artist_url": "https://bidder.art/artist/1814168704305467392"
+   "artist_url": "https://bidder.art/artist/1814168704305467392",
+   "has_audio": true
   },
   {
    "id": "1846821947074285568",
@@ -1575,7 +1579,8 @@
    "height": 693,
    "aspect": 2.7619,
    "video_id": "ddbb077e95642251e705e5f0833a006a",
-   "artist_url": "https://bidder.art/artist/1793179492940910592"
+   "artist_url": "https://bidder.art/artist/1793179492940910592",
+   "has_audio": true
   },
   {
    "id": "1846507829394018304",
@@ -1737,7 +1742,8 @@
    "height": 542,
    "aspect": 1.2085,
    "video_id": "6adc3cf597167666e47d9cf93a609f2f",
-   "artist_url": "https://bidder.art/artist/1792592981161807872"
+   "artist_url": "https://bidder.art/artist/1792592981161807872",
+   "has_audio": false
   },
   {
    "id": "1845656251896303616",
@@ -1761,7 +1767,8 @@
    "height": 1510,
    "aspect": 0.8093,
    "video_id": "e3447e6006f5c06f5af69cc9e50ff6e7",
-   "artist_url": "https://bidder.art/artist/1803015954804903936"
+   "artist_url": "https://bidder.art/artist/1803015954804903936",
+   "has_audio": true
   },
   {
    "id": "1840005303182168064",
@@ -1808,7 +1815,8 @@
    "height": 2000,
    "aspect": 1.0,
    "video_id": "b82c7e862130dac39cfafdee468d9cc1",
-   "artist_url": "https://bidder.art/artist/1843560584268877824"
+   "artist_url": "https://bidder.art/artist/1843560584268877824",
+   "has_audio": true
   },
   {
    "id": "1844408508653637632",
@@ -1904,7 +1912,8 @@
    "height": 5712,
    "aspect": 0.6766,
    "video_id": "4e8d7055cbb56a89136f1a5a9ed28563",
-   "artist_url": "https://bidder.art/artist/1838256016463106048"
+   "artist_url": "https://bidder.art/artist/1838256016463106048",
+   "has_audio": true
   },
   {
    "id": "1841188026215174144",
@@ -1928,7 +1937,8 @@
    "height": 1819,
    "aspect": 0.5937,
    "video_id": "afe05357bd004d061774e4595d7c7bbd",
-   "artist_url": "https://bidder.art/artist/1836976651733438464"
+   "artist_url": "https://bidder.art/artist/1836976651733438464",
+   "has_audio": true
   },
   {
    "id": "1840362184878723072",
@@ -1975,7 +1985,8 @@
    "height": 1080,
    "aspect": 1.7778,
    "video_id": "8991f175004f51995706608b2b9ce492",
-   "artist_url": "https://bidder.art/artist/1826818250340700160"
+   "artist_url": "https://bidder.art/artist/1826818250340700160",
+   "has_audio": true
   },
   {
    "id": "1840317672236126208",
@@ -1999,7 +2010,8 @@
    "height": 1280,
    "aspect": 1.5,
    "video_id": "280b9ef0eb0e7008e87926df3730eeef",
-   "artist_url": "https://bidder.art/artist/1826818250340700160"
+   "artist_url": "https://bidder.art/artist/1826818250340700160",
+   "has_audio": true
   },
   {
    "id": "1839922601653309440",
@@ -2023,7 +2035,8 @@
    "height": 350,
    "aspect": 1.0,
    "video_id": "e5e068827db12f111d0ef0554096224d",
-   "artist_url": "https://bidder.art/artist/1838547128348184576"
+   "artist_url": "https://bidder.art/artist/1838547128348184576",
+   "has_audio": true
   },
   {
    "id": "1839563492009578496",
@@ -2047,7 +2060,8 @@
    "height": 1080,
    "aspect": 1.7778,
    "video_id": "ab470c3f410ecbf450c68c05ab75d12a",
-   "artist_url": "https://bidder.art/artist/1791038743256371200"
+   "artist_url": "https://bidder.art/artist/1791038743256371200",
+   "has_audio": true
   },
   {
    "id": "1839276472741793792",
@@ -2071,7 +2085,8 @@
    "height": 1024,
    "aspect": 1.0,
    "video_id": "7462f08d1717616194e7c2c58aabd206",
-   "artist_url": "https://bidder.art/artist/1796130218369486848"
+   "artist_url": "https://bidder.art/artist/1796130218369486848",
+   "has_audio": true
   },
   {
    "id": "1839075943159828480",
@@ -2097,7 +2112,8 @@
    "video_cors": false,
    "artist_url": "https://bidder.art/artist/1838784143522140160",
    "video_path": "/rare/Qmbwg191dQQUm6EJAm8xCTaQXBfmAHKF9Jwzv6GkF9VYcT.MP4",
-   "video_codec": "h264"
+   "video_codec": "h264",
+   "has_audio": true
   },
   {
    "id": "1838967121921576960",
@@ -2121,7 +2137,8 @@
    "height": 1080,
    "aspect": 1.7778,
    "video_id": "d7aaf3490524ab70b725d76356232b3c",
-   "artist_url": "https://bidder.art/artist/1798019505121792000"
+   "artist_url": "https://bidder.art/artist/1798019505121792000",
+   "has_audio": true
   },
   {
    "id": "1838848888660955136",
@@ -2145,7 +2162,8 @@
    "height": 2613,
    "aspect": 1.0,
    "video_id": "349ddedeacaffb3c02a723817fbfd063",
-   "artist_url": "https://bidder.art/artist/1797919075666628608"
+   "artist_url": "https://bidder.art/artist/1797919075666628608",
+   "has_audio": true
   },
   {
    "id": "1838834450054647808",
@@ -2169,7 +2187,8 @@
    "height": 2453,
    "aspect": 1.0,
    "video_id": "7d1d02becec75c1da512ba3b6091bcbe",
-   "artist_url": "https://bidder.art/artist/1797919075666628608"
+   "artist_url": "https://bidder.art/artist/1797919075666628608",
+   "has_audio": true
   },
   {
    "id": "1838531735441248256",
@@ -2538,7 +2557,8 @@
    "height": 1713,
    "aspect": 0.5733,
    "video_id": "a1970c8a6c8e5db75bbb1cb5504a6f2f",
-   "artist_url": "https://bidder.art/artist/1826200981084442624"
+   "artist_url": "https://bidder.art/artist/1826200981084442624",
+   "has_audio": true
   },
   {
    "id": "1837753762450640896",
@@ -2562,7 +2582,8 @@
    "height": 2048,
    "aspect": 1.0,
    "video_id": "df79953d4786efe5fba9dc2b46b8a374",
-   "artist_url": "https://bidder.art/artist/1806984635461275648"
+   "artist_url": "https://bidder.art/artist/1806984635461275648",
+   "has_audio": true
   },
   {
    "id": "1814195268489449472",
@@ -2681,7 +2702,8 @@
    "height": 1365,
    "aspect": 1.7553,
    "video_id": "378a20f8ac885249ebe67bd2cd8fbc4c",
-   "artist_url": "https://bidder.art/artist/1795057808694185984"
+   "artist_url": "https://bidder.art/artist/1795057808694185984",
+   "has_audio": true
   },
   {
    "id": "1813838292471386112",
@@ -2705,7 +2727,8 @@
    "height": 1126,
    "aspect": 1.7771,
    "video_id": "30aa8bdd5e1ac86e099e382e5a5da5cc",
-   "artist_url": "https://bidder.art/artist/1813817121017303040"
+   "artist_url": "https://bidder.art/artist/1813817121017303040",
+   "has_audio": true
   },
   {
    "id": "1813781563020808192",
@@ -2729,7 +2752,8 @@
    "height": 1654,
    "aspect": 1.5429,
    "video_id": "e34fd1b1a4103a7acefee376ea033ea9",
-   "artist_url": "https://bidder.art/artist/1802588867845558272"
+   "artist_url": "https://bidder.art/artist/1802588867845558272",
+   "has_audio": true
   },
   {
    "id": "1813444400827731968",
@@ -2753,7 +2777,8 @@
    "height": 1619,
    "aspect": 1.7789,
    "video_id": "a2ae87a1e17fc699ee36ad845bb937b1",
-   "artist_url": "https://bidder.art/artist/1795359506818011136"
+   "artist_url": "https://bidder.art/artist/1795359506818011136",
+   "has_audio": true
   },
   {
    "id": "1813156727961554944",
@@ -2777,7 +2802,8 @@
    "height": 2700,
    "aspect": 1.7778,
    "video_id": "2e81dbd3b88c9652facac53f19dac435",
-   "artist_url": "https://bidder.art/artist/1803763350212055040"
+   "artist_url": "https://bidder.art/artist/1803763350212055040",
+   "has_audio": true
   },
   {
    "id": "1813150996034097152",
@@ -2824,7 +2850,8 @@
    "height": 1040,
    "aspect": 1.8462,
    "video_id": "15dc206e28b2f55e7c8d183b2d948684",
-   "artist_url": "https://bidder.art/artist/1808085276514455552"
+   "artist_url": "https://bidder.art/artist/1808085276514455552",
+   "has_audio": true
   },
   {
    "id": "1813121055531864064",
@@ -2848,7 +2875,8 @@
    "height": 1718,
    "aspect": 1.0838,
    "video_id": "60426cfc0f2594656884fbfebb550e2a",
-   "artist_url": "https://bidder.art/artist/1800529719586852864"
+   "artist_url": "https://bidder.art/artist/1800529719586852864",
+   "has_audio": true
   },
   {
    "id": "1813116734098509824",
@@ -2895,7 +2923,8 @@
    "height": 1349,
    "aspect": 0.7561,
    "video_id": "b1c0c077f4dfaca651d7ef6543d997db",
-   "artist_url": "https://bidder.art/artist/1801447405498011648"
+   "artist_url": "https://bidder.art/artist/1801447405498011648",
+   "has_audio": true
   },
   {
    "id": "1813096907082436608",
@@ -2919,7 +2948,8 @@
    "height": 1359,
    "aspect": 0.4996,
    "video_id": "d103c424e0e16f87b240d81405443403",
-   "artist_url": "https://bidder.art/artist/1800895947048357888"
+   "artist_url": "https://bidder.art/artist/1800895947048357888",
+   "has_audio": true
   },
   {
    "id": "1811311458613596160",
@@ -2943,7 +2973,8 @@
    "height": 1662,
    "aspect": 1.8484,
    "video_id": "f82c6962261c558a3eaa2a456cbe113d",
-   "artist_url": "https://bidder.art/artist/1801822614851817472"
+   "artist_url": "https://bidder.art/artist/1801822614851817472",
+   "has_audio": true
   },
   {
    "id": "1812154172875870208",
@@ -2993,7 +3024,8 @@
    "artist_url": "https://bidder.art/artist/1807288775777325056",
    "video_path": "/rare/QmRkUBS9McFs6r2yay1EHrSCZ9aB59cCwCkYaMq6tMfqsd.MP4",
    "video_codec": "hevc",
-   "video_local": "video/1811997491453890560.mp4"
+   "video_local": "video/1811997491453890560.mp4",
+   "has_audio": true
   },
   {
    "id": "1811743964458520576",
@@ -3041,7 +3073,8 @@
    "height": 2061,
    "aspect": 1.0,
    "video_id": "426fd3253ec4e7f15badfc9330a99755",
-   "artist_url": "https://bidder.art/artist/1795364174688292864"
+   "artist_url": "https://bidder.art/artist/1795364174688292864",
+   "has_audio": false
   },
   {
    "id": "1810944074501459968",
@@ -3088,7 +3121,8 @@
    "height": 1481,
    "aspect": 1.0,
    "video_id": "fe3c02610dc00f4b1b7406f17ab1c2b7",
-   "artist_url": "https://bidder.art/artist/1801054938395185152"
+   "artist_url": "https://bidder.art/artist/1801054938395185152",
+   "has_audio": true
   },
   {
    "id": "1807032668072841216",
@@ -3112,7 +3146,8 @@
    "height": 2100,
    "aspect": 1.0005,
    "video_id": "822b78adc2c4412582b0495d679055d9",
-   "artist_url": "https://bidder.art/artist/1805469246596190208"
+   "artist_url": "https://bidder.art/artist/1805469246596190208",
+   "has_audio": true
   },
   {
    "id": "1803751700192956416",
@@ -3136,7 +3171,8 @@
    "height": 360,
    "aspect": 1.0,
    "video_id": "8f80991a161cc05b2f5d487b0bf54193",
-   "artist_url": "https://bidder.art/artist/1789921930397224960"
+   "artist_url": "https://bidder.art/artist/1789921930397224960",
+   "has_audio": true
   },
   {
    "id": "1795476788709822464",
@@ -3183,7 +3219,8 @@
    "height": 1080,
    "aspect": 1.7778,
    "video_id": "ab6ee7a6028a3d62399f5933f131173f",
-   "artist_url": "https://bidder.art/artist/1767540285774106624"
+   "artist_url": "https://bidder.art/artist/1767540285774106624",
+   "has_audio": true
   },
   {
    "id": "1778323904046174208",
@@ -3207,7 +3244,8 @@
    "height": 1080,
    "aspect": 1.0,
    "video_id": "0427d9c52e65d4d4e295d7b7e48be1b9",
-   "artist_url": "https://bidder.art/artist/1778046652473544704"
+   "artist_url": "https://bidder.art/artist/1778046652473544704",
+   "has_audio": true
   },
   {
    "id": "1775521791033348096",
@@ -3231,7 +3269,8 @@
    "height": 3240,
    "aspect": 1.7778,
    "video_id": "b497cb2ce8b41b60e87c80a0081dfd28",
-   "artist_url": "https://bidder.art/artist/1766466437200875520"
+   "artist_url": "https://bidder.art/artist/1766466437200875520",
+   "has_audio": true
   },
   {
    "id": "1773257921895993344",
@@ -3255,7 +3294,8 @@
    "height": 1036,
    "aspect": 1.777,
    "video_id": "41ac0ed37f7a9ed46f86c3d8a451f0b0",
-   "artist_url": "https://bidder.art/artist/1770030788054749184"
+   "artist_url": "https://bidder.art/artist/1770030788054749184",
+   "has_audio": true
   },
   {
    "id": "1771546003384700928",
@@ -3394,7 +3434,8 @@
    "height": 2280,
    "aspect": 1.2298,
    "video_id": "34666e03ec943fa66e20a220087212d0",
-   "artist_url": "https://bidder.art/artist/1771518943123607552"
+   "artist_url": "https://bidder.art/artist/1771518943123607552",
+   "has_audio": true
   },
   {
    "id": "1768923618676445184",
@@ -3442,7 +3483,8 @@
    "height": 2848,
    "aspect": 1.5056,
    "video_id": "f7162d06da3bf25da386c5bb2d99ce12",
-   "artist_url": "https://bidder.art/artist/1770659986272292864"
+   "artist_url": "https://bidder.art/artist/1770659986272292864",
+   "has_audio": true
   },
   {
    "id": "1767569417102823424",
@@ -3466,7 +3508,8 @@
    "height": 830,
    "aspect": 0.7494,
    "video_id": "d323125383262ab1a9ed75cac1ab5884",
-   "artist_url": "https://bidder.art/artist/1767506814682927104"
+   "artist_url": "https://bidder.art/artist/1767506814682927104",
+   "has_audio": true
   },
   {
    "id": "1769961595078840320",
@@ -3490,7 +3533,8 @@
    "height": 2364,
    "aspect": 1.0,
    "video_id": "63b2b9eced19eb67b82c49a85b08cc8e",
-   "artist_url": "https://bidder.art/artist/1768265303684419584"
+   "artist_url": "https://bidder.art/artist/1768265303684419584",
+   "has_audio": false
   },
   {
    "id": "1770014400623808512",
@@ -3514,7 +3558,8 @@
    "height": 4096,
    "aspect": 0.75,
    "video_id": "7d69743e4d78465cb8036096ecb087d6",
-   "artist_url": "https://bidder.art/artist/1768833115498876928"
+   "artist_url": "https://bidder.art/artist/1768833115498876928",
+   "has_audio": true
   },
   {
    "id": "1769408131835760640",
@@ -3538,7 +3583,8 @@
    "height": 914,
    "aspect": 1.0,
    "video_id": "c62463ac42eba3db2fafa61102ac95c8",
-   "artist_url": "https://bidder.art/artist/1764563731016192000"
+   "artist_url": "https://bidder.art/artist/1764563731016192000",
+   "has_audio": true
   },
   {
    "id": "1768499583496884224",
@@ -3631,7 +3677,8 @@
    "height": 1656,
    "aspect": 1.0163,
    "video_id": "8daf68211050ffb51bfd1917f55bfdb9",
-   "artist_url": "https://bidder.art/artist/1759883355949764608"
+   "artist_url": "https://bidder.art/artist/1759883355949764608",
+   "has_audio": true
   },
   {
    "id": "1767810494317596672",
@@ -3655,7 +3702,8 @@
    "height": 1251,
    "aspect": 1.3845,
    "video_id": "4ecfb9c1a339089dbd68991072921168",
-   "artist_url": "https://bidder.art/artist/1759883355949764608"
+   "artist_url": "https://bidder.art/artist/1759883355949764608",
+   "has_audio": true
   },
   {
    "id": "1767742458369806336",
@@ -3679,7 +3727,8 @@
    "height": 2831,
    "aspect": 0.7065,
    "video_id": "b7dfe7007989045a5614b584f5a6d4b8",
-   "artist_url": "https://bidder.art/artist/1767721327936016384"
+   "artist_url": "https://bidder.art/artist/1767721327936016384",
+   "has_audio": false
   },
   {
    "id": "1766565128075087872",
@@ -3703,7 +3752,8 @@
    "height": 1024,
    "aspect": 1.0,
    "video_id": "931829ac1705c45ec7aec3bac85376e1",
-   "artist_url": "https://bidder.art/artist/1763709158537957376"
+   "artist_url": "https://bidder.art/artist/1763709158537957376",
+   "has_audio": false
   },
   {
    "id": "1766474221304811520",
@@ -3796,7 +3846,8 @@
    "height": 550,
    "aspect": 1.8182,
    "video_id": "161b480bb564919a1105b87ac1384a6f",
-   "artist_url": "https://bidder.art/artist/1764528294490935296"
+   "artist_url": "https://bidder.art/artist/1764528294490935296",
+   "has_audio": true
   },
   {
    "id": "1765741388319821824",
@@ -3924,7 +3975,8 @@
    "height": 1920,
    "aspect": 1.0,
    "video_id": "14676a6a7135b58c4d5f5fae3a1afd65",
-   "artist_url": "https://bidder.art/artist/1764595887704772608"
+   "artist_url": "https://bidder.art/artist/1764595887704772608",
+   "has_audio": false
   },
   {
    "id": "1764583352708501504",

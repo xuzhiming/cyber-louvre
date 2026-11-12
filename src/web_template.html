@@ -49,8 +49,8 @@
 </head>
 <body>
 <div id="loading"><div class="spin"></div><div id="msg">Loading model…</div><div id="err"></div></div>
-<div id="cross"></div><div id="mm" title="小地图 (M 显示/隐藏,点击切换 全层 / 局部放大)"><canvas id="mmc" width="560" height="420"></canvas></div><div id="audiohint">🔊 附近有音频作品 · 点击此处或画面开启声音</div><div id="hud"></div><div id="lockmsg">点击画面开启鼠标视角(Esc 释放鼠标)</div>
-<div id="help"><b>漫游模式操作</b><br><kbd>W</kbd><kbd>A</kbd><kbd>S</kbd><kbd>D</kbd> / 方向键:前后左右移动<br>鼠标:转动视角(先点击画面锁定鼠标,<kbd>Esc</kbd>释放;未锁定时可按住左键拖动)<br><kbd>Shift</kbd> 奔跑 &nbsp; <kbd>Space</kbd> 跳跃<br><kbd>G</kbd> 飞行模式开/关:<kbd>Space</kbd>/<kbd>E</kbd> 上升,<kbd>C</kbd>/<kbd>Q</kbd> 下降<br><kbd>1</kbd>-<kbd>7</kbd> 传送点 &nbsp; <kbd>H</kbd> 显示/隐藏帮助<br><kbd>F</kbd> 切换 漫游 / 轨道 模式<br><kbd>M</kbd> 左下角小地图 显示/隐藏(点击地图:全层 / 局部放大)<br>音频作品(♪):走近约 6 米自动播放,离开约 8 米停止,音量随距离变化。<br>走近玻璃门(约4.5米内)会自动对开;楼梯可直接走上去。<hr style="border:0;border-top:1px solid #6a50a0;margin:6px 0"><b>显示效果(轨道/漫游均可用)</b><br><kbd>N</kbd> 白天 / 夜晚 切换(白天:天空+日光+阴影,发光减弱;夜晚:暗天空+霓虹+灯具+泛光)<br><kbd>L</kbd> 灯光开/关(霓虹发光条、室内灯具、灯光)<br><kbd>B</kbd> 泛光(Bloom)开/关<br><kbd>H</kbd> 显示/隐藏本帮助</div>
+<div id="cross"></div><div id="mm" title="小地图 (M 显示/隐藏,点击切换 全层 / 局部放大)"><canvas id="mmc" width="560" height="420"></canvas></div><div id="audiohint">🔊 正在静音播放 · 点击此处或画面开启声音</div><div id="hud"></div><div id="lockmsg">点击画面开启鼠标视角(Esc 释放鼠标)</div>
+<div id="help"><b>漫游模式操作</b><br><kbd>W</kbd><kbd>A</kbd><kbd>S</kbd><kbd>D</kbd> / 方向键:前后左右移动<br>鼠标:转动视角(先点击画面锁定鼠标,<kbd>Esc</kbd>释放;未锁定时可按住左键拖动)<br><kbd>Shift</kbd> 奔跑 &nbsp; <kbd>Space</kbd> 跳跃<br><kbd>G</kbd> 飞行模式开/关:<kbd>Space</kbd>/<kbd>E</kbd> 上升,<kbd>C</kbd>/<kbd>Q</kbd> 下降<br><kbd>1</kbd>-<kbd>7</kbd> 传送点 &nbsp; <kbd>H</kbd> 显示/隐藏帮助<br><kbd>F</kbd> 切换 漫游 / 轨道 模式<br><kbd>M</kbd> 左下角小地图 显示/隐藏(点击地图:全层 / 局部放大)<br>视频 ▶ / 音频 ♪:同一时间只播放一件——正对着(视线 35° 内、无墙遮挡)且最近的那件自动有声播放(视频 10 米 / 音频 6 米内),音量随距离变化;首次点击画面后开启声音。<br>走近玻璃门(约4.5米内)会自动对开;楼梯可直接走上去。<hr style="border:0;border-top:1px solid #6a50a0;margin:6px 0"><b>显示效果(轨道/漫游均可用)</b><br><kbd>N</kbd> 白天 / 夜晚 切换(白天:天空+日光+阴影,发光减弱;夜晚:暗天空+霓虹+灯具+泛光)<br><kbd>L</kbd> 灯光开/关(霓虹发光条、室内灯具、灯光)<br><kbd>B</kbd> 泛光(Bloom)开/关<br><kbd>H</kbd> 显示/隐藏本帮助</div>
 <div id="tp"><button data-tp="plaza">1 广场(金字塔前)</button><button data-tp="lobby">2 大堂</button><button data-tp="stairs">3 大楼梯</button><button data-tp="f2">4 二楼</button><button data-tp="f3">5 三楼</button><button data-tp="pav">6 转角塔楼</button><button data-tp="b1">7 地下B1</button></div>
 <div id="ui">
   <button id="walkBtn">漫游模式 (F)</button>
@@ -461,7 +461,7 @@ window.__fx = { setMode, setLights, setBloom, state: () => ({ mode: FX.mode, lig
 // ===================== 艺术品展位: bidder.art works hung in the fixed display slots =====================
 // data: artworks (web/artworks.json, inlined copy as fallback) + slots (web/slots.json, from art.py). Media are loaded
 // lazily online only for slots that are near (< ART.NEAR m, same floor) and in the view frustum; far ones are unloaded.
-const ART = { NEAR: 15, FAR: 24, VNEAR: 10, VFAR: 14, MAXLOAD: 4, MAXVID: 3, MAXANIM: 6, slots: [], works: [], items: [], loading: 0, videos: 0, anims: 0,
+const ART = { NEAR: 15, FAR: 24, VNEAR: 10, VFAR: 14, MAXLOAD: 4, MAXANIM: 6, slots: [], works: [], items: [], loading: 0, videos: 0, anims: 0,
   req: { image: 0, anim: 0, video: 0, hlsjs: 0, data: 0 }, log: [], errors: [], ready: false, frustum: new THREE.Frustum(), mat4: new THREE.Matrix4() };
 const W2T = (p) => new THREE.Vector3(p[0], p[2], -p[1]);                     // world (z up) -> three
 function readJSON(id) { try { return JSON.parse($(id).textContent); } catch (e) { return null; } }
@@ -612,7 +612,7 @@ function loadImage(it, urls, k) {
   if (k >= urls.length) { it.state = 'failed'; ART.loading--; setMediaTex(it, textCardTex(it.work, '图片暂无法在线加载 · 按 E 打开 bidder.art'), 4 / 3, 'card'); return; }
   ART.req.image++; ART.log.push({ t: +performance.now().toFixed(0), slot: it.slot.id, url: urls[k].slice(0, 120) });
   new THREE.TextureLoader().setCrossOrigin('anonymous').load(urls[k], (tex) => {
-    ART.loading--; if (it.state !== 'loading') { tex.dispose(); return; }
+    ART.loading--; if (it.state !== 'loading' || it.kind === 'video') { tex.dispose(); if (it.kind === 'video') it.state = 'loaded'; return; }   // never cover a live video frame
     tex.colorSpace = THREE.SRGBColorSpace; tex.anisotropy = 4;
     const im = tex.image; if (Math.max(im.width, im.height) <= 300) { tex.magFilter = THREE.NearestFilter; tex.minFilter = THREE.NearestFilter; tex.generateMipmaps = false; }   // pixel-art inscriptions
     it.state = 'loaded'; setMediaTex(it, tex, im.width / im.height, 'image');
@@ -679,9 +679,9 @@ function directVideoSources(w) {
 }
 const hasVideo = (w) => !!(w && (w.video_id || directVideoSources(w).length));
 async function startVideo(it) {
-  const w = it.work; if (!hasVideo(w) || it.video || it.vfail || ART.videos >= ART.MAXVID) return;
-  ART.videos++; it.vstate = 'starting';
-  const v = document.createElement('video'); v.muted = true; v.loop = true; v.playsInline = true; v.crossOrigin = 'anonymous'; v.preload = 'auto';
+  const w = it.work; if (!hasVideo(w) || it.video || it.vfail) return;
+  ART.videos++; it.vstate = 'starting'; it.mvol = 0;
+  const v = document.createElement('video'); v.muted = !AUD.gesture; v.volume = 0; v.loop = true; v.playsInline = true; v.crossOrigin = 'anonymous'; v.preload = 'auto';
   it.video = v; ART.req.video++;
   const onData = () => { if (it.video !== v) return; const t = new THREE.VideoTexture(v); t.colorSpace = THREE.SRGBColorSpace; setMediaTex(it, t, (v.videoWidth / v.videoHeight) || w.aspect || 16 / 9, 'video'); it.vstate = 'playing'; };
   try {
@@ -695,21 +695,21 @@ async function startVideo(it) {
     } else {
       const src = directVideoSources(w); let k = 0;
       const next = () => { if (it.video !== v) return; if (k >= src.length) { ART.errors.push('video ' + w.id + ' no playable source'); it.vfail = true; stopVideo(it); return; }
-        it.vsrc = src[k]; ART.log.push({ t: +performance.now().toFixed(0), slot: it.slot.id, url: src[k].slice(0, 120), video: 1 }); v.src = src[k++]; v.play().catch(() => {}); };
+        it.vsrc = src[k]; ART.log.push({ t: +performance.now().toFixed(0), slot: it.slot.id, url: src[k].slice(0, 120), video: 1 }); v.src = src[k++]; it.mRetry = 0; };
       v.addEventListener('error', () => { if (it.video !== v) return; ART.errors.push('video ' + w.id + ' ' + (v.error && v.error.code) + ' ' + (it.vsrc || '').slice(0, 80)); next(); });
       next();
     }
     v.addEventListener('loadeddata', onData, { once: true });
-    await v.play().catch(() => {});
   } catch (e) { ART.errors.push('video ' + w.id + ' ' + e); stopVideo(it); }
 }
 function stopVideo(it) {
   if (!it.video) return;
   try { it.video.pause(); } catch (_) {} if (it.hls) { it.hls.destroy(); it.hls = null; }
-  it.video.removeAttribute('src'); it.video.load(); it.video = null; ART.videos--; it.vstate = null;
+  it.video.removeAttribute('src'); it.video.load(); it.video = null; ART.videos--; it.vstate = null; it.mvol = 0;
   if (it.kind === 'video') { it.kind = null; it.state = 'idle'; }      // poster is re-loaded by the scheduler
 }
 function unloadItem(it) {
+  if (MED.cur === it) MED.cur = null;
   stopVideo(it); stopAudio(it); dropAudioViz(it); stopAnim(it); it.vfail = false; it.tok = (it.tok || 0) + 1; dropLabel(it);
   if (it.state !== 'idle' || it.kind !== 'reserved') { it.state = 'idle'; setMediaTex(it, reservedTex(), it.slot.inner[0] / it.slot.inner[1], 'reserved'); }
 }
@@ -728,33 +728,20 @@ function updateArt() {
   if (!ART.ready) return;
   const eye = camera.position, now = performance.now();
   camera.updateMatrixWorld(); ART.mat4.multiplyMatrices(camera.projectionMatrix, camera.matrixWorldInverse); ART.frustum.setFromProjectionMatrix(ART.mat4);
-  const cand = [], vcand = [];
+  const cand = [], tcand = [];
   for (const it of ART.items) {
     const d = eye.distanceTo(it.center), sameFloor = Math.abs(eye.y - it.center.y) < 5.5;
     const facing = it.normal.dot(new THREE.Vector3().subVectors(eye, it.center)) > 0;
-    if (it.work && it.work.media === 'audio') { tickAudio(it, d, sameFloor); if (it.state !== 'idle' && it.kind !== 'reserved') drawAudioViz(it, now); else if (it.aviz) dropAudioViz(it); }
+    if (it.work && it.work.media === 'audio') { it.ad = d; if (it.state !== 'idle' && it.kind !== 'reserved') drawAudioViz(it, now); else if (it.aviz) dropAudioViz(it); }
     if (d > ART.FAR || !sameFloor) { if (it.state !== 'idle' || it.label) unloadItem(it); continue; }
-    if (it.video && (d > ART.VFAR || !facing)) stopVideo(it);
+    if (it.video && it !== MED.cur && (d > ART.VFAR || !facing)) stopVideo(it);      // paused (last frame) videos kept only while near + facing
+    if ((it.state === 'loaded' || it.state === 'failed') && isTimed(it.work)) { it.vd = d; tcand.push(it); }   // after the poster / cover settled
     const inView = d < ART.NEAR && facing && ART.frustum.intersectsSphere(_sph.set(it.center, 1.3));
     if (it.anim && inView) tickAnim(it, now);          // animations only advance while visible
     it.vd = d; it.inView = inView;
-    if (inView) {
-      if (it.state === 'idle') cand.push([d, it]);
-      else if (it.state === 'loaded' && !it.video && !it.vfail && d < ART.VNEAR && hasVideo(it.work)) vcand.push(it);
-    }
+    if (inView && it.state === 'idle') cand.push([d, it]);
   }
-  // video streams (max MAXVID): nearest in-view first; when the cap is full, a nearer in-view video takes over the stream of
-  // a playing one that is out of view or clearly (>1.5 m) farther - so the closest video never stays a still thumbnail
-  vcand.sort((a, b) => a.vd - b.vd);
-  for (const it of vcand) {
-    if (ART.videos >= ART.MAXVID) {
-      const playing = ART.items.filter(o => o.video).sort((a, b) => (a.inView - b.inView) || (b.vd - a.vd));
-      const victim = playing[0];
-      if (!victim || (victim.inView && victim.vd < it.vd + 1.5)) break;
-      stopVideo(victim); ART.preempted = (ART.preempted || 0) + 1;
-    }
-    startVideo(it);
-  }
+  mediaDirector(tcand, eye, now);
   cand.sort((a, b) => a[0] - b[0]);
   for (const [, it] of cand) { if (ART.loading >= ART.MAXLOAD) break; loadItem(it); }
   audioHint();
@@ -762,10 +749,10 @@ function updateArt() {
 // ===================== 音频作品: proximity playback (t33u) =====================
 // bidder audio works (type 2, e.g. mp3 on image.bidder.art - no CORS header) play through the same-origin /media proxy
 // (Range) so the element can feed a WebAudio graph (distance gain + analyser for the on-frame visualiser).  Starts when the
-// viewer is within AUD.NEAR m on the same floor, stops (fade out + pause) beyond AUD.FAR m (hysteresis).  Browsers only allow
+// viewer faces it (single-media director below decides which ONE video / audio plays).  Browsers only allow
 // sound after a user gesture: the AudioContext is created / resumed on the first click / key (walk mode needs a click anyway);
 // if playback is still blocked a small hint asks for a click.
-const AUD = { NEAR: 6, FAR: 8, ctx: null, locked: false, gesture: false, req: 0, errors: [] };
+const AUD = { ctx: null, locked: false, gesture: false, req: 0, errors: [] };
 function audioSources(w) {
   const c = [], web = /^https?:$/.test(location.protocol);
   if (w.audio.startsWith('https://image.bidder.art/') && w.audio_path && web) c.push({ url: location.origin + '/media' + w.audio_path, graph: true });
@@ -776,7 +763,8 @@ function audioCtx() {
   if (!AUD.ctx) { try { AUD.ctx = new (window.AudioContext || window.webkitAudioContext)(); } catch (_) { AUD.ctx = null; } }
   return AUD.ctx;
 }
-function audioGain(d) { return d <= 2 ? 1 : Math.max(0, Math.min(1, 1 - (d - 2) / (AUD.FAR - 2))) ** 1.3; }
+function audioGain(d) { return d <= 2 ? 1 : Math.max(0, Math.min(1, 1 - (d - 2) / (MED.AR_KEEP - 2))) ** 1.3; }
+function videoGain(d) { return d <= 3 ? 1 : Math.max(0, Math.min(1, 1 - (d - 3) / (MED.VR_KEEP + 1 - 3))) ** 1.2; }
 function attachGraph(a) {
   const ctx = AUD.ctx; if (!a.graphOK || a.g || !ctx || ctx.state !== 'running') return;
   try {
@@ -785,16 +773,17 @@ function attachGraph(a) {
     a.g = g; a.an = an; a.bins = new Uint8Array(an.frequencyBinCount); a.el.volume = 1;
   } catch (e) { AUD.errors.push('graph ' + e); a.graphOK = false; }
 }
-function audioPlay(it) {
-  const a = it.aud; if (!a || !a.want) return;
-  const p = a.el.play(); a.tries = (a.tries || 0) + 1;
-  if (p && p.catch) p.then(() => { AUD.locked = false; attachGraph(a); }).catch((e) => { if (e && e.name === 'NotAllowedError') AUD.locked = true; else if (e && e.name !== 'AbortError') AUD.errors.push('play ' + e.name); });
+function playEl(it, el) {          // the director's only way to start an element; muted until the first user gesture
+  el.muted = !AUD.gesture;
+  const p = el.play(); if (it.aud && it.aud.el === el) it.aud.tries = (it.aud.tries || 0) + 1;
+  if (p && p.catch) p.then(() => { if (!el.muted) AUD.locked = false; if (it.aud && it.aud.el === el) attachGraph(it.aud); })
+    .catch((e) => { if (e && e.name === 'NotAllowedError') { AUD.locked = true; el.muted = true; } else if (e && e.name !== 'AbortError') AUD.errors.push('play ' + e.name); });
 }
 function startAudio(it) {
   const w = it.work;
   if (!it.aud) {
     const srcs = audioSources(w); let k = 0;
-    const a = it.aud = { el: null, want: true, vol: 0, src: null, graphOK: false, g: null, an: null, bins: null, k: 0 };
+    const a = it.aud = { el: null, want: false, vol: 0, src: null, graphOK: false, g: null, an: null, bins: null, k: 0 };
     const make = () => {
       if (it.aud !== a) return;
       if (k >= srcs.length) { AUD.errors.push('audio ' + w.id + ' no playable source'); a.fail = true; return; }
@@ -803,30 +792,9 @@ function startAudio(it) {
       el.addEventListener('error', () => { if (it.aud === a && a.el === el) { AUD.errors.push('audio ' + w.id + ' err ' + (el.error && el.error.code) + ' ' + s.url.slice(0, 70)); a.g = null; a.an = null; make(); } });
       a.el = el; a.src = s.url; a.graphOK = s.graph; a.g = null; a.an = null; el.volume = 0; el.src = s.url; AUD.req++;
       ART.log.push({ t: +performance.now().toFixed(0), slot: it.slot.id, url: s.url.slice(0, 120), audio: 1 });
-      attachGraph(a); audioPlay(it);
+      attachGraph(a); it.mRetry = 0; it.mvol = 0;
     };
     make();
-  } else { it.aud.want = true; if (!it.aud.fail && it.aud.el.paused) audioPlay(it); }
-}
-function setAudioVol(a, v) {
-  a.vol = v;
-  if (a.g) { a.g.gain.setTargetAtTime(v, AUD.ctx.currentTime, 0.12); a.el.volume = 1; }
-  else a.el.volume = Math.max(0, Math.min(1, a.el.volume + (v - a.el.volume) * 0.15));   // per-frame smoothing (no WebAudio)
-}
-function tickAudio(it, d, sameFloor) {
-  const a = it.aud, near = sameFloor && d < AUD.NEAR, far = !sameFloor || d > AUD.FAR;
-  it.ad = d;
-  if (!a || !a.want) { if (near && !document.hidden) startAudio(it); }
-  else if (far) { a.want = false; a.fadeT = performance.now(); setAudioVol(a, 0);
-    setTimeout(() => { if (it.aud === a && !a.want) a.el.pause(); }, 450); }     // fade out, then stop (independent of the frame rate)
-  const b = it.aud; if (!b || b.fail) return;
-  if (b.want) {
-    if (b.el.paused && !AUD.locked && (b.tries || 0) < 400 && !document.hidden) { if (!b.retryT || performance.now() - b.retryT > 1500) { b.retryT = performance.now(); audioPlay(it); } }
-    if (b.graphOK && !b.g && !b.el.paused && AUD.ctx && AUD.ctx.state === 'running') attachGraph(b);
-    setAudioVol(b, audioGain(d));
-  } else if (!b.el.paused) {
-    setAudioVol(b, 0);
-    if (performance.now() - b.fadeT > 450) b.el.pause();     // stop after a short fade-out (position kept; resumes when near again)
   }
 }
 function stopAudio(it) {          // release the element (slot unloaded / far away)
@@ -838,14 +806,14 @@ function stopAudio(it) {          // release the element (slot unloaded / far aw
 function unlockAudio() {
   AUD.gesture = true;
   const ctx = audioCtx();       // created inside the gesture -> allowed to run
-  const go = () => { for (const it of ART.items) if (it.aud && it.aud.want && !it.aud.fail) { attachGraph(it.aud); if (it.aud.el.paused) audioPlay(it); } };
+  const go = () => { for (const it of ART.items) { if (it.aud && !it.aud.fail) attachGraph(it.aud); const el = medEl(it); if (el && it === MED.cur) { el.muted = false; if (el.paused) playEl(it, el); } } };
   if (ctx && ctx.state !== 'running') ctx.resume().then(go, go); else go();
   if (AUD.locked) AUD.locked = false;
 }
 addEventListener('pointerdown', unlockAudio, true);
 addEventListener('keydown', (e) => { if (!e.repeat) unlockAudio(); }, true);
 $('audiohint').addEventListener('click', unlockAudio);
-document.addEventListener('visibilitychange', () => { if (document.hidden) for (const it of ART.items) if (it.aud) it.aud.el.pause(); });
+document.addEventListener('visibilitychange', () => { if (document.hidden) for (const it of ART.items) { const el = medEl(it); if (el) el.pause(); } });   // resumed by the director when visible
 // on-frame indicator: a strip along the bottom edge of the cover with state text + spectrum bars (analyser, or a gentle
 // synthetic pulse when the element can't be routed through WebAudio)
 function ensureAudioViz(it) {
@@ -858,10 +826,10 @@ function ensureAudioViz(it) {
 function dropAudioViz(it) { const z = it.aviz; if (!z) return; z.tex.dispose(); z.m.material.dispose(); z.m.geometry.dispose(); ART.group.remove(z.m); it.aviz = null; }
 const fmtT = (t) => { t = Math.max(0, t | 0); return (t / 60 | 0) + ':' + String(t % 60).padStart(2, '0'); };
 function drawAudioViz(it, now) {
-  const z = ensureAudioViz(it), a = it.aud, playing = !!(a && a.el && !a.el.paused && a.want);
-  if (!playing && z.idle === (AUD.locked ? 2 : 1) && now - z.t < 1000) return;
+  const z = ensureAudioViz(it), a = it.aud, playing = !!(a && a.el && !a.el.paused && a.want), locked = !AUD.gesture || AUD.locked;
+  if (!playing && z.idle === (locked ? 2 : 1) && now - z.t < 1000) return;
   if (playing && now - z.t < 60) return;
-  z.t = now; z.idle = playing ? 0 : (AUD.locked ? 2 : 1);
+  z.t = now; z.idle = playing ? 0 : (locked ? 2 : 1);
   const sw = it.media.scale.x, sh = it.media.scale.y, hh = Math.min(0.26, sh * 0.2);      // place along the bottom edge of the cover
   z.m.scale.set(sw, hh, 1); z.m.position.copy(it.center).addScaledVector(it.normal, 0.008); z.m.position.y += -sh / 2 + hh / 2;
   z.m.lookAt(z.m.position.clone().add(it.normal));
@@ -878,14 +846,81 @@ function drawAudioViz(it, now) {
   }
   g.fillStyle = playing ? '#ff9bf0' : '#cbb8ff'; g.font = '700 46px system-ui,"Microsoft YaHei",sans-serif'; g.fillText(playing ? '♪ ▶' : '♪', 18, 60);
   g.font = '28px system-ui,"Microsoft YaHei",sans-serif'; g.fillStyle = '#eee';
-  const txt = playing ? fmtT(a.el.currentTime) + (isFinite(a.el.duration) ? ' / ' + fmtT(a.el.duration) : '') : AUD.locked ? '点击开启声音' : '靠近播放';
+  const txt = playing ? fmtT(a.el.currentTime) + (isFinite(a.el.duration) ? ' / ' + fmtT(a.el.duration) : '') + (a.el.muted ? '  静音·点击开声' : '') : '正对且最近时播放';
   g.fillText(txt, playing ? 112 : 70, 58);
   z.tex.needsUpdate = true;
 }
 function audioHint() {
-  const need = AUD.locked && ART.items.some(it => it.aud && it.aud.want && it.aud.el && it.aud.el.paused);
-  const el = $('audiohint'); const v = need ? 'block' : 'none'; if (el.style.display !== v) el.style.display = v;
+  const c = MED.cur, el = c && medEl(c);
+  const need = !!(el && (!AUD.gesture || AUD.locked) && (c.work.media === 'audio' || c.work.has_audio !== false));
+  const h = $('audiohint'); const v = need ? 'block' : 'none'; if (h.style.display !== v) h.style.display = v;
 }
+// ===================== 单一媒体播放 (t35u): exactly one video / audio work plays, with sound =====================
+// Candidate = time-based work (video / audio) on the same floor, its face towards the viewer, inside the play radius
+// (video VR m / audio AR m), within CONE deg of the view direction and with a free line of sight (BVH raycast).  The nearest
+// candidate plays; the current one is kept while it stays inside the wider KEEP thresholds, and is replaced only when it has
+// been lost for SWITCH_MS or another candidate is >= BETTER m nearer for SWITCH_MS (no flicker between neighbours).  Switching
+// fades the old element out (FADE_MS) and pauses it (paused videos keep their last frame), and only then starts the new one, so
+// at most one element is ever un-paused.  Volume follows distance; muted until the first click / key (browser autoplay rule).
+const MED = { VR: 10, VR_KEEP: 12, AR: 6, AR_KEEP: 8, CONE: 35, CONE_KEEP: 45, SWITCH_MS: 300, BETTER: 1.0, FADE_MS: 300, KEEP_VIDEOS: 3,
+  cur: null, pend: null, pendT: 0, lostT: 0, switches: 0, log: [], fwd: new THREE.Vector3(), dir: new THREE.Vector3() };
+const isTimed = (w) => !!(w && ((w.media === 'audio' && w.audio) || (w.media === 'video' && hasVideo(w))));
+function medEl(it) { return it.video || (it.aud && !it.aud.fail && it.aud.el) || null; }
+function medScore(it, eye, keep, now) {           // distance if it may play, else null
+  const w = it.work; if (it.vfail || (it.aud && it.aud.fail)) return null;
+  const d = it.vd, aud = w.media === 'audio';
+  if (d > (aud ? (keep ? MED.AR_KEEP : MED.AR) : (keep ? MED.VR_KEEP : MED.VR))) return null;
+  MED.dir.subVectors(it.center, eye); if (it.normal.dot(MED.dir) >= 0) return null;          // back side of the wall
+  MED.dir.normalize(); if (MED.dir.dot(MED.fwd) < Math.cos((keep ? MED.CONE_KEEP : MED.CONE) * Math.PI / 180)) return null;
+  if (WALK.col) {                                   // line of sight, cached 250 ms
+    if (!it.losT || now - it.losT > 250) { it.losT = now; const h = cast(eye, MED.dir, Math.max(0.1, d - 0.3)); it.los = !h; }
+    if (!it.los) return null;
+  }
+  return d;
+}
+function mediaDirector(tcand, eye, now) {
+  camera.getWorldDirection(MED.fwd);
+  let best = null, bd = 1e9;
+  for (const it of tcand) { const d = medScore(it, eye, false, now); if (d !== null && d < bd) { bd = d; best = it; } }
+  const cur = MED.cur, cd = cur && tcand.includes(cur) ? medScore(cur, eye, true, now) : null;
+  let next = cur;
+  if (!cur) { next = best; MED.pend = null; }
+  else if (cd !== null) {
+    MED.lostT = 0;
+    if (best && best !== cur && bd < cd - MED.BETTER) { if (MED.pend !== best) { MED.pend = best; MED.pendT = now; } else if (now - MED.pendT >= MED.SWITCH_MS) next = best; }
+    else MED.pend = null;
+  } else {
+    if (!MED.lostT) MED.lostT = now;
+    if (now - MED.lostT >= MED.SWITCH_MS) next = best;
+  }
+  if (next !== cur) {
+    MED.cur = next; MED.lostT = 0; MED.pend = null; MED.switches++;
+    MED.log.push({ t: +now.toFixed(0), from: cur && cur.slot.id, to: next && next.slot.id, d: next ? +next.vd.toFixed(1) : null }); if (MED.log.length > 50) MED.log.shift();
+    if (cur && cur.aud) cur.aud.want = false;
+    if (next) { next.mRetry = 0; if (next.work.media === 'audio') { startAudio(next); next.aud.want = true; } else startVideo(next); }
+  }
+  if (ART.videos > MED.KEEP_VIDEOS) {             // paused videos keep their last frame; release the farthest extra ones
+    const keep = ART.items.filter(o => o.video && o !== MED.cur).sort((a, b) => b.vd - a.vd);
+    for (const o of keep) { if (ART.videos <= MED.KEEP_VIDEOS) break; stopVideo(o); }
+  }
+}
+// fader (40 ms timer, independent of the render frame rate): current element -> distance volume, every other element -> 0 then
+// paused.  The current one is (re)started only once no other element is still playing.
+setInterval(() => {
+  const now = performance.now(), step = 40 / MED.FADE_MS, cur = MED.cur;
+  let othersPlaying = false;
+  for (const it of ART.items) {
+    const el = medEl(it); if (!el) continue;
+    const a = it.aud && it.aud.el === el ? it.aud : null;
+    const tgt = it === cur && !document.hidden ? (a ? audioGain(it.ad ?? it.vd) : videoGain(it.vd)) : 0;
+    let v = it.mvol || 0; v += Math.max(-step, Math.min(step, tgt - v)); it.mvol = v; if (a) a.vol = v;
+    if (a && a.g) { a.g.gain.value = v; el.volume = 1; } else el.volume = Math.max(0, Math.min(1, v));
+    if (AUD.gesture && el.muted && !AUD.locked) el.muted = false;
+    if (it !== cur || document.hidden) { if (!el.paused) { if (v <= 0.001 || document.hidden) el.pause(); else othersPlaying = true; } }
+  }
+  const el = cur && medEl(cur);
+  if (el && !document.hidden && el.paused && !othersPlaying && (!cur.mRetry || now - cur.mRetry > 1500)) { cur.mRetry = now; playEl(cur, el); }
+}, 40);
 // ===========================================================
 // info overlay (E near a work, or click a work in orbit view)
 function nearestItem(maxD) {
@@ -899,6 +934,7 @@ function showInfo(it) {
   const w = it.work, o = $('artinfo'); if (!w) return;
   o.innerHTML = `<div class="t">${esc(w.title)}</div><div class="a">${esc(w.artist)}</div>` +
     `<div class="m">${esc({ image: '图片', video: '视频', audio: '音频', text: '文本 / 语录', plaintext: '纯文本', artist: '艺术家 · ' + (w.n || 0) + ' 件作品' }[w.media] || w.media)}${w.edition ? ' · ' + esc(w.edition) : ''}${w.price ? ' · 价格 ' + esc(w.price) : ''}</div>` +
+    (w.media === 'video' || w.media === 'audio' ? `<div class="x">${MED.cur === it ? '▶ 正在播放' : '正对且最近时自动播放'}${w.media === 'video' && w.has_audio === false ? ' · 此视频本身无音轨' : ' · 有声'}${!AUD.gesture ? '(点击画面开启声音)' : ''}</div>` : '') +
     (w.media === 'plaintext' && w.text ? `<pre class="q" style="max-height:30vh;overflow:auto;white-space:pre-wrap;word-break:break-all;font-size:11px">${esc(w.text.slice(0, 4000))}${w.text.length > 4000 ? '…' : ''}</pre>` : '') +
     (w.headline ? `<div class="q"><b>${esc(w.headline)}</b></div>` : '') + (w.quote ? `<div class="q">“${esc(w.quote)}”</div>` : '') +
     (w.media === 'artist' ? `<a href="${esc(w.artist_url)}" target="_blank" rel="noopener">打开艺术家主页 ↗</a>` :
@@ -921,8 +957,11 @@ window.__art = { state: () => ({ slots: ART.slots.length, works: ART.works.lengt
     labels: ART.items.filter(i => i.label).length, videos: ART.videos, anims: ART.anims, animating: ART.items.filter(i => i.anim).length, imageDecoder: typeof ImageDecoder !== 'undefined', playing: ART.items.filter(i => i.vstate === 'playing').length,
     kinds: ART.items.reduce((a, i) => (a[i.kind] = (a[i.kind] || 0) + 1, a), {}), req: { ...ART.req }, errors: ART.errors.slice(-10) }),
   log: () => ART.log.slice(),
-  video: (id) => { const it = ART.items.find(i => i.slot.id === id); const v = it && it.video; return v ? { t: +v.currentTime.toFixed(2), paused: v.paused, ready: v.readyState, w: v.videoWidth, h: v.videoHeight, err: v.error && v.error.code, src: (it.vsrc || (it.work && it.work.video) || '').slice(0, 100), vstate: it.vstate } : (it ? { none: true, vfail: !!it.vfail } : null); },
-  videos: () => ART.items.filter(i => i.video).map(i => ({ slot: i.slot.id, d: +(i.vd || 0).toFixed(1), inView: !!i.inView, t: +i.video.currentTime.toFixed(2) })), preempted: () => ART.preempted || 0, cap: (n) => (n ? (ART.MAXVID = n) : ART.MAXVID),
+  video: (id) => { const it = ART.items.find(i => i.slot.id === id); const v = it && it.video; return v ? { t: +v.currentTime.toFixed(2), paused: v.paused, muted: v.muted, vol: +v.volume.toFixed(2), cur: MED.cur === it, ready: v.readyState, w: v.videoWidth, h: v.videoHeight, err: v.error && v.error.code, src: (it.vsrc || (it.work && it.work.video) || '').slice(0, 100), vstate: it.vstate } : (it ? { none: true, vfail: !!it.vfail } : null); },
+  videos: () => ART.items.filter(i => i.video).map(i => ({ slot: i.slot.id, d: +(i.vd || 0).toFixed(1), inView: !!i.inView, t: +i.video.currentTime.toFixed(2) })), preempted: () => MED.switches, cap: () => 1,
+  media: () => ({ cur: MED.cur && MED.cur.slot.id, switches: MED.switches, log: MED.log.slice(-10), gesture: AUD.gesture, locked: AUD.locked, hint: $('audiohint').style.display,
+    els: ART.items.filter(i => medEl(i)).map(i => { const e = medEl(i); return { slot: i.slot.id, kind: i.video ? 'video' : 'audio', paused: e.paused, muted: e.muted, vol: +(i.mvol || 0).toFixed(2), elVol: +e.volume.toFixed(2), t: +e.currentTime.toFixed(2), d: +(i.vd || 0).toFixed(1), ready: e.readyState, hasAudio: i.work.media === 'audio' || i.work.has_audio !== false }; }),
+    unpaused: ART.items.filter(i => medEl(i) && !medEl(i).paused).length }),
   slot: (id) => { const it = ART.items.find(i => i.slot.id === id); return it && { id, work: it.work && it.work.id, artist: it.work && it.work.artist, media: it.work && it.work.media, state: it.state, kind: it.kind, anim: it.anim ? { frames: it.anim.n, shown: it.anim.frames, i: it.anim.i, src: it.anim.src.slice(0, 90) } : null }; }, nearest: () => { const it = nearestItem(8); return it && { slot: it.slot.id, id: it.work.id, title: it.work.title }; },
   audio: (id) => { const it = ART.items.find(i => i.slot.id === id); const a = it && it.aud; return a ? { t: +a.el.currentTime.toFixed(2), paused: a.el.paused, want: a.want, ready: a.el.readyState, dur: +(a.el.duration || 0).toFixed(1), vol: +a.vol.toFixed(2), gain: a.g ? +a.g.gain.value.toFixed(2) : null, elVol: +a.el.volume.toFixed(2), graph: !!a.g, src: (a.src || '').slice(0, 100), d: +(it.ad || 0).toFixed(1), fail: !!a.fail, viz: !!it.aviz } : (it ? { none: true, d: +(it.ad || 0).toFixed(1), viz: !!it.aviz } : null); },
   audioState: () => ({ locked: AUD.locked, gesture: AUD.gesture, ctx: AUD.ctx ? AUD.ctx.state : null, req: AUD.req, errors: AUD.errors.slice(-5), hint: $('audiohint').style.display }),
