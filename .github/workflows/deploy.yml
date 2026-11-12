@@ -29,6 +29,7 @@ jobs:
           cp web/model_web.glb dist/model_web.glb
           cp web/artworks.json dist/artworks.json
           cp web/slots.json dist/slots.json
+          cp -r web/thumbs dist/thumbs
           find dist -type f -size +25M -print -exec false {} + || { echo "::error::file exceeds Cloudflare Pages 25 MiB limit"; exit 1; }
           ls -la dist
 

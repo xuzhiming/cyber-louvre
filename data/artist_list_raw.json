@@ -1,0 +1,2175 @@
+[
+ {
+  "artistId": "1754128548970500096",
+  "artistName": "CryptoZR",
+  "avatar": "/rare/QmZZyXqGb9ZkjnzD1B4AcDcN2MS4qKeTodjAMtKAf4H6Yj.jpg",
+  "isApply": 1,
+  "colleges": [
+   {
+    "collegeId": "1759481867490430976",
+    "collegeName": "Central Academy of Fine Arts",
+    "degree": "1",
+    "cert": "/rare/QmUtPJhCquxvVnscLsNfgwM9VcsUfHNHKh9i6oeRoQ9rdk.png"
+   }
+  ],
+  "works": 10972,
+  "artworks": [
+   {
+    "artworkId": "1996088597593300994",
+    "artworkName": "The Consensus",
+    "type": 5,
+    "title": "Jamie Dimon Slams Crypto Tokens as ‘Decentralized Ponzi Schemes’",
+    "quote": "I’m a major skeptic on crypto tokens, which you call currency, like Bitcoin, They are decentralized Ponzi schemes."
+   },
+   {
+    "artworkId": "1996088597492637699",
+    "artworkName": "The Consensus",
+    "type": 5,
+    "title": "Bitcoin Is Over",
+    "quote": "Bitcoin is over. #RIP"
+   },
+   {
+    "artworkId": "1996088597484249089",
+    "artworkName": "The Consensus",
+    "type": 5,
+    "title": "Bitcoin Has No Value",
+    "quote": "Cryptocurrencies basically have no value and they don't produce anything. They don't reproduce, they can't mail you a check, they can't do anything, and what you hope is that somebody else comes along and pays you more money for them later on, but then that person's got the problem. In terms of value: zero."
+   }
+  ],
+  "isFollowed": 0,
+  "isCollector": 0
+ },
+ {
+  "artistId": "1768921286052024320",
+  "artistName": "Gh0st",
+  "avatar": "/rare/QmZNfz1nzzy9H2XoZ61gmGe3H6jrPC1Kbv58nx5qsrSCPK.png",
+  "isApply": 1,
+  "colleges": [],
+  "works": 255,
+  "artworks": [
+   {
+    "artworkId": "1779809780064456704",
+    "artworkName": "Composition with Yellow, Blue and Red (but Pixelated)",
+    "type": 1,
+    "ipfsHash": "https://ordinals.com/content/925386e39357cacf8ef3d7b8bb465c9479d68a0357e8fa52dfe6d833180a6b63i0"
+   },
+   {
+    "artworkId": "1779809780064456706",
+    "artworkName": "Black Square (but Pixelated)",
+    "type": 1,
+    "ipfsHash": "https://ordinals.com/content/96639d2e4345bdc56fb519f199f18b9ce274cb097bb3a1ec98be762ed97d0298i0"
+   },
+   {
+    "artworkId": "1779809780123176963",
+    "artworkName": "Shimmer Bright (but Pixelated)",
+    "type": 1,
+    "ipfsHash": "https://ordinals.com/content/bae530a0589d3519e83428cc005d78e29425c4c78726cc3afa22804b2f96783fi0"
+   }
+  ],
+  "isFollowed": 0,
+  "isCollector": 0
+ },
+ {
+  "artistId": "1790697095095783424",
+  "artistName": "LiHang",
+  "avatar": "/rare/QmUSHuX8AnQXeun3JztYQ1n9874QivE4hBWDGQNyyT9teH.jpg",
+  "isApply": 1,
+  "colleges": [
+   {
+    "collegeId": "1759481867490430976",
+    "collegeName": "Central Academy of Fine Arts",
+    "degree": "1",
+    "cert": "/rare/QmUbPSbJmqmqmqzzskYpVE7Hhz2GehC6xaf7wav2AYppMN.jpg"
+   }
+  ],
+  "works": 6,
+  "artworks": [
+   {
+    "artworkId": "1853719090968006656",
+    "artworkName": "模仿游戏",
+    "type": 1,
+    "ipfsHash": "/rare/QmPD8wm4QVz4XEk2buhtf1a4Fne1sheR3nUWU8hg955jog.jpg",
+    "cover": ""
+   },
+   {
+    "artworkId": "1847213678089342976",
+    "artworkName": "Imitation Game",
+    "type": 1,
+    "ipfsHash": "/rare/QmPD8wm4QVz4XEk2buhtf1a4Fne1sheR3nUWU8hg955jog.jpg",
+    "cover": ""
+   }
+  ],
+  "isFollowed": 0,
+  "isCollector": 0
+ },
+ {
+  "artistId": "1851535135908958208",
+  "artistName": "陈镪",
+  "avatar": "/rare/QmZ27rUtWjQMQaqdgynvb2trt858G3w2S8DjeXwgKa9sbP.jpg",
+  "isApply": 1,
+  "colleges": [
+   {
+    "collegeId": "1766102773541244928",
+    "collegeName": "Sichuan Fine Arts Institute",
+    "degree": "0",
+    "cert": "/rare/QmZ27rUtWjQMQaqdgynvb2trt858G3w2S8DjeXwgKa9sbP.jpg"
+   }
+  ],
+  "works": 2,
+  "artworks": [
+   {
+    "artworkId": "1853010838592557056",
+    "artworkName": "多梦症",
+    "type": 3,
+    "ipfsHash": "e93253ce4b77b0391f4996886d1801d3",
+    "cover": "/rare/QmVA9Ghnt4jRLNH5caCn55nFPEWMPVWh5CmsJB3KALTDyh.png"
+   }
+  ],
+  "isFollowed": 0,
+  "isCollector": 0
+ },
+ {
+  "artistId": "1847339285729120256",
+  "artistName": "张海超",
+  "isApply": 1,
+  "colleges": [
+   {
+    "collegeId": "1766102773541244928",
+    "collegeName": "Sichuan Fine Arts Institute",
+    "degree": "0",
+    "cert": "/rare/QmZiKCGPoTUSYsTpVS1q6b4V3bFbtkhVZFKi6Yik9VBG9H.jpg"
+   }
+  ],
+  "works": 2,
+  "artworks": [
+   {
+    "artworkId": "1849241310708502528",
+    "artworkName": "波形之拟态场域 HELLOWAVE_PSEUDO-FIELD",
+    "type": 3,
+    "ipfsHash": "4617999eaa1047df4803e953e18d828f",
+    "cover": "/rare/QmYPUfSFELPisVKKhUJL1dhdsBjLPCeZHXTRxjQd6qq4pL.png"
+   }
+  ],
+  "isFollowed": 0,
+  "isCollector": 0
+ },
+ {
+  "artistId": "1832390380436459520",
+  "artistName": "Alex Long Yuan 袁隆",
+  "isApply": 1,
+  "colleges": [
+   {
+    "collegeId": "1759468185268129792",
+    "collegeName": "University of the Arts London",
+    "degree": "1",
+    "cert": "/rare/QmTwmectfnNGNjwNGQTE22pm6NECS9EMNUibPcG23JT7pX.pdf"
+   }
+  ],
+  "works": 2,
+  "artworks": [
+   {
+    "artworkId": "1848434786163625984",
+    "artworkName": "Sustainability Resonator001, 可持续共鸣体001",
+    "type": 3,
+    "ipfsHash": "f9cadd6a571d2e53a1099f241387e2bc",
+    "cover": "/rare/QmXnUAdCUwZpxHcwwFDKcQfQ7QrMe1kBLnkcnKudu9wvsG.png"
+   }
+  ],
+  "isFollowed": 0,
+  "isCollector": 0
+ },
+ {
+  "artistId": "1845753348767223808",
+  "artistName": "Joey Liu",
+  "avatar": "/rare/QmPJHbts2y7E4eCjaKtt6yN23A8FqC4BWy6Q3iMw9RYsCm.jpg",
+  "isApply": 1,
+  "colleges": [
+   {
+    "collegeId": "1759481867490430976",
+    "collegeName": "Central Academy of Fine Arts",
+    "degree": "2",
+    "cert": "/rare/Qma7cZDr33a4hhT9tTFr61Gfe3Q3qdhUXoyJR2Kk7o79HR.png"
+   }
+  ],
+  "works": 4,
+  "artworks": [
+   {
+    "artworkId": "1846214466740555776",
+    "artworkName": "digital honeycomb",
+    "type": 1,
+    "ipfsHash": "/rare/QmaReGi2usGiGvdquNZvT4PPiBprHrFfeSrAqQYTVDQRi8.jpg",
+    "cover": ""
+   }
+  ],
+  "isFollowed": 0,
+  "isCollector": 0
+ },
+ {
+  "artistId": "1846874238577938432",
+  "artistName": "UAL.ROXIEREN",
+  "avatar": "/rare/Qmbnusj61j36qT1VYTPMFRFmaTdM7Wm9gguRVqSuXaUKos.png",
+  "isApply": 1,
+  "colleges": [
+   {
+    "collegeId": "1759468185268129792",
+    "collegeName": "University of the Arts London",
+    "degree": "1",
+    "cert": "/rare/QmXgMEcahc6Ptdja5CFyq3FbvtiuMbEdNgzfpFbnDEhifg.pdf"
+   }
+  ],
+  "works": 2,
+  "artworks": [
+   {
+    "artworkId": "1847197510297325568",
+    "artworkName": "Water Skin",
+    "type": 1,
+    "ipfsHash": "/rare/QmRiEHtm8gaL6rHJtTe4sQXaeLxuXRKdbLmq7AuBWCyBmN.png",
+    "cover": ""
+   }
+  ],
+  "isFollowed": 0,
+  "isCollector": 0
+ },
+ {
+  "artistId": "1795877967688241152",
+  "artistName": "邱宇",
+  "isApply": 1,
+  "colleges": [
+   {
+    "collegeId": "1759481867490430976",
+    "collegeName": "Central Academy of Fine Arts",
+    "degree": "2",
+    "cert": "/rare/QmY91m5M3VchqA173bqdQkiXUK5GwaX8ZxjmACRpY4Z6iu.jpg"
+   }
+  ],
+  "works": 2,
+  "artworks": [
+   {
+    "artworkId": "1847153647604076544",
+    "artworkName": "共同的想象-何方01",
+    "type": 1,
+    "ipfsHash": "/rare/QmQzTKtsagSRRmmFDZKAVCM7gWzWN81oLHnkNYXYWMDDsQ.jpg",
+    "cover": ""
+   }
+  ],
+  "isFollowed": 0,
+  "isCollector": 0
+ },
+ {
+  "artistId": "1814168704305467392",
+  "artistName": "焦洋",
+  "avatar": "/rare/Qmbako8KDFpHTm9BCbVixy2bU4SbperVi1c9Bqd8WEsRiD.jpg",
+  "isApply": 1,
+  "colleges": [
+   {
+    "collegeId": "1766107219750948864",
+    "collegeName": "Lu Xun Academy of Fine Arts",
+    "degree": "1",
+    "cert": "/rare/QmYqSKMxhhXWa39cJ3ihAN9BC1vYNrH9Hv9L84WiwPnbmX.jpg"
+   }
+  ],
+  "works": 2,
+  "artworks": [
+   {
+    "artworkId": "1846933247179755520",
+    "artworkName": "向度·观",
+    "type": 3,
+    "ipfsHash": "816c8c7ca28265ecaccbd9f952304826",
+    "cover": "/rare/QmbCAotYuvURdVSJ5DmvHjHYH7Cpzpva7GykB2zzQ2mHgb.jpg"
+   }
+  ],
+  "isFollowed": 0,
+  "isCollector": 0
+ },
+ {
+  "artistId": "1793179492940910592",
+  "artistName": "WANG ZHAN",
+  "isApply": 1,
+  "colleges": [
+   {
+    "collegeId": "1759481867490430976",
+    "collegeName": "Central Academy of Fine Arts",
+    "degree": "0",
+    "cert": "/rare/Qmdej6GjfcyF85pYvrQCk5vJbgGWcREXPYAeG7WvZ3JHDP.jpg"
+   }
+  ],
+  "works": 2,
+  "artworks": [
+   {
+    "artworkId": "1846821947074285568",
+    "artworkName": "《city introduction》",
+    "type": 3,
+    "ipfsHash": "ddbb077e95642251e705e5f0833a006a",
+    "cover": "/rare/QmQcPsnJAg45pHX73fTy7SgdJDShUjeidTNFWYRRymzZWR.png"
+   }
+  ],
+  "isFollowed": 0,
+  "isCollector": 0
+ },
+ {
+  "artistId": "1830123469027807232",
+  "artistName": "周罡 ZhouGang",
+  "avatar": "/rare/QmQYKoDeA2oNVWNVvJRsQcDhpUpsAneLGbGspe5viE4xts.jpg",
+  "isApply": 1,
+  "colleges": [
+   {
+    "collegeId": "1764972462413582336",
+    "collegeName": "Akademie der Bildenden Künste München",
+    "degree": "1",
+    "cert": "/rare/QmQwAQNg4cMDBd5jo4U4PzjoPrf5BBoW7ujjK86rX2mGUp.jpg"
+   },
+   {
+    "collegeId": "1766104741076668416",
+    "collegeName": "Hubei Institute of Fine Arts",
+    "degree": "0",
+    "cert": "/rare/QmNjvZXDoEc3iLeX1N49ZKaCJS2aHBiZsLrsiyhbySxSwG.jpg"
+   }
+  ],
+  "works": 20,
+  "artworks": [
+   {
+    "artworkId": "1846507829394018304",
+    "artworkName": "Valpinçon Bather 3‘01”",
+    "type": 1,
+    "ipfsHash": "/rare/QmdYhS54NXCfRjh27vf73M6CgdnNMPZunGKopEKEZg8KHY.jpg",
+    "cover": ""
+   },
+   {
+    "artworkId": "1846507638230224896",
+    "artworkName": "The Wedding at Cana2‘12“",
+    "type": 1,
+    "ipfsHash": "/rare/QmbuCxMRDCvicfegvm5Zhc521Y2da41HvmUQhfzbeHSWKA.jpg",
+    "cover": ""
+   },
+   {
+    "artworkId": "1846507325649719296",
+    "artworkName": "Mona Lisa 1’38”",
+    "type": 1,
+    "ipfsHash": "/rare/Qmcr7Ta1BiCx7kUruMPtivVEX65KHboF7cwAKgH1dLbbGh.jpg",
+    "cover": ""
+   }
+  ],
+  "isFollowed": 0,
+  "isCollector": 0
+ },
+ {
+  "artistId": "1838297059103477760",
+  "artistName": "Yangxin Chen",
+  "isApply": 1,
+  "colleges": [
+   {
+    "collegeId": "1839829047463514112",
+    "collegeName": "University of California, Berkeley",
+    "degree": "1",
+    "cert": "/rare/QmbkrFoXi9Q5MLN7emTUZMb4wMhcHzJM6YKa2gPJQUNN85.jpg"
+   }
+  ],
+  "works": 2,
+  "artworks": [
+   {
+    "artworkId": "1846417201905668096",
+    "artworkName": "Blockie: The Block of Cyber Delights",
+    "type": 1,
+    "ipfsHash": "/rare/QmXfKnMChg2QWR2yi7LMvwaMPtgsQseoc3hJeTeBWokK4Y.png",
+    "cover": ""
+   }
+  ],
+  "isFollowed": 0,
+  "isCollector": 0
+ },
+ {
+  "artistId": "1833362115310784512",
+  "artistName": "Zijie Zhu",
+  "isApply": 1,
+  "colleges": [
+   {
+    "collegeId": "1764571373050662912",
+    "collegeName": "School of Visual Arts New York City",
+    "degree": "1",
+    "cert": "/rare/QmWFHa7YLtEmeRn1JxCd8rUHAr2RRFVyNTcwUmcUt3YMvq.jpeg"
+   }
+  ],
+  "works": 4,
+  "artworks": [
+   {
+    "artworkId": "1845827709230518272",
+    "artworkName": "幻想的瘟疫",
+    "type": 1,
+    "ipfsHash": "/rare/QmSyxq5jqSH8ZuuBK9QvR8JZawewE1NWgzgyLu8NnExQMy.png",
+    "cover": ""
+   }
+  ],
+  "isFollowed": 0,
+  "isCollector": 0
+ },
+ {
+  "artistId": "1792592981161807872",
+  "artistName": "张一帆",
+  "isApply": 1,
+  "colleges": [
+   {
+    "collegeId": "1845845311818436608",
+    "collegeName": "Coventry University",
+    "degree": "1",
+    "cert": "/rare/QmfLtThHppMymAshF54hhB1mvbD2X2XZvdpEwnKRpsxPN1.jpg"
+   }
+  ],
+  "works": 2,
+  "artworks": [
+   {
+    "artworkId": "1845839925140918272",
+    "artworkName": "Circle",
+    "type": 3,
+    "ipfsHash": "6adc3cf597167666e47d9cf93a609f2f",
+    "cover": "/rare/Qma1eN8baPVj1pMxcTevLPgweMzvH8FUi6W3fZUKy35qUp.png"
+   }
+  ],
+  "isFollowed": 0,
+  "isCollector": 0
+ },
+ {
+  "artistId": "1803015954804903936",
+  "artistName": "Monkey Sun",
+  "avatar": "/rare/QmTQdjxoV1Ci2y1UXDpN37FeasR6SPk1u5Mt1VjvvjyYRq.jpeg",
+  "isApply": 1,
+  "colleges": [
+   {
+    "collegeId": "1759481867490430976",
+    "collegeName": "Central Academy of Fine Arts",
+    "degree": "1",
+    "cert": "/rare/QmQQ47Z1zwKKzj9UK5zCRBs2Yk8M36T6boEFGbNATDbYhe.pdf"
+   }
+  ],
+  "works": 2,
+  "artworks": [
+   {
+    "artworkId": "1845656251896303616",
+    "artworkName": "Andless",
+    "type": 3,
+    "ipfsHash": "e3447e6006f5c06f5af69cc9e50ff6e7",
+    "cover": "/rare/QmYkRZxvrUJv3tu9VqdNnN4HaupaaMuDs5DAux6T963LiJ.png"
+   }
+  ],
+  "isFollowed": 0,
+  "isCollector": 0
+ },
+ {
+  "artistId": "1804432413695283200",
+  "artistName": "金郑晓 Jin Zhengxiao",
+  "avatar": "/rare/QmcQTrcQVX5ictCHGBHfS2d8hT9cWttL2KAqjcASKkQkyk.png",
+  "isApply": 1,
+  "colleges": [
+   {
+    "collegeId": "1759481867490430976",
+    "collegeName": "Central Academy of Fine Arts",
+    "degree": "1",
+    "cert": "/rare/QmRGR7WG2TZJeZYfzEEtLeBqJ5wPqEMGVt3cdZeec6FFUG.jpg"
+   }
+  ],
+  "works": 4,
+  "artworks": [
+   {
+    "artworkId": "1840005303182168064",
+    "artworkName": "quantum bird-1",
+    "type": 1,
+    "ipfsHash": "/rare/QmSVNmaFvyYoaqPRtKpLdYZE6Dp8Tow9f6MPYmqxoNJvaz.jpg",
+    "cover": ""
+   }
+  ],
+  "isFollowed": 0,
+  "isCollector": 0
+ },
+ {
+  "artistId": "1843560584268877824",
+  "artistName": "DaDa 笪秋焱",
+  "avatar": "/rare/QmdQ942gtNxk3oiJojzsXYtT3bvEPRT1txw64BRShRrmrP.jpg",
+  "isApply": 1,
+  "colleges": [
+   {
+    "collegeId": "1761650403981791232",
+    "collegeName": "University College London",
+    "degree": "1",
+    "cert": "/rare/QmTyiaJNxzqKgL7zBdaBPksTYGs3ii61nvccdXnHCdXBaC.jpg"
+   }
+  ],
+  "works": 2,
+  "artworks": [
+   {
+    "artworkId": "1844592264844808192",
+    "artworkName": "Enconded Life #6",
+    "type": 3,
+    "ipfsHash": "b82c7e862130dac39cfafdee468d9cc1",
+    "cover": "/rare/QmWwjXK6vks9aKyqN5nVqAEtpKAGUN8b2XSDuhYDcFTaTo.png"
+   }
+  ],
+  "isFollowed": 0,
+  "isCollector": 0
+ },
+ {
+  "artistId": "1839005509630431232",
+  "artistName": "Zheng Hong Chang 郑宏昌",
+  "avatar": "/rare/QmRzRGgxFn8Z9S491BepB7VYmQ3N7W6NZfgfCg163LsJca.png",
+  "isApply": 1,
+  "colleges": [
+   {
+    "collegeId": "1759481867490430976",
+    "collegeName": "Central Academy of Fine Arts",
+    "degree": "1",
+    "cert": "/rare/QmfBfZCzd7LB84wq96z3SSWNabxfrmCG6gvxoHDcrhTPmH.jpg"
+   }
+  ],
+  "works": 15,
+  "artworks": [
+   {
+    "artworkId": "1844408508653637632",
+    "artworkName": "My Universe 我的宇宙",
+    "type": 1,
+    "ipfsHash": "/rare/QmNy9NMsQWUXaZzN1BD7BafKkpWZigRh2A4a1LvUpWhRBK.jpg",
+    "cover": ""
+   },
+   {
+    "artworkId": "1839015341926256640",
+    "artworkName": "\"My Universe\" 《 我的宇宙 》",
+    "type": 1,
+    "ipfsHash": "/rare/QmeLek4UxLGoiUPwJip66JnPnuConiVwgCCVxv9UNbHemn.jpg",
+    "cover": ""
+   }
+  ],
+  "isFollowed": 0,
+  "isCollector": 0
+ },
+ {
+  "artistId": "1801924293114859520",
+  "artistName": "岳艳娜",
+  "avatar": "/rare/QmZ7jXi8HFyEzDf9kXgRZTHGENSKazoCRW6cKQZvsWM3Hx.jpg",
+  "isApply": 1,
+  "colleges": [
+   {
+    "collegeId": "1759481867490430976",
+    "collegeName": "Central Academy of Fine Arts",
+    "degree": "2",
+    "cert": "/rare/QmS52uqzWBdTw5sayE1MRPqy6MuupQ3USK2M4BAUaBKBWN.pdf"
+   }
+  ],
+  "works": 6,
+  "artworks": [
+   {
+    "artworkId": "1844383116844732416",
+    "artworkName": "“The Shadow Chasing Light”《追光之影》",
+    "type": 1,
+    "ipfsHash": "/rare/QmRGBuqQbdejzUJXYGrnJsdY9tRpM7WqrnCsgAqbktrYiP.gif",
+    "cover": ""
+   }
+  ],
+  "isFollowed": 0,
+  "isCollector": 0
+ },
+ {
+  "artistId": "1838256016463106048",
+  "artistName": "Xu Zhongmin",
+  "avatar": "/rare/QmacLZMkws8b9RNEte2sFRkqKdFUGY6M5c8pX8zy1D8osv.jpg",
+  "isApply": 1,
+  "colleges": [],
+  "works": 12,
+  "artworks": [
+   {
+    "artworkId": "1838276249219371008",
+    "artworkName": "《蛋形B红》动态雕塑，‘Egg Shape B Red’ Kinetic Sculpture，",
+    "type": 3,
+    "ipfsHash": "4e8d7055cbb56a89136f1a5a9ed28563",
+    "cover": "/rare/QmSYnsCUBRy38pJSgH1EhoTJ7qZ3g3hbd5gSb3u1rgQACn.jpg"
+   }
+  ],
+  "isFollowed": 0,
+  "isCollector": 0
+ },
+ {
+  "artistId": "1836976651733438464",
+  "artistName": "肖维 YoYo Xiao",
+  "isApply": 1,
+  "colleges": [
+   {
+    "collegeId": "1759481867490430976",
+    "collegeName": "Central Academy of Fine Arts",
+    "degree": "0",
+    "cert": "/rare/QmPqtReKpJe6yz1s9d92gH8d3LxzkZq2n8sujp9nAGLcod.jpg"
+   }
+  ],
+  "works": 2,
+  "artworks": [
+   {
+    "artworkId": "1841188026215174144",
+    "artworkName": "Dilemma",
+    "type": 3,
+    "ipfsHash": "afe05357bd004d061774e4595d7c7bbd",
+    "cover": "/rare/QmVeSsPuUZNTnij4eTSwFD8mMViyeY8SmYsNzQU4CVpQBE.jpeg"
+   }
+  ],
+  "isFollowed": 0,
+  "isCollector": 0
+ },
+ {
+  "artistId": "1829086833556983808",
+  "artistName": "Loxel Li",
+  "isApply": 1,
+  "colleges": [
+   {
+    "collegeId": "1759468185268129792",
+    "collegeName": "University of the Arts London",
+    "degree": "1",
+    "cert": "/rare/QmatPVo5PyXhFU39f3Ub2Ci29bKHcryvLzLCpVLrxRHymt.jpg"
+   }
+  ],
+  "works": 4,
+  "artworks": [
+   {
+    "artworkId": "1840362184878723072",
+    "artworkName": "蝴蝶茶馆 Butterfly Teahouse 001",
+    "type": 1,
+    "ipfsHash": "/rare/QmbFUWPb7o8njfuBekqdiE2hPxtGDCAuDhZ1jZPFzRF3d9.png",
+    "cover": ""
+   }
+  ],
+  "isFollowed": 0,
+  "isCollector": 0
+ },
+ {
+  "artistId": "1826818250340700160",
+  "artistName": "Dolores Wang",
+  "isApply": 1,
+  "colleges": [
+   {
+    "collegeId": "1840319055987347456",
+    "collegeName": "Nanjing Normal University",
+    "degree": "1",
+    "cert": "/rare/QmV95ZSXE4hrcAbrL7wbnyqkiF9MNtXQNCt3HDdVvdZGSR.jpg"
+   }
+  ],
+  "works": 6,
+  "artworks": [
+   {
+    "artworkId": "1840319536268709888",
+    "artworkName": "后启示录·森林群落",
+    "type": 3,
+    "ipfsHash": "8991f175004f51995706608b2b9ce492",
+    "cover": "/rare/QmPH5x9kYum7RVAaaBSMqn7mbYvsxzmzpe1Yz9v2h8xkxQ.PNG"
+   },
+   {
+    "artworkId": "1840317672236126208",
+    "artworkName": "超智慧植物形态2088",
+    "type": 3,
+    "ipfsHash": "280b9ef0eb0e7008e87926df3730eeef",
+    "cover": "/rare/QmSdWKrCHQXkEryWWCq6m2UqqqamZFFj4P6V8a1VZmN5EL.JPG"
+   }
+  ],
+  "isFollowed": 0,
+  "isCollector": 0
+ },
+ {
+  "artistId": "1838547128348184576",
+  "artistName": "Chen Zijian",
+  "isApply": 1,
+  "colleges": [
+   {
+    "collegeId": "1759485665046827008",
+    "collegeName": "China Academy of Art",
+    "degree": "1",
+    "cert": "/rare/QmY88JAZqpwXHSZqwurKHh3AwZ7wXo2aPVsUvCd6fWie5B.pdf"
+   }
+  ],
+  "works": 2,
+  "artworks": [
+   {
+    "artworkId": "1839922601653309440",
+    "artworkName": "解剖剧场",
+    "type": 3,
+    "ipfsHash": "e5e068827db12f111d0ef0554096224d",
+    "cover": "/rare/QmQP3wisijk41VyWHKZP4jZTV9QGoN82mH7rvPxw2YWgjw.png"
+   }
+  ],
+  "isFollowed": 0,
+  "isCollector": 0
+ },
+ {
+  "artistId": "1791038743256371200",
+  "artistName": "薛雷Lei XUE",
+  "isApply": 1,
+  "colleges": [
+   {
+    "collegeId": "1760331818554494976",
+    "collegeName": "Kunsthochschule Kassel",
+    "degree": "1",
+    "cert": "/rare/QmNyraxghzmNZk46z9F2yjr376czfHav1wYPdVun5MsYy4.pdf"
+   }
+  ],
+  "works": 2,
+  "artworks": [
+   {
+    "artworkId": "1839563492009578496",
+    "artworkName": "Bondbomb-war, 战争",
+    "type": 3,
+    "ipfsHash": "ab470c3f410ecbf450c68c05ab75d12a",
+    "cover": "/rare/QmQ4XTtHNj9FHDsAk9zo8u1cBw7fvekazyLXLzLbCwJyss.jpg"
+   }
+  ],
+  "isFollowed": 0,
+  "isCollector": 0
+ },
+ {
+  "artistId": "1796130218369486848",
+  "artistName": "成林",
+  "avatar": "/rare/QmZcYDEmcvB3w8aKVm18j3FWcjYzuyzuVAxr9rbntQnpgQ.jpg",
+  "isApply": 1,
+  "colleges": [
+   {
+    "collegeId": "1766098502338875392",
+    "collegeName": "Xi'an Academy of Fine Arts",
+    "degree": "0",
+    "cert": "/rare/Qmf1v7ZwMwrMHHMebt8DmNjS6UrcFo74cbSQRpJr4DDZxk.jpg"
+   }
+  ],
+  "works": 4,
+  "artworks": [
+   {
+    "artworkId": "1839276472741793792",
+    "artworkName": "《虚无》",
+    "type": 3,
+    "ipfsHash": "7462f08d1717616194e7c2c58aabd206",
+    "cover": "/rare/QmYdy9yrakwxQJQ4SVPwKDie2RnwoGjCGigMLUCf52kvmV.jpg"
+   }
+  ],
+  "isFollowed": 0,
+  "isCollector": 0
+ },
+ {
+  "artistId": "1838784143522140160",
+  "artistName": "田地 Di Tian",
+  "avatar": "/rare/Qmcch9S8oq5SRdA5CCK9gUmWpBwny8dn5ej8zrhiU2bsQq.png",
+  "isApply": 1,
+  "colleges": [
+   {
+    "collegeId": "1839174253841354752",
+    "collegeName": "University of Pennsylvania",
+    "degree": "1",
+    "cert": "/rare/Qma8c29mzR74yDNt4duRRUBKwTJhuXKEwDCBZWWHzBYK5w.pdf"
+   },
+   {
+    "collegeId": "1759499325060288512",
+    "collegeName": "School of the Art Institute of Chicago",
+    "degree": "0",
+    "cert": "/rare/QmX29noi2pDvzHih7mZbMDRDRAn1gTLPDjd3MvsvFVuQ3c.pdf"
+   }
+  ],
+  "works": 2,
+  "artworks": [
+   {
+    "artworkId": "1839075943159828480",
+    "artworkName": "怨嗟的我 - The Sighing Me",
+    "type": 3,
+    "ipfsHash": "/rare/Qmbwg191dQQUm6EJAm8xCTaQXBfmAHKF9Jwzv6GkF9VYcT.MP4",
+    "cover": "/rare/QmVqfDR1vLYQL6G6NFgtho8zVSPFpB633UYo5mUwm81uTo.png"
+   }
+  ],
+  "isFollowed": 0,
+  "isCollector": 0
+ },
+ {
+  "artistId": "1798019505121792000",
+  "artistName": "Metarter",
+  "isApply": 1,
+  "colleges": [
+   {
+    "collegeId": "1766097133171249152",
+    "collegeName": "Guangzhou Academy of Fine Arts",
+    "degree": "3",
+    "cert": "/rare/Qmcz5xHcAHBaC5vcKWnBdU4KLJp1TFAVaPHqKPFFgqsVVd.jpg"
+   }
+  ],
+  "works": 2,
+  "artworks": [
+   {
+    "artworkId": "1838967121921576960",
+    "artworkName": "Binary Synergy Ballet",
+    "type": 3,
+    "ipfsHash": "d7aaf3490524ab70b725d76356232b3c",
+    "cover": "/rare/QmZMjw34ezDjmRBff8kWPFqEjtxnhYiKwkcHMccn9YyX71.png"
+   }
+  ],
+  "isFollowed": 0,
+  "isCollector": 0
+ },
+ {
+  "artistId": "1797919075666628608",
+  "artistName": "LinRan苒",
+  "avatar": "/rare/QmZLnd1tgpGPHikVva7t811u4zSyPDcwANQytVgCSxkFLS.jpeg",
+  "isApply": 1,
+  "colleges": [
+   {
+    "collegeId": "1845847632392622080",
+    "collegeName": "École nationale supérieure d’arts Paris-Cergy",
+    "degree": "1",
+    "cert": "/rare/QmV9wxM9QDNv8U4jTQ8TWC7hShaUXC3WtG7HuMPpnhmw8G.pdf"
+   }
+  ],
+  "works": 15,
+  "artworks": [
+   {
+    "artworkId": "1838848888660955136",
+    "artworkName": "From Peach Blossom Planet #007P来自桃花星",
+    "type": 3,
+    "ipfsHash": "349ddedeacaffb3c02a723817fbfd063",
+    "cover": "/rare/QmZ4aUievv9r4SpXjstodcafnFTa2G2Guu9Tqrgsb3aE8U.jpeg"
+   },
+   {
+    "artworkId": "1838834450054647808",
+    "artworkName": "From Peach Blossom Planet #006P来自桃花星",
+    "type": 3,
+    "ipfsHash": "7d1d02becec75c1da512ba3b6091bcbe",
+    "cover": "/rare/QmPT7c9hKnPtkfezbf59oHdA4Qym46JtE3fSNy14J5XPSK.jpeg"
+   }
+  ],
+  "isFollowed": 0,
+  "isCollector": 0
+ },
+ {
+  "artistId": "1802687941550673920",
+  "artistName": "王宏为Galaxia Wang",
+  "avatar": "/rare/QmahJMBxv4jadtTswFB6KUHJkwod8EdAV21U3ADfoZvCdS.PNG",
+  "isApply": 1,
+  "colleges": [
+   {
+    "collegeId": "1838526584215179264",
+    "collegeName": "Haute École d'art et de Design Genève",
+    "degree": "1",
+    "cert": "/rare/QmQ7jGDQZtiNPSxHs1WekCGtU3gNP9JAnqDEzGZ9frkda6.JPG"
+   }
+  ],
+  "works": 4,
+  "artworks": [
+   {
+    "artworkId": "1838531735441248256",
+    "artworkName": "大，命，性，情，道",
+    "type": 1,
+    "ipfsHash": "/rare/QmVA6S5at8GE2LLQWDGXAdC4CoyoJzB9RGspsG9Dmv3iDN.JPG",
+    "cover": ""
+   }
+  ],
+  "isFollowed": 0,
+  "isCollector": 0
+ },
+ {
+  "artistId": "1803000135198838784",
+  "artistName": "赵小锋",
+  "isApply": 1,
+  "colleges": [
+   {
+    "collegeId": "1759485665046827008",
+    "collegeName": "China Academy of Art",
+    "degree": "1",
+    "cert": "/rare/QmSA57q5TcKkh9KYK1k6PJ9ZaRcUuzxerSHSnkDBof2ypp.png"
+   }
+  ],
+  "works": 210,
+  "artworks": [
+   {
+    "artworkId": "1838402350201573376",
+    "artworkName": "独立印象 Independentype",
+    "type": 1,
+    "ipfsHash": "/rare/QmSZiYSeDJskkUbeceqRMJ4RbmfTiTZ25i8Ea1cV5Eoa2G.jpg",
+    "cover": ""
+   },
+   {
+    "artworkId": "1838402182005788672",
+    "artworkName": "独立印象 Independentype",
+    "type": 1,
+    "ipfsHash": "/rare/QmQ1ZcSZHqbrcgRaDcZsmqyTcptdKhJbHESCEmY8wkvWzm.jpg",
+    "cover": ""
+   },
+   {
+    "artworkId": "1838401750525153280",
+    "artworkName": "独立印象 Independentype",
+    "type": 1,
+    "ipfsHash": "/rare/QmNzud1Qm6J3FFDS5JwWD9XgJfJM4FxQTs1HCHcwnLAdXw.jpg",
+    "cover": ""
+   }
+  ],
+  "isFollowed": 0,
+  "isCollector": 0
+ },
+ {
+  "artistId": "1826200981084442624",
+  "artistName": "胡婧璇 Hu Jingxuan",
+  "avatar": "/rare/QmXBnVouv1gtjJbK4Ha6PtdBFFEK1KtHAynumqRsuaP8ga.jpg",
+  "isApply": 1,
+  "colleges": [],
+  "works": 4,
+  "artworks": [
+   {
+    "artworkId": "1838159095673262080",
+    "artworkName": "蓬莱仙境计划 Penglai Fairyland Plan",
+    "type": 3,
+    "ipfsHash": "a1970c8a6c8e5db75bbb1cb5504a6f2f",
+    "cover": "/rare/QmZPKp8fth6AtwxeC46dzf8HWv87CxbckLMixLfMbU5mmV.png"
+   }
+  ],
+  "isFollowed": 0,
+  "isCollector": 0
+ },
+ {
+  "artistId": "1806984635461275648",
+  "artistName": "罗灿 Echo Can Luo",
+  "isApply": 1,
+  "colleges": [
+   {
+    "collegeId": "1759485665046827008",
+    "collegeName": "China Academy of Art",
+    "degree": "0",
+    "cert": "/rare/QmQvyEdYon987JTvFEvAnVDHxHkGNmsuGgGpQcMtwVWA4E.pdf"
+   },
+   {
+    "collegeId": "1760331818554494976",
+    "collegeName": "Kunsthochschule Kassel",
+    "degree": "1",
+    "cert": "/rare/QmZQFMcgYLQvAXF4Vu7TQnsPJLPehLrFxUPnBGj5mgJc7o.pdf"
+   }
+  ],
+  "works": 4,
+  "artworks": [
+   {
+    "artworkId": "1837753762450640896",
+    "artworkName": "toxoid healing2-24",
+    "type": 3,
+    "ipfsHash": "df79953d4786efe5fba9dc2b46b8a374",
+    "cover": "/rare/QmWq77L2SMYwpxWF5CEqe84TfV7Fn5FoVUyvTGjxhHJpnq.png"
+   }
+  ],
+  "isFollowed": 0,
+  "isCollector": 0
+ },
+ {
+  "artistId": "1808366515095998464",
+  "artistName": "李琳琳",
+  "isApply": 1,
+  "colleges": [],
+  "works": 6,
+  "artworks": [
+   {
+    "artworkId": "1814195268489449472",
+    "artworkName": "重回世界 Return to the World",
+    "type": 1,
+    "ipfsHash": "/rare/QmeAApRWEQSCQKbqwVEufgg7mtEda9NGE9dzhJc42y9g1B.jpeg",
+    "cover": ""
+   }
+  ],
+  "isFollowed": 0,
+  "isCollector": 0
+ },
+ {
+  "artistId": "1798574174411821056",
+  "artistName": "朱宝元 BaoyuanZhu",
+  "avatar": "/rare/QmSEbHYupTbgqvd9MaJVF6DmXn7CuBbauKhKSEr6QXJrwV.jpg",
+  "isApply": 1,
+  "colleges": [
+   {
+    "collegeId": "1759481867490430976",
+    "collegeName": "Central Academy of Fine Arts",
+    "degree": "2",
+    "cert": "/rare/QmWRagzgmUWaWGCy7By2CK7uhvwXTfnB1kgZtNTS2sfjrP.jpeg"
+   }
+  ],
+  "works": 6,
+  "artworks": [
+   {
+    "artworkId": "1813119095948840960",
+    "artworkName": "天空、山丘、棕榈树 Sky, hills, palm trees",
+    "type": 1,
+    "ipfsHash": "/rare/QmcZ45EqB22BgWoZQAEDm54szuqMf7UJJ2wiCyGpQSiMTH.gif",
+    "cover": ""
+   }
+  ],
+  "isFollowed": 0,
+  "isCollector": 0
+ },
+ {
+  "artistId": "1803692426708258816",
+  "artistName": "陈天禅 Tianchan",
+  "avatar": "/rare/QmVSU6Xga7mNfuepkwMSBDc7SwTieFRB87HJeeQckM7WU4.png",
+  "isApply": 1,
+  "colleges": [
+   {
+    "collegeId": "1761656608829607936",
+    "collegeName": "Massachusetts Institute of Technology",
+    "degree": "1",
+    "cert": "/rare/Qmc4UYabAw9YFsrfpQL4kSD5Z6XDrxvYBv5eG8Fve6PMFy.pdf"
+   }
+  ],
+  "works": 4,
+  "artworks": [
+   {
+    "artworkId": "1813151908664315904",
+    "artworkName": "Deus ex machina",
+    "type": 1,
+    "ipfsHash": "/rare/Qmb1z4y3REb4ibKm4RpNzbkXHpMWf3ST7LPHzrCREBMdJJ.png",
+    "cover": ""
+   }
+  ],
+  "isFollowed": 0,
+  "isCollector": 0
+ },
+ {
+  "artistId": "1801539192770138112",
+  "artistName": "王屿星 WangYuxing",
+  "avatar": "/rare/QmNnqELC3CaABq4qNG4jGEQkiSCV6iE7ZzvhUJeWHvMMCq.jpg",
+  "isApply": 1,
+  "colleges": [],
+  "works": 6,
+  "artworks": [
+   {
+    "artworkId": "1811232915858788352",
+    "artworkName": "黑点 The Dark Spot",
+    "type": 1,
+    "ipfsHash": "/rare/QmewURe2hpuBLF8TJK1jtfLmLvyi2zPqHtpQdw7ykdrSPt.PNG",
+    "cover": ""
+   }
+  ],
+  "isFollowed": 0,
+  "isCollector": 0
+ },
+ {
+  "artistId": "1795057808694185984",
+  "artistName": "CYBERBBAGE",
+  "avatar": "/rare/Qmb7gHXorThBT3cLEWzDXJ3enEZzCPkhUgbS1xmZmY9GGv.jpg",
+  "isApply": 1,
+  "colleges": [
+   {
+    "collegeId": "1759481867490430976",
+    "collegeName": "Central Academy of Fine Arts",
+    "degree": "0",
+    "cert": "/rare/QmPa4f4P4ubDaRh9mffbbwhgWb7DeNNdzVdNtLjLDqu54B.jpg"
+   }
+  ],
+  "works": 2,
+  "artworks": [
+   {
+    "artworkId": "1814198546086367232",
+    "artworkName": "IF WE WILL KNOW WHERE WE WILL GO",
+    "type": 3,
+    "ipfsHash": "378a20f8ac885249ebe67bd2cd8fbc4c",
+    "cover": "/rare/QmeeXiny9frqpX8tLmExYQpg3nqsgwGVJXu5pdeUiTFdVq.jpg"
+   }
+  ],
+  "isFollowed": 0,
+  "isCollector": 0
+ },
+ {
+  "artistId": "1813817121017303040",
+  "artistName": "大西洋蛙神",
+  "isApply": 1,
+  "colleges": [
+   {
+    "collegeId": "1759481867490430976",
+    "collegeName": "Central Academy of Fine Arts",
+    "degree": "1",
+    "cert": "/rare/QmcjW7wQfGfcbCw3DsxCJSks5FSne5gP6TuQYaZx5k5bex.jpg"
+   },
+   {
+    "collegeId": "1759481867490430976",
+    "collegeName": "Central Academy of Fine Arts",
+    "degree": "1",
+    "cert": "/rare/QmXVkjsbDKUWUe5AHTjsQkMgnekKqrxWbTp7br9wMvdtNK.jpg"
+   }
+  ],
+  "works": 4,
+  "artworks": [
+   {
+    "artworkId": "1813838292471386112",
+    "artworkName": "绿色火焰纹外套",
+    "type": 3,
+    "ipfsHash": "30aa8bdd5e1ac86e099e382e5a5da5cc",
+    "cover": "/rare/QmdUGuB8gyZV9eh3s2MgQswYFLrX1HcdgZXaLRe43JPjwR.png"
+   }
+  ],
+  "isFollowed": 0,
+  "isCollector": 0
+ },
+ {
+  "artistId": "1802588867845558272",
+  "artistName": "Houshuai 侯帅",
+  "avatar": "/rare/QmZeDF9ff3daYf4oRMe86bWwhoGUiVdEcC2teC6w4A37KM.png",
+  "isApply": 1,
+  "colleges": [
+   {
+    "collegeId": "1759481867490430976",
+    "collegeName": "Central Academy of Fine Arts",
+    "degree": "2",
+    "cert": "/rare/QmQSWFM8LvsZLPMTE5D4p8YjydwYUMuyCgWt3szpmwSEe7.jpg"
+   }
+  ],
+  "works": 2,
+  "artworks": [
+   {
+    "artworkId": "1813781563020808192",
+    "artworkName": "Kodak Girls' Bedroom(Middle Part）《柯达女孩的卧室（中）》",
+    "type": 3,
+    "ipfsHash": "e34fd1b1a4103a7acefee376ea033ea9",
+    "cover": "/rare/QmP1zhtpwKTxttr8xZyo6zaSfDBxFugYQKmYxJu5bALHVu.png"
+   }
+  ],
+  "isFollowed": 0,
+  "isCollector": 0
+ },
+ {
+  "artistId": "1795359506818011136",
+  "artistName": "PinkCY ",
+  "avatar": "/rare/QmYwKfq7Yojzc3Du6gv1wc5tp6cfkmGWb6XhMmapYiqH21.jpeg",
+  "isApply": 1,
+  "colleges": [
+   {
+    "collegeId": "1759481867490430976",
+    "collegeName": "Central Academy of Fine Arts",
+    "degree": "1",
+    "cert": "/rare/QmZweceqkHf74JGxRzziePREwpG1wrNtJi3QU2bbncTf9W.jpg"
+   }
+  ],
+  "works": 2,
+  "artworks": [
+   {
+    "artworkId": "1813444400827731968",
+    "artworkName": "化身（Avatar）",
+    "type": 3,
+    "ipfsHash": "a2ae87a1e17fc699ee36ad845bb937b1",
+    "cover": "/rare/QmUnuumz7RBG4Ry1ojnvS38xXwmLmw5rJZ3zndKryajbo1.png"
+   }
+  ],
+  "isFollowed": 0,
+  "isCollector": 0
+ },
+ {
+  "artistId": "1803763350212055040",
+  "artistName": "Rupeng Zhao",
+  "avatar": "/rare/QmaBQfQ6x1FvWXF8ZjNsvPvc6HYjeFVt29VyJrrbpdFTnc.jpg",
+  "isApply": 1,
+  "colleges": [
+   {
+    "collegeId": "1759485665046827008",
+    "collegeName": "China Academy of Art",
+    "degree": "0",
+    "cert": "/rare/QmZNE8qZqK1scmQjWsEHDhw1YEX96PAT2S6naQCDQmFfXX.jpg"
+   }
+  ],
+  "works": 2,
+  "artworks": [
+   {
+    "artworkId": "1813156727961554944",
+    "artworkName": "标准神龛 Standard Shrine",
+    "type": 3,
+    "ipfsHash": "2e81dbd3b88c9652facac53f19dac435",
+    "cover": "/rare/QmNMHdgbLMi5kfrxZi1a6HScQaoNLRqeGNRMzVipokprfS.jpg"
+   }
+  ],
+  "isFollowed": 0,
+  "isCollector": 0
+ },
+ {
+  "artistId": "1799368732741603328",
+  "artistName": "任伦",
+  "avatar": "/rare/QmVY9RBzyPYS7Ra6CRPHJnVX6yVRLgUiDb9uDkCde8iXeS.JPG",
+  "isApply": 1,
+  "colleges": [
+   {
+    "collegeId": "1759468185268129792",
+    "collegeName": "University of the Arts London",
+    "degree": "1",
+    "cert": "/rare/QmSS39gzZ2e5XakWaFHyucHNdJ1z8VzsfuLQC9xbW31TDS.jpg"
+   }
+  ],
+  "works": 4,
+  "artworks": [
+   {
+    "artworkId": "1813150996034097152",
+    "artworkName": "Facing white wall ",
+    "type": 1,
+    "ipfsHash": "/rare/QmdFEYPwv5cbDXHxWEA3Dzs9pBkPAsMfctoqfaqDnTrUrm.jpg",
+    "cover": ""
+   }
+  ],
+  "isFollowed": 0,
+  "isCollector": 0
+ },
+ {
+  "artistId": "1808085276514455552",
+  "artistName": "王歆童",
+  "avatar": "/rare/QmbidPrtbPWKqCaXPT84FvNh6knauS9JAbzRv2pNzPiecb.png",
+  "isApply": 1,
+  "colleges": [
+   {
+    "collegeId": "1759474472525631488",
+    "collegeName": "Parsons School of Design",
+    "degree": "1",
+    "cert": "/rare/QmUuV67ZdiqxNBCDn5VR1PoguJHftASV1ubignPf77fL4y.png"
+   }
+  ],
+  "works": 2,
+  "artworks": [
+   {
+    "artworkId": "1813123074892107776",
+    "artworkName": "鸽子剧院",
+    "type": 3,
+    "ipfsHash": "15dc206e28b2f55e7c8d183b2d948684",
+    "cover": "/rare/QmRd6xixz7SUsc8LqRW6roDSYjF3gg5Vm5X4XKgTK7AiTE.png"
+   }
+  ],
+  "isFollowed": 0,
+  "isCollector": 0
+ },
+ {
+  "artistId": "1800529719586852864",
+  "artistName": "吴凡",
+  "avatar": "/rare/QmfNtpDHmWBycGBdQa8x1RxjaxrLNqQHBpmM5ThX8JyHz1.jpg",
+  "isApply": 1,
+  "colleges": [
+   {
+    "collegeId": "1759481867490430976",
+    "collegeName": "Central Academy of Fine Arts",
+    "degree": "2",
+    "cert": "/rare/QmZQF1LZqXRdcBHiZWS5aQMKUMUL7kPSZHz73rPh8B255T.pdf"
+   }
+  ],
+  "works": 2,
+  "artworks": [
+   {
+    "artworkId": "1813121055531864064",
+    "artworkName": "坍缩D02（Collapsing-D02）",
+    "type": 3,
+    "ipfsHash": "60426cfc0f2594656884fbfebb550e2a",
+    "cover": "/rare/QmVZ9VxXJvZU8FdKVRrMvS5BDiFrWpWUvpqcYBQx7va9WC.png"
+   }
+  ],
+  "isFollowed": 0,
+  "isCollector": 0
+ },
+ {
+  "artistId": "1804389015533785088",
+  "artistName": "张振 Zhang Zhen",
+  "isApply": 1,
+  "colleges": [
+   {
+    "collegeId": "1766107219750948864",
+    "collegeName": "Lu Xun Academy of Fine Arts",
+    "degree": "1",
+    "cert": "/rare/QmP2nwZRQj9vSvKT781p8jgEwXLNTjg9R8Y51sWM5b651Z.JPG"
+   }
+  ],
+  "works": 4,
+  "artworks": [
+   {
+    "artworkId": "1813116734098509824",
+    "artworkName": "未来场系：后自然拟态复刻",
+    "type": 1,
+    "ipfsHash": "/rare/QmeDq4qSybHEsXRo7mgyWjW9TfHYpQHe7TPndDomHG44Ej.jpg",
+    "cover": ""
+   }
+  ],
+  "isFollowed": 0,
+  "isCollector": 0
+ },
+ {
+  "artistId": "1801447405498011648",
+  "artistName": "蒋旎 Jewel",
+  "avatar": "/rare/QmQPsw32B8TZVP6A4tmsWE5j7xjisTSBYabNAnPxnKrQ6j.jpg",
+  "isApply": 1,
+  "colleges": [
+   {
+    "collegeId": "1766100260087795712",
+    "collegeName": "Tianjin Academy of Fine Arts",
+    "degree": "2",
+    "cert": "/rare/QmbJVH7dcVLn81mcpL7VK4nVCWDKg2xcC6hPQoRMbEMYav.png"
+   }
+  ],
+  "works": 2,
+  "artworks": [
+   {
+    "artworkId": "1813109398248230912",
+    "artworkName": "《JN by JN 江南记忆》",
+    "type": 3,
+    "ipfsHash": "b1c0c077f4dfaca651d7ef6543d997db",
+    "cover": "/rare/QmSXfhA4VgWL1tCWqmrewD8vkvLrxv7AxoRnpTm4VYrweG.png"
+   }
+  ],
+  "isFollowed": 0,
+  "isCollector": 0
+ },
+ {
+  "artistId": "1800895947048357888",
+  "artistName": "苇航",
+  "avatar": "/rare/Qma8wRyaHkWuDHvxBmSuyUifUJrdWYWgpoCun3MyuVdvU4.jpg",
+  "isApply": 1,
+  "colleges": [
+   {
+    "collegeId": "1766100260087795712",
+    "collegeName": "Tianjin Academy of Fine Arts",
+    "degree": "1",
+    "cert": "/rare/Qmbg7cE85wLC13HS2Ns4tLz2sDgyZWmyNUPWMTGXvJQTio.png"
+   }
+  ],
+  "works": 2,
+  "artworks": [
+   {
+    "artworkId": "1813096907082436608",
+    "artworkName": "风云画卷·春溪待渡",
+    "type": 3,
+    "ipfsHash": "d103c424e0e16f87b240d81405443403",
+    "cover": "/rare/QmTBiyWaWBzoD2smiNyi7b7QLe7LCJBDCx9rFpPPJ7QxWe.png"
+   }
+  ],
+  "isFollowed": 0,
+  "isCollector": 0
+ },
+ {
+  "artistId": "1801822614851817472",
+  "artistName": "杨蝉翼",
+  "avatar": "/rare/QmYYHL4JYSjSGXuC5S6EME3i23wECFyUVNT7vW9N6KthYv.png",
+  "isApply": 1,
+  "colleges": [
+   {
+    "collegeId": "1759481867490430976",
+    "collegeName": "Central Academy of Fine Arts",
+    "degree": "2",
+    "cert": "/rare/Qmc5YtR4ijwSJ4SapQiNGWuPwEo98X2ocePPvnAvfGCjfQ.png"
+   }
+  ],
+  "works": 4,
+  "artworks": [
+   {
+    "artworkId": "1811311458613596160",
+    "artworkName": "运转",
+    "type": 3,
+    "ipfsHash": "f82c6962261c558a3eaa2a456cbe113d",
+    "cover": "/rare/QmYYHL4JYSjSGXuC5S6EME3i23wECFyUVNT7vW9N6KthYv.png"
+   }
+  ],
+  "isFollowed": 0,
+  "isCollector": 0
+ },
+ {
+  "artistId": "1800822446857785344",
+  "artistName": "黄仕尊 Huangshizun",
+  "isApply": 1,
+  "colleges": [],
+  "works": 4,
+  "artworks": [
+   {
+    "artworkId": "1812154172875870208",
+    "artworkName": "信仰 Faith",
+    "type": 1,
+    "ipfsHash": "/rare/QmPYdmuBtPuwfEC3uHmGC1PHdPrdqbP4ZmZdtMJkPyzfeY.jpg",
+    "cover": ""
+   }
+  ],
+  "isFollowed": 0,
+  "isCollector": 0
+ },
+ {
+  "artistId": "1807288775777325056",
+  "artistName": "许毅博",
+  "isApply": 1,
+  "colleges": [
+   {
+    "collegeId": "1766107219750948864",
+    "collegeName": "Lu Xun Academy of Fine Arts",
+    "degree": "2",
+    "cert": "/rare/QmYYrT5JbUNJSY8NGmBFYi9MXzbHSVmfqpDFSMSmr92xzD.png"
+   }
+  ],
+  "works": 2,
+  "artworks": [
+   {
+    "artworkId": "1811997491453890560",
+    "artworkName": "元厂-观察者",
+    "type": 3,
+    "ipfsHash": "/rare/QmRkUBS9McFs6r2yay1EHrSCZ9aB59cCwCkYaMq6tMfqsd.MP4",
+    "cover": "/rare/QmPqZifdF3ZyhSi5jDxnPBPkfiR152SM9QhQSG5NcR33Zh.jpg"
+   }
+  ],
+  "isFollowed": 0,
+  "isCollector": 0
+ },
+ {
+  "artistId": "1797112936553123840",
+  "artistName": "Wenliang Sun",
+  "isApply": 1,
+  "colleges": [],
+  "works": 2,
+  "artworks": [
+   {
+    "artworkId": "1811743964458520576",
+    "artworkName": "《隐藏角色·STAND IN LINE》",
+    "type": 1,
+    "ipfsHash": "/rare/QmWt4djowAySn946WLoJssyzxrNEzrYYZeWjumb912eiXq.png",
+    "cover": ""
+   }
+  ],
+  "isFollowed": 0,
+  "isCollector": 0
+ },
+ {
+  "artistId": "1795364174688292864",
+  "artistName": "李敬坤",
+  "avatar": "/rare/QmceoopXDteepQQTVimCdit45JQzERiDKnC5kYQ2RZMUiZ.png",
+  "isApply": 1,
+  "colleges": [
+   {
+    "collegeId": "1759481867490430976",
+    "collegeName": "Central Academy of Fine Arts",
+    "degree": "1",
+    "cert": "/rare/QmYuxYauQT6A3dbDidssUdNmz6hdauSfaUsrSfg2h2u6du.jpeg"
+   }
+  ],
+  "works": 6,
+  "artworks": [
+   {
+    "artworkId": "1810287794434740224",
+    "artworkName": "请在明天的终点找到我 Find Me at the End of Tomorrow",
+    "type": 3,
+    "ipfsHash": "426fd3253ec4e7f15badfc9330a99755",
+    "cover": "/rare/QmRnUafNdzREVmgvvDXSEFtabVfwfQRwrA6fwr6HsoJWWx.png"
+   }
+  ],
+  "isFollowed": 0,
+  "isCollector": 0
+ },
+ {
+  "artistId": "1800506845891268608",
+  "artistName": "盖琦正 Gai Qizheng",
+  "avatar": "/rare/QmesEuNgx7KhYegMAF2hzULTrWm8GvZtca4gu3decaFGrC.JPG",
+  "isApply": 1,
+  "colleges": [
+   {
+    "collegeId": "1759481867490430976",
+    "collegeName": "Central Academy of Fine Arts",
+    "degree": "1",
+    "cert": "/rare/QmbY8Qt3mKWKf1rPxsYzhu5aJeSQQC1kDowSNPMNE9aKAY.JPG"
+   }
+  ],
+  "works": 2,
+  "artworks": [
+   {
+    "artworkId": "1810944074501459968",
+    "artworkName": "他者的想象 Imagination of the Other",
+    "type": 1,
+    "ipfsHash": "/rare/QmeZf4yECUcrPVMthfuhKqprxcCMEaK764TUvHa21qK5fX.jpg",
+    "cover": ""
+   }
+  ],
+  "isFollowed": 0,
+  "isCollector": 0
+ },
+ {
+  "artistId": "1801054938395185152",
+  "artistName": "GaoWenqian高文谦",
+  "avatar": "/rare/QmXcWyxUh9smB1RhBKqFTj1jsUxsFGEQoJsGheEaE8V9Hw.jpeg",
+  "isApply": 1,
+  "colleges": [
+   {
+    "collegeId": "1761663251990581248",
+    "collegeName": "Beaux-Arts de Paris",
+    "degree": "1",
+    "cert": "/rare/QmZnWAk3EFWei7ZgLm9vF1f1pPmyXt2Cz5m9B4o4pm3s6W.jpeg"
+   }
+  ],
+  "works": 6,
+  "artworks": [
+   {
+    "artworkId": "1810196886188068864",
+    "artworkName": "Currency - US Dollar/货币计划——美元",
+    "type": 3,
+    "ipfsHash": "fe3c02610dc00f4b1b7406f17ab1c2b7",
+    "cover": "/rare/QmWFtMmpex1RpRgwhYXfGwpPNd2BFYTfJztJTXizGQm21Q.png"
+   }
+  ],
+  "isFollowed": 0,
+  "isCollector": 0
+ },
+ {
+  "artistId": "1805469246596190208",
+  "artistName": "wang lichen",
+  "avatar": "/rare/QmQ84Y9V2vHoVq1AdqrEdbzi1UWVwcZhbAt1CxSQJJ6Vpy.png",
+  "isApply": 1,
+  "colleges": [],
+  "works": 6,
+  "artworks": [
+   {
+    "artworkId": "1807032668072841216",
+    "artworkName": "灵光/AURA",
+    "type": 3,
+    "ipfsHash": "822b78adc2c4412582b0495d679055d9",
+    "cover": "/rare/QmR8YjHk2uajXY1MtcXdFf9oLzR8XuAc3JtgLtYeSoMxyt.png"
+   }
+  ],
+  "isFollowed": 0,
+  "isCollector": 0
+ },
+ {
+  "artistId": "1789921930397224960",
+  "artistName": "Yufei Quan",
+  "avatar": "/rare/QmXDLc4pLwCe88hdvrigFTdRXFQDLm9WXMDeVmij5pwBTZ.png",
+  "isApply": 1,
+  "colleges": [
+   {
+    "collegeId": "1759470732842242048",
+    "collegeName": "Rhode Island School of Design",
+    "degree": "1",
+    "cert": "/rare/QmQWrRTgUzKbgyJFiB5LQ4YvWz6swdsQv3QBwtic72X7QK.pdf"
+   }
+  ],
+  "works": 2,
+  "artworks": [
+   {
+    "artworkId": "1803751700192956416",
+    "artworkName": "Brave New World 美丽新世界  ",
+    "type": 3,
+    "ipfsHash": "8f80991a161cc05b2f5d487b0bf54193",
+    "cover": "/rare/QmTkN7SpugSeKpLjKNiVr9FG3n7k8Sr3gCc6nkHTekpB2u.jpg"
+   }
+  ],
+  "isFollowed": 0,
+  "isCollector": 0
+ },
+ {
+  "artistId": "1787747413231013888",
+  "artistName": "AKi@ZHANG YONGJI",
+  "avatar": "/rare/QmbfydbtAtNQqvsSLzvMQ9oCxsfueyFS8mwwgqJ9fVYP46.jpg",
+  "isApply": 1,
+  "colleges": [
+   {
+    "collegeId": "1759481867490430976",
+    "collegeName": "Central Academy of Fine Arts",
+    "degree": "1",
+    "cert": "/rare/QmaimcBJbTJqfFPUF8ky7axaM7Fd4yKUZqv9r1cyDnnSpn.jpg"
+   }
+  ],
+  "works": 4,
+  "topSale": 0.001,
+  "artworks": [
+   {
+    "artworkId": "1795476788709822464",
+    "artworkName": "AKi 1.0-Me and My Cat",
+    "type": 1,
+    "ipfsHash": "/rare/QmXFw8SArbkVyZM2tSM7HBAte7PMN4MPMunpTXWEqKjCbP.jpg",
+    "cover": ""
+   }
+  ],
+  "isFollowed": 0,
+  "isCollector": 0
+ },
+ {
+  "artistId": "1767540285774106624",
+  "artistName": "Ruihuang_art",
+  "avatar": "/rare/QmWZbHv5L2jrZTzbniFCz4HHHHq6sDj7EAsXfqfVJXptt8.jpg",
+  "isApply": 1,
+  "colleges": [],
+  "works": 6,
+  "artworks": [
+   {
+    "artworkId": "1795098975804723200",
+    "artworkName": "轨道家园 Orbital home",
+    "type": 3,
+    "ipfsHash": "ab6ee7a6028a3d62399f5933f131173f",
+    "cover": "/rare/QmUNzPsmrfF5TdzjN9ZaZjFoSVgwb7n4rjWjczGqU2v5pu.jpg"
+   }
+  ],
+  "isFollowed": 0,
+  "isCollector": 0
+ },
+ {
+  "artistId": "1778046652473544704",
+  "artistName": "ZOOJOO",
+  "isApply": 1,
+  "colleges": [
+   {
+    "collegeId": "1759485665046827008",
+    "collegeName": "China Academy of Art",
+    "degree": "1",
+    "cert": "/rare/QmPa4BptsjxEvpttBcuBSVvkAjiRQB1TwSkLJUMhn91xhF.JPG"
+   }
+  ],
+  "works": 2,
+  "artworks": [
+   {
+    "artworkId": "1778323904046174208",
+    "artworkName": "The Pink Explosion - Invisible Cthulhu",
+    "type": 3,
+    "ipfsHash": "0427d9c52e65d4d4e295d7b7e48be1b9",
+    "cover": "/rare/QmY7YhNJQSLYQ9dR4YZiSWZaG4uNAak9EFChTgNX7m4jQa.jpg"
+   }
+  ],
+  "isFollowed": 0,
+  "isCollector": 0
+ },
+ {
+  "artistId": "1766466437200875520",
+  "artistName": "H",
+  "isApply": 1,
+  "colleges": [],
+  "works": 2,
+  "artworks": [
+   {
+    "artworkId": "1775521791033348096",
+    "artworkName": "一个世界正在建设中/A World is Under Construction",
+    "type": 3,
+    "ipfsHash": "b497cb2ce8b41b60e87c80a0081dfd28",
+    "cover": "/rare/QmZ7hb2MKCbEWwDcVnjTyWSVsdMcrij3wW9em3XY64ZAv2.JPG"
+   }
+  ],
+  "isFollowed": 0,
+  "isCollector": 0
+ },
+ {
+  "artistId": "1770030788054749184",
+  "artistName": "王子耕 Zigeng Wang",
+  "avatar": "/rare/QmZ7CSgChUugpqqm5ptN13xTyKahJAw7FHiXhax4v4TSgS.jpg",
+  "isApply": 1,
+  "colleges": [
+   {
+    "collegeId": "1772227432183631872",
+    "collegeName": "Princeton University",
+    "degree": "1",
+    "cert": "/rare/QmTb2BBXrNGCJeXT89M1eWvmDZ9FUkNSFP31YXzdYof2AL.png"
+   }
+  ],
+  "works": 2,
+  "artworks": [
+   {
+    "artworkId": "1773257921895993344",
+    "artworkName": "Nineteen Ninety-Four",
+    "type": 3,
+    "ipfsHash": "41ac0ed37f7a9ed46f86c3d8a451f0b0",
+    "cover": "/rare/QmcQXuq6GyYoXKVhEWaMPTMriUwVi1sBT9UF7GNzr6NnLF.jpg"
+   }
+  ],
+  "isFollowed": 0,
+  "isCollector": 0
+ },
+ {
+  "artistId": "1764199883805429760",
+  "artistName": "邬建安 Wu Jian’an",
+  "avatar": "/rare/QmTWNiz6XXyMxkqVwwR5BKZ5PpXbtzicsaJk7RzPi33A1U.png",
+  "isApply": 1,
+  "colleges": [
+   {
+    "collegeId": "1759481867490430976",
+    "collegeName": "Central Academy of Fine Arts",
+    "degree": "1",
+    "cert": "/rare/QmUA6jpv7qJqvDkUCjoza3qoaAo18hTatwQq9C7ajhBkb2.png"
+   }
+  ],
+  "works": 30,
+  "artworks": [
+   {
+    "artworkId": "1771546003384700928",
+    "artworkName": "《蛋生》 Birth of a Life",
+    "type": 1,
+    "ipfsHash": "/rare/Qmckf31LEGjdKYizqXJdvahLqQgMEn4znxsAz2aUHvKrVr.png",
+    "cover": ""
+   },
+   {
+    "artworkId": "1771543014557224960",
+    "artworkName": "《蛋生》 Birth of a Life",
+    "type": 1,
+    "ipfsHash": "/rare/QmVgZAUSo3QvpDZbEDKwexp7y6UEAjkpadBeUUPGVvbz8Q.png",
+    "cover": ""
+   },
+   {
+    "artworkId": "1768638292896649216",
+    "artworkName": "《蛋生》 Birth of a Life",
+    "type": 1,
+    "ipfsHash": "/rare/QmSFCkdbEK3DoGVuMF1LnmfZA9JMBYEBmibyo7FnHqKQVP.png",
+    "cover": ""
+   }
+  ],
+  "isFollowed": 0,
+  "isCollector": 0
+ },
+ {
+  "artistId": "1771518943123607552",
+  "artistName": "ff-uu-nn",
+  "isApply": 1,
+  "colleges": [],
+  "works": 2,
+  "artworks": [
+   {
+    "artworkId": "1771540611829207040",
+    "artworkName": "32-3-904545-1",
+    "type": 3,
+    "ipfsHash": "34666e03ec943fa66e20a220087212d0",
+    "cover": "/rare/QmXxHJoEHMiSTLVzBMeWwHE97DJSVZn1Db2Xj2WS7bYfV2.jpg"
+   }
+  ],
+  "isFollowed": 0,
+  "isCollector": 0
+ },
+ {
+  "artistId": "1762849322115928064",
+  "artistName": "Khabu",
+  "isApply": 1,
+  "colleges": [],
+  "works": 4,
+  "artworks": [
+   {
+    "artworkId": "1768923618676445184",
+    "artworkName": "T-bit",
+    "type": 1,
+    "ipfsHash": "/rare/QmUvTJtENJzQqCxhSCnfnSMmfVztisgezw7AYVHp2fqViZ.jpg",
+    "cover": ""
+   }
+  ],
+  "isFollowed": 0,
+  "isCollector": 0
+ },
+ {
+  "artistId": "1770659986272292864",
+  "artistName": "张增增 Zhang Zengzeng",
+  "avatar": "/rare/QmTX5XVwVhgecwWgys3f3HDpZX5XYo3ejzwL1P55wJCdPV.jpg",
+  "isApply": 1,
+  "colleges": [
+   {
+    "collegeId": "1766102773541244928",
+    "collegeName": "Sichuan Fine Arts Institute",
+    "degree": "1",
+    "cert": "/rare/QmXaVHm7mVxBx5ZtaJAD9gUfv8xvosSWTXRKVzTwCmizGi.pdf"
+   }
+  ],
+  "works": 2,
+  "artworks": [
+   {
+    "artworkId": "1771024242536747008",
+    "artworkName": "《无形之形》 Formless Form",
+    "type": 3,
+    "ipfsHash": "f7162d06da3bf25da386c5bb2d99ce12",
+    "cover": "/rare/QmexbNvaQe2fVQoLMf4Ctj7ed7jmvdmn836onw5o5Syh6i.jpg"
+   }
+  ],
+  "isFollowed": 0,
+  "isCollector": 0
+ },
+ {
+  "artistId": "1767506814682927104",
+  "artistName": "雎安奇 Ju Anqi",
+  "avatar": "/rare/QmYuZMu8K14DLG9UW6J3Hm7u8VtRRmNA6QReRgyJFDvoM3.png",
+  "isApply": 1,
+  "colleges": [],
+  "works": 4,
+  "artworks": [
+   {
+    "artworkId": "1767569417102823424",
+    "artworkName": "《大字》",
+    "type": 3,
+    "ipfsHash": "d323125383262ab1a9ed75cac1ab5884",
+    "cover": "/rare/QmPqbnhEXW2VNDTAeSD4ronH1mfdv2wfzqKZCCLCuoeMzV.png"
+   }
+  ],
+  "isFollowed": 0,
+  "isCollector": 0
+ },
+ {
+  "artistId": "1768265303684419584",
+  "artistName": "张晓 Zhang Xiao",
+  "avatar": "/rare/QmY8XX6F2WteB4pUrRxSPrenMqTrG5TumP9RSybA3vvyzK.jpg",
+  "isApply": 1,
+  "colleges": [],
+  "works": 4,
+  "artworks": [
+   {
+    "artworkId": "1769961595078840320",
+    "artworkName": "键盘侠菩萨 Keyboard Man Bodhisattva",
+    "type": 3,
+    "ipfsHash": "63b2b9eced19eb67b82c49a85b08cc8e",
+    "cover": "/rare/Qmcd2F7ANTgB2BbPXgaWBqM9iqBXXuCjbh2B3RgnBhWctk.jpg"
+   }
+  ],
+  "isFollowed": 0,
+  "isCollector": 0
+ },
+ {
+  "artistId": "1768833115498876928",
+  "artistName": "李娜 LiNa",
+  "avatar": "/rare/QmWjMw1xWL6e4ja1EfjZ77n3vhLRWV3y88NZ8fDvkLF61u.jpg",
+  "isApply": 1,
+  "colleges": [
+   {
+    "collegeId": "1766102773541244928",
+    "collegeName": "Sichuan Fine Arts Institute",
+    "degree": "1",
+    "cert": "/rare/Qma92m8nEEzSayAAUrtsodxEdiYbncTmCuBaG1rEsV1naq.jpg"
+   }
+  ],
+  "works": 2,
+  "artworks": [
+   {
+    "artworkId": "1770014400623808512",
+    "artworkName": "《异场》Different Field",
+    "type": 3,
+    "ipfsHash": "7d69743e4d78465cb8036096ecb087d6",
+    "cover": "/rare/QmehSwSPMcgmUhqdHnD7BbXTLkkoRZ4qYEFKEUqX9tznRd.jpg"
+   }
+  ],
+  "isFollowed": 0,
+  "isCollector": 0
+ },
+ {
+  "artistId": "1764563731016192000",
+  "artistName": "周姜杉 Cedar J Zhou",
+  "avatar": "/rare/QmPNFJY7m5L3HmtEQqFc6uQHrJWjybDBwCxnCQjaRkrfmx.png",
+  "isApply": 1,
+  "colleges": [
+   {
+    "collegeId": "1761063337690533888",
+    "collegeName": "Central Saint Martins",
+    "degree": "1",
+    "cert": "/rare/QmPNFJY7m5L3HmtEQqFc6uQHrJWjybDBwCxnCQjaRkrfmx.png"
+   }
+  ],
+  "works": 4,
+  "artworks": [
+   {
+    "artworkId": "1769408131835760640",
+    "artworkName": "红、黄、蓝的构成生成器 Composition Generator in Red, Yellow, and Blue",
+    "type": 3,
+    "ipfsHash": "c62463ac42eba3db2fafa61102ac95c8",
+    "cover": "/rare/QmUC7CWyik4MqSqrei9HR5nqP6FM8ZDzrAqhXbxSAGGcig.png"
+   }
+  ],
+  "isFollowed": 0,
+  "isCollector": 0
+ },
+ {
+  "artistId": "1767806141162721280",
+  "artistName": "MR UNICORN",
+  "avatar": "/rare/QmZiG5ahjRWxk9pyELp4a8E83bW1Fp2Bujjj3M1jaVsPfL.jpg",
+  "isApply": 1,
+  "colleges": [
+   {
+    "collegeId": "1759485665046827008",
+    "collegeName": "China Academy of Art",
+    "degree": "0",
+    "cert": "/rare/QmRsmqJkidWP95QXjQ5yEbAUWTxW7KK65xwTNtXYnXKvAW.jpg"
+   }
+  ],
+  "works": 24,
+  "artworks": [
+   {
+    "artworkId": "1768499583496884224",
+    "artworkName": "《GOLD》",
+    "type": 1,
+    "ipfsHash": "/rare/QmYA6GnMsBGdUB8HeiKn8JbksTXDdxNz629ETgVR3oc9Ma.jpg",
+    "cover": ""
+   },
+   {
+    "artworkId": "1767835430864162816",
+    "artworkName": "city dog",
+    "type": 1,
+    "ipfsHash": "/rare/QmTJzGS2ByKABb8sC9B6JZF5R7nELQ9hqRipn2YtAL7yrL.jpg",
+    "cover": ""
+   },
+   {
+    "artworkId": "1767812459600678912",
+    "artworkName": "《⚖️》",
+    "type": 1,
+    "ipfsHash": "/rare/QmTT5G1bmM7hRpWpPnviRGAX2YpyKzh6YXUxGgwmM2n7tt.jpg",
+    "cover": ""
+   }
+  ],
+  "isFollowed": 0,
+  "isCollector": 0
+ },
+ {
+  "artistId": "1759883355949764608",
+  "artistName": "Bi Jing",
+  "avatar": "/rare/QmQf8gQ8JraCvPqKASuiD9K6qU61LEta6aZr1v3sHPVywX.png",
+  "isApply": 1,
+  "colleges": [
+   {
+    "collegeId": "1759485665046827008",
+    "collegeName": "China Academy of Art",
+    "degree": "0",
+    "cert": "/rare/QmaSvt7pzhTQs9scCGT8fd5LbdiED5QeesF9syuFo1V929.jpg"
+   },
+   {
+    "collegeId": "1767821727171219456",
+    "collegeName": "City University of Hong Kong",
+    "degree": "1",
+    "cert": "/rare/QmSVCqhD1KZ1T4GdKcNRxxKdbRdzTQ1YwKAgGLDq9yZAvs.jpg"
+   }
+  ],
+  "works": 18,
+  "topSale": 0.003,
+  "artworks": [
+   {
+    "artworkId": "1768159429129277440",
+    "artworkName": "A Poem",
+    "type": 3,
+    "ipfsHash": "8daf68211050ffb51bfd1917f55bfdb9",
+    "cover": "/rare/QmZFtyDSUQin3revQzEZBWNo7VmNEfQVerp3KGzjPA2Pin.png"
+   },
+   {
+    "artworkId": "1767810494317596672",
+    "artworkName": "Glass Memory",
+    "type": 3,
+    "ipfsHash": "4ecfb9c1a339089dbd68991072921168",
+    "cover": "/rare/QmdDEQmTPVaJqv1VJSKjx6mG72vCUE4uUuzEbwbkBWjMeg.png"
+   }
+  ],
+  "isFollowed": 0,
+  "isCollector": 0
+ },
+ {
+  "artistId": "1767721327936016384",
+  "artistName": "Jumping He",
+  "avatar": "/rare/Qmc2X2AJqvSo7pSkxgauLKJFXMFZ5Q2nqieYDcRPMcKeXC.png",
+  "isApply": 1,
+  "colleges": [],
+  "works": 2,
+  "artworks": [
+   {
+    "artworkId": "1767742458369806336",
+    "artworkName": "innumerable · jumping he",
+    "type": 3,
+    "ipfsHash": "b7dfe7007989045a5614b584f5a6d4b8",
+    "cover": "/rare/QmTnxSfapE4aDBCMTuQNWsYz1xeVjJGR3c2u4VMikGnY2Y.jpg"
+   }
+  ],
+  "isFollowed": 0,
+  "isCollector": 0
+ },
+ {
+  "artistId": "1763709158537957376",
+  "artistName": "刘真辰 Liu Zhenchen",
+  "avatar": "/rare/QmQTtiuKLmVtCULdoZbzWbeygyR5ZF2bt5qRi1CoaLyBsi.png",
+  "isApply": 1,
+  "colleges": [
+   {
+    "collegeId": "1766820366522650624",
+    "collegeName": "Le Fresnoy",
+    "degree": "1",
+    "cert": "/rare/QmTQtSnfmVm64r9BCR7FDzcyPyQA5CSugqs2eSpVG8FtRe.png"
+   }
+  ],
+  "works": 55,
+  "artworks": [
+   {
+    "artworkId": "1766565128075087872",
+    "artworkName": "MetaKaleidoscope",
+    "type": 3,
+    "ipfsHash": "931829ac1705c45ec7aec3bac85376e1",
+    "cover": "/rare/QmaC2FP9XxdcGmc27QQ41rLiSCybtnLwDwSQpUtaZzqq7F.jpg"
+   },
+   {
+    "artworkId": "1766474221304811520",
+    "artworkName": "MetaKaleidoscope_000",
+    "type": 1,
+    "ipfsHash": "/rare/QmVqVsj8H3yWgpaHdvoXCDd5xRfYEuaAtipbLut9mKgSH8.jpg",
+    "cover": ""
+   },
+   {
+    "artworkId": "1766473419538436096",
+    "artworkName": "MetaKaleidoscope_001",
+    "type": 1,
+    "ipfsHash": "/rare/QmZaJ9z2Yj9M6SoPU74FUCqhwCvgU8hg6R7vT2uApJRisa.jpg",
+    "cover": ""
+   }
+  ],
+  "isFollowed": 0,
+  "isCollector": 0
+ },
+ {
+  "artistId": "1764528294490935296",
+  "artistName": "陈霄",
+  "avatar": "/rare/QmYmHBZYPXUiGYeHjZDh4AyrQtzRRSyKqn6QD8Wh15dAhJ.jpg",
+  "isApply": 1,
+  "colleges": [
+   {
+    "collegeId": "1764828407406923776",
+    "collegeName": "Haute école des arts du Rhin",
+    "degree": "1",
+    "cert": "/rare/QmbYzW6qbm1NC64Tnou8FTbtcciGGQE7mjVCN71SCKM3s5.jpg"
+   }
+  ],
+  "works": 6,
+  "artworks": [
+   {
+    "artworkId": "1764822027295920128",
+    "artworkName": "直径 12.7 ",
+    "type": 3,
+    "ipfsHash": "161b480bb564919a1105b87ac1384a6f",
+    "cover": "/rare/Qmeb3pd6kvu71Gwhv4fF56KdUiUXdVHJ22uom8cguo2XEU.png"
+   }
+  ],
+  "isFollowed": 0,
+  "isCollector": 0
+ },
+ {
+  "artistId": "1755556964965945344",
+  "artistName": "司马源 SIMA Yuan",
+  "avatar": "/rare/QmeJ6TTbJGuTr7sDAKVZDcjfRJPa8ACeT1tEW5HfM4VgYF.jpeg",
+  "isApply": 1,
+  "colleges": [
+   {
+    "collegeId": "1759468185268129792",
+    "collegeName": "University of the Arts London",
+    "degree": "1",
+    "cert": "/rare/QmW6iqwviaj1X5Epj7H5peApBPKa2KBF8vSvDTjDC6AKy2.jpg"
+   }
+  ],
+  "works": 4,
+  "artworks": [
+   {
+    "artworkId": "1765741388319821824",
+    "artworkName": "Symphony No.1 - PAH",
+    "type": 2,
+    "ipfsHash": "/rare/QmSSHXYA8U15CC6YBSjum1kbt4Ju7Tx2EENKu3XpjPuKtj.mp3",
+    "cover": "/rare/QmTTkJJCc8dTV3au581iBUCGzPazEZVkD1Sxt7GByyGDQb.PNG"
+   }
+  ],
+  "isFollowed": 0,
+  "isCollector": 0
+ },
+ {
+  "artistId": "1764595887704772608",
+  "artistName": "seeyoutomorrow",
+  "avatar": "/rare/QmPv2mBWPeK5fRupykn13uo8Mq9yR3DaxQubvQBueLo8bu.jpg",
+  "isApply": 1,
+  "colleges": [
+   {
+    "collegeId": "1764972462413582336",
+    "collegeName": "Akademie der Bildenden Künste München",
+    "degree": "1",
+    "cert": "/rare/QmPKA15rjRx6GUf1PoJbYJfT78w7EXPFBuBUPhKgqDVUqE.jpg"
+   }
+  ],
+  "works": 40,
+  "artworks": [
+   {
+    "artworkId": "1765677559665790976",
+    "artworkName": "水果立方表情/Fruit Cubic Emoticon",
+    "type": 1,
+    "ipfsHash": "/rare/QmNaw6iwZdpSRSxy14fq1pLu51YA8wTYDMj88Gv2qHpW9A.gif",
+    "cover": ""
+   },
+   {
+    "artworkId": "1765334210626850816",
+    "artworkName": "水果立方表情/Fruit Cubic Emoticon",
+    "type": 1,
+    "ipfsHash": "/rare/QmUFxvkEMd7ReSfdQzzzLSC7FQ1WrpkbPzwhdwiTqsTPoU.gif",
+    "cover": ""
+   },
+   {
+    "artworkId": "1765331852236820480",
+    "artworkName": "水果立方表情/Fruit Cubic Emoticon ",
+    "type": 1,
+    "ipfsHash": "/rare/QmeU3xtw5UnqVRCxCkCHPGJvMSb1iwYUkugVn8DSPiCcfi.gif",
+    "cover": ""
+   }
+  ],
+  "isFollowed": 0,
+  "isCollector": 0
+ },
+ {
+  "artistId": "1760264677188833280",
+  "artistName": "张翀 Zhang, Chong",
+  "avatar": "/rare/QmcPvfeZ9PfQBgnhUUf3LC1FfkcnJcx9TtFZaxgLnf7ktT.jpg",
+  "isApply": 1,
+  "colleges": [
+   {
+    "collegeId": "1764546448780824576",
+    "collegeName": "Alanus University of Arts and Social Sciences",
+    "degree": "1",
+    "cert": "/rare/QmTDPMsw7uKc7PPLT1C9foreJrKB9y8JrXuMqfTBGEN5hR.jpg"
+   }
+  ],
+  "works": 24,
+  "artworks": [
+   {
+    "artworkId": "1764583352708501504",
+    "artworkName": "From East Hellweg street to West Hellweg street（No.3）",
+    "type": 1,
+    "ipfsHash": "/rare/QmYAooGkFDCiSeTeVZCRR3ccxtzm3nPmNdmvK9GYFuM3Yr.jpg",
+    "cover": ""
+   },
+   {
+    "artworkId": "1764579476303384576",
+    "artworkName": "From East Hellweg street to West Hellweg street(No.2)",
+    "type": 1,
+    "ipfsHash": "/rare/Qmb7wSp699b6EpFZf9DoZAoeMtXCpPRe4pzjjKiiVrDeGp.jpg",
+    "cover": ""
+   },
+   {
+    "artworkId": "1764578023467782144",
+    "artworkName": "From East Hellweg street to West Hellweg street（No.1）",
+    "type": 1,
+    "ipfsHash": "/rare/QmXjNaMcs2LFbei83yBF4DPWcWaZNuLwvFbkUbyT4g9Aqx.jpg",
+    "cover": ""
+   }
+  ],
+  "isFollowed": 0,
+  "isCollector": 0
+ },
+ {
+  "artistId": "1772253796949430272",
+  "artistName": "神灯先生",
+  "isApply": 1,
+  "colleges": [
+   {
+    "collegeId": "1767821727171219456",
+    "collegeName": "City University of Hong Kong",
+    "degree": "0",
+    "cert": "/rare/QmdSrHbgNtPxhvVfhfHwnj87JR77m7Gqg4r9Rw98B4kzTs.jpg"
+   }
+  ],
+  "works": 1,
+  "artworks": [],
+  "isFollowed": 0,
+  "isCollector": 0
+ },
+ {
+  "artistId": "1787859888861483008",
+  "artistName": "42",
+  "isApply": 1,
+  "colleges": [],
+  "works": 1,
+  "artworks": [],
+  "isFollowed": 0,
+  "isCollector": 0
+ },
+ {
+  "artistId": "1790746899259723776",
+  "artistName": "杨琪磊YuanQi",
+  "avatar": "/rare/QmXgqA2nt3mheToLoD6rF6EypAY33rExRWNe1qo8V2PM1P.png",
+  "isApply": 1,
+  "colleges": [],
+  "works": 1,
+  "artworks": [],
+  "isFollowed": 0,
+  "isCollector": 0
+ },
+ {
+  "artistId": "1793280741182935040",
+  "artistName": "Reva Fan",
+  "avatar": "/rare/QmNg3B4fzgArkzN7xwYZwSDRzN5uLAVYw9bHjVYk7iwRvE.jpg",
+  "isApply": 1,
+  "colleges": [],
+  "works": 1,
+  "artworks": [],
+  "isFollowed": 0,
+  "isCollector": 0
+ },
+ {
+  "artistId": "1796497148091699200",
+  "artistName": "Howie Leung",
+  "isApply": 1,
+  "colleges": [],
+  "works": 1,
+  "artworks": [],
+  "isFollowed": 0,
+  "isCollector": 0
+ }
+]

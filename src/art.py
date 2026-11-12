@@ -11,13 +11,20 @@ DEPTH = 0.05                     # frame depth off the wall face
 Z_CENTER = 1.6                   # centre height above the storey floor
 PER_FACE = 2                     # slots per wall face (face net length 7.6 m)
 SLOTS = []
+DROPPED = []                     # faces dropped because their wall was removed (room, band, axis, coord)
 OUT = os.path.join(os.path.dirname(os.path.abspath(__file__)), '..')
 
 def faces():
     """display faces of every opened gallery bay: (room, band, axis_of_wall, wall_coord, face_coord, normal, u0, u1)"""
     res = []
     zone_order = {'wingW': 0, 'nwingW': 1, 'nwingE': 2, 'wingE': 3}
-    opened = sorted(spec.OPENED, key=lambda o: (ORDER.index(o['band']), zone_order.get(SPACES[o['room']]['zone'], 9), o['room']))
+    # walking order (t29u: hang from 1F upwards): storey by storey, and on each storey one loop through the galleries -
+    # west wing south -> north, north wing west half west -> east, east half west -> east, east wing north -> south
+    def walk_key(o):
+        sp = SPACES[o['room']]; r = sp['rect']; cx, cy = (r[0] + r[2]) / 2, (r[1] + r[3]) / 2; z = sp['zone']
+        along = {'wingW': cy, 'nwingW': cx, 'nwingE': cx, 'wingE': -cy}.get(z, 0.0)
+        return (ORDER.index(o['band']), zone_order.get(z, 9), round(along, 2), o['room'])
+    opened = sorted(spec.OPENED, key=walk_key)
     for o in opened:
         r = SPACES[o['room']]['rect']; ti = arch.T_INT / 2; te = arch.T_EXT / 2
         if o['axis'] == 'x':                 # door wall vertical at x=coord, room extends along x, side walls are y = r1 / r3
@@ -30,7 +37,13 @@ def faces():
             ua, ub = sorted((o['coord'], far - o['n'][1] * te))
             res.append((o['room'], o['band'], 'x', r[0], r[0] + ti, (1, 0), ua, ub))
             res.append((o['room'], o['band'], 'x', r[2], r[2] - ti, (-1, 0), ua, ub))
-    return res
+    # walls removed later (t27u corner-tower opening: wall to the tower / between the tower's neighbour rooms) carry no art
+    def removed(f):
+        _, band, wax, wc, _, _, ua, ub = f
+        return any(o['axis'] == wax and abs(o['coord'] - wc) < 1e-3 and band in o['bands'] and min(o['a1'], ub) - max(o['a0'], ua) > 0.5
+                   for o in spec.OPENS)
+    DROPPED[:] = [(f[0], f[1], f[2], f[3]) for f in res if removed(f)]
+    return [f for f in res if not removed(f)]
 
 def build_slots():
     SLOTS.clear()

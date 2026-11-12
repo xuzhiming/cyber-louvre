@@ -140,3 +140,23 @@ def _bad_slots():
     r = verify.check_slots(bvh, S)
     print('NEGATIVE CONTROL (slots slid 2.5 m past the bay edge): slots ok', r['ok'], 'of', r['slots'], '| overlaps', r['overlaps'], '| e.g.', r['fails'][:2])
 _bad_slots()
+
+
+# ---- negative control for the t27u tower-open check: rebuild with the corner-tower walls back (TOWER_OPEN=False) and run the
+# remnant check against the removed-wall registry of the current design; every one of the removed walls must be flagged
+def _tower_walls_back():
+    import spec as sp
+    sp.TOWER_OPEN = True; sp.build(); reg = list(sp.TOWER_OPENED)
+    sp.TOWER_OPEN = False
+    try:
+        bvh, acc = verify.build_bvh()
+        r = verify.check_open_rooms(bvh, reg)
+        flagged = len(set((b[0], b[1]) for b in r['fails']))
+        import numpy as np
+        nflag = 0
+        for o in reg:
+            rr = verify.check_open_rooms(bvh, [o]); nflag += (not rr['ok'])
+    finally:
+        sp.TOWER_OPEN = True; sp.build()
+    print('NEGATIVE CONTROL (corner-tower walls kept): tower-open check ok =', r['ok'], '| flagged', nflag, 'of', len(reg), 'removed walls')
+_tower_walls_back()

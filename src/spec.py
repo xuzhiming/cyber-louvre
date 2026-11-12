@@ -56,6 +56,10 @@ HOLES = {}      # z -> list of rects
 HOLE_META = []  # dict(z, rect, access) for guardrails around slab openings
 OPEN_ROOMS = True   # small gallery rooms off the wing / north-wing corridors: whole door wall removed (open alcove bays)
 OPENED = []         # registry of removed door walls: dict(room, corr, axis, coord, a0, a1, band, n)
+TOWER_OPEN = True   # corner towers (pavilions) L1-L3: interior hall/lobby wall + every wall to the adjacent rooms/corridors removed
+TOWER_OPEN_PARTITIONS = False   # also remove the adjacent rooms' partitions to the next (non-adjacent) rooms (kept: art walls, t23u)
+TOWER_OPENED = []   # registry of walls removed by open_towers(): dict(room, corr, axis, coord, a0, a1, band, n, kind, a, b)
+TOWER_KEEP = ('stair', 'elevator')   # stair shafts + elevator cabs keep their enclosure
 
 def add_space(id, level, rect, **kw):
     z0 = LEVELS[level]
@@ -168,8 +172,61 @@ def room_link(cid, rid, axis, coord, center, width, height, band):
     OPENED.append(dict(room=rid, corr=cid, axis=axis, coord=coord, a0=a0, a1=a1, band=band, n=n))
     return o
 
+def shared_edge(r1, r2, minlen=0.5):
+    """two touching (non-overlapping) rects -> (axis, coord, a0, a1) of their common wall segment, else None"""
+    for axis, (c1a, c1b, c2a, c2b, u1, u2) in (('x', (r1[2], r1[0], r2[0], r2[2], (r1[1], r1[3]), (r2[1], r2[3]))),
+                                              ('y', (r1[3], r1[1], r2[1], r2[3], (r1[0], r1[2]), (r2[0], r2[2])))):
+        for c in (c1a, c1b):
+            if (abs(c - c2a) < 1e-6 and c == c1a) or (abs(c - c2b) < 1e-6 and c == c1b):
+                a0, a1 = max(u1[0], u2[0]), min(u1[1], u2[1])
+                if a1 - a0 >= minlen: return axis, c, a0, a1
+    return None
+
+def _covered(axis, coord, a0, a1, band):
+    return any(o['axis'] == axis and abs(o['coord'] - coord) < 1e-3 and band in o['bands'] and o['a0'] <= a0 + 1e-6 and o['a1'] >= a1 - 1e-6
+               for o in OPENS)
+
+def open_towers():
+    """t27u: inside each corner tower (pavilion) the hall <-> core-lobby wall is removed, and so is every wall between the tower
+    (hall + lobby) and the rooms / corridors next to it, plus the walls between those adjacent rooms themselves -> one open,
+    walkable floor per tower and storey.  Kept: exterior walls (windows), the stair-shaft enclosure, the elevator cab, slabs."""
+    for q in QN.values():
+        for lv in ('L1', 'L2', 'L3'):
+            tower = ['PAV_%s_HALL_%s' % (q, lv), 'PAV_%s_LOB_%s' % (q, lv)]
+            cands = [s for s in SPACES.values() if lv in s['bands'] and s['walls'] and s['id'] not in tower and s['kind'] not in TOWER_KEEP]
+            pairs = [(tower[0], tower[1], 'tower_interior')]
+            adj = []
+            for t in tower:
+                for s in cands:
+                    if shared_edge(SPACES[t]['rect'], s['rect']):
+                        pairs.append((t, s['id'], 'tower_to_' + s['kind'])); adj.append(s['id'])
+            adj = sorted(set(adj))
+            rooms = [a for a in adj if SPACES[a]['kind'] == 'gallery']
+            for i, a in enumerate(rooms):          # neighbour room <-> neighbour room (not corridor <-> room: that is OPEN_ROOMS' job)
+                for b in rooms[i + 1:]:
+                    if shared_edge(SPACES[a]['rect'], SPACES[b]['rect']): pairs.append((a, b, 'adjacent_to_adjacent'))
+            if TOWER_OPEN_PARTITIONS:
+                for a in rooms:
+                    for s in cands:
+                        if s['id'] not in adj and s['id'] not in tower and shared_edge(SPACES[a]['rect'], s['rect']):
+                            pairs.append((a, s['id'], 'adjacent_partition'))
+            for a, b, kind in pairs:
+                axis, coord, a0, a1 = shared_edge(SPACES[a]['rect'], SPACES[b]['rect'])
+                if _covered(axis, coord, a0, a1, lv): continue          # already open (corridor <-> open gallery bay)
+                # a door in that wall goes with it
+                for d in [d for d in DOORS if {d['a'], d['b']} == {a, b} and d['band'] == lv]:
+                    DOORS.remove(d)
+                    for e in [e for e in EDGES if e.get('door') is d]: EDGES.remove(e)
+                ra, rb = SPACES[a]['rect'], SPACES[b]['rect']
+                ca = ((ra[0] + ra[2]) / 2, (ra[1] + ra[3]) / 2)
+                n = (1 if ca[0] < coord else -1, 0) if axis == 'x' else (0, 1 if ca[1] < coord else -1)   # a -> b
+                o = add_open(a, b, axis, coord, a0, a1, [lv])
+                o['room_open'] = True; o['center'] = (a0 + a1) / 2; o['n'] = n; o['tower'] = q
+                TOWER_OPENED.append(dict(room=b, corr=a, a=a, b=b, axis=axis, coord=coord, a0=a0, a1=a1, band=lv, n=n, kind=kind, tower=q))
+
 def build():
     SPACES.clear(); DOORS.clear(); OPENS.clear(); EDGES.clear(); STAIRS.clear(); HOLES.clear(); HOLE_META.clear(); OPENED.clear()
+    TOWER_OPENED.clear()
     L3 = ['L1', 'L2', 'L3']
 
     # ---------------- outdoor plaza (courtyard)
@@ -383,6 +440,7 @@ def build():
         add_door('N%s_CORR_L1' % s, 'ATRIUM', 'x', xwall, 40, 3.2, 4.0, 'L1')
         for lv in ('L2', 'L3'):
             add_door('N%s_CORR_%s' % (s, lv), 'R%s_%s' % (s, lv), 'x', xwall, 40, 3.2, 4.0, lv)
+    if TOWER_OPEN: open_towers()
     return SPACES
 
 def space_at_band(band):

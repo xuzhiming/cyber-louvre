@@ -93,6 +93,10 @@ def check_doors(bvh):
                 r = first_hit(bvh, o, n, 12.0)
             else:
                 r = first_hit(bvh, o, n, 3.2)
+            if r is None and not d['glass']:
+                # corner jamb: the opening sits right at a wall corner (t27u: tower hall <-> stair-shaft door now ends on the
+                # opened hall/lobby line, the shaft's own south wall is its jamb) -> a wall within 0.5 m beside the opening
+                r = first_hit(bvh, c + np.array([0, 0, 1.0]), t * s, d['width'] / 2 + 0.5)
             side_hits += 1 if r is not None else 0
         # lintel above the opening (not for glass; the pyramid frame bar is the lintel there)
         lint = None
@@ -484,6 +488,33 @@ def check_open_rooms(bvh, opened=None):
                 partitions_room_to_room=len(shared), side_walls_room_to_hall=len(single),
                 art_wall_faces=sum(len(v) for v in parts.values()), art_wall_length_m=round(faces_len, 1))
 
+def check_tower_open(bvh):
+    """t27u: every wall removed in / around the corner towers is really gone (rays across the old wall line at 7 heights find
+    nothing, floor continuous and step-free), and what must stay is still there: stair-shaft + elevator-cab enclosures, exterior walls"""
+    r = check_open_rooms(bvh, spec.TOWER_OPENED)
+    out = dict(removed_walls=len(spec.TOWER_OPENED), rays=r['rays'], ok=r['ok'], fails=r['fails'],
+               by_tower={q: sum(1 for o in spec.TOWER_OPENED if o['tower'] == q) for q in ('NW', 'NE', 'SW', 'SE')},
+               by_kind=dict(collections.Counter(o['kind'] for o in spec.TOWER_OPENED)))
+    kept_bad = []
+    for sp in SPACES.values():
+        if sp['kind'] not in spec.TOWER_KEEP or not sp['zone'].startswith('pav') or sp['level'] not in ('L1', 'L2', 'L3'): continue
+        x0, y0, x1, y1 = sp['rect']; z = sp['z0'] + 1.2; cx, cy = (x0 + x1) / 2, (y0 + y1) / 2
+        for d, (px, py) in (((1, 0), (x1, cy)), ((-1, 0), (x0, cy)), ((0, 1), (cx, y1)), ((0, -1), (cx, y0))):
+            # ray from inside the space towards each enclosure wall: must hit within 0.6 m of the wall line (door gaps avoided:
+            # probe at 3 offsets, one hit is enough)
+            ok = False
+            for off in (-0.3, 0.0, 0.3) if d[0] else (-0.3, 0.0, 0.3):
+                q = ((x1 - x0) * off, 0) if d[0] == 0 else (0, (y1 - y0) * off)
+                o = np.array([cx + q[0], cy + q[1], z]); dist = abs((px - cx) if d[0] else (py - cy))
+                h = first_hit(bvh, o, np.array([d[0], d[1], 0.0]), dist + 0.6)
+                if h is not None and abs(h[3] - dist) < 0.6: ok = True; break
+            if not ok: kept_bad.append((sp['id'], d))
+    out['kept_enclosures_checked'] = sum(1 for sp in SPACES.values() if sp['kind'] in spec.TOWER_KEEP and sp['zone'].startswith('pav') and sp['level'] in ('L1', 'L2', 'L3'))
+    out['kept_enclosure_fails'] = kept_bad
+    out['ok'] = out['ok'] and not kept_bad
+    art.faces(); out['slot_faces_dropped'] = len(art.DROPPED)
+    return out
+
 def check_slots(bvh, slots=None):
     """display slots: whole frame on a wall face (corner/edge rays hit the wall right behind it), nothing in front of it,
     clear of windows / doors / opened door-wall lines / face ends, no two slots overlapping"""
@@ -506,7 +537,7 @@ def check_slots(bvh, slots=None):
             if w['axis'] == s['wall_axis'] and abs(w['coord'] - s['wall_coord']) < 0.5 and w['a0'] < u1 and w['a1'] > u0 and w['z0'] < z1 and w['z1'] > z0: why.append('window')
         for d in DOORS:
             if d['axis'] == s['wall_axis'] and d['band'] == s['band'] and abs(d['coord'] - s['wall_coord']) < 0.5 and d['center'] - d['width'] / 2 - 0.3 < u1 and d['center'] + d['width'] / 2 + 0.3 > u0: why.append(('door', d['a'], d['b']))
-        for o in spec.OPENED:
+        for o in spec.OPENED + spec.TOWER_OPENED:
             if o['axis'] != s['wall_axis'] and o['band'] == s['band'] and u0 - 0.3 < o['coord'] < u1 + 0.3 and o['a0'] - 1e-6 <= s['wall_coord'] <= o['a1'] + 1e-6: why.append('opened_line')
         if why: bad.append((s['id'], s['room'], why[:3]))
     ov = 0
@@ -568,6 +599,7 @@ def main():
     res['entrances'] = check_entrances(bvh)
     res['windows'] = check_windows(bvh, acc)
     res['open_rooms'] = check_open_rooms(bvh)
+    res['tower_open'] = check_tower_open(bvh)
     res['slots'] = check_slots(bvh)
     res['floor_props'] = check_floor_props()
     res['panes'] = check_panes(acc)

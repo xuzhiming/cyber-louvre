@@ -5,7 +5,9 @@ bvh, acc = verify.build_bvh()
 adj = verify.build_graph(skip=lambda e: e['type'] == 'elevator')
 out = {}
 for q in ('NW', 'NE', 'SW', 'SE'):
-    src = 'PAV_%s_SHAFT_L1' % q; dst = 'PAV_%s_SHAFT_L4' % q
+    # t27u: start in the neighbour gallery bay next to the tower (wing room by the tower), walk through the removed wall into the
+    # opened tower hall, then the shaft stairs L1 -> L4 mech level
+    src = {'NW': 'W_IN3_L1', 'NE': 'E_IN3_L1', 'SW': 'W_IN0_L1', 'SE': 'E_IN0_L1'}[q]; dst = 'PAV_%s_SHAFT_L4' % q
     prev = verify.bfs(adj, src); chain = []; c = dst
     while prev[c] is not None:
         u, e = prev[c]; chain.append((u, c, e)); c = u

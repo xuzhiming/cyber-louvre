@@ -210,6 +210,17 @@ def draw_window(acc, S, name, nrm, coord, w):
         S.box(acc, G, 'stone_trim', u0 - 0.2, u1 + 0.2, 0.0, 0.28, z0 - ft - 0.25, z0 - ft)  # sill
     reg(S, name, nrm, coord, u0, u1, z0, z1, w['band'])
 
+def _exposed_runs(mass, name, nrm, coord, u0, u1, a0, a1, band, step=0.1):
+    k = max(1, int(round((u1 - u0) / step))); us = [u0 + (u1 - u0) * i / k for i in range(k + 1)]
+    okv = [visible(mass, name, nrm, coord, min(max((us[i] + us[i + 1]) / 2, a0 + 1e-3), a1 - 1e-3), band) for i in range(k)]
+    runs, i = [], 0
+    while i < k:
+        if not okv[i]: i += 1; continue
+        j = i
+        while j < k and okv[j]: j += 1
+        runs.append((us[i], us[j])); i = j
+    return runs
+
 def facades(acc, rng):
     G = 'Facade'; W = 'Windows'
     WINDOWS.clear(); PANES.clear(); SKIPPED.clear()
@@ -319,13 +330,16 @@ def facades(acc, rng):
                             S.box(acc, G, 'frame_dark', a0_, a1_, 0.03, 0.06, b0_, b1_)
                         reg(S, name, nrm, coord, uc - w / 2, uc + w / 2, zb0 + 2.2, zb0 + 5.0, 'L4')
                         S.box(acc, G, 'stone_trim', uc - w / 2 - 0.2, uc + w / 2 + 0.2, 0.0, 0.25, zb0 + 5.0, zb0 + 5.3)
-                    # string course at band top
-                    if not top:
-                        S.box(acc, G, 'stone_trim', u0, u1, 0.0, 0.42, zb1 - 0.35, zb1 + 0.35)
-                    else:
-                        S.box(acc, G, 'stone_trim', u0 - 0.0, u1 + 0.0, 0.0, 0.55, zt - 1.0, zt - 0.3)
-                        S.box(acc, G, 'stone_trim', u0 - 0.0, u1 + 0.0, 0.0, 1.05, zt - 0.3, zt + 0.35)
-                        S.box(acc, G, 'gold', u0, u1, 0.0, 1.1, zt + 0.35, zt + 0.5)
+                    # string course at band top - only along the exposed part of the bay (a bay half covered by an adjoining
+                    # wing used to run its course on into that wing's room: a 0.35 m ledge on the floor once the wall there
+                    # was removed, found by the t27u tower-open check)
+                    for ra, rb in _exposed_runs(mass, name, nrm, coord, u0, u1, a0, a1, b):
+                        if not top:
+                            S.box(acc, G, 'stone_trim', ra, rb, 0.0, 0.42, zb1 - 0.35, zb1 + 0.35)
+                        else:
+                            S.box(acc, G, 'stone_trim', ra, rb, 0.0, 0.55, zt - 1.0, zt - 0.3)
+                            S.box(acc, G, 'stone_trim', ra, rb, 0.0, 1.05, zt - 0.3, zt + 0.35)
+                            S.box(acc, G, 'gold', ra, rb, 0.0, 1.1, zt + 0.35, zt + 0.5)
             for w in side_wins: draw_window(acc, S, name, nrm, coord, w)
     return stats
 

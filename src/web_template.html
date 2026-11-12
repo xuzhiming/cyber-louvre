@@ -443,19 +443,32 @@ window.__fx = { setMode, setLights, setBloom, state: () => ({ mode: FX.mode, lig
 // ===================== 艺术品展位: bidder.art works hung in the fixed display slots =====================
 // data: artworks (web/artworks.json, inlined copy as fallback) + slots (web/slots.json, from art.py). Media are loaded
 // lazily online only for slots that are near (< ART.NEAR m, same floor) and in the view frustum; far ones are unloaded.
-const ART = { NEAR: 15, FAR: 24, VNEAR: 10, VFAR: 14, MAXLOAD: 4, MAXVID: 3, slots: [], works: [], items: [], loading: 0, videos: 0,
-  req: { image: 0, video: 0, hlsjs: 0, data: 0 }, log: [], errors: [], ready: false, frustum: new THREE.Frustum(), mat4: new THREE.Matrix4() };
+const ART = { NEAR: 15, FAR: 24, VNEAR: 10, VFAR: 14, MAXLOAD: 4, MAXVID: 3, MAXANIM: 6, slots: [], works: [], items: [], loading: 0, videos: 0, anims: 0,
+  req: { image: 0, anim: 0, video: 0, hlsjs: 0, data: 0 }, log: [], errors: [], ready: false, frustum: new THREE.Frustum(), mat4: new THREE.Matrix4() };
 const W2T = (p) => new THREE.Vector3(p[0], p[2], -p[1]);                     // world (z up) -> three
 function readJSON(id) { try { return JSON.parse($(id).textContent); } catch (e) { return null; } }
 const WSRV = (u) => 'https://wsrv.nl/?url=' + encodeURIComponent(u.replace(/^https?:\/\//, '')) + '&w=1024&h=1024&fit=inside&we&output=webp';
+const isAnimCandidate = (w) => !!(w && w.image && (w.animated || /\.(gif|webp|apng)(\?|$)/i.test(w.image)));
+function animCandidates(w) {          // full animation: wsrv animated webp (n=-1, resized), then the untouched original (same-origin proxy / CORS host)
+  const u = w.image, c = [];
+  if (u.startsWith('https://image.bidder.art/')) { c.push(WSRV(u) + '&n=-1'); if (/^https?:$/.test(location.protocol)) c.push(location.origin + '/media' + w.image_path); }
+  else { c.push(u); c.push(WSRV(u) + '&n=-1'); }
+  return c;
+}
 function imageCandidates(w) {
   const u = w.image; if (!u) return [];
-  const big = (w.width || 0) * (w.height || 0) > 60e6;
+  const big = (w.width || 0) * (w.height || 0) > 70e6;      // wsrv.nl refuses sources over ~71 MP
   const c = [];
+  // oversize originals (wsrv can't resize, original is tens of MB): pre-resized copy shipped with the site (web/thumbs/)
+  if (w.local_thumb && /^https?:$/.test(location.protocol)) c.push(new URL(w.local_thumb, location.href).href);
+  // animated GIF/WebP shown as a still (no ImageDecoder / too many animations): never frame 0 (often a blank fade-in frame),
+  // but a representative frame picked offline (poster_frame) - wsrv 'page' selects the frame
+  if (w.animated && u.startsWith('https://image.bidder.art/') && !big) c.push(WSRV(u) + '&page=' + (w.poster_frame || 0));
   if (u.startsWith('https://image.bidder.art/')) {          // bidder image CDN sends no CORS header -> resize/CORS proxy first
     if (!big) c.push(WSRV(u));
     if (/^https?:$/.test(location.protocol) && !big) c.push(location.origin + '/media' + w.image_path);   // same-origin Pages Function (deploy)
-  } else { c.push(u); c.push(WSRV(u)); }                    // ordinals / unisat content: CORS ok (or via proxy)
+  } else if (u.startsWith('https://ordinals.com/')) { c.push(WSRV(u)); c.push(u); }   // ordinals.com: no CORS on some inscriptions -> proxy first
+  else { c.push(u); c.push(WSRV(u)); }                      // unisat content: CORS ok (or via proxy)
   return c;
 }
 function canvasTex(draw, wpx, hpx) {
@@ -478,10 +491,31 @@ function textCardTex(w, note) {
     g.fillStyle = '#e8e4ff'; g.font = 'italic 32px Georgia,"Microsoft YaHei",serif'; wrapText(g, w.quote ? '“' + w.quote + '”' : (note || ''), 40, 260, W - 80, 42, 6);
     g.fillStyle = '#9fd8ff'; g.font = '28px system-ui,sans-serif'; g.fillText((w.compilation || '') + (w.edition ? '  ·  ' + w.edition : ''), 40, H - 40); }, 1024, 768);
 }
+function artistCardTex(w, img) {
+  return canvasTex((g, W, H) => { const gr = g.createLinearGradient(0, 0, W, H); gr.addColorStop(0, '#120a24'); gr.addColorStop(1, '#2a1240'); g.fillStyle = gr; g.fillRect(0, 0, W, H);
+    g.strokeStyle = 'rgba(255,155,240,.55)'; g.lineWidth = 6; g.strokeRect(24, 24, W - 48, H - 48);
+    const r = 150, cx = W / 2, cy = 250; g.save(); g.beginPath(); g.arc(cx, cy, r, 0, Math.PI * 2); g.closePath();
+    if (img) { g.clip(); const s = Math.max(2 * r / img.width, 2 * r / img.height); g.drawImage(img, cx - img.width * s / 2, cy - img.height * s / 2, img.width * s, img.height * s); }
+    else { g.fillStyle = '#3a2a5a'; g.fill(); g.fillStyle = '#e8e4ff'; g.font = '700 120px system-ui,"Microsoft YaHei",sans-serif'; g.textAlign = 'center'; g.fillText([...(w.title || '?')][0].toUpperCase(), cx, cy + 42); }
+    g.restore(); g.textAlign = 'center';
+    g.fillStyle = '#9fd8ff'; g.font = '600 30px system-ui,sans-serif'; g.fillText('ARTIST · 艺术家', W / 2, 460);
+    g.fillStyle = '#ffffff'; g.font = '700 64px system-ui,"Microsoft YaHei",sans-serif'; g.fillText([...(w.title || '')].slice(0, 22).join(''), W / 2, 545);
+    g.fillStyle = '#ff9bf0'; g.font = '34px system-ui,"Microsoft YaHei",sans-serif'; g.fillText((w.n || 0) + ' 件作品 · 按 E 打开艺术家主页', W / 2, 615);
+    g.fillStyle = '#b9a8e6'; g.font = '26px system-ui,sans-serif'; g.fillText('bidder.art/artist', W / 2, 680); }, 1024, 768);
+}
+function loadArtistCard(it) {
+  const w = it.work, tok = it.tok = (it.tok || 0) + 1;
+  it.state = 'loaded'; setMediaTex(it, artistCardTex(w), 4 / 3, 'artist');
+  if (!w.avatar) return;
+  const im = new Image(); im.crossOrigin = 'anonymous'; ART.req.image++;
+  im.onload = () => { if (it.tok === tok && it.state === 'loaded' && it.kind === 'artist') setMediaTex(it, artistCardTex(w, im), 4 / 3, 'artist'); };
+  im.onerror = () => ART.errors.push('avatar ' + w.avatar.slice(0, 80));
+  im.src = w.avatar.startsWith('https://image.bidder.art/') ? 'https://wsrv.nl/?url=' + encodeURIComponent(w.avatar.replace(/^https?:\/\//, '')) + '&w=320&h=320&fit=cover&output=webp' : w.avatar;
+}
 function labelTex(w) {
   return canvasTex((g, W, H) => { g.fillStyle = 'rgba(10,8,20,.92)'; g.fillRect(0, 0, W, H);
     g.fillStyle = '#f2ecff'; g.font = '600 34px system-ui,"Microsoft YaHei",sans-serif'; g.fillText(([...(w.title || '')].slice(0, 26).join('')) + ({ video: '  ▶', audio: '  ♪', text: '  ❝' }[w.media] || ''), 18, 42);
-    g.fillStyle = '#b9a8e6'; g.font = '26px system-ui,"Microsoft YaHei",sans-serif'; g.fillText([...(w.artist || '')].slice(0, 40).join('') + '   ·   按 E 查看详情', 18, 82); }, 1024, 100);
+    g.fillStyle = '#b9a8e6'; g.font = '26px system-ui,"Microsoft YaHei",sans-serif'; g.fillText(w.media === 'artist' ? '艺术家 · ' + (w.n || 0) + ' 件作品   ·   按 E 打开主页' : [...(w.artist || '')].slice(0, 40).join('') + '   ·   按 E 查看详情', 18, 82); }, 1024, 100);
 }
 function fitPlane(it, aspect) {
   const [IW, IH] = it.slot.inner; let w = IW, h = IH;
@@ -489,15 +523,18 @@ function fitPlane(it, aspect) {
   it.media.scale.set(w, h, 1);
 }
 function setMediaTex(it, tex, aspect, kind) {
-  const m = it.media.material; if (m.map && m.map !== RESERVED_TEX && m.map !== tex) m.map.dispose();
+  const m = it.media.material; if (m.map && m.map !== RESERVED_TEX && m.map !== tex) m.map.dispose();   // (anim canvas texture included)
   m.map = tex; m.color.setScalar(kind === 'reserved' ? 1 : 0.92); m.needsUpdate = true; fitPlane(it, aspect || (it.slot.inner[0] / it.slot.inner[1])); it.kind = kind;
 }
 function initArt(root) {
   const S = readJSON('slotdata'), A = readJSON('artdata');
-  ART.slots = (S && S.slots) || []; ART.works = (A && A.artworks) || [];
+  ART.slots = (S && S.slots) || []; ART.works = (A && A.artworks) || []; ART.artists = (A && A.artists) || [];
+  const P = A && A.placement && A.placement.length === ART.slots.length ? A.placement : null;   // artist-grouped hanging (1F -> 3F)
+  const artistCard = (k) => { const a = ART.artists[k]; return a ? { media: 'artist', title: a.name, artist: a.name, artist_url: a.profile_url, detail_url: a.profile_url, avatar: a.avatar, n: a.n, id: 'artist-' + a.id } : null; };
+  const workAt = (i) => !P ? (ART.works[i] || null) : typeof P[i] === 'number' ? (ART.works[P[i]] || null) : (typeof P[i] === 'string' && P[i][0] === 'a') ? artistCard(+P[i].slice(1)) : null;
   const g = new THREE.Group(); g.name = 'ArtMedia'; scene.add(g); ART.group = g;
   ART.slots.forEach((s, i) => {
-    const w = ART.works[i] || null;                    // deterministic: i-th work -> i-th slot (slots ordered 1F->3F, W wing, NW, NE, E wing)
+    const w = workAt(i);                               // placement from make_preview (artist by artist, slots in walking order 1F->3F)
     const n = new THREE.Vector3(s.normal[0], 0, -s.normal[1]);
     const c = W2T(s.pos).addScaledVector(n, 0.004);
     const media = new THREE.Mesh(new THREE.PlaneGeometry(1, 1), new THREE.MeshBasicMaterial({ color: 0xffffff, toneMapped: true }));
@@ -507,8 +544,8 @@ function initArt(root) {
     ART.items.push(it);
   });
   ART.ready = true;
-  ART.assigned = Math.min(ART.slots.length, ART.works.length);
-  ART.unplaced = Math.max(0, ART.works.length - ART.slots.length);
+  ART.assigned = ART.items.filter(i => i.work && i.work.media !== 'artist').length;
+  ART.unplaced = Math.max(0, ART.works.length - ART.assigned);
   if (ART.unplaced) console.warn('art: ' + ART.unplaced + ' works have no free slot');
 }
 function ensureLabel(it) {
@@ -527,6 +564,49 @@ function loadImage(it, urls, k) {
     it.state = 'loaded'; setMediaTex(it, tex, im.width / im.height, 'image');
   }, undefined, () => { ART.errors.push(urls[k].slice(0, 100)); if (it.state === 'loading') loadImage(it, urls, k + 1); else ART.loading--; });
 }
+// animated GIF / WebP: decoded client-side with the WebCodecs ImageDecoder into a CanvasTexture that is advanced frame by
+// frame (honouring each frame's duration) only while the slot is near + in view; decoder closed when the slot unloads
+async function loadAnimated(it) {
+  const tok = it.tok = (it.tok || 0) + 1, w = it.work;
+  it.state = 'loading'; ART.loading++; ART.anims++;
+  const live = () => it.tok === tok && it.state === 'loading';
+  for (const u of animCandidates(w)) {
+    let dec = null;
+    try {
+      ART.req.anim++; ART.log.push({ t: +performance.now().toFixed(0), slot: it.slot.id, url: u.slice(0, 120), anim: 1 });
+      const r = await fetch(u, { mode: 'cors' }); if (!r.ok) throw new Error('HTTP ' + r.status);
+      const type = (r.headers.get('content-type') || '').split(';')[0].trim() || 'image/gif';
+      if (!(await ImageDecoder.isTypeSupported(type))) throw new Error('unsupported ' + type);
+      const buf = await r.arrayBuffer(); if (!live()) { ART.loading--; ART.anims--; return; }
+      dec = new ImageDecoder({ data: buf, type });
+      await dec.tracks.ready; const n = dec.tracks.selectedTrack.frameCount; if (!live()) { dec.close(); ART.loading--; ART.anims--; return; }
+      const first = (await dec.decode({ frameIndex: Math.min(w.poster_frame || 0, n - 1) })).image;
+      const W = first.displayWidth, H = first.displayHeight, sc = Math.min(1, 1024 / Math.max(W, H));
+      const c = document.createElement('canvas'); c.width = Math.max(1, Math.round(W * sc)); c.height = Math.max(1, Math.round(H * sc));
+      const g = c.getContext('2d'); g.drawImage(first, 0, 0, c.width, c.height); first.close();
+      const tex = new THREE.CanvasTexture(c); tex.colorSpace = THREE.SRGBColorSpace; tex.anisotropy = 4;
+      if (Math.max(W, H) <= 300) { tex.magFilter = THREE.NearestFilter; tex.minFilter = THREE.NearestFilter; tex.generateMipmaps = false; }
+      ART.loading--; it.state = 'loaded';
+      setMediaTex(it, tex, W / H, n > 1 ? 'anim' : 'image');
+      if (n > 1) it.anim = { dec, n, i: (w.poster_frame || 0) % n, next: 0, busy: false, c, g, tex, frames: 0, src: u };
+      else { dec.close(); ART.anims--; }
+      return;
+    } catch (e) { if (dec) try { dec.close(); } catch (_) {} ART.errors.push('anim ' + String(e && e.message || e).slice(0, 60) + ' @ ' + u.slice(0, 70)); if (!live()) { ART.loading--; ART.anims--; return; } }
+  }
+  ART.anims--; loadImage(it, imageCandidates(w), 0);       // still image fallback (state stays 'loading', loadImage settles ART.loading)
+}
+function tickAnim(it, now) {
+  const a = it.anim; if (!a || a.busy || now < a.next) return;
+  a.busy = true; const i = a.i;
+  a.dec.decode({ frameIndex: i }).then((res) => {
+    const f = res.image;
+    if (it.anim !== a) { f.close(); return; }
+    a.g.clearRect(0, 0, a.c.width, a.c.height); a.g.drawImage(f, 0, 0, a.c.width, a.c.height);
+    a.next = performance.now() + Math.max(20, (f.duration || 100000) / 1000); f.close();
+    a.tex.needsUpdate = true; a.i = (i + 1) % a.n; a.frames++; a.busy = false;
+  }).catch(() => { a.i = 0; a.busy = false; a.next = performance.now() + 200; });
+}
+function stopAnim(it) { if (!it.anim) return; try { it.anim.dec.close(); } catch (_) {} it.anim = null; ART.anims--; }
 let HLS = null;
 async function hlsLib() { if (HLS) return HLS; ART.req.hlsjs++; HLS = (await import('https://cdn.jsdelivr.net/npm/hls.js@1.5.17/dist/hls.mjs')).default; return HLS; }
 async function startVideo(it) {
@@ -550,20 +630,22 @@ function stopVideo(it) {
   if (it.kind === 'video') { it.kind = null; it.state = 'idle'; }      // poster is re-loaded by the scheduler
 }
 function unloadItem(it) {
-  stopVideo(it); dropLabel(it);
+  stopVideo(it); stopAnim(it); it.tok = (it.tok || 0) + 1; dropLabel(it);
   if (it.state !== 'idle' || it.kind !== 'reserved') { it.state = 'idle'; setMediaTex(it, reservedTex(), it.slot.inner[0] / it.slot.inner[1], 'reserved'); }
 }
 function loadItem(it) {
   const w = it.work; ensureLabel(it);
   if (!w) { it.state = 'empty'; return; }
   if (w.media === 'text') { it.state = 'loaded'; setMediaTex(it, textCardTex(w), 4 / 3, 'card'); return; }
+  if (w.media === 'artist') { loadArtistCard(it); return; }
+  if (w.media === 'image' && isAnimCandidate(w) && typeof ImageDecoder !== 'undefined' && ART.anims < ART.MAXANIM) { loadAnimated(it); return; }
   const urls = w.media === 'video' && w.thumbnail && w.thumbnail.startsWith('https://videodelivery.net/') ? [w.thumbnail].concat(imageCandidates(w)) : imageCandidates(w);
   it.state = 'loading'; ART.loading++; loadImage(it, urls, 0);
 }
 const _sph = new THREE.Sphere();
 function updateArt() {
   if (!ART.ready) return;
-  const eye = camera.position;
+  const eye = camera.position, now = performance.now();
   camera.updateMatrixWorld(); ART.mat4.multiplyMatrices(camera.projectionMatrix, camera.matrixWorldInverse); ART.frustum.setFromProjectionMatrix(ART.mat4);
   const cand = [];
   for (const it of ART.items) {
@@ -571,7 +653,9 @@ function updateArt() {
     const facing = it.normal.dot(new THREE.Vector3().subVectors(eye, it.center)) > 0;
     if (d > ART.FAR || !sameFloor) { if (it.state !== 'idle' || it.label) unloadItem(it); continue; }
     if (it.video && (d > ART.VFAR || !facing)) stopVideo(it);
-    if (d < ART.NEAR && facing && ART.frustum.intersectsSphere(_sph.set(it.center, 1.3))) {
+    const inView = d < ART.NEAR && facing && ART.frustum.intersectsSphere(_sph.set(it.center, 1.3));
+    if (it.anim && inView) tickAnim(it, now);          // animations only advance while visible
+    if (inView) {
       if (it.state === 'idle') cand.push([d, it]);
       else if (it.state === 'loaded' && it.work && it.work.video_id && !it.video && d < ART.VNEAR) startVideo(it);
     }
@@ -590,9 +674,11 @@ const esc = (s) => String(s ?? '').replace(/[&<>"]/g, c => ({ '&': '&amp;', '<':
 function showInfo(it) {
   const w = it.work, o = $('artinfo'); if (!w) return;
   o.innerHTML = `<div class="t">${esc(w.title)}</div><div class="a">${esc(w.artist)}</div>` +
-    `<div class="m">${esc({ image: '图片', video: '视频', audio: '音频', text: '文本 / 语录' }[w.media] || w.media)}${w.edition ? ' · ' + esc(w.edition) : ''}${w.price ? ' · 价格 ' + esc(w.price) : ''}</div>` +
+    `<div class="m">${esc({ image: '图片', video: '视频', audio: '音频', text: '文本 / 语录', artist: '艺术家 · ' + (w.n || 0) + ' 件作品' }[w.media] || w.media)}${w.edition ? ' · ' + esc(w.edition) : ''}${w.price ? ' · 价格 ' + esc(w.price) : ''}</div>` +
     (w.headline ? `<div class="q"><b>${esc(w.headline)}</b></div>` : '') + (w.quote ? `<div class="q">“${esc(w.quote)}”</div>` : '') +
-    `<a href="${esc(w.detail_url)}" target="_blank" rel="noopener">在 bidder.art 查看作品 ↗</a><div class="x">E / Esc 关闭 · 展位 ${esc(it.slot.id)}</div>`;
+    (w.media === 'artist' ? `<a href="${esc(w.artist_url)}" target="_blank" rel="noopener">打开艺术家主页 ↗</a>` :
+      `<a href="${esc(w.detail_url)}" target="_blank" rel="noopener">在 bidder.art 查看作品 ↗</a>` +
+      (w.artist_url ? `<br><a href="${esc(w.artist_url)}" target="_blank" rel="noopener">艺术家 ${esc(w.artist)} 的主页 ↗</a>` : '')) + `<div class="x">E / Esc 关闭 · 展位 ${esc(it.slot.id)}</div>`;
   o.style.display = 'block'; ART.open = it;
 }
 function hideInfo() { $('artinfo').style.display = 'none'; ART.open = null; }
@@ -607,9 +693,10 @@ renderer.domElement.addEventListener('click', (e) => {
 });
 window.__art = { state: () => ({ slots: ART.slots.length, works: ART.works.length, assigned: ART.assigned, unplaced: ART.unplaced,
     loaded: ART.items.filter(i => i.state === 'loaded').length, loading: ART.loading, failed: ART.items.filter(i => i.state === 'failed').length,
-    labels: ART.items.filter(i => i.label).length, videos: ART.videos, playing: ART.items.filter(i => i.vstate === 'playing').length,
+    labels: ART.items.filter(i => i.label).length, videos: ART.videos, anims: ART.anims, animating: ART.items.filter(i => i.anim).length, imageDecoder: typeof ImageDecoder !== 'undefined', playing: ART.items.filter(i => i.vstate === 'playing').length,
     kinds: ART.items.reduce((a, i) => (a[i.kind] = (a[i.kind] || 0) + 1, a), {}), req: { ...ART.req }, errors: ART.errors.slice(-10) }),
-  log: () => ART.log.slice(), nearest: () => { const it = nearestItem(8); return it && { slot: it.slot.id, id: it.work.id, title: it.work.title }; },
+  log: () => ART.log.slice(),
+  slot: (id) => { const it = ART.items.find(i => i.slot.id === id); return it && { id, work: it.work && it.work.id, artist: it.work && it.work.artist, media: it.work && it.work.media, state: it.state, kind: it.kind, anim: it.anim ? { frames: it.anim.n, shown: it.anim.frames, i: it.anim.i, src: it.anim.src.slice(0, 90) } : null }; }, nearest: () => { const it = nearestItem(8); return it && { slot: it.slot.id, id: it.work.id, title: it.work.title }; },
   info: () => ART.open && { slot: ART.open.slot.id, href: $('artinfo').querySelector('a').href }, showSlot: (id) => { const it = ART.items.find(i => i.slot.id === id); if (it) showInfo(it); }, hide: hideInfo };
 // ===========================================================
 
