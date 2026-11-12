@@ -96,9 +96,124 @@ def collect_windows():
     facades(Acc(), _r.Random(3))
     return list(WINDOWS)
 
+# ---------------------------------------------------------------- window plan (round "fewer, bigger windows")
+ROOM_KINDS = ('gallery', 'core_lobby', 'corridor', 'stair')            # small rooms: ONE centred floor-to-ceiling window
+HALL_KINDS = ('hall', 'pavilion_hall', 'lobby', 'atrium')     # halls: tall windows on every 2nd (long runs: 3rd) structural bay
+PLAN = {}
+PLAN_LOG = []
+
+def _in_rect(r, x, y): return r[0] < x < r[2] and r[1] < y < r[3]
+
+def _face_exterior(sp, band, axis, coord, out, u):
+    """is the room face at along-coordinate u a real, visible facade (no room / other wing / north-wing roof outside)?"""
+    zb0 = BAND_Z[band][0]
+    po = (u, coord + out * 0.6) if axis == 'x' else (coord + out * 0.6, u)
+    for s2 in spec.SPACES.values():
+        if s2['kind'] == 'outdoor' or band not in s2['bands']: continue
+        if _in_rect(s2['rect'], *po): return None
+    for m in MASSES:
+        for (nm, nrm, c, (a0, a1), ax) in side_defs(m['rect']):
+            o = nrm[1] if ax == 'x' else nrm[0]
+            if ax == axis and abs(c - coord) < 1e-3 and o == out and a0 - 1e-6 <= u <= a1 + 1e-6:
+                if not visible(m, nm, nrm, coord, u, band): return None
+                for m2 in MASSES:
+                    if m2 is m: continue
+                    x0, y0, x1, y1 = m2['rect']; foot = [((x0, y0, x1, y1), m2['h'] + 0.01)]
+                    if m2['kind'] == 'nwing':
+                        fx0, fx1 = (x0 - 10, x1) if (x0 + x1) / 2 < 0 else (x0, x1 + 10)
+                        foot.append(((fx0, 40.0 - 10.2, fx1, 40.0 + 10.2), 31.0))
+                    for r, zt in foot:
+                        if zb0 < zt and _in_rect(r, *((u, coord + out * 0.5) if axis == 'x' else (coord + out * 0.5, u))): return None
+                return (m, nm, nrm, a0, a1)
+    return None
+
+def _runs(sp, band):
+    """exterior runs of every face of a room: list of (axis, coord, out, u0, u1, mass, side)"""
+    x0, y0, x1, y1 = sp['rect']; res = []
+    for axis, coord, out, a0, a1 in (('x', y0, -1, x0, x1), ('x', y1, 1, x0, x1), ('y', x0, -1, y0, y1), ('y', x1, 1, y0, y1)):
+        n = max(2, int((a1 - a0) / 0.25)); cur = None
+        for k in range(n + 1):
+            u = a0 + 0.12 + (a1 - a0 - 0.24) * k / n
+            f = _face_exterior(sp, band, axis, coord, out, u)
+            key = None if f is None else (f[0]['name'], f[1])
+            if cur and cur[5] == key and key is not None: cur[4] = u
+            else:
+                if cur and cur[5] is not None: res.append(tuple(cur))
+                cur = [axis, coord, out, u, u, key, f]
+        if cur and cur[5] is not None: res.append(tuple(cur))
+    return [(r[0], r[1], r[2], r[3], r[4], r[5], r[6]) for r in res if r[4] - r[3] > 2.0]
+
+def _doors_clear(axis, coord, band, u0, u1):
+    return not any(d['axis'] == ('y' if axis == 'x' else 'x') and abs(d['coord'] - coord) < 1e-3 and d['band'] == band
+                   and d['center'] - d['width'] / 2 - 0.8 < u1 and d['center'] + d['width'] / 2 + 0.8 > u0 for d in DOORS)
+
+def plan_windows():
+    plan = {}; PLAN_LOG.clear()
+    def add(key, w): plan.setdefault(key, []).append(w)
+    for sp in spec.SPACES.values():
+        if (not sp['walls'] and sp['kind'] != 'stair') or sp['kind'] not in ROOM_KINDS + HALL_KINDS: continue
+        for band in sp['bands']:
+            zb0, zb1 = BAND_Z[band]; ztop = min(sp['z1'], zb1)
+            if ztop - zb0 < 3.0: continue
+            runs = _runs(sp, band)
+            if not runs: continue
+            if sp['kind'] in ROOM_KINDS:
+                r = max(runs, key=lambda r: r[4] - r[3])          # ONE window per room, on its longest facade run
+                L = r[4] - r[3]; uc = (r[3] + r[4]) / 2
+                w = min(max(0.5 * L, 1.8), 5.0, L - 1.2)
+                u0, u1 = uc - w / 2, uc + w / 2
+                if not _doors_clear(r[0], r[1], band, u0, u1): continue
+                add(r[5], dict(u0=u0, u1=u1, z0=zb0 + 0.08, z1=ztop - 1.0, band=band, kind='room', space=sp['id']))
+                PLAN_LOG.append((sp['id'], band, 'room', 1))
+            else:
+                n_hall = 0
+                for r in runs:
+                    m, nm, nrm, a0, a1 = r[6]
+                    nb = max(1, round((a1 - a0) / BAY)); bw = (a1 - a0) / nb
+                    cs = [a0 + (i + 0.5) * bw for i in range(nb)]
+                    cs = [c for c in cs if r[3] + 1.4 <= c <= r[4] - 1.4]
+                    if not cs: continue
+                    step = 3 if (r[4] - r[3]) > 30 else 2
+                    mid = (r[3] + r[4]) / 2
+                    ci = min(range(len(cs)), key=lambda i: abs(cs[i] - mid))
+                    if len(cs) % 2 == 0 and step == 2:      # even count: symmetric pairs around the centre (+-0.5, +-2.5 bays ...)
+                        sel = [c for c in cs if round(abs(c - mid) / bw - 0.5) % 2 == 0]
+                    else:
+                        sel = [c for i, c in enumerate(cs) if (i - ci) % step == 0]
+                    for c in sel:
+                        w = min(2.6, bw - 0.9)
+                        if not _doors_clear(r[0], r[1], band, c - w / 2, c + w / 2): continue
+                        add(r[5], dict(u0=c - w / 2, u1=c + w / 2, z0=zb0 + 0.9, z1=ztop - 1.0, band=band, kind='hall', space=sp['id']))
+                        n_hall += 1
+                PLAN_LOG.append((sp['id'], band, 'hall', n_hall))
+    return plan
+
+def draw_window(acc, S, name, nrm, coord, w):
+    G, W = 'Facade', 'Windows'
+    u0, u1, z0, z1 = w['u0'], w['u1'], w['z0'], w['z1']
+    gm = 'win_glass' if w['kind'] == 'room' else 'win_glass_g'
+    S.box(acc, W, gm, u0, u1, 0.05, 0.08, z0, z1)
+    ft = 0.16
+    for (a0_, a1_, b0_, b1_) in ((u0 - ft, u0, z0 - (0.0 if w['kind'] == 'room' else ft), z1 + ft), (u1, u1 + ft, z0 - (0.0 if w['kind'] == 'room' else ft), z1 + ft),
+                                  (u0, u1, z1, z1 + ft)) + (() if w['kind'] == 'room' else ((u0, u1, z0 - ft, z0),)):
+        S.box(acc, G, 'frame_dark', a0_, a1_, 0.03, 0.10, b0_, b1_)
+    nm = max(1, int(math.ceil((u1 - u0) / 1.5)) - 1)          # vertical mullions
+    for k in range(1, nm + 1):
+        uk = u0 + (u1 - u0) * k / (nm + 1)
+        S.box(acc, G, 'frame_dark', uk - 0.05, uk + 0.05, 0.08, 0.14, z0, z1)
+    nt = int((z1 - z0) / 2.6)                                    # transoms
+    for k in range(1, nt + 1):
+        zk = z0 + (z1 - z0) * k / (nt + 1)
+        S.box(acc, G, 'frame_dark', u0, u1, 0.08, 0.14, zk - 0.05, zk + 0.05)
+    S.box(acc, G, 'stone_trim', u0 - 0.35, u1 + 0.35, 0.0, 0.32, z1 + ft, z1 + ft + 0.32)   # lintel
+    if w['kind'] == 'hall':
+        S.box(acc, G, 'stone_trim', u0 - 0.2, u1 + 0.2, 0.0, 0.28, z0 - ft - 0.25, z0 - ft)  # sill
+    reg(S, name, nrm, coord, u0, u1, z0, z1, w['band'])
+
 def facades(acc, rng):
     G = 'Facade'; W = 'Windows'
     WINDOWS.clear(); PANES.clear(); SKIPPED.clear()
+    PLAN.clear(); PLAN.update(plan_windows())
     stats = dict(bays=0)
     for mass in MASSES:
         h = mass['h']
@@ -109,15 +224,14 @@ def facades(acc, rng):
             nb = max(1, round(L / BAY))
             bw = L / nb
             S = Side(nrm, coord, axis)
+            side_wins = PLAN.get((mass['name'], name), [])
             # door exclusion
             doors = [d for d in DOORS if not d['glass'] and d['axis'] == axis and False]
             for ib in range(nb):
                 u0, u1 = a0 + ib * bw, a0 + (ib + 1) * bw
                 uc = (u0 + u1) / 2
                 vis = {b: visible(mass, name, nrm, coord, uc, b) for b in bands}
-                wok = {b: window_ok(mass, nrm, coord, axis, uc, b) for b in bands}
-                for b in bands:
-                    if vis[b] and not wok[b]: SKIPPED.append((mass['name'], name, round(uc, 1), b))
+                wok = {b: False for b in bands}     # per-bay windows retired: windows now come from plan_windows() (one per room / hall rhythm)
                 # entrance door exclusion (main door of lobby)
                 door_here = any((d['axis'] == ('y' if axis == 'x' else 'x')) and abs(d['coord'] - coord) < 1e-3 and d['band'] == 'L1' and not d['glass']
                                 and abs(d['center'] - uc) < bw / 2 + d['width'] / 2 and d['kind'] == 'main_door' for d in DOORS)
@@ -126,6 +240,7 @@ def facades(acc, rng):
                     if mass['name'] == 'CENTER_S' and name == 'S' and abs(pu) < 3.0 + 0.45: continue   # no pilaster inside the main doorway
                     pv = [b for b in bands if visible(mass, name, nrm, coord, min(max(pu, a0 + 0.3), a1 - 0.3), b)]
                     for b in pv:
+                        if any(w['band'] == b and w['u0'] - 0.5 < pu < w['u1'] + 0.5 for w in side_wins): continue
                         zb0, zb1 = BAND_Z[b]; zt = min(zb1, h)
                         S.box(acc, G, 'stone_trim', pu - 0.38, pu + 0.38, 0.0, 0.42, max(zb0, 1.2) if b == 'L1' else zb0 + 0.3, zt - (1.4 if zt == h else 0.3))
                 if not any(vis.values()): continue
@@ -136,7 +251,11 @@ def facades(acc, rng):
                     top = (zt == h)
                     if b == 'L1':
                         if not door_here:
-                            S.box(acc, G, 'stone_trim', u0, u1, 0.0, 0.18, 0.0, 1.2)  # plinth (omitted in the doorway: step-free entrance)
+                            cur = u0
+                            for w in sorted([w for w in side_wins if w['band'] == 'L1' and w['u1'] > u0 and w['u0'] < u1], key=lambda w: w['u0']):
+                                if w['u0'] - 0.15 > cur: S.box(acc, G, 'stone_trim', cur, w['u0'] - 0.15, 0.0, 0.18, 0.0, 1.2)
+                                cur = max(cur, w['u1'] + 0.15)
+                            if u1 > cur: S.box(acc, G, 'stone_trim', cur, u1, 0.0, 0.18, 0.0, 1.2)  # plinth (omitted in the doorway and under floor-to-ceiling glass)
                         if not door_here and wok['L1']:
                             w = 2.2
                             zs = 5.2
@@ -196,6 +315,7 @@ def facades(acc, rng):
                         S.box(acc, G, 'stone_trim', u0 - 0.0, u1 + 0.0, 0.0, 0.55, zt - 1.0, zt - 0.3)
                         S.box(acc, G, 'stone_trim', u0 - 0.0, u1 + 0.0, 0.0, 1.05, zt - 0.3, zt + 0.35)
                         S.box(acc, G, 'gold', u0, u1, 0.0, 1.1, zt + 0.35, zt + 0.5)
+            for w in side_wins: draw_window(acc, S, name, nrm, coord, w)
     return stats
 
 def central_portico(acc):

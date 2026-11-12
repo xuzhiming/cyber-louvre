@@ -26,3 +26,4 @@ r11 (lavender walls + dark day glass): IoU unchanged (0.899/0.930/0.851/0.849/0.
 r12 (exterior walls #3A3F4B): IoU unchanged
 r13 (dark slate roofs #2A2E37): IoU unchanged
 r14 (hollow dormers + gable window opening; blocked facade windows dropped): IoU front .899 back .930 left .851 right .849 top .928 (unchanged)
+- r16 (windows simplified: one centred floor-to-ceiling window per room, halls every 2nd/3rd bay symmetric; 746 -> 270 facade windows): IoU 0.899 / 0.930 / 0.851 / 0.849 / 0.928 (unchanged); windows 270/270, panes 371/371, doors 146/146, stairs 20/20, walk 164/164 x3

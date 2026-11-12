@@ -18,8 +18,8 @@ max_riser_m : 0.16666666666666666
 min_tread_m : 0.3
 min_headroom_m : 2.6
 total_steps_checked : 912
-windows : {'cuts': 980, 'glass_blocked': 980, 'open_through': 980, 'glass_fail': [], 'open_fail': []}
-panes : {'panes': 847, 'ok': 847, 'by_kind': {'facade_L1': [234, 234], 'facade_L2': [238, 238], 'facade_L3': [240, 240], 'facade_L4': [34, 34], 'gable': [1, 1], 'dormer_tower': [40, 40], 'dormer_wing': [36, 36], 'dormer_nwing': [24, 24]}, 'fails': []}
+windows : {'cuts': 270, 'glass_blocked': 270, 'open_through': 270, 'glass_fail': [], 'open_fail': []}
+panes : {'panes': 371, 'ok': 371, 'by_kind': {'facade_L1': [82, 82], 'facade_L2': [84, 84], 'facade_L3': [84, 84], 'facade_L4': [20, 20], 'gable': [1, 1], 'dormer_tower': [40, 40], 'dormer_wing': [36, 36], 'dormer_nwing': [24, 24]}, 'fails': []}
 stair_wells_checked : 20
 stair_wells_ok : 20
 stair_wells_min_head_m : 2.6

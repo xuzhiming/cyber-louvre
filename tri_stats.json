@@ -1,14 +1,14 @@
 {
- "tris": 201628,
+ "tris": 143414,
  "by_group": {
   "Walls_Interior": 5352,
-  "Walls_Exterior": 34224,
+  "Walls_Exterior": 11472,
   "Ground": 660,
   "Slabs": 3060,
   "Stairs": 10944,
   "Rails": 4752,
-  "Facade": 86736,
-  "Windows": 9451,
+  "Facade": 56284,
+  "Windows": 4441,
   "AutoDoor_LOBBY_L": 50,
   "AutoDoor_LOBBY_R": 50,
   "Roofs": 12409,
