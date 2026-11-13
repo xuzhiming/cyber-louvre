@@ -973,7 +973,7 @@ function showInfo(it) {
   const durl = safeUrl(w.detail_url), aurl = safeUrl(w.artist_url);
   const kind = w.media === 'image' && w.animated ? '动图 (GIF)' : (MEDIA_ZH[w.media] || w.media);
   o.innerHTML = `<button class="cls" title="关闭 (Esc)" aria-label="关闭">×</button><div class="t">${esc(w.title)}</div><div class="a">艺术家:${esc(w.artist)}</div>` +
-    `<canvas class="th" width="2" height="2" style="display:none"></canvas>` +
+    (isAV(w) ? `<img class="th cover" alt="封面" style="display:none" decoding="async" referrerpolicy="no-referrer">` : `<canvas class="th" width="2" height="2" style="display:none"></canvas>`) +
     `<div class="m">类型:${esc(w.media === 'artist' ? '艺术家 · ' + (w.n || 0) + ' 件作品' : kind)}${w.edition ? ' · 版次 ' + esc(w.edition) : ''}${w.price ? ' · 价格 ' + esc(w.price) : ''} · 来源:${src}</div>` +
     (w.media === 'video' || w.media === 'audio' ? `<div class="x">${MED.cur === it ? '▶ 正在播放' : '正对且最近时自动播放'}${w.media === 'video' && w.has_audio === false ? ' · 此视频本身无音轨' : ' · 有声'}${!AUD.gesture ? '(点击画面开启声音)' : ''}</div>` : '') +
     `<div class="lk">` + (w.media === 'artist' ? (aurl ? `<a href="${esc(aurl)}" target="_blank" rel="noopener">打开艺术家主页 ↗</a>` : '') :
@@ -987,12 +987,48 @@ function showInfo(it) {
     (!w.intro && !w.headline && !w.quote && w.media !== 'plaintext' ? `<div class="x">该作品在 ${src} 上暂无文字介绍</div>` : '') +
     `<div class="x">展位 ${esc(it.slot.id)} · × / Esc 关闭 · 走开自动关闭</div>`;
   o.querySelector('.cls').onclick = (e) => { e.stopPropagation(); hideInfo('button'); };
-  o.style.display = 'block'; o.scrollTop = 0; ART.open = it; ART.openWalk = WALK.on; ART.openD = camera.position.distanceTo(it.center); ART.thumbKind = null; ART.thumbT = 0;
-  drawThumb();
+  o.style.display = 'block'; o.scrollTop = 0; ART.open = it; ART.openWalk = WALK.on; ART.openD = camera.position.distanceTo(it.center); ART.thumbKind = null; ART.thumbT = 0; ART.coverState = null; ART.coverSrc = null;
+  if (isAV(w)) showCover(it); else drawThumb();
 }
-// thumbnail: a copy of what the frame currently shows (image / GIF frame / video frame / text card) - no extra download
+// thumbnail: images / GIFs / text cards = a copy of what the frame shows (GIF keeps animating, no extra download).
+// video / audio works (t39u): only a STATIC cover - never the live video frame, never a player in the panel:
+//   <img> of the work's cover (video: thumbnail / poster, then the image candidates via wsrv / thumbs / media proxy;
+//   audio: its cover image) -> if all fail, one frame of the wall poster drawn once into a canvas -> placeholder icon.
+const isAV = (w) => !!w && (w.media === 'video' || w.media === 'audio');
+function coverCandidates(w) {
+  const c = [];
+  if (w.media === 'video' && w.thumbnail && !w.thumbnail.startsWith('https://image.bidder.art/') && !/\.(mp4|m4v|webm|m3u8)(\?|$)/i.test(w.thumbnail)) c.push(w.thumbnail);
+  for (const u of imageCandidates(w)) if (!c.includes(u) && !/\.(mp4|m4v|webm|m3u8|mp3|m4a|wav|ogg)(\?|$)/i.test(u)) c.push(u);
+  return c;
+}
+function showCover(it) {
+  const o = $('artinfo'), im = o.querySelector('img.th.cover'); if (!im) return;
+  const urls = coverCandidates(it.work); let k = 0; ART.coverState = 'loading';
+  const next = () => {
+    if (ART.open !== it) return;
+    if (k >= urls.length) { coverFallback(it, im); return; }
+    im.src = urls[k++];
+  };
+  im.onload = () => { if (ART.open === it) { im.style.display = 'block'; ART.coverState = 'img'; ART.coverSrc = im.currentSrc.slice(0, 120); } };
+  im.onerror = next; next();
+}
+function coverFallback(it, im) {            // a single still drawn once (wall poster if it is an image texture), else an icon
+  const c = document.createElement('canvas'); c.className = 'th cover'; const map = it.media.material.map, src = map && map.image;
+  let ok = false;
+  if (src && it.kind !== 'reserved' && it.kind !== 'video' && !(src instanceof HTMLVideoElement)) {
+    const iw = src.width, ih = src.height;
+    if (iw && ih) { const s = Math.min(1, 680 / iw, 400 / ih); c.width = Math.round(iw * s); c.height = Math.round(ih * s); try { c.getContext('2d').drawImage(src, 0, 0, c.width, c.height); ok = true; } catch (_) {} }
+  } else if (src instanceof HTMLVideoElement && src.videoWidth) {        // one frame, copied once (no further updates)
+    const s = Math.min(1, 680 / src.videoWidth, 400 / src.videoHeight); c.width = Math.round(src.videoWidth * s); c.height = Math.round(src.videoHeight * s);
+    try { c.getContext('2d').drawImage(src, 0, 0, c.width, c.height); ok = true; } catch (_) {}
+  }
+  if (!ok) { c.width = 480; c.height = 270; const g = c.getContext('2d'); const gr = g.createLinearGradient(0, 0, 480, 270); gr.addColorStop(0, '#1b1030'); gr.addColorStop(1, '#0c1a2a'); g.fillStyle = gr; g.fillRect(0, 0, 480, 270);
+    g.fillStyle = '#ff9bf0'; g.font = '700 110px system-ui,sans-serif'; g.textAlign = 'center'; g.fillText(it.work.media === 'audio' ? '♪' : '▶', 240, 170);
+    g.fillStyle = '#cbb8ff'; g.font = '24px system-ui,"Microsoft YaHei",sans-serif'; g.fillText(it.work.media === 'audio' ? '音频作品' : '视频作品', 240, 235); }
+  im.replaceWith(c); c.style.display = 'block'; ART.coverState = ok ? 'frame' : 'icon';
+}
 function drawThumb() {
-  const it = ART.open; if (!it) return; const c = $('artinfo').querySelector('canvas.th'); if (!c) return;
+  const it = ART.open; if (!it || isAV(it.work)) return; const c = $('artinfo').querySelector('canvas.th'); if (!c) return;
   const map = it.media.material.map, img = map && map.image;
   if (!img || it.kind === 'reserved' || !it.kind) { c.style.display = 'none'; return; }
   const iw = img.videoWidth || img.width, ih = img.videoHeight || img.height; if (!iw || !ih) return;
@@ -1001,7 +1037,7 @@ function drawThumb() {
 }
 function infoTick(now) {           // per frame: refresh the thumbnail when the frame content arrives / changes; walk-away close
   const it = ART.open; if (!it) return;
-  if ((it.kind !== ART.thumbKind && now - ART.thumbT > 250) || ((it.kind === 'video' || it.kind === 'anim') && now - ART.thumbT > 1000)) { ART.thumbT = now; drawThumb(); }
+  if (!isAV(it.work) && ((it.kind !== ART.thumbKind && now - ART.thumbT > 250) || (it.kind === 'anim' && now - ART.thumbT > 1000))) { ART.thumbT = now; drawThumb(); }
   if (ART.openWalk && WALK.on && !FOCUS.anim) {
     const d = camera.position.distanceTo(it.center), away = it.normal.dot(new THREE.Vector3().subVectors(camera.position, it.center)) < 0;
     camera.getWorldDirection(_pk.q); const look = _pk.q.dot(_pk.t.subVectors(it.center, camera.position).normalize());
@@ -1136,7 +1172,10 @@ window.__art = { state: () => ({ slots: ART.slots.length, works: ART.works.lengt
   slot: (id) => { const it = ART.items.find(i => i.slot.id === id); return it && { id, work: it.work && it.work.id, artist: it.work && it.work.artist, media: it.work && it.work.media, state: it.state, kind: it.kind, anim: it.anim ? { frames: it.anim.n, shown: it.anim.frames, i: it.anim.i, src: it.anim.src.slice(0, 90) } : null }; }, nearest: () => { const it = nearestItem(8); return it && { slot: it.slot.id, id: it.work.id, title: it.work.title }; },
   audio: (id) => { const it = ART.items.find(i => i.slot.id === id); const a = it && it.aud; return a ? { t: +a.el.currentTime.toFixed(2), paused: a.el.paused, want: a.want, ready: a.el.readyState, dur: +(a.el.duration || 0).toFixed(1), vol: +a.vol.toFixed(2), gain: a.g ? +a.g.gain.value.toFixed(2) : null, elVol: +a.el.volume.toFixed(2), graph: !!a.g, src: (a.src || '').slice(0, 100), d: +(it.ad || 0).toFixed(1), fail: !!a.fail, viz: !!it.aviz } : (it ? { none: true, d: +(it.ad || 0).toFixed(1), viz: !!it.aviz } : null); },
   audioState: () => ({ locked: AUD.locked, gesture: AUD.gesture, ctx: AUD.ctx ? AUD.ctx.state : null, req: AUD.req, errors: AUD.errors.slice(-5), hint: $('audiohint').style.display }),
-  info: () => ART.open && { slot: ART.open.slot.id, href: $('artinfo').querySelector('a').href, title: $('artinfo').querySelector('.t').textContent, text: $('artinfo').innerText, thumb: $('artinfo').querySelector('canvas.th').style.display === 'block' }, showSlot: (id) => { const it = ART.items.find(i => i.slot.id === id); if (it) showInfo(it); }, hide: hideInfo };
+  info: () => ART.open && { slot: ART.open.slot.id, href: $('artinfo').querySelector('a').href, title: $('artinfo').querySelector('.t').textContent, text: $('artinfo').innerText, thumb: !!$('artinfo').querySelector('.th') && $('artinfo').querySelector('.th').style.display === 'block',
+    thumbTag: ($('artinfo').querySelector('.th') || {}).tagName || null, cover: ART.coverState || null, coverSrc: ART.coverSrc || null,
+    media: $('artinfo').querySelectorAll('video,audio,iframe,source').length, thumbHash: (() => { const e = $('artinfo').querySelector('.th'); if (!e) return null; if (e.tagName === 'IMG') return 'img:' + e.currentSrc.slice(-40);
+      try { const d = e.getContext('2d').getImageData(0, 0, e.width, e.height).data; let h = 0; for (let i = 0; i < d.length; i += 97) h = (h * 31 + d[i]) | 0; return 'cv:' + e.width + 'x' + e.height + ':' + h; } catch (_) { return 'cv:tainted:' + e.width + 'x' + e.height; } })() }, showSlot: (id) => { const it = ART.items.find(i => i.slot.id === id); if (it) showInfo(it); }, hide: hideInfo };
 // ===========================================================
 
 // ===================== 小地图 minimap (t33u) =====================

@@ -63,13 +63,20 @@ with sync_playwright() as p:
                 if e and not e['paused'] and e['t'] > 0.2: break
             r['playing'] = bool(e and not e['paused'] and e['t'] > 0.2); r['unmuted'] = bool(e and not e['muted']); r['unpaused'] = m['unpaused']
         time.sleep(1.0); i2 = pg.evaluate('window.__art.info()'); r['thumb'] = bool(i2 and i2['thumb'])
+        if label in ('video', 'audio', 'top video'):     # t39u: static cover only - no player / live frame in the panel
+            h1 = i2 and i2['thumbHash']; time.sleep(2.0); i3 = pg.evaluate('window.__art.info()')
+            r['cover'] = dict(tag=i3 and i3['thumbTag'], state=i3 and i3['cover'], src=i3 and i3['coverSrc'], media_in_panel=i3 and i3['media'],
+                              static=bool(h1 and i3 and h1 == i3['thumbHash']), dom_media=pg.evaluate("document.querySelectorAll('video,audio').length"),
+                              wall_playing=pg.evaluate(f"(() => {{ const m = window.__art.media(); const e = m.els.find(e => e.slot === '{sid}'); return !!(e && !e.paused); }})()"))
+            r['cover_ok'] = bool(r['thumb'] and r['cover']['tag'] in ('IMG', 'CANVAS') and r['cover']['state'] in ('img', 'frame', 'icon') and r['cover']['media_in_panel'] == 0
+                                 and r['cover']['static'] and r['cover']['dom_media'] == 0 and r['cover']['wall_playing'])
         if not i2: r['closed'] = pg.evaluate('window.__focus.state()')
         r['anim_ms'] = next((l['dur'] for l in reversed(pg.evaluate('window.__focus.state().log')) if l.get('slot') == sid and 'dur' in l), None)
         if n == 2: pg.screenshot(path='/tmp/cf_after.png')
         if n in (4, 6): pg.screenshot(path=R + f'art/click_focus_{sid}.png')
         r['ok'] = bool(r['picked'] == sid and r['started'] and r['anim_ms'] <= 1200 and r['info_slot'] == sid and r['title_ok'] and r['href_ok'] and r['intro_shown'] and r['source_label']
                        and pose['along'] > 0.9 and pose['lateral'] < 0.35 and pose['facingDot'] > 0.97 and pose['centerDot'] > 0.995 and abs(pose['eyeAboveFloor'] - 1.7) < 0.02
-                       and abs(pose['floorDelta']) < 0.1 and pose['walk'] and pose['grounded'] and r['thumb'] and r.get('active_media', True) and r.get('playing', True))
+                       and abs(pose['floorDelta']) < 0.1 and pose['walk'] and pose['grounded'] and r['thumb'] and r.get('cover_ok', True) and r.get('active_media', True) and r.get('playing', True))
         res.append(r); print(json.dumps(r, ensure_ascii=False), flush=True)
     out = {}
     # walking resumes from the landing pose; walk-away closes the panel
