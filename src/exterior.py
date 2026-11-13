@@ -473,6 +473,8 @@ def hollow_dormer(acc, R, fx, fy, n, zD, W, H, D, gw, gz0, gz1, kind, ft=0.15):
         acc.prism(R, 'roof_metal', [(fy - W - 0.25, zD + H), (fy + W + 0.25, zD + H), (fy, zD + H + 1.0 * (W + 0.25) / 1.15)], 'yz', min(fx, fx - n[0] * D) - 0.1, max(fx, fx - n[0] * D) + 0.1)
     return (W - ft, zD, zD + H)   # half-width of the opening through the shell, z range
 
+# t38u: roof / dome light strips use their own pale-yellow materials (neon_roof, neon_roof_ridge) in day AND night;
+# neon_purple / neon_cyan elsewhere (screen frames, hologram, plaza, tower lantern) are unchanged
 def roofs(acc, rng):
     R = 'Roofs'; N = 'Roofs'
     NW_FOOT = []    # north-wing roof footprints (they extend 10 m into the corner pavilions)
@@ -492,12 +494,12 @@ def roofs(acc, rng):
             acc.box(R, 'roof_cap', cx - 5.4, cy - 5.4, 44.0, cx + 6.1, cy + 6.1, 44.55)
             for z, hh in prof:
                 for (ax, ay, bx, by) in [(-1, -1, 1, -1), (1, -1, 1, 1), (1, 1, -1, 1), (-1, 1, -1, -1)]:
-                    acc.bar(N, 'neon_magenta', (cx + ax * hh, cy + ay * hh, z + 0.1), (cx + bx * hh, cy + by * hh, z + 0.1), 0.28, 0.28)
+                    acc.bar(N, 'neon_roof', (cx + ax * hh, cy + ay * hh, z + 0.1), (cx + bx * hh, cy + by * hh, z + 0.1), 0.28, 0.28)
             for sxx in (-1, 1):
                 for syy in (-1, 1):
                     pts = [(cx + sxx * hh, cy + syy * hh, z + 0.1) for z, hh in prof]
                     for p0, p1 in zip(pts[:-1], pts[1:]):
-                        acc.bar(N, 'neon_magenta', p0, p1, 0.26, 0.26)
+                        acc.bar(N, 'neon_roof', p0, p1, 0.26, 0.26)
             # top lantern
             acc.cyl(R, 'roof_cap', cx, cy, 44.55, 45.6, 1.2, n=10, r1=0.8)
             acc.cyl(R, 'neon_cyan', cx, cy, 45.5, 46.0, 0.35, n=8)
@@ -531,11 +533,11 @@ def roofs(acc, rng):
             prof = [(cx - 10.2, 24), (cx - 7.4, 28), (cx - 4, 31), (cx + 4, 31), (cx + 7.4, 28), (cx + 10.2, 24)]
             wing_holes = {0: [], 4: []}
             for xx in (cx - 4, cx + 4):
-                acc.bar(N, 'neon_purple', (xx, -34, 31.1), (xx, 34, 31.1), 0.3, 0.3)
+                acc.bar(N, 'neon_roof_ridge', (xx, -34, 31.1), (xx, 34, 31.1), 0.3, 0.3)
             for xx in (cx - 7.4, cx + 7.4):
-                acc.bar(N, 'neon_magenta', (xx, -34, 28.1), (xx, 34, 28.1), 0.2, 0.2)
+                acc.bar(N, 'neon_roof', (xx, -34, 28.1), (xx, 34, 28.1), 0.2, 0.2)
             for xx, nsg in ((cx - 10.2, -1), (cx + 10.2, 1)):
-                acc.bar(N, 'neon_magenta', (xx, -34, 24.1), (xx, 34, 24.1), 0.22, 0.22)
+                acc.bar(N, 'neon_roof', (xx, -34, 24.1), (xx, 34, 24.1), 0.22, 0.22)
             # dormers along both long sides (hollow, opening through the roof slope behind)
             sl = lambda z: 10.2 - 2.8 * (z - 24) / 4          # half-width of the lower roof slope at height z
             for yy in np.arange(-30, 31, 7.5):
@@ -552,11 +554,11 @@ def roofs(acc, rng):
             prof = [(cyy - 10.2, 24), (cyy - 7.4, 28), (cyy - 4, 31), (cyy + 4, 31), (cyy + 7.4, 28), (cyy + 10.2, 24)]
             nw_holes = {0: [], 4: []}
             for yy in (cyy - 4, cyy + 4):
-                acc.bar(N, 'neon_purple', (x0, yy, 31.1), (x1, yy, 31.1), 0.3, 0.3)
+                acc.bar(N, 'neon_roof_ridge', (x0, yy, 31.1), (x1, yy, 31.1), 0.3, 0.3)
             for yy in (cyy - 7.4, cyy + 7.4):
-                acc.bar(N, 'neon_magenta', (x0, yy, 28.1), (x1, yy, 28.1), 0.2, 0.2)
+                acc.bar(N, 'neon_roof', (x0, yy, 28.1), (x1, yy, 28.1), 0.2, 0.2)
             for yy in (cyy - 10.2, cyy + 10.2):
-                acc.bar(N, 'neon_magenta', (x0, yy, 24.1), (x1, yy, 24.1), 0.22, 0.22)
+                acc.bar(N, 'neon_roof', (x0, yy, 24.1), (x1, yy, 24.1), 0.22, 0.22)
             sl = lambda z: 10.2 - 2.8 * (z - 24) / 4
             for xx in np.arange(x0 + 3, x1 - 2, 6.5):
                 for nsg in (-1, 1):
@@ -573,8 +575,8 @@ def roofs(acc, rng):
             prof = [(xo - sgn * 0.2, 16), (xo - sgn * -4 if False else xo + (-sgn) * -4, 22), (xi, 22), (xi, 16)]
             prof = [(xo + sgn * 0.2, 24), (xo - sgn * 3.2, 31), (xi, 31), (xi, 24)]
             acc.prism(R, 'roof_metal', prof, 'xz', y0 - 0.2, y1 + 0.2)
-            acc.bar(N, 'neon_purple', (xo - sgn * 3.2, y0 - 0.2, 31.1), (xo - sgn * 3.2, y1 + 0.2, 31.1), 0.25, 0.25)
-            acc.bar(N, 'neon_magenta', (xo + sgn * 0.2, y0, 24.1), (xo + sgn * 0.2, y1, 24.1), 0.2, 0.2)
+            acc.bar(N, 'neon_roof_ridge', (xo - sgn * 3.2, y0 - 0.2, 31.1), (xo - sgn * 3.2, y1 + 0.2, 31.1), 0.25, 0.25)
+            acc.bar(N, 'neon_roof', (xo + sgn * 0.2, y0, 24.1), (xo + sgn * 0.2, y1, 24.1), 0.2, 0.2)
         elif m['kind'] == 'center':
             ctri = [(-14.4, 32), (14.4, 32), (0, 38)]
             if DORMER_OPEN:
@@ -583,9 +585,9 @@ def roofs(acc, rng):
             else:
                 acc.prism(R, 'roof_metal', ctri, 'xz', 7.4, 32.0)
             acc.bar(N, 'neon_cyan', (-14.4, 7.3, 32.15), (0, 7.3, 38.1), 0.2, 0.2) if False else None
-            acc.bar(N, 'neon_magenta', (0, 7.5, 38.1), (0, 32, 38.1), 0.25, 0.25)
-            acc.bar(N, 'neon_magenta', (-14.4, 7.4, 32.1), (0, 7.4, 38.0), 0.2, 0.2)
-            acc.bar(N, 'neon_magenta', (14.4, 7.4, 32.1), (0, 7.4, 38.0), 0.2, 0.2)
+            acc.bar(N, 'neon_roof', (0, 7.5, 38.1), (0, 32, 38.1), 0.25, 0.25)
+            acc.bar(N, 'neon_roof', (-14.4, 7.4, 32.1), (0, 7.4, 38.0), 0.2, 0.2)
+            acc.bar(N, 'neon_roof', (14.4, 7.4, 32.1), (0, 7.4, 38.0), 0.2, 0.2)
         elif m['kind'] == 'drum':
             # drum roof with a circular opening under the dome (atrium looks up into the dome)
             cy0, rr = DOME['c'][1], DOME['r'] - 0.3
@@ -634,17 +636,17 @@ def dome(acc):
     base = rings[0]
     for k in range(n):
         p0, p1 = np.array(base[k]), np.array(base[(k + 1) % n])
-        acc.bar('Dome', 'neon_magenta', p0 + np.array([0, 0, 0.45]), p1 + np.array([0, 0, 0.45]), 0.3, 0.3)
+        acc.bar('Dome', 'neon_roof', p0 + np.array([0, 0, 0.45]), p1 + np.array([0, 0, 0.45]), 0.3, 0.3)
         acc.bar(D, 'roof_cap', p0 + np.array([0, 0, 0.1]), p1 + np.array([0, 0, 0.1]), 0.9, 0.5)
     # arcs of neon along the dome (meridian, magenta) at four sides
     for k in (0, 8, 16, 24):
         for a, b in zip(rings[:-1], rings[1:]):
-            acc.bar('Dome', 'neon_magenta', np.array(a[k]) * 1.0 + np.array([0, 0, 0.0]), np.array(b[k]), 0.0, 0.0) if False else None
+            acc.bar('Dome', 'neon_roof', np.array(a[k]) * 1.0 + np.array([0, 0, 0.0]), np.array(b[k]), 0.0, 0.0) if False else None
     # lantern + spire (z 44 -> 46)
     ztop = z0 + hh
     acc.cyl(D, 'roof_cap', cx, cy, ztop - 0.2, ztop + 0.9, 1.4, n=12, r1=1.0)
     acc.cyl(D, 'window_cyan', cx, cy, ztop + 0.9, ztop + 1.25, 0.6, n=10)
-    acc.cyl('Dome', 'neon_magenta', cx, cy, ztop + 1.25, 48.0, 0.07, n=6, r1=0.03)
+    acc.cyl('Dome', 'neon_roof', cx, cy, ztop + 1.25, 48.0, 0.07, n=6, r1=0.03)
     # drum corner turrets
     for sx in (-1, 1):
         for sy in (-1, 1):
@@ -653,8 +655,8 @@ def dome(acc):
             acc.box(D, 'window_purple', x - 0.4, y - 1.65 if False else y - 1.62, 33.0, x + 0.4, y - 1.58, 35.2) if False else None
             acc.loft(D, 'roof_metal', [acc.rect_ring(x, y, 1.9, 1.9, 36.0), acc.rect_ring(x, y, 0.2, 0.2, 38.8)], caps=True, center=(x, y, 37))
             acc.box(D, 'roof_cap', x - 1.8, y - 1.8, 35.7, x + 1.8, y + 1.8, 36.1)
-            acc.bar('Dome', 'neon_magenta', (x - 1.9, y - 1.9, 36.1), (x + 1.9, y - 1.9, 36.1), 0.15, 0.15)
-            acc.bar('Dome', 'neon_magenta', (x - 1.9, y + 1.9, 36.1), (x + 1.9, y + 1.9, 36.1), 0.15, 0.15)
+            acc.bar('Dome', 'neon_roof', (x - 1.9, y - 1.9, 36.1), (x + 1.9, y - 1.9, 36.1), 0.15, 0.15)
+            acc.bar('Dome', 'neon_roof', (x - 1.9, y + 1.9, 36.1), (x + 1.9, y + 1.9, 36.1), 0.15, 0.15)
 
 DOOR_LEAVES = []   # registry of auto-door leaf groups: dict(name, side, x0, x1, z0, z1, slide)
 

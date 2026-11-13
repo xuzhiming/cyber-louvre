@@ -443,6 +443,7 @@ const NIGHT = { fixture: 0xffe9b0, atrium: 0xffe6b0, panel: 0xfff1c8, hemiSky: 0
 const NIGHT_EMIS = {           // material -> [night emissive colour (null = keep), intensity factor]
   light_panel: [0xfff1c8, 1], window_warm: [0xffe9b0, 1], window_cyan: [0xfff1c8, 0.9], glass_dome: [0xffe9b0, 1],
   neon_magenta: [0xffe9b0, 0.7], neon_purple: [0xffe2a0, 0.55],                 // roof / dome outlines -> pale yellow
+  neon_roof: [0xffe9b0, 0.7], neon_roof_ridge: [0xffe2a0, 0.55],             // t38u: roof / dome strips own material, pale yellow by day too (model colour)
   neon_cyan: [null, 0.3], holo_purple: [null, 0.5], holo_cyan: [null, 0.5] };   // accents, toned down
 function applyFx() {
   const day = FX.mode === 'day', on = FX.lights;
