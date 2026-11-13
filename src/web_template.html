@@ -30,7 +30,15 @@
   #tp button:hover{background:rgba(20,60,80,.9)}
   #lockmsg{position:fixed;left:50%;top:62%;transform:translateX(-50%);z-index:2;color:#fff;background:rgba(0,0,0,.55);padding:8px 16px;border-radius:8px;font:15px system-ui,"Microsoft YaHei",sans-serif;display:none;pointer-events:none}
   body.walk canvas{cursor:crosshair}
-  #artinfo{position:fixed;right:16px;top:70px;width:min(380px,calc(100vw - 32px));z-index:4;display:none;color:#eee;background:rgba(14,10,30,.94);border:1px solid rgba(255,123,240,.6);border-radius:10px;padding:14px 16px;font:14px/1.55 system-ui,"Microsoft YaHei",sans-serif}
+  #artinfo{position:fixed;right:16px;top:70px;width:min(380px,calc(100vw - 32px));max-height:calc(100vh - 90px);overflow:auto;box-sizing:border-box;z-index:4;display:none;color:#eee;background:rgba(14,10,30,.94);border:1px solid rgba(255,123,240,.6);border-radius:10px;padding:14px 16px;font:14px/1.55 system-ui,"Microsoft YaHei",sans-serif;box-shadow:0 6px 28px rgba(0,0,0,.5)}
+  #artinfo .cls{position:sticky;float:right;top:0;margin:-6px -8px 0 6px;width:30px;height:30px;border:1px solid rgba(255,123,240,.55);background:rgba(40,20,70,.9);color:#fdf;border-radius:6px;font-size:18px;line-height:26px;cursor:pointer;padding:0}
+  #artinfo .cls:hover{background:#5a2590}
+  #artinfo .th{display:block;max-width:100%;max-height:200px;margin:8px auto 4px;border-radius:6px;border:1px solid rgba(255,255,255,.15);background:#000}
+  #artinfo .h{margin-top:10px;color:#ff9bf0;font-size:12px;font-weight:700;letter-spacing:.05em}
+  #artinfo .tags span{display:inline-block;margin:3px 4px 0 0;padding:0 7px;border-radius:9px;background:rgba(120,90,220,.28);color:#d9ccff;font-size:11px}
+  #artinfo details{margin-top:8px;font-size:12px;color:#ccd}#artinfo summary{cursor:pointer;color:#c9b8ff}
+  #artinfo .lk a{margin-right:12px}
+  @media (max-width:600px){#artinfo{top:auto;bottom:10px;right:10px;width:calc(100vw - 20px);max-height:46vh}}
   #artinfo .t{font-size:18px;font-weight:700;color:#ffb6f6}#artinfo .a{color:#c9b8ff;margin-bottom:6px}#artinfo .m{color:#9fb;font-size:12px}#artinfo .q{margin:8px 0;color:#ddd;font-size:13px}
   #artinfo a{display:inline-block;margin-top:8px;color:#7ee7ff}#artinfo .x{margin-top:8px;color:#889;font-size:12px}
   #mm{position:fixed;left:12px;bottom:12px;z-index:2;width:min(300px,40vw);background:rgba(10,8,24,.66);border:1px solid rgba(190,110,255,.55);border-radius:8px;padding:4px;box-sizing:border-box;pointer-events:auto;cursor:pointer;user-select:none;display:none}
@@ -50,7 +58,7 @@
 <body>
 <div id="loading"><div class="spin"></div><div id="msg">Loading model…</div><div id="err"></div></div>
 <div id="cross"></div><div id="mm" title="小地图 (M 显示/隐藏,点击切换 全层 / 局部放大)"><canvas id="mmc" width="560" height="420"></canvas></div><div id="audiohint">🔊 正在静音播放 · 点击此处或画面开启声音</div><div id="hud"></div><div id="lockmsg">点击画面开启鼠标视角(Esc 释放鼠标)</div>
-<div id="help"><b>漫游模式操作</b><br><kbd>W</kbd><kbd>A</kbd><kbd>S</kbd><kbd>D</kbd> / 方向键:前后左右移动<br>鼠标:转动视角(先点击画面锁定鼠标,<kbd>Esc</kbd>释放;未锁定时可按住左键拖动)<br><kbd>Shift</kbd> 奔跑 &nbsp; <kbd>Space</kbd> 跳跃<br><kbd>G</kbd> 飞行模式开/关:<kbd>Space</kbd>/<kbd>E</kbd> 上升,<kbd>C</kbd>/<kbd>Q</kbd> 下降<br><kbd>1</kbd>-<kbd>7</kbd> 传送点 &nbsp; <kbd>H</kbd> 显示/隐藏帮助<br><kbd>F</kbd> 切换 漫游 / 轨道 模式<br><kbd>M</kbd> 左下角小地图 显示/隐藏(点击地图:全层 / 局部放大)<br>视频 ▶ / 音频 ♪:同一时间只播放一件——正对着(视线 35° 内、无墙遮挡)且最近的那件自动有声播放(视频 10 米 / 音频 6 米内),音量随距离变化;首次点击画面后开启声音。<br>走近玻璃门(约4.5米内)会自动对开;楼梯可直接走上去。<hr style="border:0;border-top:1px solid #6a50a0;margin:6px 0"><b>显示效果(轨道/漫游均可用)</b><br><kbd>N</kbd> 白天 / 夜晚 切换(白天:天空+日光+阴影,发光减弱;夜晚:暗天空+霓虹+灯具+泛光)<br><kbd>L</kbd> 灯光开/关(霓虹发光条、室内灯具、灯光)<br><kbd>B</kbd> 泛光(Bloom)开/关<br><kbd>H</kbd> 显示/隐藏本帮助</div>
+<div id="help"><b>漫游模式操作</b><br><kbd>W</kbd><kbd>A</kbd><kbd>S</kbd><kbd>D</kbd> / 方向键:前后左右移动<br>鼠标:转动视角(先点击画面锁定鼠标,<kbd>Esc</kbd>释放;未锁定时可按住左键拖动)<br><kbd>Shift</kbd> 奔跑 &nbsp; <kbd>Space</kbd> 跳跃<br><kbd>G</kbd> 飞行模式开/关:<kbd>Space</kbd>/<kbd>E</kbd> 上升,<kbd>C</kbd>/<kbd>Q</kbd> 下降<br><kbd>1</kbd>-<kbd>7</kbd> 传送点 &nbsp; <kbd>H</kbd> 显示/隐藏帮助<br><kbd>F</kbd> 切换 漫游 / 轨道 模式<br><kbd>M</kbd> 左下角小地图 显示/隐藏(点击地图:全层 / 局部放大)<br>视频 ▶ / 音频 ♪:同一时间只播放一件——正对着(视线 35° 内、无墙遮挡)且最近的那件自动有声播放(视频 10 米 / 音频 6 米内),音量随距离变化;首次点击画面后开启声音。<br><b>鼠标左键点击作品</b>(轨道视角也可,手机轻点):镜头自动移到作品正前方并弹出作品介绍;<kbd>E</kbd> 打开/关闭最近作品介绍,<kbd>Esc</kbd> / × / 走开即关闭。<br>走近玻璃门(约4.5米内)会自动对开;楼梯可直接走上去。<hr style="border:0;border-top:1px solid #6a50a0;margin:6px 0"><b>显示效果(轨道/漫游均可用)</b><br><kbd>N</kbd> 白天 / 夜晚 切换(白天:天空+日光+阴影,发光减弱;夜晚:暗天空+霓虹+灯具+泛光)<br><kbd>L</kbd> 灯光开/关(霓虹发光条、室内灯具、灯光)<br><kbd>B</kbd> 泛光(Bloom)开/关<br><kbd>H</kbd> 显示/隐藏本帮助</div>
 <div id="tp"><button data-tp="plaza">1 广场(金字塔前)</button><button data-tp="lobby">2 大堂</button><button data-tp="stairs">3 大楼梯</button><button data-tp="f2">4 二楼</button><button data-tp="f3">5 三楼</button><button data-tp="pav">6 转角塔楼</button><button data-tp="b1">7 地下B1</button></div>
 <div id="ui">
   <button id="walkBtn">漫游模式 (F)</button>
@@ -261,7 +269,7 @@ async function buildCollision(root) {
 function setLook(yaw, pitch) { camera.rotation.set(pitch, yaw, 0, 'YXZ'); }
 function floorName(y) { return y < -3 ? 'B1 地下' : y < 4 ? '1F' : y < 12 ? '2F' : y < 20 ? '3F' : '屋顶机房层'; }
 function teleport(name) {
-  const s = SPAWN[name]; if (!s) return;
+  const s = SPAWN[name]; if (!s) return; dropFocusAnim();
   WALK.pos.set(s[0], s[2] + 0.05, -s[1]); WALK.vel.set(0, 0, 0); WALK.vy = 0; WALK.grounded = false;
   setLook(s[3], 0); syncCam();
 }
@@ -333,14 +341,15 @@ function enterWalk() {
   camera.fov = 75; camera.near = 0.08; camera.updateProjectionMatrix(); lamp.visible = true;
   scene.fog.density = FX.fogBase * 0.5;
   if (WALK.first) { teleport('plaza'); WALK.first = false; } else syncCam();
-  for (const id of ['cross', 'hud', 'help']) $(id).style.display = 'block';
+  for (const id of ['cross', 'hud']) $(id).style.display = 'block';
+  $('help').style.display = innerWidth >= 700 ? 'block' : 'none';      // phones: the help card would cover the view (tap it to hide)
   $('tp').style.display = 'flex'; placeTp(); $('walkBtn').classList.add('on'); $('lockmsg').style.display = 'block';
   updateHud();
 }
 function placeTp() { $('tp').style.top = ($('ui').getBoundingClientRect().bottom + 6) + 'px'; }
 addEventListener('resize', placeTp);
 function exitWalk() {
-  if (!WALK.on) return;
+  if (!WALK.on) return; dropFocusAnim();
   if (plc.isLocked) plc.unlock();
   WALK.on = false; WALK.keys.clear(); document.body.classList.remove('walk');
   const s = WALK.saved; camera.fov = s.fov; camera.near = s.near; camera.updateProjectionMatrix(); lamp.visible = false;
@@ -355,14 +364,30 @@ function toggleWalk() { WALK.on ? exitWalk() : enterWalk(); }
 $('walkBtn').onclick = () => { toggleWalk(); };
 document.querySelectorAll('[data-tp]').forEach(b => b.onclick = () => teleport(b.dataset.tp));
 document.querySelectorAll('#ui button, #tp button').forEach(b => b.addEventListener('click', () => b.blur()));
+$('help').addEventListener('pointerup', (e) => { if (e.pointerType !== 'mouse') $('help').style.display = 'none'; });
 plc.addEventListener('lock', () => { $('lockmsg').style.display = 'none'; });
 plc.addEventListener('unlock', () => { if (WALK.on) $('lockmsg').style.display = 'block'; });
+// pointer: press / release on the canvas.  A short press without movement is a click: on an artwork -> focus it (t37u, cursor
+// position, or the crosshair when the mouse is locked); anywhere else in walk mode -> lock the mouse (as before).  A press that
+// moves is a look-drag (walk, pointer lock unavailable) / orbit drag and never picks.
+const CLICK = { down: null, TOL_MOUSE: 6, TOL_TOUCH: 12, MS: 700 };
 renderer.domElement.addEventListener('pointerdown', (e) => {
+  CLICK.down = { x: e.clientX, y: e.clientY, t: e.timeStamp, b: e.button, locked: plc.isLocked, type: e.pointerType, moved: 0 };
   if (!WALK.on) return;
-  WALK.drag = true; if (!plc.isLocked) { try { plc.lock(); } catch (_) {} }
+  WALK.drag = true;
+});
+renderer.domElement.addEventListener('pointerup', (e) => {
+  const d = CLICK.down; CLICK.down = null; if (!d || d.b !== 0) return;
+  const tol = d.type === 'touch' || d.type === 'pen' ? CLICK.TOL_TOUCH : CLICK.TOL_MOUSE;
+  const click = d.moved <= tol && (d.locked || Math.hypot(e.clientX - d.x, e.clientY - d.y) <= tol) && e.timeStamp - d.t < CLICK.MS;      // event times (not handler times: a slow frame must not turn a click into a hold)
+  CLICK.last = { click, moved: d.moved, ms: Math.round(e.timeStamp - d.t), locked: d.locked, type: d.type };
+  if (click) { const it = pickArt(d.locked ? null : e.clientX, d.locked ? null : e.clientY); if (it) { startFocus(it, 'click'); return; } }
+  if (WALK.on && !plc.isLocked && d.type === 'mouse') { try { plc.lock(); } catch (_) {} }
 });
 addEventListener('pointerup', () => { WALK.drag = false; });
 addEventListener('pointermove', (e) => {
+  if (CLICK.down) CLICK.down.moved += Math.abs(e.movementX || 0) + Math.abs(e.movementY || 0);
+  if (FOCUS.anim && WALK.on && (plc.isLocked || (WALK.drag && CLICK.down && CLICK.down.moved > CLICK.TOL_MOUSE))) cancelFocus('look');
   if (!WALK.on || plc.isLocked || !WALK.drag) return;           // fallback: drag-to-look when pointer lock is unavailable
   const eu = camera.rotation; setLook(eu.y - e.movementX * 0.003, Math.max(-1.5, Math.min(1.5, eu.x - e.movementY * 0.003)));
 });
@@ -376,6 +401,7 @@ addEventListener('keydown', (e) => {
     if (e.code === 'KeyH' && !WALK.on) { $('help').style.display = $('help').style.display === 'block' ? 'none' : 'block'; return; }
   }
   if (!WALK.on) return;
+  if (FOCUS.anim && FOCUS_CANCEL_KEYS.has(e.code)) cancelFocus('key');
   if (['Space', 'ArrowUp', 'ArrowDown', 'ArrowLeft', 'ArrowRight', 'Tab'].includes(e.code)) e.preventDefault();
   if (!e.repeat) {
     if (e.code === 'Space') WALK.jump = true;
@@ -386,8 +412,8 @@ addEventListener('keydown', (e) => {
   WALK.keys.add(e.code);
 });
 addEventListener('keyup', (e) => { if (WALK.on && e.code === 'Space') e.preventDefault(); WALK.keys.delete(e.code); });
-window.__walk = { enter: enterWalk, exit: exitWalk, teleport, setLook, place: (x, y, z, yaw) => { WALK.pos.set(x, z + 0.05, -y); WALK.vel.set(0, 0, 0); WALK.vy = 0; WALK.grounded = false; setLook(yaw || 0, 0); syncCam(); }, state: () => ({ on: WALK.on, fly: WALK.fly, grounded: WALK.grounded, x: WALK.pos.x, y: -WALK.pos.z, z: WALK.pos.y, yaw: camera.rotation.y, floor: floorName(WALK.pos.y), bvh: WALK.bvh, tris: WALK.tris, hits: WALK.hits, ready: !!WALK.col }),
-  setPos: (x, y, z) => { WALK.pos.set(x, z, -y); WALK.vel.set(0, 0, 0); WALK.vy = 0; syncCam(); } };
+window.__walk = { enter: enterWalk, exit: exitWalk, teleport, setLook, place: (x, y, z, yaw) => { dropFocusAnim(); WALK.pos.set(x, z + 0.05, -y); WALK.vel.set(0, 0, 0); WALK.vy = 0; WALK.grounded = false; setLook(yaw || 0, 0); syncCam(); }, state: () => ({ on: WALK.on, fly: WALK.fly, grounded: WALK.grounded, x: WALK.pos.x, y: -WALK.pos.z, z: WALK.pos.y, yaw: camera.rotation.y, floor: floorName(WALK.pos.y), bvh: WALK.bvh, tris: WALK.tris, hits: WALK.hits, ready: !!WALK.col }),
+  setPos: (x, y, z) => { dropFocusAnim(); WALK.pos.set(x, z, -y); WALK.vel.set(0, 0, 0); WALK.vy = 0; syncCam(); } };
 // ===========================================================
 
 
@@ -896,6 +922,11 @@ function mediaDirector(tcand, eye, now) {
     if (!MED.lostT) MED.lostT = now;
     if (now - MED.lostT >= MED.SWITCH_MS) next = best;
   }
+  if (MED.force) {                                 // t37u: clicked video / audio -> active right away (no SWITCH_MS wait)
+    const f = MED.force.it;
+    if (now - MED.force.t > 8000 || ART.open !== f) MED.force = null;
+    else if (!FOCUS.anim && tcand.includes(f) && medScore(f, eye, true, now) !== null) { next = f; MED.force = null; }
+  }
   if (next !== cur) {
     MED.cur = next; MED.lostT = 0; MED.pend = null; MED.switches++;
     MED.log.push({ t: +now.toFixed(0), from: cur && cur.slot.id, to: next && next.slot.id, d: next ? +next.vd.toFixed(1) : null }); if (MED.log.length > 50) MED.log.shift();
@@ -932,30 +963,165 @@ function nearestItem(maxD) {
     if (d < bd && v.normalize().dot(fwd) > 0.55 && it.normal.dot(new THREE.Vector3().subVectors(eye, it.center)) > 0) { bd = d; best = it; } }
   return best;
 }
-const esc = (s) => String(s ?? '').replace(/[&<>"]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
+const esc = (s) => String(s ?? '').replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
+const safeUrl = (u) => /^https:\/\/(bidder\.art|bidder\.top)\//.test(String(u || '')) ? u : '';
+const MEDIA_ZH = { image: '图片', video: '视频', audio: '音频', text: '文本 / 语录', plaintext: '纯文本', artist: '艺术家' };
 function showInfo(it) {
   const w = it.work, o = $('artinfo'); if (!w) return;
-  o.innerHTML = `<div class="t">${esc(w.title)}</div><div class="a">${esc(w.artist)}</div>` +
-    `<div class="m">${esc({ image: '图片', video: '视频', audio: '音频', text: '文本 / 语录', plaintext: '纯文本', artist: '艺术家 · ' + (w.n || 0) + ' 件作品' }[w.media] || w.media)}${w.edition ? ' · ' + esc(w.edition) : ''}${w.price ? ' · 价格 ' + esc(w.price) : ''}</div>` +
+  const src = w.source === 'bidder.top' ? 'bidder.top' : 'bidder.art', ar = (ART.artists || []).find(a => String(a.id) === String(w.artist_id));
+  const durl = safeUrl(w.detail_url), aurl = safeUrl(w.artist_url);
+  const kind = w.media === 'image' && w.animated ? '动图 (GIF)' : (MEDIA_ZH[w.media] || w.media);
+  o.innerHTML = `<button class="cls" title="关闭 (Esc)" aria-label="关闭">×</button><div class="t">${esc(w.title)}</div><div class="a">艺术家:${esc(w.artist)}</div>` +
+    `<canvas class="th" width="2" height="2" style="display:none"></canvas>` +
+    `<div class="m">类型:${esc(w.media === 'artist' ? '艺术家 · ' + (w.n || 0) + ' 件作品' : kind)}${w.edition ? ' · 版次 ' + esc(w.edition) : ''}${w.price ? ' · 价格 ' + esc(w.price) : ''} · 来源:${src}</div>` +
     (w.media === 'video' || w.media === 'audio' ? `<div class="x">${MED.cur === it ? '▶ 正在播放' : '正对且最近时自动播放'}${w.media === 'video' && w.has_audio === false ? ' · 此视频本身无音轨' : ' · 有声'}${!AUD.gesture ? '(点击画面开启声音)' : ''}</div>` : '') +
-    (w.media === 'plaintext' && w.text ? `<pre class="q" style="max-height:30vh;overflow:auto;white-space:pre-wrap;word-break:break-all;font-size:11px">${esc(w.text.slice(0, 4000))}${w.text.length > 4000 ? '…' : ''}</pre>` : '') +
+    `<div class="lk">` + (w.media === 'artist' ? (aurl ? `<a href="${esc(aurl)}" target="_blank" rel="noopener">打开艺术家主页 ↗</a>` : '') :
+      (durl ? `<a href="${esc(durl)}" target="_blank" rel="noopener">在 ${src} 查看作品 ↗</a>` : '') + (aurl ? `<a href="${esc(aurl)}" target="_blank" rel="noopener">艺术家主页 ↗</a>` : '')) + `</div>` +
     (w.headline ? `<div class="q"><b>${esc(w.headline)}</b></div>` : '') + (w.quote ? `<div class="q">“${esc(w.quote)}”</div>` : '') +
-    (w.media === 'artist' ? `<a href="${esc(w.artist_url)}" target="_blank" rel="noopener">打开艺术家主页 ↗</a>` :
-      (w.intro ? `<div class="q" style="max-height:18vh;overflow:auto;font-size:12px">${esc(w.intro)}</div>` : '') +
-      `<a href="${esc(w.detail_url)}" target="_blank" rel="noopener">在 ${w.source === 'bidder.top' ? 'bidder.top' : 'bidder.art'} 查看作品 ↗</a>` +
-      (w.artist_url ? `<br><a href="${esc(w.artist_url)}" target="_blank" rel="noopener">艺术家 ${esc(w.artist)} 的主页 ↗</a>` : '')) + `<div class="x">来源 ${w.source === 'bidder.top' ? 'bidder.top' : 'bidder.art'} · E / Esc 关闭 · 展位 ${esc(it.slot.id)}</div>`;
-  o.style.display = 'block'; ART.open = it;
+    (w.intro ? `<div class="h">作品介绍</div><div class="q" style="white-space:pre-wrap;max-height:26vh;overflow:auto;font-size:13px">${esc(w.intro)}</div>` : '') +
+    (w.media === 'plaintext' && w.text ? `<div class="h">文本内容</div><pre class="q" style="max-height:30vh;overflow:auto;white-space:pre-wrap;word-break:break-all;font-size:11px">${esc(w.text.slice(0, 4000))}${w.text.length > 4000 ? '…' : ''}</pre>` : '') +
+    (w.tags && w.tags.length ? `<div class="tags">${w.tags.map(x => `<span>${esc(x)}</span>`).join('')}</div>` : '') +
+    (w.curator && w.curator.length ? `<details><summary>策展人点评(${w.curator.length})</summary>${w.curator.map(c => `<div class="q" style="white-space:pre-wrap"><b>${esc(c.name)}:</b>${esc(c.text)}</div>`).join('')}</details>` : '') +
+    (ar && ar.bio ? `<details><summary>艺术家简介 · ${esc(ar.name)}</summary><div class="q" style="white-space:pre-wrap">${esc(ar.bio)}</div></details>` : '') +
+    (!w.intro && !w.headline && !w.quote && w.media !== 'plaintext' ? `<div class="x">该作品在 ${src} 上暂无文字介绍</div>` : '') +
+    `<div class="x">展位 ${esc(it.slot.id)} · × / Esc 关闭 · 走开自动关闭</div>`;
+  o.querySelector('.cls').onclick = (e) => { e.stopPropagation(); hideInfo('button'); };
+  o.style.display = 'block'; o.scrollTop = 0; ART.open = it; ART.openWalk = WALK.on; ART.openD = camera.position.distanceTo(it.center); ART.thumbKind = null; ART.thumbT = 0;
+  drawThumb();
 }
-function hideInfo() { $('artinfo').style.display = 'none'; ART.open = null; }
+// thumbnail: a copy of what the frame currently shows (image / GIF frame / video frame / text card) - no extra download
+function drawThumb() {
+  const it = ART.open; if (!it) return; const c = $('artinfo').querySelector('canvas.th'); if (!c) return;
+  const map = it.media.material.map, img = map && map.image;
+  if (!img || it.kind === 'reserved' || !it.kind) { c.style.display = 'none'; return; }
+  const iw = img.videoWidth || img.width, ih = img.videoHeight || img.height; if (!iw || !ih) return;
+  const s = Math.min(1, 680 / iw, 400 / ih); c.width = Math.max(1, Math.round(iw * s)); c.height = Math.max(1, Math.round(ih * s));
+  try { c.getContext('2d').drawImage(img, 0, 0, c.width, c.height); c.style.display = 'block'; ART.thumbKind = it.kind; } catch (_) { c.style.display = 'none'; }
+}
+function infoTick(now) {           // per frame: refresh the thumbnail when the frame content arrives / changes; walk-away close
+  const it = ART.open; if (!it) return;
+  if ((it.kind !== ART.thumbKind && now - ART.thumbT > 250) || ((it.kind === 'video' || it.kind === 'anim') && now - ART.thumbT > 1000)) { ART.thumbT = now; drawThumb(); }
+  if (ART.openWalk && WALK.on && !FOCUS.anim) {
+    const d = camera.position.distanceTo(it.center), away = it.normal.dot(new THREE.Vector3().subVectors(camera.position, it.center)) < 0;
+    camera.getWorldDirection(_pk.q); const look = _pk.q.dot(_pk.t.subVectors(it.center, camera.position).normalize());
+    const elsewhere = d > ART.openD + 1.0 && look < 0.5;                       // moved off and no longer looking at it (> 60 deg)
+    const fd = Math.abs(camera.position.y - EYE - (it.center.y - 1.6));
+    if (d > Math.max(ART.openD, 2) + 2.5 || elsewhere || fd > 3 || away) { FOCUS.closeWhy = { slot: it.slot.id, d: +d.toFixed(2), openD: +ART.openD.toFixed(2), fd: +fd.toFixed(2), away, look: +look.toFixed(2) }; hideInfo('walk'); }
+  }
+}
+function hideInfo(why) { if (!ART.open) return; $('artinfo').style.display = 'none'; ART.open = null; FOCUS.closed = why || 'api'; }
 addEventListener('keydown', (e) => {
-  if (e.code === 'KeyE' && !e.repeat) { if (ART.open) hideInfo(); else { const it = nearestItem(8); if (it) { showInfo(it); if (plc.isLocked) plc.unlock(); } } }
-  if (e.code === 'Escape' && ART.open) hideInfo();
+  if (e.code === 'KeyE' && !e.repeat) { if (ART.open) hideInfo('key'); else { const it = nearestItem(8); if (it) { showInfo(it); if (plc.isLocked) plc.unlock(); } } }
+  if (e.code === 'Escape' && ART.open) hideInfo('esc');
 });
-renderer.domElement.addEventListener('click', (e) => {
-  if (WALK.on || !ART.ready) return;
-  const r = new THREE.Raycaster(), p = new THREE.Vector2((e.clientX / innerWidth) * 2 - 1, -(e.clientY / innerHeight) * 2 + 1); r.setFromCamera(p, camera);
-  const h = r.intersectObjects(ART.items.map(i => i.media), false)[0]; if (h && h.distance < 30) showInfo(ART.items[h.object.userData.slot]);
-});
+// ===================== 点击作品聚焦 (t37u) =====================
+// left click / tap on a work: the camera flies (ease-in-out, ~0.8-1.2 s) to stand in front of it on the same floor - eye at the
+// walking eye height, facing the frame, at a distance that fits frame + caption (~62 % of the view, from FOV + aspect), shortened
+// if a wall / partition / rail is closer (BVH rays from the frame along its normal), floor height from a down ray, then the walker's
+// push-out.  From the orbit view it enters walk mode first.  The info panel opens at the click; the walker state (position,
+// look, minimap, HUD) is the landing pose, so walking just continues.  Movement keys / mouse look cancel the flight (inside: stop
+// where the camera is; from orbit: land at once).  A clicked video / audio becomes the single active media on landing.
+const FOCUS = { anim: null, it: null, n: 0, log: [], closed: null, FILL: 0.62, DMIN: 1.6, DMAX: 4.5 };
+const FOCUS_CANCEL_KEYS = new Set(['KeyW', 'KeyA', 'KeyS', 'KeyD', 'ArrowUp', 'ArrowDown', 'ArrowLeft', 'ArrowRight', 'Space', 'KeyG', 'KeyE', 'KeyQ', 'KeyC']);
+const _pk = { r: new THREE.Raycaster(), p: new THREE.Vector2(), t: new THREE.Vector3(), q: new THREE.Vector3(), o: new THREE.Vector3() };
+function losClear(o, dir, far) {       // BVH line of sight; in the orbit view geometry above the cutaway clip plane is ignored
+  if (!WALK.col) return true;
+  _pk.o.copy(o); let left = far;
+  for (let k = 0; k < 8 && left > 0.05; k++) {
+    const h = cast(_pk.o, dir, left); if (!h) return true; _pk.hit = { x: +h.point.x.toFixed(2), y: +h.point.y.toFixed(2), z: +h.point.z.toFixed(2), d: +h.distance.toFixed(2), obj: h.object && h.object.name };
+    if (WALK.on || h.point.y <= clip.constant) return false;
+    const step = h.distance + 0.02; _pk.o.addScaledVector(dir, step); left -= step;
+  }
+  return true;
+}
+function pickArt(cx, cy) {             // client px (null = screen centre / crosshair) -> art item or null
+  if (!ART.ready || !window.__ready) return null;
+  _pk.p.set(cx == null ? 0 : (cx / innerWidth) * 2 - 1, cy == null ? 0 : -(cy / innerHeight) * 2 + 1);
+  camera.updateMatrixWorld(); _pk.r.setFromCamera(_pk.p, camera);
+  const o = _pk.r.ray.origin, d = _pk.r.ray.direction, far = WALK.on ? 30 : 600;
+  let best = null, bt = far;
+  for (const it of ART.items) {
+    if (!it.work) continue;
+    if (WALK.on && Math.abs((it.center.y - 1.6) - WALK.pos.y) > 3) continue;          // same floor only
+    if (!WALK.on && it.center.y > clip.constant) continue;                            // clipped away in the cutaway view
+    const den = d.dot(it.normal); if (den >= -0.05) continue;                         // seen from behind / grazing
+    const tt = _pk.t.subVectors(it.center, o).dot(it.normal) / den; if (tt <= 0.05 || tt >= bt) continue;
+    _pk.q.copy(o).addScaledVector(d, tt).sub(it.center);
+    const u = _pk.q.x * -it.normal.z + _pk.q.z * it.normal.x, v = _pk.q.y, [SW, SH] = it.slot.size;   // u: along the wall
+    if (Math.abs(u) > SW / 2 + 0.05 || v > SH / 2 + 0.05 || v < -SH / 2 - 0.35) continue;            // frame + caption below
+    best = it; bt = tt;
+  }
+  FOCUS.pickDbg = { cand: best && best.slot.id, t: +bt.toFixed(2), blocked: null };
+  if (best && !losClear(o, d, bt - 0.08)) { FOCUS.pickDbg.blocked = _pk.hit; best = null; }
+  return best;
+}
+function focusPose(it) {
+  const n = it.normal, c = it.center, [SW, SH] = it.slot.size;
+  const tv = Math.tan(THREE.MathUtils.degToRad(75) / 2), th = tv * camera.aspect;
+  let d = Math.max((SH + 0.5) / FOCUS.FILL / 2 / tv, SW / FOCUS.FILL / 2 / th);
+  d = Math.min(FOCUS.DMAX, Math.max(FOCUS.DMIN, d));
+  const floorY0 = c.y - 1.6; let free = 9;
+  if (WALK.col) for (const h of [0.35, 0.95, 1.6, 1.85]) {      // what stands in front of the frame (partitions, rails, glass)
+    V.o.copy(c).addScaledVector(n, 0.05); V.o.y = floorY0 + h; const hit = cast(V.o, n, 9); if (hit) free = Math.min(free, hit.distance + 0.05);
+  }
+  d = Math.max(1.0, Math.min(d, free - RAD - 0.15));
+  const pos = new THREE.Vector3(c.x + n.x * d, floorY0, c.z + n.z * d);
+  if (WALK.col) { V.o.set(pos.x, floorY0 + 1.2, pos.z); const g = cast(V.o, V.down, 2.5); if (g && Math.abs(g.face.normal.y) > 0.75) pos.y = g.point.y; }
+  if (WALK.col) { const sv = WALK.pos.clone(); WALK.pos.copy(pos); pushOut(); pos.copy(WALK.pos); WALK.pos.copy(sv); }
+  const eye = new THREE.Vector3(pos.x, pos.y + EYE, pos.z), look = c.clone(); look.y -= 0.12;       // centre on frame + caption
+  const dir = look.clone().sub(eye);
+  return { pos, eye, d: Math.hypot(dir.x, dir.z), yaw: Math.atan2(-dir.x, -dir.z), pitch: Math.atan2(dir.y, Math.hypot(dir.x, dir.z)) };
+}
+function startFocus(it, why) {
+  if (!it || !it.work) return false;
+  const now = performance.now(), fromOrbit = !WALK.on;
+  dropFocusAnim(); tween = null;
+  const p0 = camera.position.clone(), e0 = new THREE.Euler().setFromQuaternion(camera.quaternion, 'YXZ'), f0 = camera.fov;
+  if (fromOrbit) { WALK.first = false; enterWalk(); camera.position.copy(p0); camera.fov = f0; camera.updateProjectionMatrix(); }
+  if (plc.isLocked) plc.unlock();
+  WALK.keys.clear(); WALK.vel.set(0, 0, 0); WALK.vy = 0;
+  const P = focusPose(it);
+  let dy = P.yaw - e0.y; dy = ((dy + Math.PI) % (2 * Math.PI) + 2 * Math.PI) % (2 * Math.PI) - Math.PI;   // shortest turn
+  const dist = p0.distanceTo(P.eye), dur = Math.min(1200, Math.max(800, 750 + dist * 25 + Math.abs(dy) * 60));
+  FOCUS.anim = { t0: now, dur, p0, p1: P.eye, y0: e0.y, dy, x0: e0.x, x1: P.pitch, f0, f1: 75, fromOrbit, it, pos: P.pos, d: P.d };
+  FOCUS.it = it; FOCUS.n++;
+  showInfo(it); ART.openD = P.d;
+  MED.force = isTimed(it.work) ? { it, t: now } : null;
+  FOCUS.log.push({ t: +now.toFixed(0), slot: it.slot.id, why, fromOrbit, dur: Math.round(dur), d: +P.d.toFixed(2) }); if (FOCUS.log.length > 30) FOCUS.log.shift();
+  return true;
+}
+function tickFocus(now) {
+  const a = FOCUS.anim; if (!a) return;
+  const k = Math.min(1, (now - a.t0) / a.dur), e = ease(k);
+  camera.position.lerpVectors(a.p0, a.p1, e); setLook(a.y0 + a.dy * e, a.x0 + (a.x1 - a.x0) * e);
+  const f = a.f0 + (a.f1 - a.f0) * e; if (Math.abs(camera.fov - f) > 1e-3) { camera.fov = f; camera.updateProjectionMatrix(); }
+  if (k >= 1) landFocus();
+}
+function landFocus() {
+  const a = FOCUS.anim; if (!a) return; FOCUS.anim = null;
+  WALK.pos.copy(a.pos); WALK.vel.set(0, 0, 0); WALK.vy = 0; WALK.grounded = true;
+  setLook(a.y0 + a.dy, a.x1); camera.fov = 75; camera.updateProjectionMatrix(); syncCam(); updateHud();
+  if (ART.open === a.it) ART.openD = camera.position.distanceTo(a.it.center);
+  FOCUS.log.push({ t: +performance.now().toFixed(0), slot: a.it.slot.id, landed: true });
+}
+function cancelFocus(why) {
+  const a = FOCUS.anim; if (!a) return;
+  if (a.fromOrbit) { landFocus(); FOCUS.log.push({ slot: a.it.slot.id, cancel: why, snapped: true }); return; }     // path came from outside
+  FOCUS.anim = null; FOCUS.log.push({ slot: a.it.slot.id, cancel: why });
+  WALK.pos.set(camera.position.x, camera.position.y - EYE, camera.position.z); WALK.vel.set(0, 0, 0); WALK.vy = 0; WALK.grounded = false;
+  camera.fov = 75; camera.updateProjectionMatrix();
+  if (ART.open === a.it) ART.openD = camera.position.distanceTo(a.it.center);
+}
+function dropFocusAnim() { if (FOCUS.anim) { FOCUS.anim = null; if (WALK.on) { camera.fov = 75; camera.updateProjectionMatrix(); } } }
+window.__focus = { state: () => ({ anim: !!FOCUS.anim, slot: FOCUS.it && FOCUS.it.slot.id, n: FOCUS.n, closed: FOCUS.closed, closeWhy: FOCUS.closeWhy, pickDbg: FOCUS.pickDbg, lastClick: CLICK.last, open: ART.open && ART.open.slot.id, log: FOCUS.log.slice(-10) }),
+  slot: (id) => { const it = ART.items.find(i => i.slot.id === id); return startFocus(it, 'api'); },
+  pick: (x, y) => { const it = pickArt(x, y); return it && it.slot.id; },
+  project: (id) => { const it = ART.items.find(i => i.slot.id === id); if (!it) return null; camera.updateMatrixWorld(); const v = it.center.clone().project(camera); return { x: (v.x + 1) / 2 * innerWidth, y: (1 - v.y) / 2 * innerHeight, z: v.z }; },
+  pose: (id) => { const it = ART.items.find(i => i.slot.id === id); if (!it) return null; const f = new THREE.Vector3(); camera.getWorldDirection(f);
+    const to = it.center.clone().sub(camera.position), dist = to.length(); to.normalize();
+    return { dist: +dist.toFixed(2), horiz: +Math.hypot(camera.position.x - it.center.x, camera.position.z - it.center.z).toFixed(2), along: +it.normal.dot(camera.position.clone().sub(it.center)).toFixed(2),
+      lateral: +Math.abs(new THREE.Vector3(-it.normal.z, 0, it.normal.x).dot(camera.position.clone().sub(it.center))).toFixed(2), eyeAboveFloor: +(camera.position.y - WALK.pos.y).toFixed(2),
+      floorDelta: +(WALK.pos.y - (it.center.y - 1.6)).toFixed(2), facingDot: +f.dot(it.normal.clone().negate()).toFixed(3), centerDot: +f.dot(to).toFixed(4), fov: +camera.fov.toFixed(1), walk: WALK.on, grounded: WALK.grounded }; } };
 window.__art = { state: () => ({ slots: ART.slots.length, works: ART.works.length, assigned: ART.assigned, unplaced: ART.unplaced,
     loaded: ART.items.filter(i => i.state === 'loaded').length, loading: ART.loading, failed: ART.items.filter(i => i.state === 'failed').length,
     labels: ART.items.filter(i => i.label).length, videos: ART.videos, anims: ART.anims, animating: ART.items.filter(i => i.anim).length, imageDecoder: typeof ImageDecoder !== 'undefined', playing: ART.items.filter(i => i.vstate === 'playing').length,
@@ -969,7 +1135,7 @@ window.__art = { state: () => ({ slots: ART.slots.length, works: ART.works.lengt
   slot: (id) => { const it = ART.items.find(i => i.slot.id === id); return it && { id, work: it.work && it.work.id, artist: it.work && it.work.artist, media: it.work && it.work.media, state: it.state, kind: it.kind, anim: it.anim ? { frames: it.anim.n, shown: it.anim.frames, i: it.anim.i, src: it.anim.src.slice(0, 90) } : null }; }, nearest: () => { const it = nearestItem(8); return it && { slot: it.slot.id, id: it.work.id, title: it.work.title }; },
   audio: (id) => { const it = ART.items.find(i => i.slot.id === id); const a = it && it.aud; return a ? { t: +a.el.currentTime.toFixed(2), paused: a.el.paused, want: a.want, ready: a.el.readyState, dur: +(a.el.duration || 0).toFixed(1), vol: +a.vol.toFixed(2), gain: a.g ? +a.g.gain.value.toFixed(2) : null, elVol: +a.el.volume.toFixed(2), graph: !!a.g, src: (a.src || '').slice(0, 100), d: +(it.ad || 0).toFixed(1), fail: !!a.fail, viz: !!it.aviz } : (it ? { none: true, d: +(it.ad || 0).toFixed(1), viz: !!it.aviz } : null); },
   audioState: () => ({ locked: AUD.locked, gesture: AUD.gesture, ctx: AUD.ctx ? AUD.ctx.state : null, req: AUD.req, errors: AUD.errors.slice(-5), hint: $('audiohint').style.display }),
-  info: () => ART.open && { slot: ART.open.slot.id, href: $('artinfo').querySelector('a').href }, showSlot: (id) => { const it = ART.items.find(i => i.slot.id === id); if (it) showInfo(it); }, hide: hideInfo };
+  info: () => ART.open && { slot: ART.open.slot.id, href: $('artinfo').querySelector('a').href, title: $('artinfo').querySelector('.t').textContent, text: $('artinfo').innerText, thumb: $('artinfo').querySelector('canvas.th').style.display === 'block' }, showSlot: (id) => { const it = ART.items.find(i => i.slot.id === id); if (it) showInfo(it); }, hide: hideInfo };
 // ===========================================================
 
 // ===================== 小地图 minimap (t33u) =====================
@@ -1122,7 +1288,8 @@ renderer.setAnimationLoop(() => {
   const nowT = performance.now(), dtR = (nowT - lastT) / 1000; lastT = nowT;
   updateDoors(Math.min(dtR, 0.3));
   updateArt();
-  if (WALK.on && WALK.col) updateWalk(dtR);
+  if (FOCUS.anim) tickFocus(nowT); else if (WALK.on && WALK.col) updateWalk(dtR);
+  infoTick(nowT);
   mmDraw(nowT);
   if (tween) { const k = Math.min(1, (performance.now() - tween.t0) / tween.dur), e = ease(k);
     camera.position.lerpVectors(tween.p0, tween.p1, e); controls.target.lerpVectors(tween.c0, tween.c1, e); if (k >= 1) tween = null; }
