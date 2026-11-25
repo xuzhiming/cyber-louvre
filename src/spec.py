@@ -426,8 +426,10 @@ def build():
             cab = 'PAV_%s_CAB_%s' % (q, lv)
             add_space(cab, lv, R((-80, 34, -74, 40)), kind='elevator', zone='pav' + q, h=10.0, ceil=False)
             sh = 'PAV_%s_SHAFT_%s' % (q, lv)
-            # south wall at 42.8 (was 45): the 15-riser U needs the approach inside the shaft
-            arr = (-80, 42.8, -70, 46.6)
+            # south wall at 42.8 (was 45): the 15-riser U needs the approach inside the shaft.
+            # north edge is the shared start and end of the U (Y0). One tread past that (46.6) put the
+            # shaft rail across the first riser, because the rail only opens within 5 cm of a flight end.
+            arr = (-80, 42.8, -70, 46.30)
             add_space(sh, lv, R((-80, 42.8, -70, 60)), kind='stair', zone='pav' + q, ceil=False, floor=[R(arr)],
                       anchor=P(-75, 44.4))
             xw = P(-70, 0)[0]
@@ -452,7 +454,8 @@ def build():
             lv, lv2 = ORDER[1 + k], ORDER[2 + k]
             zL = LEVELS[lv]
             # U stair, 3.0 m flights hugging the shaft side walls (5 cm gap). 10 m rise at 1/6 m = 4 x 15.
-            # Turn landing ends 5 cm inside the north wall (y=59.55). South wall moved to 42.8 for the approach.
+            # Turn landing north edge is y=59.50, half a metre inside the shaft wall at y=60.
+            # The U leaves and returns on y=46.30, which is also the shaft slab's north edge.
             xA, xB, W3, Y0 = -78.05, -71.75, 3.0, 46.30
             RS = (LEVELS[lv2] - LEVELS[lv]) / 60
             fl, ld = [], []
@@ -472,7 +475,7 @@ def build():
         # L4 mech level (shaft top + mech hall)
         sh4 = 'PAV_%s_SHAFT_L4' % q
         add_space(sh4, 'L4', R((-78, 42.8, -70, 58)), kind='stair', zone='pav' + q, ceil=False, h=4.0,
-                  floor=[R((-78, 42.8, -70, 46.6))], anchor=P(-74, 44.4))
+                  floor=[R((-78, 42.8, -70, 46.30))], anchor=P(-74, 44.4))
         # h=4.0 (was 2.6) so the 3.4 m door has its own 0.6 m lintel, not only the mech wall
         mech = 'PAV_%s_MECH' % q
         add_space(mech, 'L4', R((-70, 40, -60, 56)), kind='mech', zone='pav' + q, ceil=False, h=5.0)

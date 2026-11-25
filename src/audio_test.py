@@ -8,7 +8,7 @@ from playwright.sync_api import sync_playwright
 url = sys.argv[1]; tag = sys.argv[2] if len(sys.argv) > 2 else 'local'
 R = _REPO + '/renders/art/'
 S = {s['id']: s for s in json.load(open(_REPO + '/web/slots.json'))['slots']}
-SID = 'S129'; s = S[SID]; x, y, z = s['pos']; nx, ny = s['normal'][:2]; fz = 8.0
+SID = 'S129'; s = S[SID]; x, y, z = s['pos']; nx, ny = s['normal'][:2]; fz = round(z - 1.6, 2)   # storey floor under the slot (was the old L2 plate at 8)
 import math
 yaw = math.atan2(nx, -ny)          # look against the slot normal: forward (-sin, cos) = (-nx, -ny)
 res, cons, net = {}, [], []
@@ -47,7 +47,7 @@ with sync_playwright() as p:
     mm = {}
     for tp in ['b1', 'plaza', 'lobby', 'f2', 'f3', 'pav']:
         pg.evaluate(f"window.__walk.teleport('{tp}')"); time.sleep(1.5); pg.evaluate("window.__mm.draw()"); mm[tp] = pg.evaluate("window.__mm.state()")
-    pg.evaluate("window.__walk.place(40, 0, 24.05, 0)"); time.sleep(1.0); pg.evaluate("window.__mm.draw()"); mm['L4_mech'] = pg.evaluate("window.__mm.state().name")
+    pg.evaluate("window.__walk.place(40, 0, 30.05, 0)"); time.sleep(1.0); pg.evaluate("window.__mm.draw()"); mm['L4_mech'] = pg.evaluate("window.__mm.state().name")
     pg.evaluate("window.__walk.teleport('f2')"); time.sleep(0.6)
     pg.keyboard.press('KeyM'); time.sleep(0.4); mm['after_M'] = pg.evaluate("window.__mm.state().display")
     pg.keyboard.press('KeyM'); time.sleep(0.4); mm['after_M2'] = pg.evaluate("window.__mm.state().display")

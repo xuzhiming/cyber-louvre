@@ -26,14 +26,15 @@ with sync_playwright() as p:
     st = lambda: pg.evaluate('window.__walk.state()')
     pg.keyboard.press('KeyF'); time.sleep(1.5)
     def steer(target, tol, timeout):
-        t0 = time.time(); last = None; lastmove = time.time(); ok = False
+        t0 = time.time(); last = None; lastmove = time.time(); hits_at = st()['hits']; ok = False
         pg.keyboard.down('KeyW')
         while time.time() - t0 < timeout:
             s = st(); dx, dy = target[0] - s['x'], target[1] - s['y']
             if math.hypot(dx, dy) < tol: ok = True; break
             pg.evaluate(f'window.__walk.setLook({math.atan2(-dx, dy)}, 0)')
-            if last is None or math.hypot(s['x'] - last[0], s['y'] - last[1]) > 0.15: last = (s['x'], s['y']); lastmove = time.time()
-            elif time.time() - lastmove > 8: break
+            if last is None or math.hypot(s['x'] - last[0], s['y'] - last[1]) > 0.15:
+                last = (s['x'], s['y']); lastmove = time.time(); hits_at = s['hits']
+            elif time.time() - lastmove > 8 and s['hits'] > hits_at: break
             time.sleep(0.05)
         pg.keyboard.up('KeyW')
         return ok, st()

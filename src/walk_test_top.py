@@ -21,7 +21,7 @@ with sync_playwright() as p:
     st = lambda: pg.evaluate('window.__walk.state()')
     pg.keyboard.press('KeyF'); time.sleep(1.5)
     def steer(target, tol, run, timeout, traj):
-        t0 = time.time(); last = None; lastmove = time.time()
+        t0 = time.time(); last = None; lastmove = time.time(); hits_at = st()['hits']
         pg.keyboard.down('KeyW')
         if run: pg.keyboard.down('ShiftLeft')
         ok = False
@@ -30,8 +30,9 @@ with sync_playwright() as p:
             dx, dy = target[0] - s['x'], target[1] - s['y']
             if math.hypot(dx, dy) < tol: ok = True; break
             pg.evaluate(f'window.__walk.setLook({math.atan2(-dx, dy)}, 0)')
-            if last is None or math.hypot(s['x'] - last[0], s['y'] - last[1]) > 0.15: last = (s['x'], s['y']); lastmove = time.time()
-            elif time.time() - lastmove > 8: break
+            if last is None or math.hypot(s['x'] - last[0], s['y'] - last[1]) > 0.15:
+                last = (s['x'], s['y']); lastmove = time.time(); hits_at = s['hits']
+            elif time.time() - lastmove > 8 and s['hits'] > hits_at: break
             time.sleep(0.05)
         pg.keyboard.up('KeyW')
         if run: pg.keyboard.up('ShiftLeft')
@@ -41,7 +42,8 @@ with sync_playwright() as p:
         for i, q in enumerate(pts[1:], 1):
             near = any(abs(pts[j][2] - pts[j - 1][2]) > 0.01 for j in range(max(1, i - 1), min(len(pts), i + 2)))
             run = (not near) and math.hypot(q[0] - st()['x'], q[1] - st()['y']) > 6
-            ok, s = steer((q[0], q[1]), 0.45 if near else 0.8, run, 40, traj)
+            dist = math.hypot(q[0] - st()['x'], q[1] - st()['y'])
+            ok, s = steer((q[0], q[1]), 0.45 if near else 0.8, run, max(40, dist / 1.2), traj)
             if not ok: stuck = (i, q, (round(s['x'], 2), round(s['y'], 2), round(s['z'], 2))); break
             zmax = max(zmax, s['z'])
         s = st()

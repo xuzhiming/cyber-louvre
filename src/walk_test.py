@@ -25,7 +25,7 @@ with sync_playwright() as p:
     pg.screenshot(path=SH + '01_plaza_spawn.png')
     traj = []
     def steer(target, tol, run, timeout, label):
-        t0 = time.time(); last = None; lastmove = time.time()
+        t0 = time.time(); last = None; lastmove = time.time(); hits_at = st()['hits']
         pg.keyboard.down('KeyW')
         if run: pg.keyboard.down('ShiftLeft')
         ok = False
@@ -37,8 +37,9 @@ with sync_playwright() as p:
             # blender dir (dx,dy) -> three look yaw: dir=(-sin,-cos) in (x,z=-y) => (dx,dy)=(-sin yaw, cos yaw)
             yaw = math.atan2(-dx, dy)
             pg.evaluate(f'window.__walk.setLook({yaw}, 0)')
-            if last is None or math.hypot(s['x'] - last[0], s['y'] - last[1]) > 0.15: last = (s['x'], s['y']); lastmove = time.time()
-            elif time.time() - lastmove > 6: break
+            if last is None or math.hypot(s['x'] - last[0], s['y'] - last[1]) > 0.15:
+                last = (s['x'], s['y']); lastmove = time.time(); hits_at = s['hits']
+            elif time.time() - lastmove > 6 and s['hits'] > hits_at: break   # collision while not moving; a frame gap with no new hits is not a wall
             time.sleep(0.05)
         pg.keyboard.up('KeyW')
         if run: pg.keyboard.up('ShiftLeft')
@@ -62,7 +63,8 @@ with sync_playwright() as p:
         near_stair = any(abs(pts[j][2] - pts[j - 1][2]) > 0.01 for j in range(max(1, i - 1), min(len(pts), i + 2)))
         run = not near_stair and math.hypot(q[0] - st()['x'], q[1] - st()['y']) > 6
         tol = 0.45 if near_stair else 0.8
-        ok, s = steer((q[0], q[1]), tol, run, 40, i)
+        dist = math.hypot(q[0] - st()['x'], q[1] - st()['y'])
+        ok, s = steer((q[0], q[1]), tol, run, max(40, dist / 1.2), i)
         if not ok:
             stuck = (i, q, (round(s['x'], 2), round(s['y'], 2), round(s['z'], 2))); break
         if i % 20 == 0: L('wp', i, 'of', len(pts) - 1, 'pos', round(s['x'], 1), round(s['y'], 1), 'h', round(s['z'], 2), s['floor'])
