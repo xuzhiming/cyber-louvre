@@ -267,7 +267,17 @@ async function buildCollision(root) {
 }
 
 function setLook(yaw, pitch) { camera.rotation.set(pitch, yaw, 0, 'YXZ'); }
-function floorName(y) { return y < -4 ? 'B1 地下' : y < 5 ? '1F' : y < 15 ? '2F' : y < 25 ? '3F' : '屋顶机房层'; }
+// One floor cut for the HUD and the minimap: the midpoint between the plate heights in plandata
+// (B1 -8, 1F 0, 2F 10, 3F 20, L4 30 → -4 / 5 / 15 / 25). A 3F foot at 20.05 stays on 3F.
+const FLOOR_LABEL = { B1: 'B1 地下', L1: '1F', L2: '2F', L3: '3F', L4: '屋顶机房层' };
+function floorKeyFrom(y, plates) {
+  for (let i = 0; i < plates.length - 1; i++) if (y < (plates[i].z + plates[i + 1].z) / 2) return plates[i].k;
+  return plates[plates.length - 1].k;
+}
+function floorKey(y) {
+  return floorKeyFrom(y, MM_LV.map(k => ({ k, z: MM.plan.levels[k].z })));
+}
+function floorName(y) { return FLOOR_LABEL[floorKey(y)]; }
 function teleport(name) {
   const s = SPAWN[name]; if (!s) return; dropFocusAnim();
   WALK.pos.set(s[0], s[2] + 0.05, -s[1]); WALK.vel.set(0, 0, 0); WALK.vy = 0; WALK.grounded = false;
@@ -1190,7 +1200,7 @@ const MM_FILL = { g: 'rgba(150,110,255,.20)', p: 'rgba(150,110,255,.14)', c: 'rg
   e: 'rgba(90,170,255,.40)', s: 'rgba(255,160,60,.28)', m: 'rgba(160,160,160,.22)', y: 'rgba(120,230,255,.10)', b: 'rgba(140,200,255,.16)', h: 'rgba(255,150,220,.16)',
   o: 'rgba(90,150,110,.12)', l: 'rgba(255,120,240,.20)', a: 'rgba(255,240,140,.16)' };
 const MM_LABEL = { l: '大堂', a: '中庭', v: '塔楼', b: '地下大厅', h: '大厅', o: '广场', m: '机房' };
-const mmLevel = (y) => y < -3 ? 'B1' : y < 4 ? 'L1' : y < 12 ? 'L2' : y < 20 ? 'L3' : 'L4';
+const mmLevel = floorKey;
 function mmSliceWalls(root) {        // horizontal section of the wall / window / pyramid meshes at floor + 1.3 m
   if (!MM.plan) return;
   const H = MM_LV.map(k => MM.plan.levels[k].z + 1.3), out = MM_LV.map(() => []);

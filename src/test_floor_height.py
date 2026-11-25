@@ -2,11 +2,15 @@
 
 Riser stays 1/6 m. Pyramid glass doors stay. Every other real door is 1 m taller.
 The L4 shaft wall must be tall enough for its own lintel.
+The minimap and the HUD share one floor cut, taken from the plate heights.
 """
-import os, sys, unittest
+import json, os, re, subprocess, sys, unittest
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 import spec
 from spec import flight_end
+
+ROOT = os.path.abspath(os.path.join(os.path.dirname(os.path.abspath(__file__)), '..'))
+STALE_FLOOR = ("y < -3 ? 'B1'", "zz < -3")
 
 RISER = 1.0 / 6.0
 
@@ -139,6 +143,124 @@ class FloorHeightTest(unittest.TestCase):
             ys += [r[1], r[3]]
         self.assertLess(max(ys), 59.7)
         self.assertGreater(min(f['y'] for f in pav['flights']), 42.8)
+
+    def test_pavilion_slab_edge_meets_flights_and_rail_opens(self):
+        """each tower's railed slab edge is the real flight start/end, and that flight is not walled off"""
+        import arch
+        from geom import Acc
+        acc = Acc()
+        arch.build_arch(acc)
+        rails = acc.g.get('Rails', {}).get('rail_glass')
+        self.assertIsNotNone(rails)
+        V, F = rails
+
+        def spans_at(y, z):
+            raw = []
+            for face in F:
+                pts = [V[i] for i in face]
+                xs = [p[0] for p in pts]; ys = [p[1] for p in pts]; zs = [p[2] for p in pts]
+                # rail glass sits 3 cm off the slab edge, so accept a face whose y is that close
+                if min(ys) - 0.08 <= y <= max(ys) + 0.08 and min(zs) <= z + 0.6 <= max(zs):
+                    raw.append((min(xs), max(xs)))
+            raw.sort()
+            merged = []
+            for a, b in raw:
+                if merged and a <= merged[-1][1] + 0.02:
+                    merged[-1] = (merged[-1][0], max(merged[-1][1], b))
+                else:
+                    merged.append((a, b))
+            return merged
+
+        def covered(spans, x):
+            return any(a - 1e-6 <= x <= b + 1e-6 for a, b in spans)
+
+        for q in ('NW', 'NE', 'SW', 'SE'):
+            for lv in ('L1', 'L2', 'L3', 'L4'):
+                sp = spec.SPACES['PAV_%s_SHAFT_%s' % (q, lv)]
+                x0, y0, x1, y1 = sp['rect']
+                z = sp['z0']
+                ends = []
+                for st in spec.STAIRS:
+                    if not st['id'].startswith('S_PAV_%s_' % q):
+                        continue
+                    for f in st['flights']:
+                        e = flight_end(f)
+                        for py, pz in ((f['y'], f['z0']), (e[1], e[2])):
+                            if abs(pz - z) < 0.05:
+                                ends.append((st['id'], f, py))
+                self.assertTrue(ends, '%s %s has no flight on its floor' % (q, lv))
+                railed = []
+                for fr in sp['floor']:
+                    for coord in (fr[1], fr[3]):
+                        if abs(coord - y0) < 0.01 or abs(coord - y1) < 0.01:
+                            continue
+                        railed.append(coord)
+                self.assertTrue(railed, '%s %s slab has no guarded edge' % (q, lv))
+                for coord in railed:
+                    for sid, f, py in ends:
+                        self.assertLess(abs(py - coord), 0.05, '%s end y=%.3f vs slab edge %.3f' % (sid, py, coord))
+                    spans = spans_at(coord, z)
+                    for sid, f, py in ends:
+                        for x in (f['x'] - f['w'] / 2 + 0.05, f['x'], f['x'] + f['w'] / 2 - 0.05):
+                            self.assertFalse(covered(spans, x), '%s rail still crosses the flight at x=%.2f' % (sid, x))
+                    # the well beside the flights stays guarded (not the sliver the rail builder drops under 0.2 m)
+                    centers = sorted(set(round(f['x'], 4) for _, f, _ in ends))
+                    fx0 = min(fr[0] for fr in sp['floor']); fx1 = max(fr[2] for fr in sp['floor'])
+                    if len(centers) >= 2:
+                        probe = (centers[0] + centers[1]) / 2
+                    else:
+                        f0 = ends[0][1]
+                        probe = f0['x'] - f0['w'] / 2 - 1.0 if (f0['x'] - fx0) > (fx1 - f0['x']) else f0['x'] + f0['w'] / 2 + 1.0
+                    self.assertTrue(fx0 < probe < fx1, '%s %s probe %.2f left the slab' % (q, lv, probe))
+                    self.assertFalse(any(abs(probe - f['x']) <= f['w'] / 2 for _, f, _ in ends))
+                    self.assertTrue(covered(spans, probe), '%s %s well is unguarded at x=%.2f' % (q, lv, probe))
+
+
+class FloorNavTest(unittest.TestCase):
+    def test_map_and_hud_share_plate_midpoints(self):
+        pages = [os.path.join(ROOT, 'src', 'web_template.html'), os.path.join(ROOT, 'web', 'preview.html')]
+        for path in pages:
+            with open(path, encoding='utf-8') as fh:
+                html = fh.read()
+            for stale in STALE_FLOOR:
+                self.assertFalse(stale in html, '%s still classifies floors with %s' % (os.path.basename(path), stale))
+            m = re.search(r'function floorKeyFrom\(y, plates\) \{[\s\S]*?\n\}', html)
+            self.assertIsNotNone(m, path)
+            self.assertIn('return FLOOR_LABEL[floorKey(y)]', html)
+            self.assertIn('const mmLevel = floorKey', html)
+            self.assertIn('MM.plan.levels[k].z', html)
+            js = m.group(0) + """
+const plates = [{k:'B1',z:-8},{k:'L1',z:0},{k:'L2',z:10},{k:'L3',z:20},{k:'L4',z:30}];
+const ys = [-8, -4, 0, 5, 10, 15, 20, 20.05, 25, 30];
+const out = {};
+for (const y of ys) out[String(y)] = floorKeyFrom(y, plates);
+process.stdout.write(JSON.stringify(out));
+"""
+            got = json.loads(subprocess.check_output(['node', '-e', js], text=True))
+            self.assertEqual(got, {
+                '-8': 'B1', '-4': 'L1', '0': 'L1', '5': 'L2', '10': 'L2',
+                '15': 'L3', '20': 'L3', '20.05': 'L3', '25': 'L4', '30': 'L4',
+            }, path)
+            # 3F works sit at z=21.6. On the L3 plan they fall in the map's slot window; on L4 they do not.
+            self.assertIn('p[2] < zb - 0.5 || p[2] >= zb + 7.5', html)
+            with open(os.path.join(ROOT, 'web', 'slots.json'), encoding='utf-8') as fh:
+                slots = json.load(fh)['slots']
+            art = [s for s in slots if s['band'] == 'L3']
+            self.assertTrue(art)
+            zb = spec.LEVELS['L3']
+            shown = [s for s in art if zb - 0.5 <= s['pos'][2] < zb + 7.5]
+            self.assertEqual(len(shown), len(art))
+            self.assertTrue(all(abs(s['pos'][2] - (zb + 1.6)) < 1e-6 for s in shown))
+            zb4 = spec.LEVELS['L4']
+            self.assertTrue(all(s['pos'][2] < zb4 - 0.5 for s in shown))
+        for dirpath, _, files in os.walk(os.path.join(ROOT, 'src')):
+            for name in files:
+                if name == 'test_floor_height.py' or not name.endswith(('.py', '.html')):
+                    continue
+                with open(os.path.join(dirpath, name), encoding='utf-8') as fh:
+                    text = fh.read()
+                for stale in STALE_FLOOR:
+                    self.assertNotIn(stale, text, name)
 
 
 if __name__ == '__main__':

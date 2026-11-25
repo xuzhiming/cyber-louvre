@@ -71,7 +71,10 @@ def main():
                     ax.plot(*a['anchor'], marker='^', color='#d28aff', ms=9)
         # routes (each point belongs to the floor whose band contains its z)
         def lvl(zz):
-            return 'B1' if zz < -3 else 'L1' if zz < 4 else 'L2' if zz < 12 else 'L3' if zz < 20 else 'L4'
+            # same midpoint cut as the page (floorKeyFrom): a point belongs to the lower plate until halfway up
+            for a, b in zip(ORDER, ORDER[1:]):
+                if zz < (LEVELS[a] + LEVELS[b]) / 2: return a
+            return ORDER[-1]
         for t, (pts, col, n) in routes.items():
             seg = []
             for p in pts:
