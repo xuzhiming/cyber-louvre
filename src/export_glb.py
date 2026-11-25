@@ -1,5 +1,7 @@
+import os as _os
+_REPO = _os.path.abspath(_os.path.join(_os.path.dirname(_os.path.abspath(__file__)), '..'))
 import bpy, os
-root = '/workspace/outputs/cyber_louvre'
+root = _REPO + ''
 bpy.ops.wm.open_mainfile(filepath=root + '/model.blend')
 # remove helper lights/cameras not wanted in GLB
 for o in list(bpy.data.objects):

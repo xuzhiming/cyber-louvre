@@ -1,8 +1,10 @@
+import os as _os
+_REPO = _os.path.abspath(_os.path.join(_os.path.dirname(_os.path.abspath(__file__)), '..'))
 """Night look shots (t34u): exterior hero + interior gallery, night mode.  usage: night_shots.py URL TAG"""
 import sys, time, json
 from playwright.sync_api import sync_playwright
 url, tag = sys.argv[1], sys.argv[2]
-R = '/workspace/outputs/cyber_louvre/renders/art/'
+R = _REPO + '/renders/art/'
 with sync_playwright() as p:
     b = p.chromium.launch(executable_path='/usr/bin/google-chrome', headless=True, args=['--no-sandbox', '--use-angle=swiftshader', '--enable-unsafe-swiftshader', '--ignore-gpu-blocklist', '--autoplay-policy=no-user-gesture-required'])
     pg = b.new_page(viewport={'width': 1000, 'height': 620})

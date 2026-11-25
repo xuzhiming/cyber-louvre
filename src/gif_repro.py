@@ -1,8 +1,10 @@
+import os as _os
+_REPO = _os.path.abspath(_os.path.join(_os.path.dirname(_os.path.abspath(__file__)), '..'))
 """Reproduce / verify slot S032 (NW_N2_L1, GIF work 1844383116844732416): stand in front of it, log network + console."""
 import json, math, time, sys
 from playwright.sync_api import sync_playwright
 url, tag = sys.argv[1], sys.argv[2]
-SH = '/workspace/outputs/cyber_louvre/renders/art/'
+SH = _REPO + '/renders/art/'
 errors, reqs, resp = [], [], {}
 with sync_playwright() as p:
     b = p.chromium.launch(executable_path='/usr/bin/google-chrome', headless=True, args=['--no-sandbox', '--use-angle=swiftshader', '--enable-unsafe-swiftshader', '--ignore-gpu-blocklist'])

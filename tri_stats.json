@@ -1,13 +1,13 @@
 {
- "tris": 140966,
+ "tris": 149390,
  "by_group": {
   "Walls_Interior": 2472,
   "Walls_Exterior": 11472,
-  "Ground": 660,
-  "Slabs": 3060,
-  "Stairs": 10944,
-  "Rails": 4752,
-  "Facade": 56284,
+  "Ground": 972,
+  "Slabs": 3372,
+  "Stairs": 13824,
+  "Rails": 6528,
+  "Facade": 59380,
   "Windows": 4441,
   "AutoDoor_LOBBY_L": 50,
   "AutoDoor_LOBBY_R": 50,
@@ -22,7 +22,7 @@
   "AutoDoor_PYR_SR_L": 50,
   "AutoDoor_PYR_SR_R": 50,
   "Screens": 228,
-  "Props": 7416,
+  "Props": 7464,
   "Hologram": 3168,
   "ArtFrames": 12960
  }

@@ -1,10 +1,12 @@
+import os as _os
+_REPO = _os.path.abspath(_os.path.join(_os.path.dirname(_os.path.abspath(__file__)), '..'))
 """t39u render: renders/panel_cover.png - info panel of a video work and the audio work after click-focus: static cover only.
 usage: panel_cover_shots.py URL"""
 import sys, time, json, math
 from playwright.sync_api import sync_playwright
 from PIL import Image, ImageDraw, ImageFont
-url = sys.argv[1]; R = '/workspace/outputs/cyber_louvre/renders/'
-S = {s['id']: s for s in json.load(open('/workspace/outputs/cyber_louvre/web/slots.json'))['slots']}
+url = sys.argv[1]; R = _REPO + '/renders/'
+S = {s['id']: s for s in json.load(open(_REPO + '/web/slots.json'))['slots']}
 FL = {'L1': 0, 'L2': 8, 'L3': 16}; shots = []
 with sync_playwright() as p:
     b = p.chromium.launch(executable_path='/usr/bin/google-chrome', headless=True, args=['--no-sandbox', '--use-angle=swiftshader', '--enable-unsafe-swiftshader', '--ignore-gpu-blocklist'])

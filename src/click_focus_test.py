@@ -1,3 +1,5 @@
+import os as _os
+_REPO = _os.path.abspath(_os.path.join(_os.path.dirname(_os.path.abspath(__file__)), '..'))
 """t37u click-to-focus test.  For several works (text, plaintext, image, GIF, video, audio, bidder.top image + video): stand
 ~6 m away at an angle in walk mode, left-click the work where it is on screen -> camera flies (<=1.2 s) to stand in front of it
 (same floor, eye 1.7 m, facing the frame, centred), info panel shows that work; then walking resumes, walk-away / Esc / x close
@@ -5,9 +7,9 @@ the panel; a drag never picks; movement cancels the flight; clicked video/audio 
 enters walk mode; touch tap works.  usage: click_focus_test.py URL"""
 import sys, time, json, math
 from playwright.sync_api import sync_playwright
-url = sys.argv[1]; R = '/workspace/outputs/cyber_louvre/renders/'
-S = {s['id']: s for s in json.load(open('/workspace/outputs/cyber_louvre/web/slots.json'))['slots']}
-A = json.load(open('/workspace/outputs/cyber_louvre/web/artworks.json')); PL = A['placement']; W = A['artworks']
+url = sys.argv[1]; R = _REPO + '/renders/'
+S = {s['id']: s for s in json.load(open(_REPO + '/web/slots.json'))['slots']}
+A = json.load(open(_REPO + '/web/artworks.json')); PL = A['placement']; W = A['artworks']
 WORK = {sid: W[PL[k]] for k, sid in enumerate(S) if isinstance(PL[k], int)}
 FL = {'L1': 0, 'L2': 8, 'L3': 16}
 CASES = [('S000', 'text'), ('S012', 'plaintext'), ('S013', 'image'), ('S047', 'gif'), ('S027', 'video'), ('S129', 'audio'), ('S137', 'top image'), ('S139', 'top video'), ('S146', 'top image 3F')]

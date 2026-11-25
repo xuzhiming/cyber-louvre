@@ -1,7 +1,9 @@
+import os as _os
+_REPO = _os.path.abspath(_os.path.join(_os.path.dirname(_os.path.abspath(__file__)), '..'))
 import sys, time, json
 from playwright.sync_api import sync_playwright
 html, prefix = sys.argv[1], sys.argv[2]
-SH = '/workspace/outputs/cyber_louvre/renders/cg4/'
+SH = _REPO + '/renders/cg4/'
 errors = []; out = {}
 with sync_playwright() as p:
     b = p.chromium.launch(executable_path='/usr/bin/google-chrome', headless=True, args=['--no-sandbox','--use-angle=swiftshader','--enable-unsafe-swiftshader','--ignore-gpu-blocklist'])

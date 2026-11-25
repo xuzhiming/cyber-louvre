@@ -1,10 +1,12 @@
+import os as _os
+_REPO = _os.path.abspath(_os.path.join(_os.path.dirname(_os.path.abspath(__file__)), '..'))
 """t36u: every bidder.top work displays (camera 3.5 m in front, orbit view): image/cover loaded (not failed), videos become
 the single playing media and advance; info overlay links to bidder.top.  usage: top_works_test.py URL"""
 import sys, time, json
 from playwright.sync_api import sync_playwright
-url = sys.argv[1]; R = '/workspace/outputs/cyber_louvre/renders/art/'
-S = json.load(open('/workspace/outputs/cyber_louvre/web/slots.json'))['slots']
-A = json.load(open('/workspace/outputs/cyber_louvre/web/artworks.json')); P = A['placement']; W = A['artworks']
+url = sys.argv[1]; R = _REPO + '/renders/art/'
+S = json.load(open(_REPO + '/web/slots.json'))['slots']
+A = json.load(open(_REPO + '/web/artworks.json')); P = A['placement']; W = A['artworks']
 todo = [(k, P[k]) for k in range(len(S)) if isinstance(P[k], int) and W[P[k]].get('source') == 'bidder.top']
 res, cons, net = [], [], []
 with sync_playwright() as p:

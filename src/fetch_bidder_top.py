@@ -1,10 +1,12 @@
+import os as _os
+_REPO = _os.path.abspath(_os.path.join(_os.path.dirname(_os.path.abspath(__file__)), '..'))
 """t36u: bidder.top works (https://api.bidder.top/artwork/list, POST form pageNum/pageSize, public) -> data/bidder_top_raw.json
 (personal / wallet fields stripped) and appended to web/artworks.json AFTER the bidder.art works (source='bidder.top'),
 grouped by artist in list order.  Existing works / placement order untouched (art_assign packs artists contiguously).
 Media: images = api.bidder.top/file/getFile/<key> (CORS reflected, Range ok), videos = Cloudflare Stream (videodelivery.net).
 usage: fetch_bidder_top.py [--offline]  (offline: reuse data/bidder_top_raw.json)"""
 import json, re, sys, urllib.request, urllib.parse
-R = '/workspace/outputs/cyber_louvre/'
+R = _REPO + '/'
 API = 'https://api.bidder.top/'; FILE = API + 'file/getFile/'; VD = 'https://videodelivery.net/'
 SITE = 'https://bidder.top/#/product/'; ARTIST = 'https://bidder.top/#/center/'
 STRIP = {'ownerId', 'ownerName', 'artistContractAddr', 'metaMaskAddr', 'createTxnHash', 'artworkOwnerInfoVo', 'lastOwnerId', 'ownerAvatar', 'partnerName'}

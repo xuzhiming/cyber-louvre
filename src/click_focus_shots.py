@@ -1,10 +1,12 @@
+import os as _os
+_REPO = _os.path.abspath(_os.path.join(_os.path.dirname(_os.path.abspath(__file__)), '..'))
 """t37u render: renders/click_focus.png = before click (6 m away, at an angle, cursor on the work) | after focus (camera in front
 + info panel).  usage: click_focus_shots.py URL [SLOT]"""
 import sys, time, json, math
 from playwright.sync_api import sync_playwright
 from PIL import Image, ImageDraw, ImageFont
-url = sys.argv[1]; sid = sys.argv[2] if len(sys.argv) > 2 else 'S047'; R = '/workspace/outputs/cyber_louvre/renders/'
-S = {s['id']: s for s in json.load(open('/workspace/outputs/cyber_louvre/web/slots.json'))['slots']}
+url = sys.argv[1]; sid = sys.argv[2] if len(sys.argv) > 2 else 'S047'; R = _REPO + '/renders/'
+S = {s['id']: s for s in json.load(open(_REPO + '/web/slots.json'))['slots']}
 s = S[sid]; x, y = s['pos'][:2]; nx, ny = s['normal'][:2]; tx, ty = -ny, nx; FL = {'L1': 0, 'L2': 8, 'L3': 16}[s['band']]
 px, py = x + nx * 6 + tx * 2.2, y + ny * 6 + ty * 2.2; yaw = math.atan2(-(x - px), y - py) + 0.25
 with sync_playwright() as p:

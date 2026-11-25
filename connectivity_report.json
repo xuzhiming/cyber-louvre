@@ -30,7 +30,7 @@
  "max_riser_m": 0.16666666666666666,
  "min_tread_m": 0.3,
  "min_headroom_m": 2.6,
- "total_steps_checked": 912,
+ "total_steps_checked": 1152,
  "stair_failures": [],
  "entrances": [
   {
@@ -40,9 +40,9 @@
    "glass": true,
    "max_threshold_step_m": 0.0,
    "worst_step_at": [
-    -3.95,
+    -3.8,
     0.0,
-    0.0
+    -0.0
    ],
    "blocked_samples": 0,
    "clear_width_by_height": {
@@ -72,9 +72,9 @@
    "glass": true,
    "max_threshold_step_m": 0.0,
    "worst_step_at": [
-    -3.25,
-    -0.0,
-    0.0
+    2.2,
+    0.0,
+    -0.0
    ],
    "blocked_samples": 0,
    "clear_width_by_height": {
@@ -103,9 +103,9 @@
    "glass": true,
    "max_threshold_step_m": 0.0,
    "worst_step_at": [
-    -0.75,
-    -0.0,
-    0.0
+    0.2,
+    0.0,
+    -0.0
    ],
    "blocked_samples": 0,
    "clear_width_by_height": {
@@ -130,11 +130,11 @@
   {
    "entrance": "LOBBY",
    "width": 6.0,
-   "height": 5.0,
+   "height": 6.0,
    "glass": false,
    "max_threshold_step_m": 0.0,
    "worst_step_at": [
-    0.1,
+    3.7,
     0.0,
     -0.0
    ],
@@ -145,7 +145,7 @@
     "2.6": 5.95
    },
    "clear_width_min_m": 5.95,
-   "clear_height_m": 5.0,
+   "clear_height_m": 6.0,
    "leaf_closed_span": [
     -3.0,
     3.0
@@ -180,7 +180,7 @@
  },
  "tower_open": {
   "removed_walls": 84,
-  "rays": 6300,
+  "rays": 5880,
   "ok": true,
   "fails": [],
   "by_tower": {
@@ -213,7 +213,7 @@
   "ok": true,
   "exhibit_materials_left": [],
   "floor_touching_prop_faces": {
-   "frame_dark": 204,
+   "frame_dark": 76,
    "gold": 26
   },
   "removed": {
@@ -266,29 +266,33 @@
  "stair_wells_min_head_m": 2.6,
  "stair_wells_failing": [],
  "stair_wells_top_levels": [
-  -6.0,
-  0.0,
-  8.0,
-  16.0,
-  24.0
+  -8.0,
+  -0.0,
+  10.0,
+  20.0,
+  30.0
  ],
  "stair_rules_rows": [
   {
    "id": "S_PM",
    "cls": "public",
    "w": 3.4,
-   "flights": 2,
+   "flights": 3,
    "riser": 0.167,
    "tread": 0.3,
    "2R+T": 0.633,
-   "max_risers": 18,
+   "max_risers": 16,
    "landings": [
+    [
+     "straight",
+     3.0
+    ],
     [
      "straight",
      3.0
     ]
    ],
-   "min_wall_gap": 11.2,
+   "min_wall_gap": 3.1,
    "slots": [],
    "gaps_flight0": [
     99
@@ -305,15 +309,23 @@
    "id": "S_PSL",
    "cls": "public",
    "w": 2.0,
-   "flights": 2,
+   "flights": 4,
    "riser": 0.167,
    "tread": 0.3,
    "2R+T": 0.633,
-   "max_risers": 18,
+   "max_risers": 12,
    "landings": [
+    [
+     "straight",
+     1.2
+    ],
     [
      "turn",
      2.4
+    ],
+    [
+     "straight",
+     1.2
     ]
    ],
    "min_wall_gap": 1.54,
@@ -344,15 +356,23 @@
    "id": "S_PSR",
    "cls": "public",
    "w": 2.0,
-   "flights": 2,
+   "flights": 4,
    "riser": 0.167,
    "tread": 0.3,
    "2R+T": 0.633,
-   "max_risers": 18,
+   "max_risers": 12,
    "landings": [
+    [
+     "straight",
+     1.2
+    ],
     [
      "turn",
      2.4
+    ],
+    [
+     "straight",
+     1.2
     ]
    ],
    "min_wall_gap": 1.54,
@@ -383,12 +403,16 @@
    "id": "S_LOBBY",
    "cls": "public",
    "w": 3.4,
-   "flights": 2,
+   "flights": 3,
    "riser": 0.167,
    "tread": 0.3,
    "2R+T": 0.633,
-   "max_risers": 18,
+   "max_risers": 16,
    "landings": [
+    [
+     "straight",
+     3.0
+    ],
     [
      "straight",
      3.0
@@ -402,7 +426,7 @@
    "zone_start": 15.0,
    "zone_end": 15.0,
    "zone_req": 3.4,
-   "headroom": 2.6,
+   "headroom": 2.77,
    "rails_missing": 0,
    "door_conflicts": [],
    "issues": []
@@ -410,32 +434,36 @@
   {
    "id": "S_GR1W",
    "cls": "grand",
-   "w": 3.2,
-   "flights": 3,
+   "w": 3.0,
+   "flights": 4,
    "riser": 0.167,
    "tread": 0.3,
    "2R+T": 0.633,
-   "max_risers": 16,
+   "max_risers": 15,
    "landings": [
     [
      "straight",
-     1.8
+     1.2
     ],
     [
      "straight",
-     1.8
+     1.2
+    ],
+    [
+     "turn",
+     3.0
     ]
    ],
-   "min_wall_gap": 1.3,
+   "min_wall_gap": 1.2,
    "slots": [],
    "gaps_flight0": [
-    1.3,
+    1.2,
     99
    ],
-   "zone_start": 3.29,
-   "zone_end": 6.26,
-   "zone_req": 3.2,
-   "headroom": 3.55,
+   "zone_start": 4.19,
+   "zone_end": 14.06,
+   "zone_req": 3.0,
+   "headroom": 2.77,
    "rails_missing": 0,
    "door_conflicts": [],
    "issues": []
@@ -448,7 +476,7 @@
    "riser": 0.167,
    "tread": 0.3,
    "2R+T": 0.633,
-   "max_risers": 12,
+   "max_risers": 15,
    "landings": [
     [
      "straight",
@@ -463,16 +491,16 @@
      1.2
     ]
    ],
-   "min_wall_gap": 5.0,
+   "min_wall_gap": 3.2,
    "slots": [],
    "gaps_flight0": [
     5.4,
     99
    ],
-   "zone_start": 10.96,
-   "zone_end": 10.96,
+   "zone_start": 3.46,
+   "zone_end": 15.0,
    "zone_req": 3.2,
-   "headroom": 15.6,
+   "headroom": 19.6,
    "rails_missing": 0,
    "door_conflicts": [],
    "issues": []
@@ -480,32 +508,36 @@
   {
    "id": "S_GR1E",
    "cls": "grand",
-   "w": 3.2,
-   "flights": 3,
+   "w": 3.0,
+   "flights": 4,
    "riser": 0.167,
    "tread": 0.3,
    "2R+T": 0.633,
-   "max_risers": 16,
+   "max_risers": 15,
    "landings": [
     [
      "straight",
-     1.8
+     1.2
     ],
     [
      "straight",
-     1.8
+     1.2
+    ],
+    [
+     "turn",
+     3.0
     ]
    ],
-   "min_wall_gap": 1.3,
+   "min_wall_gap": 1.2,
    "slots": [],
    "gaps_flight0": [
-    1.3,
+    1.2,
     99
    ],
-   "zone_start": 3.29,
-   "zone_end": 6.26,
-   "zone_req": 3.2,
-   "headroom": 3.55,
+   "zone_start": 4.19,
+   "zone_end": 14.06,
+   "zone_req": 3.0,
+   "headroom": 2.77,
    "rails_missing": 0,
    "door_conflicts": [],
    "issues": []
@@ -518,7 +550,7 @@
    "riser": 0.167,
    "tread": 0.3,
    "2R+T": 0.633,
-   "max_risers": 12,
+   "max_risers": 15,
    "landings": [
     [
      "straight",
@@ -533,16 +565,16 @@
      1.2
     ]
    ],
-   "min_wall_gap": 5.0,
+   "min_wall_gap": 3.2,
    "slots": [],
    "gaps_flight0": [
     5.4,
     99
    ],
-   "zone_start": 10.96,
-   "zone_end": 10.96,
+   "zone_start": 3.46,
+   "zone_end": 15.0,
    "zone_req": 3.2,
-   "headroom": 15.6,
+   "headroom": 19.6,
    "rails_missing": 0,
    "door_conflicts": [],
    "issues": []
@@ -555,7 +587,7 @@
    "riser": 0.167,
    "tread": 0.3,
    "2R+T": 0.633,
-   "max_risers": 12,
+   "max_risers": 15,
    "landings": [
     [
      "straight",
@@ -570,17 +602,17 @@
      1.2
     ]
    ],
-   "min_wall_gap": 0.0,
+   "min_wall_gap": 0.05,
    "slots": [],
    "gaps_flight0": [
     0.05,
     6.35,
     99
    ],
-   "zone_start": 2.99,
-   "zone_end": 2.99,
+   "zone_start": 3.29,
+   "zone_end": 3.29,
    "zone_req": 3.0,
-   "headroom": 5.5,
+   "headroom": 7.5,
    "rails_missing": 0,
    "door_conflicts": [],
    "issues": []
@@ -593,7 +625,7 @@
    "riser": 0.167,
    "tread": 0.3,
    "2R+T": 0.633,
-   "max_risers": 12,
+   "max_risers": 15,
    "landings": [
     [
      "straight",
@@ -608,17 +640,17 @@
      1.2
     ]
    ],
-   "min_wall_gap": 0.0,
+   "min_wall_gap": 0.05,
    "slots": [],
    "gaps_flight0": [
     0.05,
     6.35,
     99
    ],
-   "zone_start": 2.99,
-   "zone_end": 2.99,
+   "zone_start": 3.29,
+   "zone_end": 3.29,
    "zone_req": 3.0,
-   "headroom": 5.5,
+   "headroom": 7.5,
    "rails_missing": 0,
    "door_conflicts": [],
    "issues": []
@@ -631,7 +663,7 @@
    "riser": 0.167,
    "tread": 0.3,
    "2R+T": 0.633,
-   "max_risers": 12,
+   "max_risers": 15,
    "landings": [
     [
      "straight",
@@ -646,17 +678,17 @@
      1.2
     ]
    ],
-   "min_wall_gap": 0.0,
+   "min_wall_gap": 0.05,
    "slots": [],
    "gaps_flight0": [
     0.05,
     6.35,
     99
    ],
-   "zone_start": 2.99,
-   "zone_end": 3.19,
+   "zone_start": 3.29,
+   "zone_end": 3.09,
    "zone_req": 3.0,
-   "headroom": 3.6,
+   "headroom": 4.6,
    "rails_missing": 0,
    "door_conflicts": [],
    "issues": []
@@ -669,7 +701,7 @@
    "riser": 0.167,
    "tread": 0.3,
    "2R+T": 0.633,
-   "max_risers": 12,
+   "max_risers": 15,
    "landings": [
     [
      "straight",
@@ -684,17 +716,17 @@
      1.2
     ]
    ],
-   "min_wall_gap": 0.0,
+   "min_wall_gap": 0.05,
    "slots": [],
    "gaps_flight0": [
     0.05,
     6.35,
     99
    ],
-   "zone_start": 2.99,
-   "zone_end": 2.99,
+   "zone_start": 3.29,
+   "zone_end": 3.29,
    "zone_req": 3.0,
-   "headroom": 5.5,
+   "headroom": 7.5,
    "rails_missing": 0,
    "door_conflicts": [],
    "issues": []
@@ -707,7 +739,7 @@
    "riser": 0.167,
    "tread": 0.3,
    "2R+T": 0.633,
-   "max_risers": 12,
+   "max_risers": 15,
    "landings": [
     [
      "straight",
@@ -722,17 +754,17 @@
      1.2
     ]
    ],
-   "min_wall_gap": 0.0,
+   "min_wall_gap": 0.05,
    "slots": [],
    "gaps_flight0": [
     0.05,
     6.35,
     99
    ],
-   "zone_start": 2.99,
-   "zone_end": 2.99,
+   "zone_start": 3.29,
+   "zone_end": 3.29,
    "zone_req": 3.0,
-   "headroom": 5.5,
+   "headroom": 7.5,
    "rails_missing": 0,
    "door_conflicts": [],
    "issues": []
@@ -745,7 +777,7 @@
    "riser": 0.167,
    "tread": 0.3,
    "2R+T": 0.633,
-   "max_risers": 12,
+   "max_risers": 15,
    "landings": [
     [
      "straight",
@@ -760,17 +792,17 @@
      1.2
     ]
    ],
-   "min_wall_gap": 0.0,
+   "min_wall_gap": 0.05,
    "slots": [],
    "gaps_flight0": [
     0.05,
     6.35,
     99
    ],
-   "zone_start": 2.99,
-   "zone_end": 3.19,
+   "zone_start": 3.29,
+   "zone_end": 3.09,
    "zone_req": 3.0,
-   "headroom": 3.6,
+   "headroom": 4.6,
    "rails_missing": 0,
    "door_conflicts": [],
    "issues": []
@@ -783,7 +815,7 @@
    "riser": 0.167,
    "tread": 0.3,
    "2R+T": 0.633,
-   "max_risers": 12,
+   "max_risers": 15,
    "landings": [
     [
      "straight",
@@ -798,17 +830,17 @@
      1.2
     ]
    ],
-   "min_wall_gap": 0.0,
+   "min_wall_gap": 0.05,
    "slots": [],
    "gaps_flight0": [
     0.05,
     6.35,
     99
    ],
-   "zone_start": 2.99,
-   "zone_end": 2.99,
+   "zone_start": 3.29,
+   "zone_end": 3.29,
    "zone_req": 3.0,
-   "headroom": 5.5,
+   "headroom": 7.5,
    "rails_missing": 0,
    "door_conflicts": [],
    "issues": []
@@ -821,7 +853,7 @@
    "riser": 0.167,
    "tread": 0.3,
    "2R+T": 0.633,
-   "max_risers": 12,
+   "max_risers": 15,
    "landings": [
     [
      "straight",
@@ -836,17 +868,17 @@
      1.2
     ]
    ],
-   "min_wall_gap": 0.0,
+   "min_wall_gap": 0.05,
    "slots": [],
    "gaps_flight0": [
     0.05,
     6.35,
     99
    ],
-   "zone_start": 2.99,
-   "zone_end": 2.99,
+   "zone_start": 3.29,
+   "zone_end": 3.29,
    "zone_req": 3.0,
-   "headroom": 5.5,
+   "headroom": 7.5,
    "rails_missing": 0,
    "door_conflicts": [],
    "issues": []
@@ -859,7 +891,7 @@
    "riser": 0.167,
    "tread": 0.3,
    "2R+T": 0.633,
-   "max_risers": 12,
+   "max_risers": 15,
    "landings": [
     [
      "straight",
@@ -874,17 +906,17 @@
      1.2
     ]
    ],
-   "min_wall_gap": 0.0,
+   "min_wall_gap": 0.05,
    "slots": [],
    "gaps_flight0": [
     0.05,
     6.35,
     99
    ],
-   "zone_start": 2.99,
-   "zone_end": 3.19,
+   "zone_start": 3.29,
+   "zone_end": 3.09,
    "zone_req": 3.0,
-   "headroom": 3.6,
+   "headroom": 4.6,
    "rails_missing": 0,
    "door_conflicts": [],
    "issues": []
@@ -897,7 +929,7 @@
    "riser": 0.167,
    "tread": 0.3,
    "2R+T": 0.633,
-   "max_risers": 12,
+   "max_risers": 15,
    "landings": [
     [
      "straight",
@@ -912,17 +944,17 @@
      1.2
     ]
    ],
-   "min_wall_gap": 0.0,
+   "min_wall_gap": 0.05,
    "slots": [],
    "gaps_flight0": [
     0.05,
     6.35,
     99
    ],
-   "zone_start": 2.99,
-   "zone_end": 2.99,
+   "zone_start": 3.29,
+   "zone_end": 3.29,
    "zone_req": 3.0,
-   "headroom": 5.5,
+   "headroom": 7.5,
    "rails_missing": 0,
    "door_conflicts": [],
    "issues": []
@@ -935,7 +967,7 @@
    "riser": 0.167,
    "tread": 0.3,
    "2R+T": 0.633,
-   "max_risers": 12,
+   "max_risers": 15,
    "landings": [
     [
      "straight",
@@ -950,17 +982,17 @@
      1.2
     ]
    ],
-   "min_wall_gap": 0.0,
+   "min_wall_gap": 0.05,
    "slots": [],
    "gaps_flight0": [
     0.05,
     6.35,
     99
    ],
-   "zone_start": 2.99,
-   "zone_end": 2.99,
+   "zone_start": 3.29,
+   "zone_end": 3.29,
    "zone_req": 3.0,
-   "headroom": 5.5,
+   "headroom": 7.5,
    "rails_missing": 0,
    "door_conflicts": [],
    "issues": []
@@ -973,7 +1005,7 @@
    "riser": 0.167,
    "tread": 0.3,
    "2R+T": 0.633,
-   "max_risers": 12,
+   "max_risers": 15,
    "landings": [
     [
      "straight",
@@ -988,17 +1020,17 @@
      1.2
     ]
    ],
-   "min_wall_gap": 0.0,
+   "min_wall_gap": 0.05,
    "slots": [],
    "gaps_flight0": [
     0.05,
     6.35,
     99
    ],
-   "zone_start": 2.99,
-   "zone_end": 3.19,
+   "zone_start": 3.29,
+   "zone_end": 3.09,
    "zone_req": 3.0,
-   "headroom": 3.6,
+   "headroom": 4.6,
    "rails_missing": 0,
    "door_conflicts": [],
    "issues": []
@@ -1009,9 +1041,31 @@
    "z": 0.0,
    "rect": [
     -1.7,
-    -52.25,
+    -57.75,
     1.7,
-    -46.9
+    -52.7
+   ],
+   "access": "S",
+   "unguarded": []
+  },
+  {
+   "z": 0.0,
+   "rect": [
+    -1.7,
+    -49.95,
+    1.7,
+    -49.4
+   ],
+   "access": "S",
+   "unguarded": []
+  },
+  {
+   "z": 0.0,
+   "rect": [
+    -1.9,
+    -52.9,
+    1.9,
+    -49.5
    ],
    "access": "S",
    "unguarded": []
@@ -1022,7 +1076,29 @@
     -40.4,
     -53.25,
     -38.4,
-    -47.9
+    -49.4
+   ],
+   "access": "S",
+   "unguarded": []
+  },
+  {
+   "z": 0.0,
+   "rect": [
+    -40.4,
+    -48.45,
+    -38.4,
+    -46.7
+   ],
+   "access": "S",
+   "unguarded": []
+  },
+  {
+   "z": 0.0,
+   "rect": [
+    -40.6,
+    -49.6,
+    -38.2,
+    -48.0
    ],
    "access": "S",
    "unguarded": []
@@ -1033,7 +1109,29 @@
     38.4,
     -53.25,
     40.4,
-    -47.9
+    -49.4
+   ],
+   "access": "S",
+   "unguarded": []
+  },
+  {
+   "z": 0.0,
+   "rect": [
+    38.4,
+    -48.45,
+    40.4,
+    -46.7
+   ],
+   "access": "S",
+   "unguarded": []
+  },
+  {
+   "z": 0.0,
+   "rect": [
+    38.2,
+    -49.6,
+    40.6,
+    -48.0
    ],
    "access": "S",
    "unguarded": []
@@ -1042,33 +1140,165 @@
    "z": 0.0,
    "rect": [
     -1.7,
-    15.15,
+    14.95,
     1.7,
-    20.8
+    15.8
+   ],
+   "access": "S",
+   "unguarded": []
+  },
+  {
+   "z": 0.0,
+   "rect": [
+    -1.7,
+    18.55,
+    1.7,
+    23.6
    ],
    "access": "N",
    "unguarded": []
   },
   {
-   "z": 8.0,
+   "z": 0.0,
    "rect": [
-    -12.3,
-    24.65,
-    -9.1,
-    29.7
+    -1.9,
+    15.6,
+    1.9,
+    19.0
+   ],
+   "access": "S",
+   "unguarded": []
+  },
+  {
+   "z": 10.0,
+   "rect": [
+    -12.4,
+    27.35,
+    -9.4,
+    28.5
+   ],
+   "access": "S",
+   "unguarded": []
+  },
+  {
+   "z": 10.0,
+   "rect": [
+    -9.65,
+    28.5,
+    -4.9,
+    31.5
+   ],
+   "access": "E",
+   "unguarded": []
+  },
+  {
+   "z": 10.0,
+   "rect": [
+    -12.6,
+    28.3,
+    -9.2,
+    31.7
+   ],
+   "access": "S",
+   "unguarded": []
+  },
+  {
+   "z": 20.0,
+   "rect": [
+    -4.8,
+    18.15,
+    -1.6,
+    19.3
+   ],
+   "access": "S",
+   "unguarded": []
+  },
+  {
+   "z": 20.0,
+   "rect": [
+    -4.8,
+    20.25,
+    -1.6,
+    25.0
    ],
    "access": "N",
    "unguarded": []
   },
   {
-   "z": 8.0,
+   "z": 20.0,
    "rect": [
-    9.1,
-    24.65,
-    12.3,
-    29.7
+    -5.0,
+    19.1,
+    -1.4,
+    20.7
+   ],
+   "access": "S",
+   "unguarded": []
+  },
+  {
+   "z": 10.0,
+   "rect": [
+    9.4,
+    27.35,
+    12.4,
+    28.5
+   ],
+   "access": "S",
+   "unguarded": []
+  },
+  {
+   "z": 10.0,
+   "rect": [
+    4.9,
+    28.5,
+    9.65,
+    31.5
+   ],
+   "access": "W",
+   "unguarded": []
+  },
+  {
+   "z": 10.0,
+   "rect": [
+    9.2,
+    28.3,
+    12.6,
+    31.7
+   ],
+   "access": "S",
+   "unguarded": []
+  },
+  {
+   "z": 20.0,
+   "rect": [
+    1.6,
+    18.15,
+    4.8,
+    19.3
+   ],
+   "access": "S",
+   "unguarded": []
+  },
+  {
+   "z": 20.0,
+   "rect": [
+    1.6,
+    20.25,
+    4.8,
+    25.0
    ],
    "access": "N",
+   "unguarded": []
+  },
+  {
+   "z": 20.0,
+   "rect": [
+    1.4,
+    19.1,
+    5.0,
+    20.7
+   ],
+   "access": "S",
    "unguarded": []
   }
  ],
@@ -1076,9 +1306,9 @@
  "stair_rules_violations": 0,
  "stair_rules_failing": [],
  "fixtures": {
-  "fixtures": 491,
+  "fixtures": 495,
   "by_level": {
-   "B1": 25,
+   "B1": 29,
    "L1": 150,
    "L2": 150,
    "L3": 150,
@@ -1086,7 +1316,7 @@
   },
   "violations": 0,
   "min_margin_to_host_walls_m": 1.2,
-  "min_plan_distance_to_stair_m": 1.0,
+  "min_plan_distance_to_stair_m": 0.75,
   "details": []
  },
  "anchors_without_floor": [],

@@ -1,6 +1,8 @@
+import os as _os
+_REPO = _os.path.abspath(_os.path.join(_os.path.dirname(_os.path.abspath(__file__)), '..'))
 import json, time, math
 from playwright.sync_api import sync_playwright
-ROOT = '/workspace/outputs/cyber_louvre/'; SH = ROOT + 'renders/daynight/'
+ROOT = _REPO + '/'; SH = ROOT + 'renders/daynight/'
 import os; os.makedirs(SH, exist_ok=True)
 errors = []; out = {}
 def L(*a): print(*a, flush=True)

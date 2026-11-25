@@ -1,6 +1,8 @@
+import os as _os
+_REPO = _os.path.abspath(_os.path.join(_os.path.dirname(_os.path.abspath(__file__)), '..'))
 import time, sys
 from playwright.sync_api import sync_playwright
-ROOT='/workspace/outputs/cyber_louvre/'
+ROOT=_REPO + '/'
 with sync_playwright() as p:
     b=p.chromium.launch(executable_path='/usr/bin/google-chrome',headless=True,args=['--no-sandbox','--use-angle=swiftshader','--enable-unsafe-swiftshader','--ignore-gpu-blocklist'])
     pg=b.new_page(viewport={'width':480,'height':270})

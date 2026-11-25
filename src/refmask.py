@@ -1,3 +1,5 @@
+import os as _os
+_REPO = _os.path.abspath(_os.path.join(_os.path.dirname(_os.path.abspath(__file__)), '..'))
 import numpy as np
 from PIL import Image
 from scipy import ndimage as ndi
@@ -6,7 +8,7 @@ ROI = {  # panel: (x0,x1,ybase) in panel-crop pixel coords: building region abov
 DIM = {'front': None, 'back': None, 'left': None, 'right': None}
 
 def ref_mask(name, thr=38):
-    im = np.asarray(Image.open('/workspace/outputs/cyber_louvre/ref/%s.png' % name).convert('RGB')).astype(float)
+    im = np.asarray(Image.open(_REPO + '/ref/%s.png' % name).convert('RGB')).astype(float)
     bg = np.median(im[2:10, 2:10].reshape(-1, 3), axis=0)
     d = np.abs(im - bg).sum(2)
     m = d > thr

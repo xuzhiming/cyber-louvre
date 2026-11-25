@@ -94,12 +94,14 @@ def props(acc, seed=5):
         for k in range(n):
             a0, a1 = 2 * math.pi * k / n, 2 * math.pi * (k + 1) / n
             acc.bar(grp, mat, (cx + r * math.cos(a0), cy + r * math.sin(a0), z), (cx + r * math.cos(a1), cy + r * math.sin(a1), z), w, w)
-    ring(7.0, 11.5, 0.45, 'holo_purple'); ring(6.2, 11.5, 0.2, 'holo_cyan'); ring(5.0, 12.4, 0.25, 'holo_purple')
+    z2, z2b = spec.LEVELS['L2'] + 3.5, spec.LEVELS['L2'] + 4.4
+    z3 = spec.LEVELS['L3'] + 6.0
+    ring(7.0, z2, 0.45, 'holo_purple'); ring(6.2, z2, 0.2, 'holo_cyan'); ring(5.0, z2b, 0.25, 'holo_purple')
     ring(9.0, 0.06, 0.15, 'neon_purple'); ring(3.2, 0.06, 0.2, 'neon_cyan')
-    acc.cyl('Hologram', 'holo_cyan', cx, cy, 0.5, 11.5, 0.45, n=14, r1=0.35)
-    acc.cyl('Hologram', 'holo_cyan', cx, cy, 11.5, 22.0, 0.35, n=14, r1=0.12)
+    acc.cyl('Hologram', 'holo_cyan', cx, cy, 0.5, z2, 0.45, n=14, r1=0.35)
+    acc.cyl('Hologram', 'holo_cyan', cx, cy, z2, z3, 0.35, n=14, r1=0.12)
     acc.cyl('Hologram', 'stone_trim_in', cx, cy, 0.0, 0.5, 2.4, n=24)
-    acc.cyl('Hologram', 'holo_purple', cx, cy, 11.2, 11.8, 2.0, n=24)
+    acc.cyl('Hologram', 'holo_purple', cx, cy, z2 - 0.3, z2 + 0.3, 2.0, n=24)
     # lobby: glowing floor medallion + chandelier rings
     acc.cyl(G, 'neon_purple', 0, 20, 0.0, 0.03, 1.0, n=3, r1=1.0) if False else None
     # door frames (visual)

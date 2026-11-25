@@ -1,8 +1,10 @@
+import os as _os
+_REPO = _os.path.abspath(_os.path.join(_os.path.dirname(_os.path.abspath(__file__)), '..'))
 """Reproduce / check one video slot: camera 4 m in front, log network + console + <video> state, screenshot.  usage: video_repro.py URL SLOT TAG"""
 import sys, time, json
 from playwright.sync_api import sync_playwright
 url, sid, tag = sys.argv[1], sys.argv[2], sys.argv[3]
-S = {s['id']: s for s in json.load(open('/workspace/outputs/cyber_louvre/web/slots.json'))['slots']}
+S = {s['id']: s for s in json.load(open(_REPO + '/web/slots.json'))['slots']}
 s = S[sid]; x, y, z = s['pos']; nx, ny = s['normal'][:2]
 net, cons = [], []
 with sync_playwright() as p:
@@ -18,7 +20,7 @@ with sync_playwright() as p:
         time.sleep(1)
         hist.append(pg.evaluate(f"(() => {{ const r = window.__art.slot('{sid}'); return {{ state: r.state, kind: r.kind, v: window.__art.video ? window.__art.video('{sid}') : null }}; }})()"))
     st = pg.evaluate('window.__art.state()')
-    pg.screenshot(path=f'/workspace/outputs/cyber_louvre/renders/art/video_{sid}_{tag}.png')
+    pg.screenshot(path=f_REPO + '/renders/art/video_{sid}_{tag}.png')
     b.close()
 print(json.dumps(dict(slot=sid, last=hist[-1], first_loaded=next((i for i, h in enumerate(hist) if h['state'] == 'loaded'), None),
     videos=st['videos'], playing=st['playing'], req=st['req'], errors=st['errors'], net=net[:15], console=cons[:10]), ensure_ascii=False, indent=1))

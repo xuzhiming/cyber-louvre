@@ -58,8 +58,8 @@ def _old_stairs():
     for b in bad: print('   ', b)
 _old_stairs()
 
-# ---- negative control for the stair-well / top-floor check: put the OLD closed mansard roof (solid cap at z=24 over each
-# corner tower) back; the well check must flag the 4 corner-tower L3->L4 stairs (headroom ~0.17 m, arrival floor under a slab)
+# ---- negative control for the stair-well / top-floor check: put a closed mansard cap back on the L4 floor
+# over each corner tower; the well check must flag the 4 corner-tower L3->L4 stairs (arrival under a slab)
 def _closed_roof():
     import exterior, spec as sp
     orig = exterior.roofs
@@ -68,7 +68,7 @@ def _closed_roof():
         for m in sp.MASSES:
             if m['kind'] == 'pav':
                 x0, y0, x1, y1 = m['rect']; cx, cy = (x0 + x1) / 2, (y0 + y1) / 2
-                acc.add_faces_oriented('Roofs', 'roof_metal', [acc.rect_ring(cx, cy, 14.6, 14.6, 24.0)], (cx, cy, 33))
+                acc.add_faces_oriented('Roofs', 'roof_metal', [acc.rect_ring(cx, cy, 14.6, 14.6, sp.LEVELS['L4'])], (cx, cy, sp.LEVELS['L4'] + 1))
     exterior.roofs = old_roofs
     try:
         bvh, acc = verify.build_bvh()

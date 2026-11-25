@@ -1,7 +1,9 @@
+import os as _os
+_REPO = _os.path.abspath(_os.path.join(_os.path.dirname(_os.path.abspath(__file__)), '..'))
 import sys, time, json
 from playwright.sync_api import sync_playwright
 html, prefix = sys.argv[1], sys.argv[2]
-SH = '/workspace/outputs/cyber_louvre/renders/or/'
+SH = _REPO + '/renders/or/'
 errors = []
 # three = (x, z, -y)
 V = {'wcorr': ([-64.6, 1.8, 31.0], [-62.0, 1.9, -6.0], 72),        # W wing 1F corridor looking north, room side on the right

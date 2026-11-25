@@ -130,7 +130,7 @@ def build_stairs(acc):
             # storey floor under this flight; where the flight's soffit is < 2.1 m above it, the void under the stair is
             # closed (solid stair base) - otherwise a walker could wander under the low end of a flight and get wedged
             zlo = min(f['z0'], f['z0'] + f['riser'] * f['n'])
-            zfl = max([l for l in (-6.0, 0.0, 8.0, 16.0, 24.0) if l <= zlo + 1e-6] or [zlo])
+            zfl = max([l for l in LEVELS.values() if l <= zlo + 1e-6] or [zlo])
             for i in range(1, f['n'] + 1):
                 r, zt = flight_step_rect(f, i)
                 zb = zt - abs(f['riser']) - 0.3
@@ -262,8 +262,21 @@ def build_landing_rails(acc):
                     if axis == 'x' and abs(px - coord) < 0.05: iv = _sub(iv, py - w / 2 - 0.1, py + w / 2 + 0.1)
                 for u, v in iv: _rail_run(acc, axis, coord, u, v, z)
 
+def _flight_fills_to_floor(f, coord, z):
+    """true when the flight crosses coord and its solid base reaches this floor, so a rail there would sit inside the stair"""
+    if abs(f['dy']) < 0.5: return False
+    dist = (coord - f['y']) * f['dy']
+    run = f['n'] * f['tread']
+    if dist < -0.02 or dist > run + 0.02: return False
+    i = min(f['n'], max(1, int(dist / f['tread']) + 1))
+    zt = f['z0'] + i * f['riser']
+    zb = zt - abs(f['riser']) - 0.3
+    if z + 1e-6 < zb < z + UNDERSTAIR_CLOSE: zb = z
+    return zb <= z + 0.05 and zt >= z - 0.05
+
 def build_shaft_rails(acc):
-    """pavilion stair shafts: the open well between the two legs is guarded at every arrival strip"""
+    """pavilion stair shafts: the open well between the two legs is guarded at every arrival strip.
+    The gap is the flight, including a flight that starts on the slab and crosses the edge inside its solid base."""
     for sp in SPACES.values():
         if sp['kind'] != 'stair': continue
         x0, y0, x1, y1 = sp['rect']; z = sp['z0']
@@ -273,8 +286,10 @@ def build_shaft_rails(acc):
                 iv = [(a0, a1)]
                 for st in STAIRS:
                     for f in st['flights']:
+                        open_gap = _flight_fills_to_floor(f, coord, z)
                         for (px, py, pz) in ((f['x'], f['y'], f['z0']), flight_end(f)):
-                            if abs(pz - z) < 0.05 and abs(py - coord) < 0.05: iv = _sub(iv, px - f['w'] / 2 - 0.1, px + f['w'] / 2 + 0.1)
+                            if abs(pz - z) < 0.05 and abs(py - coord) < 0.05: open_gap = True
+                        if open_gap: iv = _sub(iv, f['x'] - f['w'] / 2 - 0.1, f['x'] + f['w'] / 2 + 0.1)
                 for u, v in iv: _rail_run(acc, axis, coord, u, v, z)
 
 def build_arch(acc, report=None):
