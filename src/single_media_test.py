@@ -1,11 +1,13 @@
+import os as _os
+_REPO = _os.path.abspath(_os.path.join(_os.path.dirname(_os.path.abspath(__file__)), '..'))
 """Single-media playback test (t35u).  Stand between two videos and face each in turn: the faced one plays (with sound after a
 gesture), the other pauses (last frame kept); at most one element un-paused at any sampled moment; audio work vs neighbouring
 video mutually exclusive; tab hidden pauses all.  usage: single_media_test.py URL [TAG]"""
 import sys, time, json, math
 from playwright.sync_api import sync_playwright
 url = sys.argv[1]; tag = sys.argv[2] if len(sys.argv) > 2 else 'local'
-R = '/workspace/outputs/cyber_louvre/renders/art/'
-S = {s['id']: s for s in json.load(open('/workspace/outputs/cyber_louvre/web/slots.json'))['slots']}
+R = _REPO + '/renders/art/'
+S = {s['id']: s for s in json.load(open(_REPO + '/web/slots.json'))['slots']}
 def stand(a, b, off):
     A, B = S[a], S[b]; mx, my = (A['pos'][0] + B['pos'][0]) / 2, (A['pos'][1] + B['pos'][1]) / 2
     nx, ny = A['normal'][:2]; return mx + nx * off, my + ny * off, A['pos'][2] - 1.6 if False else round(A['pos'][2] - 1.6 + 0.0, 2)

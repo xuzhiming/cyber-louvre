@@ -3,7 +3,10 @@ import math, random
 import numpy as np
 from geom import Acc, rect_minus
 import spec
-from spec import MASSES, PYR_MAIN, PYR_SMALL, DOME, BAND_Z, DOORS, mirror_rect
+from spec import MASSES, PYR_MAIN, PYR_SMALL, DOME, BAND_Z, DOORS, LEVELS, SLAB, mirror_rect
+EZ = LEVELS['L4']            # eave / pavilion roof spring (was 24)
+TZ = BAND_Z['L4'][1]         # center wall top and dome spring (was 32)
+RIDGE = EZ + 7               # wing ridge (was 31)
 
 T_EXT = 0.8
 BAY = 3.6
@@ -50,7 +53,7 @@ def visible(mass, side_name, nrm, coord, ucenter, band):
             return False
     return True
 
-GABLE_WIN = [(-6, 32.9), (6, 32.9), (0, 36.3)]
+GABLE_WIN = [(-6, TZ + 0.9), (6, TZ + 0.9), (0, TZ + 4.3)]
 WIN_HALF = {'L1': 1.1, 'L2': 0.9, 'L3': 0.7, 'L4': 0.6}
 SKIPPED = []   # bays where a window would be blocked (partition wall / neighbouring roof behind it) -> plain wall bay
 
@@ -75,7 +78,7 @@ def window_ok(mass, nrm, coord, axis, uc, band):
         x0, y0, x1, y1 = m['rect']; foot = [((x0, y0, x1, y1), m['h'] + 0.01)]
         if m['kind'] == 'nwing':
             fx0, fx1 = (x0 - 10, x1) if (x0 + x1) / 2 < 0 else (x0, x1 + 10)
-            foot.append(((fx0, 40.0 - 10.2, fx1, 40.0 + 10.2), 31.0))
+            foot.append(((fx0, 40.0 - 10.2, fx1, 40.0 + 10.2), RIDGE))
         for (rx0, ry0, rx1, ry1), ztop in foot:
             if zb0 >= ztop: continue
             for k in range(9):
@@ -121,7 +124,7 @@ def _face_exterior(sp, band, axis, coord, out, u):
                     x0, y0, x1, y1 = m2['rect']; foot = [((x0, y0, x1, y1), m2['h'] + 0.01)]
                     if m2['kind'] == 'nwing':
                         fx0, fx1 = (x0 - 10, x1) if (x0 + x1) / 2 < 0 else (x0, x1 + 10)
-                        foot.append(((fx0, 40.0 - 10.2, fx1, 40.0 + 10.2), 31.0))
+                        foot.append(((fx0, 40.0 - 10.2, fx1, 40.0 + 10.2), RIDGE))
                     for r, zt in foot:
                         if zb0 < zt and _in_rect(r, *((u, coord + out * 0.5) if axis == 'x' else (coord + out * 0.5, u))): return None
                 return (m, nm, nrm, a0, a1)
@@ -228,8 +231,8 @@ def facades(acc, rng):
     stats = dict(bays=0)
     for mass in MASSES:
         h = mass['h']
-        bands = ['L1', 'L2', 'L3'] + (['L4'] if h > 24 else [])
-        if h <= 16: bands = ['L1', 'L2']
+        bands = ['L1', 'L2', 'L3'] + (['L4'] if h > LEVELS['L4'] else [])
+        if h <= LEVELS['L3']: bands = ['L1', 'L2']
         for (name, nrm, coord, (a0, a1), axis) in side_defs(mass['rect']):
             L = a1 - a0
             nb = max(1, round(L / BAY))
@@ -346,13 +349,13 @@ def facades(acc, rng):
 def central_portico(acc):
     G = 'Facade'
     for x in (-10.5, -4.5, 4.5, 10.5):
-        acc.cyl(G, 'stone_trim', x, 8 - 0.4 - 1.7, 1.2, 22.4, 0.7, n=14)
+        acc.cyl(G, 'stone_trim', x, 8 - 0.4 - 1.7, 1.2, EZ - 1.6, 0.7, n=14)
         acc.box(G, 'stone_trim', x - 0.95, 8 - 0.4 - 2.65, 0.0, x + 0.95, 8 - 0.4 - 0.75, 1.2)
-        acc.box(G, 'gold', x - 0.95, 8 - 0.4 - 2.65, 22.4, x + 0.95, 8 - 0.4 - 0.75, 22.8)
-    acc.box(G, 'stone_trim', -12.5, 8 - 3.2, 22.8, 12.5, 8 - 0.2, 24.6)       # entablature
-    acc.box(G, 'gold', -12.6, 8 - 3.3, 24.6, 12.6, 8 - 0.1, 24.9)
-    # pediment tympanum (stone) in front of the slate gable
-    tri = [(-13.2, 32.0), (13.2, 32.0), (0, 38.2)]
+        acc.box(G, 'gold', x - 0.95, 8 - 0.4 - 2.65, EZ - 1.6, x + 0.95, 8 - 0.4 - 0.75, EZ - 1.2)
+    acc.box(G, 'stone_trim', -12.5, 8 - 3.2, EZ - 1.2, 12.5, 8 - 0.2, EZ + 0.6)       # entablature, section unchanged, raised with the eave
+    acc.box(G, 'gold', -12.6, 8 - 3.3, EZ + 0.6, 12.6, 8 - 0.1, EZ + 0.9)
+    # pediment tympanum (stone) in front of the slate gable (rides the center wall top, not the eave)
+    tri = [(-13.2, TZ), (13.2, TZ), (0, TZ + 6.2)]
     if DORMER_OPEN:
         ring_prism(acc, G, 'stone_trim', tri, GABLE_WIN, 'xz', 8 - 0.9, 8 - 0.1)     # tympanum with a real window opening
     else:
@@ -361,11 +364,12 @@ def central_portico(acc):
     for i in range(3):   # thin dark frame on the glass edges
         p, q = GABLE_WIN[i], GABLE_WIN[(i + 1) % 3]
         acc.bar('Facade', 'frame_dark', (p[0], 8 - 0.97, p[1]), (q[0], 8 - 0.97, q[1]), 0.12, 0.08)
-    pane((0.0, 8 - 0.93, (32.9 * 2 + 36.3) / 3), (0, -1), 0.07 + 0.8 + 0.5, 'gable')
-    # entrance frame around the main door
-    acc.box(G, 'frame_dark', -3.3, 8 - 0.45, 0, -3.0, 8 + 0.1, 5.4)
-    acc.box(G, 'frame_dark', 3.0, 8 - 0.45, 0, 3.3, 8 + 0.1, 5.4)
-    acc.box(G, 'gold', -3.3, 8 - 0.5, 5.2, 3.3, 8 + 0.1, 5.6)
+    pane((0.0, 8 - 0.93, (GABLE_WIN[0][1] * 2 + GABLE_WIN[2][1]) / 3), (0, -1), 0.07 + 0.8 + 0.5, 'gable')
+    # entrance frame around the main door, 0.4 m above the opening
+    dh = [d['height'] for d in DOORS if d['kind'] == 'main_door'][0]
+    acc.box(G, 'frame_dark', -3.3, 8 - 0.45, 0, -3.0, 8 + 0.1, dh + 0.4)
+    acc.box(G, 'frame_dark', 3.0, 8 - 0.45, 0, 3.3, 8 + 0.1, dh + 0.4)
+    acc.box(G, 'gold', -3.3, 8 - 0.5, dh + 0.2, 3.3, 8 + 0.1, dh + 0.6)
     # (the old 0.5 m portico step is gone: the apron is flush with the plaza)
     lobby_auto_door(acc)
 
@@ -485,13 +489,13 @@ def roofs(acc, rng):
     for m in MASSES:
         x0, y0, x1, y1 = m['rect']; cx, cy = (x0 + x1) / 2, (y0 + y1) / 2
         if m['kind'] == 'pav':
-            prof = [(24, 14.6), (31, 13.4), (38, 11.4), (44.2, 6.0)]
+            prof = [(EZ, 14.6), (EZ + 7, 13.4), (EZ + 14, 11.4), (EZ + 20.2, 6.0)]
             rings = [acc.rect_ring(cx, cy, hh, hh, z) for z, hh in prof]
             # hollow mansard: open underneath so the L4 mech level / stair well inside it is real space
             # (a closed loft put a solid cap at z=24 that sealed the top of the corner-tower stairs)
             mansard_shell = True
             # cap & cresting
-            acc.box(R, 'roof_cap', cx - 5.4, cy - 5.4, 44.0, cx + 6.1, cy + 6.1, 44.55)
+            acc.box(R, 'roof_cap', cx - 5.4, cy - 5.4, EZ + 20.0, cx + 6.1, cy + 6.1, EZ + 20.55)
             for z, hh in prof:
                 for (ax, ay, bx, by) in [(-1, -1, 1, -1), (1, -1, 1, 1), (1, 1, -1, 1), (-1, 1, -1, -1)]:
                     acc.bar(N, 'neon_roof', (cx + ax * hh, cy + ay * hh, z + 0.1), (cx + bx * hh, cy + by * hh, z + 0.1), 0.28, 0.28)
@@ -501,10 +505,10 @@ def roofs(acc, rng):
                     for p0, p1 in zip(pts[:-1], pts[1:]):
                         acc.bar(N, 'neon_roof', p0, p1, 0.26, 0.26)
             # top lantern
-            acc.cyl(R, 'roof_cap', cx, cy, 44.55, 45.6, 1.2, n=10, r1=0.8)
-            acc.cyl(R, 'neon_cyan', cx, cy, 45.5, 46.0, 0.35, n=8)
+            acc.cyl(R, 'roof_cap', cx, cy, EZ + 20.55, EZ + 21.6, 1.2, n=10, r1=0.8)
+            acc.cyl(R, 'neon_cyan', cx, cy, EZ + 21.5, EZ + 22.0, 0.35, n=8)
             # dormers: hollow boxes; the mansard shell gets a matching opening behind each one
-            zD, H, W = 27.0, 3.1, 0.9
+            zD, H, W = EZ + 3.0, 3.1, 0.9
             Z = [p[0] for p in prof]; HH = [p[1] for p in prof]
             dz = lambda z: float(np.interp(z, Z, HH))
             hx = dz(zD); D = (hx + 0.15) - dz(zD + H) + 0.25
@@ -526,68 +530,69 @@ def roofs(acc, rng):
                 for (za, ha), (zb, hb) in zip(prof[:-1], prof[1:]):
                     sf = (lambda z, za=za, zb=zb, ha=ha, hb=hb: ha + (hb - ha) * (z - za) / (zb - za))
                     hl = [h for h in holes[side] if h[2] >= za - 1e-6 and h[3] <= zb + 1e-6]
-                    holed_face(acc, R, 'roof_metal', za, zb, sf, (lambda z, f=sf: -f(z)), sf, hl, mp, (cx, cy, 33))
-            acc.add_faces_oriented(R, 'roof_metal', [list(rings[-1])], (cx, cy, 33))
+                    holed_face(acc, R, 'roof_metal', za, zb, sf, (lambda z, f=sf: -f(z)), sf, hl, mp, (cx, cy, EZ + 9))
+            acc.add_faces_oriented(R, 'roof_metal', [list(rings[-1])], (cx, cy, EZ + 9))
         elif m['kind'] == 'wing':
             sgn = -1 if cx < 0 else 1
-            prof = [(cx - 10.2, 24), (cx - 7.4, 28), (cx - 4, 31), (cx + 4, 31), (cx + 7.4, 28), (cx + 10.2, 24)]
+            prof = [(cx - 10.2, EZ), (cx - 7.4, EZ + 4), (cx - 4, EZ + 7), (cx + 4, EZ + 7), (cx + 7.4, EZ + 4), (cx + 10.2, EZ)]
             wing_holes = {0: [], 4: []}
             for xx in (cx - 4, cx + 4):
-                acc.bar(N, 'neon_roof_ridge', (xx, -34, 31.1), (xx, 34, 31.1), 0.3, 0.3)
+                acc.bar(N, 'neon_roof_ridge', (xx, -34, EZ + 7.1), (xx, 34, EZ + 7.1), 0.3, 0.3)
             for xx in (cx - 7.4, cx + 7.4):
-                acc.bar(N, 'neon_roof', (xx, -34, 28.1), (xx, 34, 28.1), 0.2, 0.2)
+                acc.bar(N, 'neon_roof', (xx, -34, EZ + 4.1), (xx, 34, EZ + 4.1), 0.2, 0.2)
             for xx, nsg in ((cx - 10.2, -1), (cx + 10.2, 1)):
-                acc.bar(N, 'neon_roof', (xx, -34, 24.1), (xx, 34, 24.1), 0.22, 0.22)
+                acc.bar(N, 'neon_roof', (xx, -34, EZ + 0.1), (xx, 34, EZ + 0.1), 0.22, 0.22)
             # dormers along both long sides (hollow, opening through the roof slope behind)
-            sl = lambda z: 10.2 - 2.8 * (z - 24) / 4          # half-width of the lower roof slope at height z
+            sl = lambda z: 10.2 - 2.8 * (z - EZ) / 4          # half-width of the lower roof slope at height z
             for yy in np.arange(-30, 31, 7.5):
                 for nsg in (-1, 1):
-                    zD, H, W = 25.4, 2.6, 0.8
+                    zD, H, W = EZ + 1.4, 2.6, 0.8
                     xf = cx + nsg * (sl(zD) + 0.3)
                     D = (sl(zD) + 0.3) - sl(zD + H) + 0.25
                     hw, z0h, z1h = hollow_dormer(acc, R, xf, float(yy), (nsg, 0), zD, W, H, D, 0.5, zD + 0.4, zD + 2.2, 'dormer_wing')
-                    if DORMER_OPEN: wing_holes[0 if nsg < 0 else 4].append((yy - hw, yy + hw, z0h, min(z1h, 28.0)))
-            hollow_prism(acc, R, 'roof_metal', prof, 'xz', -44, 44, wing_holes)
+                    if DORMER_OPEN: wing_holes[0 if nsg < 0 else 4].append((yy - hw, yy + hw, z0h, min(z1h, EZ + 4)))
+            # stop 0.2 m short of the pavilion stair's 3 m arrival zone (the end cap used to cross that zone)
+            hollow_prism(acc, R, 'roof_metal', prof, 'xz', -43.1, 43.1, wing_holes)
         elif m['kind'] == 'nwing':
             xa, xb = (x0 - 10, x1) if cx < 0 else (x0, x1 + 10)
             cyy = 40.0
-            prof = [(cyy - 10.2, 24), (cyy - 7.4, 28), (cyy - 4, 31), (cyy + 4, 31), (cyy + 7.4, 28), (cyy + 10.2, 24)]
+            prof = [(cyy - 10.2, EZ), (cyy - 7.4, EZ + 4), (cyy - 4, EZ + 7), (cyy + 4, EZ + 7), (cyy + 7.4, EZ + 4), (cyy + 10.2, EZ)]
             nw_holes = {0: [], 4: []}
             for yy in (cyy - 4, cyy + 4):
-                acc.bar(N, 'neon_roof_ridge', (x0, yy, 31.1), (x1, yy, 31.1), 0.3, 0.3)
+                acc.bar(N, 'neon_roof_ridge', (x0, yy, EZ + 7.1), (x1, yy, EZ + 7.1), 0.3, 0.3)
             for yy in (cyy - 7.4, cyy + 7.4):
-                acc.bar(N, 'neon_roof', (x0, yy, 28.1), (x1, yy, 28.1), 0.2, 0.2)
+                acc.bar(N, 'neon_roof', (x0, yy, EZ + 4.1), (x1, yy, EZ + 4.1), 0.2, 0.2)
             for yy in (cyy - 10.2, cyy + 10.2):
-                acc.bar(N, 'neon_roof', (x0, yy, 24.1), (x1, yy, 24.1), 0.22, 0.22)
-            sl = lambda z: 10.2 - 2.8 * (z - 24) / 4
+                acc.bar(N, 'neon_roof', (x0, yy, EZ + 0.1), (x1, yy, EZ + 0.1), 0.22, 0.22)
+            sl = lambda z: 10.2 - 2.8 * (z - EZ) / 4
             for xx in np.arange(x0 + 3, x1 - 2, 6.5):
                 for nsg in (-1, 1):
-                    zD, H, W = 25.4, 2.6, 0.8
+                    zD, H, W = EZ + 1.4, 2.6, 0.8
                     yf = cyy + nsg * (sl(zD) + 0.3)
                     D = (sl(zD) + 0.3) - sl(zD + H) + 0.25
                     hw, z0h, z1h = hollow_dormer(acc, R, float(xx), yf, (0, nsg), zD, W, H, D, 0.5, zD + 0.4, zD + 2.2, 'dormer_nwing')
-                    if DORMER_OPEN: nw_holes[0 if nsg < 0 else 4].append((xx - hw, xx + hw, z0h, min(z1h, 28.0)))
+                    if DORMER_OPEN: nw_holes[0 if nsg < 0 else 4].append((xx - hw, xx + hw, z0h, min(z1h, EZ + 4)))
             hollow_prism(acc, R, 'roof_metal', prof, 'yz', xa, xb, nw_holes)
         elif m['kind'] == 'bump':
             sgn = -1 if cx < 0 else 1
             xo = x0 if sgn < 0 else x1       # outer edge
             xi = x1 if sgn < 0 else x0       # inner edge (against wing)
             prof = [(xo - sgn * 0.2, 16), (xo - sgn * -4 if False else xo + (-sgn) * -4, 22), (xi, 22), (xi, 16)]
-            prof = [(xo + sgn * 0.2, 24), (xo - sgn * 3.2, 31), (xi, 31), (xi, 24)]
+            prof = [(xo + sgn * 0.2, EZ), (xo - sgn * 3.2, EZ + 7), (xi, EZ + 7), (xi, EZ)]
             acc.prism(R, 'roof_metal', prof, 'xz', y0 - 0.2, y1 + 0.2)
-            acc.bar(N, 'neon_roof_ridge', (xo - sgn * 3.2, y0 - 0.2, 31.1), (xo - sgn * 3.2, y1 + 0.2, 31.1), 0.25, 0.25)
-            acc.bar(N, 'neon_roof', (xo + sgn * 0.2, y0, 24.1), (xo + sgn * 0.2, y1, 24.1), 0.2, 0.2)
+            acc.bar(N, 'neon_roof_ridge', (xo - sgn * 3.2, y0 - 0.2, EZ + 7.1), (xo - sgn * 3.2, y1 + 0.2, EZ + 7.1), 0.25, 0.25)
+            acc.bar(N, 'neon_roof', (xo + sgn * 0.2, y0, EZ + 0.1), (xo + sgn * 0.2, y1, EZ + 0.1), 0.2, 0.2)
         elif m['kind'] == 'center':
-            ctri = [(-14.4, 32), (14.4, 32), (0, 38)]
+            ctri = [(-14.4, TZ), (14.4, TZ), (0, TZ + 6)]
             if DORMER_OPEN:
                 hollow_prism(acc, R, 'roof_metal', ctri, 'xz', 7.4, 32.0, {}, caps=(False, True))
                 ring_faces(acc, R, 'roof_metal', ctri, GABLE_WIN, 'xz', 7.4, (0, -1, 0))
             else:
                 acc.prism(R, 'roof_metal', ctri, 'xz', 7.4, 32.0)
-            acc.bar(N, 'neon_cyan', (-14.4, 7.3, 32.15), (0, 7.3, 38.1), 0.2, 0.2) if False else None
-            acc.bar(N, 'neon_roof', (0, 7.5, 38.1), (0, 32, 38.1), 0.25, 0.25)
-            acc.bar(N, 'neon_roof', (-14.4, 7.4, 32.1), (0, 7.4, 38.0), 0.2, 0.2)
-            acc.bar(N, 'neon_roof', (14.4, 7.4, 32.1), (0, 7.4, 38.0), 0.2, 0.2)
+            acc.bar(N, 'neon_cyan', (-14.4, 7.3, TZ + 0.15), (0, 7.3, TZ + 6.1), 0.2, 0.2) if False else None
+            acc.bar(N, 'neon_roof', (0, 7.5, TZ + 6.1), (0, 32, TZ + 6.1), 0.25, 0.25)
+            acc.bar(N, 'neon_roof', (-14.4, 7.4, TZ + 0.1), (0, 7.4, TZ + 6.0), 0.2, 0.2)
+            acc.bar(N, 'neon_roof', (14.4, 7.4, TZ + 0.1), (0, 7.4, TZ + 6.0), 0.2, 0.2)
         elif m['kind'] == 'drum':
             # drum roof with a circular opening under the dome (atrium looks up into the dome)
             cy0, rr = DOME['c'][1], DOME['r'] - 0.3
@@ -598,7 +603,7 @@ def roofs(acc, rng):
                 if hw > 0.3: holes.append((-hw, ya, hw, yb))
             for r in rect_minus((-14.4, 31.6, 14.4, 60.4), holes):
                 if r[2] - r[0] > 1e-3 and r[3] - r[1] > 1e-3:
-                    acc.box(R, 'roof_metal', r[0], r[1], 31.7, r[2], r[3], 32.1)
+                    acc.box(R, 'roof_metal', r[0], r[1], TZ - 0.3, r[2], r[3], TZ + 0.1)
 
 def dome(acc):
     D = 'Dome'
@@ -646,17 +651,17 @@ def dome(acc):
     ztop = z0 + hh
     acc.cyl(D, 'roof_cap', cx, cy, ztop - 0.2, ztop + 0.9, 1.4, n=12, r1=1.0)
     acc.cyl(D, 'window_cyan', cx, cy, ztop + 0.9, ztop + 1.25, 0.6, n=10)
-    acc.cyl('Dome', 'neon_roof', cx, cy, ztop + 1.25, 48.0, 0.07, n=6, r1=0.03)
+    acc.cyl('Dome', 'neon_roof', cx, cy, ztop + 1.25, ztop + 3.0, 0.07, n=6, r1=0.03)
     # drum corner turrets
     for sx in (-1, 1):
         for sy in (-1, 1):
             x, y = 12.2 * sx, 46 + 13.0 * sy if False else 46 + 12.2 * sy
-            acc.box(D, 'stone_trim', x - 1.6, y - 1.6, 32.0, x + 1.6, y + 1.6, 36.0)
-            acc.box(D, 'window_purple', x - 0.4, y - 1.65 if False else y - 1.62, 33.0, x + 0.4, y - 1.58, 35.2) if False else None
-            acc.loft(D, 'roof_metal', [acc.rect_ring(x, y, 1.9, 1.9, 36.0), acc.rect_ring(x, y, 0.2, 0.2, 38.8)], caps=True, center=(x, y, 37))
-            acc.box(D, 'roof_cap', x - 1.8, y - 1.8, 35.7, x + 1.8, y + 1.8, 36.1)
-            acc.bar('Dome', 'neon_roof', (x - 1.9, y - 1.9, 36.1), (x + 1.9, y - 1.9, 36.1), 0.15, 0.15)
-            acc.bar('Dome', 'neon_roof', (x - 1.9, y + 1.9, 36.1), (x + 1.9, y + 1.9, 36.1), 0.15, 0.15)
+            acc.box(D, 'stone_trim', x - 1.6, y - 1.6, TZ, x + 1.6, y + 1.6, TZ + 4)
+            acc.box(D, 'window_purple', x - 0.4, y - 1.65 if False else y - 1.62, TZ + 1, x + 0.4, y - 1.58, TZ + 3.2) if False else None
+            acc.loft(D, 'roof_metal', [acc.rect_ring(x, y, 1.9, 1.9, TZ + 4), acc.rect_ring(x, y, 0.2, 0.2, TZ + 6.8)], caps=True, center=(x, y, TZ + 5))
+            acc.box(D, 'roof_cap', x - 1.8, y - 1.8, TZ + 3.7, x + 1.8, y + 1.8, TZ + 4.1)
+            acc.bar('Dome', 'neon_roof', (x - 1.9, y - 1.9, TZ + 4.1), (x + 1.9, y - 1.9, TZ + 4.1), 0.15, 0.15)
+            acc.bar('Dome', 'neon_roof', (x - 1.9, y + 1.9, TZ + 4.1), (x + 1.9, y + 1.9, TZ + 4.1), 0.15, 0.15)
 
 DOOR_LEAVES = []   # registry of auto-door leaf groups: dict(name, side, x0, x1, z0, z1, slide)
 
@@ -798,11 +803,12 @@ def screens(acc):
 def ground(acc, rng):
     G = 'Ground'
     # earth block: solid below the B1 slab, but hollow where the B1 concourse / stair foyer actually are
-    acc.box(G, 'ground', -170, -130, -8.0, 170, 130, -6.4)
+    soffit = LEVELS['B1'] - SLAB          # top of the earth pad meets the B1 slab
+    acc.box(G, 'ground', -170, -130, soffit - 1.6, 170, 130, soffit)
     holes = [tuple(sp['rect']) for sp in spec.SPACES.values() if sp['level'] == 'B1']
     for r in rect_minus((-170, -130, 170, 130), holes):
         if r[2] - r[0] > 1e-3 and r[3] - r[1] > 1e-3:
-            acc.box(G, 'ground', r[0], r[1], -6.4, r[2], r[3], -0.42)
+            acc.box(G, 'ground', r[0], r[1], soffit, r[2], r[3], -0.42)
     # street kerb ring + plinth glow
     acc.box(G, 'stone_dark', -96, -66, -0.42, 96, 66, -0.38) if False else None
     # lamp bollards in the courtyard

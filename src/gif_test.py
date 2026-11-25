@@ -1,12 +1,14 @@
+import os as _os
+_REPO = _os.path.abspath(_os.path.join(_os.path.dirname(_os.path.abspath(__file__)), '..'))
 """All animated works: put the camera 4 m in front of each slot, check it decodes + animates (frame counter advances),
 no console errors; S032 screenshots (two moments) for the before/after sheet."""
 import json, time, sys
 from playwright.sync_api import sync_playwright
 url, tag = sys.argv[1], sys.argv[2]
-SH = '/workspace/outputs/cyber_louvre/renders/art/'
-S = json.load(open('/workspace/outputs/cyber_louvre/web/slots.json'))['slots']
-A = json.load(open('/workspace/outputs/cyber_louvre/web/artworks.json'))['artworks']
-_P = json.load(open('/workspace/outputs/cyber_louvre/web/artworks.json')).get('placement')
+SH = _REPO + '/renders/art/'
+S = json.load(open(_REPO + '/web/slots.json'))['slots']
+A = json.load(open(_REPO + '/web/artworks.json'))['artworks']
+_P = json.load(open(_REPO + '/web/artworks.json')).get('placement')
 if _P: S = {w: S[k] for k, w in enumerate(_P) if isinstance(w, int)}   # work index -> its slot (artist-grouped placement)
 idx = [i for i, w in enumerate(A) if w.get('animated')]
 errors, out = [], {}

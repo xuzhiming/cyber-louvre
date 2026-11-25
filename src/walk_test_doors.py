@@ -1,7 +1,9 @@
+import os as _os
+_REPO = _os.path.abspath(_os.path.join(_os.path.dirname(_os.path.abspath(__file__)), '..'))
 """Walk into each of the 3 pyramids and through the lobby auto door WITHOUT jumping; check the doors animate (closed -> open)."""
 import json, math, time
 from playwright.sync_api import sync_playwright
-ROOT = '/workspace/outputs/cyber_louvre/'; SH = ROOT + 'renders/walk/'
+ROOT = _REPO + '/'; SH = ROOT + 'renders/walk/'
 log = []; errors = []; keys_used = set()
 def L(*a):
     s = ' '.join(str(x) for x in a); print(s); log.append(s)

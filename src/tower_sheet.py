@@ -1,3 +1,5 @@
+import os as _os
+_REPO = _os.path.abspath(_os.path.join(_os.path.dirname(_os.path.abspath(__file__)), '..'))
 """renders/tower_open_before_after.png: plan cuts (NW + SW tower, 1F; 2F/3F identical) + interior views per storey, before/after."""
 import json, os
 import matplotlib; matplotlib.use('Agg')
@@ -9,7 +11,7 @@ fp = '/usr/share/fonts/opentype/noto/NotoSansCJK-Regular.ttc'
 if not os.path.exists(fp): fp = '/usr/share/fonts/opentype/noto/NotoSerifCJK-Regular.ttc'
 font_manager.fontManager.addfont(fp); plt.rcParams['font.family'] = font_manager.FontProperties(fname=fp).get_name()
 B = json.load(open('/tmp/plan_before.json')); A = json.load(open('/tmp/plan_after.json'))
-R = '/workspace/outputs/cyber_louvre/renders/'
+R = _REPO + '/renders/'
 fig = plt.figure(figsize=(16, 11.5), dpi=110)
 regions = [('NW 塔楼 (西北) · 1F', (-92, 12, -36, 62)), ('SW 塔楼 (西南) · 1F', (-92, -62, -46, -12))]
 LBL = {'HALL': '塔楼大厅', 'LOB': '电梯厅', 'CAB': '电梯', 'SHAFT': '楼梯间'}

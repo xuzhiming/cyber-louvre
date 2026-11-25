@@ -1,6 +1,8 @@
+import os as _os
+_REPO = _os.path.abspath(_os.path.join(_os.path.dirname(_os.path.abspath(__file__)), '..'))
 import json, math, time, sys, os
 from playwright.sync_api import sync_playwright
-ROOT = '/workspace/outputs/cyber_louvre/'
+ROOT = _REPO + '/'
 SH = ROOT + 'renders/walk/'
 route = json.load(open(ROOT + 'src/test_route.json'))['GL2']['pts']
 log = []; errors = []

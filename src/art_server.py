@@ -1,7 +1,9 @@
+import os as _os
+_REPO = _os.path.abspath(_os.path.join(_os.path.dirname(_os.path.abspath(__file__)), '..'))
 """Local test server: serves web/ (with HTTP Range for files, like Cloudflare Pages) and mimics the Pages Function
 /media/rare/<hash>.<ext> (functions/media/[[path]].js), incl. Range pass-through for mp4/webm."""
 import http.server, urllib.request, urllib.error, re, sys, os, shutil
-ROOT = '/workspace/outputs/cyber_louvre/web'
+ROOT = _REPO + '/web'
 MEDIA = re.compile(r'^/media/(rare/[A-Za-z0-9]{20,80}\.(?:jpe?g|png|gif|webp|avif|mp4|m4v|webm|mp3|m4a|aac|ogg|oga|opus|wav|flac))$', re.I)
 MEDIA_TOP = re.compile(r'^/media/top/(\d{10,25}/(?:scale/)?\d{10,25}\.(?:jpe?g|png|gif|webp))$', re.I)   # bidder.top images (t36u)
 class H(http.server.SimpleHTTPRequestHandler):

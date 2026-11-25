@@ -1,3 +1,5 @@
+import os as _os
+_REPO = _os.path.abspath(_os.path.join(_os.path.dirname(_os.path.abspath(__file__)), '..'))
 import time, json
 from playwright.sync_api import sync_playwright
 errors=[]; out={}
@@ -6,7 +8,7 @@ with sync_playwright() as p:
     pg = b.new_page(viewport={'width': 960, 'height': 540})
     pg.on('console', lambda m: errors.append(m.text) if m.type == 'error' else None)
     pg.on('pageerror', lambda e: errors.append('PAGEERROR ' + str(e)))
-    pg.goto('file:///workspace/outputs/cyber_louvre/web/preview.html')
+    pg.goto('file://' + _REPO + '/web/preview.html')
     pg.wait_for_function('window.__ready === true && window.__collisionReady === true', timeout=240000)
     pg.keyboard.press('KeyF'); time.sleep(1); pg.keyboard.press('KeyG')   # fly mode
     for name, (x, y, z, yaw, wallface) in {'L2 window y=-60 (flying, facing +y)': (-63.3, -66, 11.0, 0, -60.4), 'L1 arch window (walking)': (-63.3, -64, 0.0, 0, -60.4)}.items():

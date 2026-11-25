@@ -4,8 +4,8 @@ import math
 from geom import rect_minus
 
 SLAB = 0.4
-LEVELS = {'B1': -6.0, 'L1': 0.0, 'L2': 8.0, 'L3': 16.0, 'L4': 24.0}
-BAND_Z = {'B1': (-6.0, 0.0), 'L1': (0.0, 8.0), 'L2': (8.0, 16.0), 'L3': (16.0, 24.0), 'L4': (24.0, 32.0)}
+LEVELS = {'B1': -8.0, 'L1': 0.0, 'L2': 10.0, 'L3': 20.0, 'L4': 30.0}
+BAND_Z = {'B1': (-8.0, 0.0), 'L1': (0.0, 10.0), 'L2': (10.0, 20.0), 'L3': (20.0, 30.0), 'L4': (30.0, 40.0)}
 ORDER = ['B1', 'L1', 'L2', 'L3', 'L4']
 RISER_MAX = 0.2
 HEAD_MIN = 2.2
@@ -33,18 +33,18 @@ CENTER_N = (-14, 32, 14, 60)
 
 MASSES = []
 for (sx, sy), q in QN.items():
-    MASSES.append(dict(name='PAV_' + q, rect=mirror_rect(PAV_R, sx, sy), h=24, kind='pav', q=q))
+    MASSES.append(dict(name='PAV_' + q, rect=mirror_rect(PAV_R, sx, sy), h=30, kind='pav', q=q))
 for sx in (-1, 1):
     s = 'W' if sx == -1 else 'E'
-    MASSES.append(dict(name='WING_' + s, rect=mirror_rect(WING_R, sx, 1), h=24, kind='wing', q=s))
-    MASSES.append(dict(name='BUMP_' + s, rect=mirror_rect(BUMP_R, sx, 1), h=24, kind='bump', q=s))
-    MASSES.append(dict(name='NWING_' + s, rect=mirror_rect(NWING_R, sx, 1), h=24, kind='nwing', q=s))
-MASSES.append(dict(name='CENTER_S', rect=CENTER_S, h=32, kind='center', q='C'))
-MASSES.append(dict(name='CENTER_N', rect=CENTER_N, h=32, kind='drum', q='C'))
+    MASSES.append(dict(name='WING_' + s, rect=mirror_rect(WING_R, sx, 1), h=30, kind='wing', q=s))
+    MASSES.append(dict(name='BUMP_' + s, rect=mirror_rect(BUMP_R, sx, 1), h=30, kind='bump', q=s))
+    MASSES.append(dict(name='NWING_' + s, rect=mirror_rect(NWING_R, sx, 1), h=30, kind='nwing', q=s))
+MASSES.append(dict(name='CENTER_S', rect=CENTER_S, h=40, kind='center', q='C'))
+MASSES.append(dict(name='CENTER_N', rect=CENTER_N, h=40, kind='drum', q='C'))
 
 PYR_MAIN = dict(c=(0, -48), base=36, h=21)
 PYR_SMALL = [dict(c=(-37, -52), base=12, h=7), dict(c=(37, -52), base=12, h=7)]
-DOME = dict(c=(0, 46), r=14, h=13, z0=32)
+DOME = dict(c=(0, 46), r=14, h=13, z0=40)
 
 # ------------------------------------------------------------------ spaces
 SPACES = {}
@@ -63,7 +63,7 @@ TOWER_KEEP = ('stair', 'elevator')   # stair shafts + elevator cabs keep their e
 
 def add_space(id, level, rect, **kw):
     z0 = LEVELS[level]
-    h = kw.pop('h', 8.0 if level not in ('B1', 'L4') else (6.0 if level == 'B1' else 5.0))
+    h = kw.pop('h', 10.0 if level not in ('B1', 'L4') else (8.0 if level == 'B1' else 5.0))
     sp = dict(id=id, level=level, rect=tuple(rect), z0=z0, z1=z0 + h, bands=[level], kind='room',
               floor=None, walls=True, ceil=True, anchor=None, zone='')
     sp.update(kw)
@@ -120,6 +120,16 @@ def add_stair(id, a, b, flights, landings, kind='stair', hole_z=None):
     STAIRS.append(st)
     EDGES.append(dict(type='stair', a=a, b=b, stair=st))
     return st
+
+def add_headroom_holes(landings, zslab, margin=0.2):
+    """open the slab above a landing whose clearance would otherwise be under HEAD_STAIR.
+    The opening joins the flight hole; sides with no floor outside do not need a rail."""
+    limit = zslab - SLAB - HEAD_STAIR
+    for r, z in landings:
+        if z > limit - 0.02:
+            h = (r[0] - margin, r[1] - margin, r[2] + margin, r[3] + margin)
+            HOLES.setdefault(zslab, []).append(h)
+            HOLE_META.append(dict(z=zslab, rect=h, access='S'))
 
 def add_hole_for_flight(f, zslab_level, thresh=-(SLAB + HEAD_STAIR + 0.15), margin=0.25):
     """hole in slab at z=zslab_level over the steps whose tread top is higher than thresh (below slab)."""
@@ -250,56 +260,89 @@ def build():
     for ps in PYR_SMALL:
         cx, cy = ps['c']
         add_door('PLAZA', 'PYR_S%s' % ('L' if cx < 0 else 'R'), 'y', cy - 6, cx, 2.4, 2.8, 'L1', glass=True)
-    # pyramid stairs down
-    # main pyramid -> B1 concourse: 36 risers = 2 flights x 18 + a 3 m straight landing, 3.4 m wide
-    fms, lms = straight_flights(0, -52.0, 0.0, 1, 3.4, 36, -6.0 / 36, 0.3, 2, 3.0)
+    # pyramid stairs down. B1 storey is 8 m; keep the 1/6 m riser -> 48 risers.
+    rise_b1 = LEVELS['L1'] - LEVELS['B1']
+    riser_b1 = rise_b1 / 48
+    # main pyramid -> B1: 3 flights x 16 + two 3 m landings, 3.4 m wide, continuing into the spine
+    # end inside B1_HALL (y=-40), so the walk to the hall anchor stays on the hall floor
+    fms, lms = straight_flights(0, -57.5, 0.0, 1, 3.4, 48, -riser_b1, 0.3, 3, 3.0)
     add_stair('S_PM', 'PYR_MAIN', 'B1_HALL', fms, lms)
-    add_hole_for_flight(fms[0], 0.0)
+    for f in fms: add_hole_for_flight(f, 0.0)
+    add_headroom_holes(lms, 0.0)
     for ps in PYR_SMALL:
         cx, cy = ps['c']; sgn = -1 if cx < 0 else 1
         side = 'L' if cx < 0 else 'R'
-        fa = flight(cx - 2.4 if sgn == -1 else cx + 2.4, cy - 1.0, 0.0, 0, 1, 2.0, 18, -3.0 / 18, 0.30)
-        ex = flight_end(fa)
-        fb = flight(cx + 2.4 if sgn == -1 else cx - 2.4, ex[1], -3.0, 0, -1, 2.0, 18, -3.0 / 18, 0.30)
-        xs = sorted([fa['x'] - 1.0, fa['x'] + 1.0, fb['x'] - 1.0, fb['x'] + 1.0])
-        land = ((xs[0], ex[1], xs[-1], ex[1] + 2.4), -3.0)
-        add_stair('S_PS' + side, 'PYR_S' + side, 'B1_HALL', [fa, fb], [land])
-        add_hole_for_flight(fa, 0.0)
+        # 4 x 12 U, 2.0 m wide. North run stays inside the B1 hall (hall goes to y=-38).
+        w, n, tr = 2.0, 12, 0.30
+        xA = cx - 2.4 if sgn == -1 else cx + 2.4
+        xB = cx + 2.4 if sgn == -1 else cx - 2.4
+        y0 = cy - 1.0                               # same south clearance the 2-flight stair had
+        fl, ld = [], []
+        a1 = flight(xA, y0, 0.0, 0, 1, w, n, -riser_b1, tr); e = flight_end(a1); fl.append(a1)
+        ld.append(((xA - 1.0, e[1], xA + 1.0, e[1] + 1.2), e[2]))
+        a2 = flight(xA, e[1] + 1.2, e[2], 0, 1, w, n, -riser_b1, tr); e = flight_end(a2); fl.append(a2)
+        xs = sorted([xA - 1.0, xA + 1.0, xB - 1.0, xB + 1.0])
+        ld.append(((xs[0], e[1], xs[-1], e[1] + 2.4), e[2]))
+        b1 = flight(xB, e[1], e[2], 0, -1, w, n, -riser_b1, tr); eb = flight_end(b1); fl.append(b1)
+        ld.append(((xB - 1.0, eb[1] - 1.2, xB + 1.0, eb[1]), eb[2]))
+        b2 = flight(xB, eb[1] - 1.2, eb[2], 0, -1, w, n, -riser_b1, tr); fl.append(b2)
+        add_stair('S_PS' + side, 'PYR_S' + side, 'B1_HALL', fl, ld)
+        for f in fl: add_hole_for_flight(f, 0.0)
+        add_headroom_holes(ld, 0.0)
 
     # ---------------- central block: lobby + atrium (tall)
     tall = ['L1', 'L2', 'L3', 'L4']
-    add_space('LOBBY', 'L1', (-14, 8, 14, 32), kind='lobby', bands=tall, h=32, zone='C', anchor=(-6, 24))
-    add_space('ATRIUM', 'L1', (-14, 32, 14, 60), kind='atrium', bands=tall, h=32, ceil=False, zone='C', anchor=(0, 44))
+    add_space('LOBBY', 'L1', (-14, 8, 14, 32), kind='lobby', bands=tall, h=40, zone='C', anchor=(-6, 24))
+    add_space('ATRIUM', 'L1', (-14, 32, 14, 60), kind='atrium', bands=tall, h=40, ceil=False, zone='C', anchor=(0, 44))
     add_open('LOBBY', 'ATRIUM', 'y', 32, -14, 14, tall)
-    add_door('PLAZA', 'LOBBY', 'y', 8, 0, 6.0, 5.0, 'L1', kind='main_door')
-    # basement spine -> lobby stair
-    fls, lls = straight_flights(0, 7.0, -6.0, 1, 3.4, 36, 6.0 / 36, 0.3, 2, 3.0)
+    add_door('PLAZA', 'LOBBY', 'y', 8, 0, 6.0, 6.0, 'L1', kind='main_door')
+    # 8 m at 1/6 m = 3 x 16. Finish at the spine's north edge (y=23.6): past y=24 the
+    # earth pad rises to z=-0.42 and would bury the upper treads.
+    _lob_run = 3 * 16 * 0.3 + 2 * 3.0
+    fls, lls = straight_flights(0, 23.6 - _lob_run, LEVELS['B1'], 1, 3.4, 48, riser_b1, 0.3, 3, 3.0)
     add_stair('S_LOBBY', 'B1_SPINE', 'LOBBY', fls, lls)
-    add_hole_for_flight(fls[-1], 0.0)
-    # grand staircases + bridges.  Double stair, one flight-group per side, 3.2 m wide, set 1.3 m off the lobby wall faces
-    # (clear walking zone, no slot).  L1->L2: 48 risers = 3 flights x 16 with two 1.8 m landings, 3 m approach in front
-    # of the first riser, arrives on the L2 gallery bridge (GL2).  L2->L3: U-stair (4 flights x 12 + 1.2 m landings
-    # + 3.2 m turn landing) rising inside the central void between the two L1->L2 flights.
-    riser = 8.0 / 48
+    for f in fls: add_hole_for_flight(f, 0.0)
+    add_headroom_holes(lls, 0.0)
+    # grand stairs. 10 m at 1/6 m riser = 60 risers. L1->L2 is a straight 4 x 15 tucked against the
+    # lobby side walls (centre x=±11.95) so the whole 3.2 m width lands on the side ring, not the void.
+    # L2->L3 stays the central U, lengthened to 4 x 15; its south end stays 2 m clear of the side stairs.
+    riser = (LEVELS['L2'] - LEVELS['L1']) / 60
     YG = 25.0                                   # south edge of the L2 / L3 gallery bridges
     add_space('GL2', 'L2', (-14, YG, 14, 32), kind='platform', walls=False, ceil=False, zone='C', anchor=(0, 28))
     add_space('GL3', 'L3', (-14, YG, 14, 32), kind='platform', walls=False, ceil=False, zone='C', anchor=(0, 28))
     for sx in (-1, 1):
         s = 'W' if sx == -1 else 'E'
-        xa = sx * 10.7
-        f1s, l1s = straight_flights(xa, 11.7, 0.0, 1, 3.2, 48, riser, 0.3, 3, 1.8)
+        # 3 x 15 north, then a quarter-turn and 15 toward the centre. The run stops
+        # south of y=32 so the bridge-to-ring walk is not cut by the stair opening.
+        w = 3.0
+        x = sx * 10.9
+        y, z = 12.6, LEVELS['L1']
+        f1s, l1s = [], []
+        for k in range(3):
+            f = flight(x, y, z, 0, 1, w, 15, riser, 0.3); f1s.append(f); e = flight_end(f)
+            if k < 2:
+                l1s.append(((x - w / 2, e[1], x + w / 2, e[1] + 1.2), e[2]))
+                y, z = e[1] + 1.2, e[2]
+            else:
+                l1s.append(((x - w / 2, e[1], x + w / 2, e[1] + w), e[2]))
+                y4, z = e[1] + w / 2, e[2]
+                x4 = x - sx * (w / 2)   # inner edge of the landing; the flight leaves toward the centre
+        f1s.append(flight(x4, y4, z, -sx, 0, w, 15, riser, 0.3))
         add_stair('S_GR1' + s, 'LOBBY', 'GL2', f1s, l1s, kind='grand')
-        add_hole_for_flight(f1s[-1], 8.0)
+        for f in f1s: add_hole_for_flight(f, LEVELS['L2'])
+        add_headroom_holes(l1s, LEVELS['L2'])
         xA, xB = sx * 6.6, sx * 3.2
-        a1 = flight(xA, YG, 8.0, 0, -1, 3.2, 12, riser, 0.3); e = flight_end(a1)
+        a1 = flight(xA, YG, LEVELS['L2'], 0, -1, 3.2, 15, riser, 0.3); e = flight_end(a1)
         ml1 = ((xA - 1.6, e[1] - 1.2, xA + 1.6, e[1]), e[2])
-        a2 = flight(xA, e[1] - 1.2, e[2], 0, -1, 3.2, 12, riser, 0.3); e = flight_end(a2)
+        a2 = flight(xA, e[1] - 1.2, e[2], 0, -1, 3.2, 15, riser, 0.3); e = flight_end(a2)
         xs = sorted([xA - 1.6, xA + 1.6, xB - 1.6, xB + 1.6])
         tl = ((xs[0], e[1] - 3.2, xs[-1], e[1]), e[2])
-        b1 = flight(xB, e[1], e[2], 0, 1, 3.2, 12, riser, 0.3); eb = flight_end(b1)
+        b1 = flight(xB, e[1], e[2], 0, 1, 3.2, 15, riser, 0.3); eb = flight_end(b1)
         ml2 = ((xB - 1.6, eb[1], xB + 1.6, eb[1] + 1.2), eb[2])
-        b2 = flight(xB, eb[1] + 1.2, eb[2], 0, 1, 3.2, 12, riser, 0.3)
+        b2 = flight(xB, eb[1] + 1.2, eb[2], 0, 1, 3.2, 15, riser, 0.3)
         add_stair('S_GR2' + s, 'GL2', 'GL3', [a1, a2, b1, b2], [ml1, tl, ml2], kind='grand')
+        for f in (a1, a2, b1, b2): add_hole_for_flight(f, LEVELS['L3'])
+        add_headroom_holes([ml1, tl, ml2], LEVELS['L3'])
     add_open('LOBBY', 'GL2', 'y', YG, -14, 14, [], check_z=False)  # logical only (stairs link); no wall changes
     EDGES.pop()  # (not a real link)
     OPENS.pop()
@@ -308,15 +351,16 @@ def build():
         add_space('RW_' + lv, lv, (-14, 32, -10, 60), kind='platform', walls=False, ceil=False, zone='C')
         add_space('RE_' + lv, lv, (10, 32, 14, 60), kind='platform', walls=False, ceil=False, zone='C')
         add_space('RN_' + lv, lv, (-10, 56, 10, 60), kind='platform', walls=False, ceil=False, zone='C')
-        add_space('RS_' + lv, lv, (-10, 32, 10, 36), kind='platform', walls=False, ceil=False, zone='C')
+        # deep enough that the straight walk from the bridge centre to a side ring stays on a slab
+        add_space('RS_' + lv, lv, (-10, 32, 10, 44), kind='platform', walls=False, ceil=False, zone='C')
         g = 'GL2' if lv == 'L2' else 'GL3'
         add_open(g, 'RW_' + lv, 'y', 32, -14, -10, [])
         add_open(g, 'RE_' + lv, 'y', 32, 10, 14, [])
         add_open(g, 'RS_' + lv, 'y', 32, -10, 10, [])
         add_open('RW_' + lv, 'RN_' + lv, 'x', -10, 56, 60, [])
         add_open('RE_' + lv, 'RN_' + lv, 'x', 10, 56, 60, [])
-        add_open('RW_' + lv, 'RS_' + lv, 'x', -10, 32, 36, [])
-        add_open('RE_' + lv, 'RS_' + lv, 'x', 10, 32, 36, [])
+        add_open('RW_' + lv, 'RS_' + lv, 'x', -10, 32, 44, [])
+        add_open('RE_' + lv, 'RS_' + lv, 'x', 10, 32, 44, [])
     # these OPENS entries list bands=[] -> no wall removal (platforms have no walls anyway)
 
     # ---------------- wings (W / E)
@@ -344,7 +388,7 @@ def build():
                 hid = '%s_BUMP_%s' % (s, lv)
                 add_space(hid, lv, R((-90, -17, -66, 17)), kind='hall', zone='wing' + s)
                 xo = mirror_rect((-66, 0, -66, 1), sx, 1)[0]
-                add_door(cid, hid, 'x', xo, 0.0, 3.2, 3.6, lv)
+                add_door(cid, hid, 'x', xo, 0.0, 3.2, 4.6, lv)
             else:
                 for k in (1, 2):
                     y0, y1 = ys[k], ys[k + 1]; yc = (y0 + y1) / 2
@@ -378,46 +422,47 @@ def build():
             hid = 'PAV_%s_HALL_%s' % (q, lv)
             add_space(hid, lv, R((-70, 34, -54, 60)), kind='pavilion_hall', zone='pav' + q)
             lid = 'PAV_%s_LOB_%s' % (q, lv)
-            add_space(lid, lv, R((-80, 34, -70, 45)), kind='core_lobby', zone='pav' + q, anchor=P(-75, 43))
+            add_space(lid, lv, R((-80, 34, -70, 42.8)), kind='core_lobby', zone='pav' + q, anchor=P(-72, 41.4))
             cab = 'PAV_%s_CAB_%s' % (q, lv)
-            add_space(cab, lv, R((-80, 34, -74, 40)), kind='elevator', zone='pav' + q, h=8.0, ceil=False)
+            add_space(cab, lv, R((-80, 34, -74, 40)), kind='elevator', zone='pav' + q, h=10.0, ceil=False)
             sh = 'PAV_%s_SHAFT_%s' % (q, lv)
-            arr = (-80, 45, -70, 48.2)
-            add_space(sh, lv, R((-80, 45, -70, 60)), kind='stair', zone='pav' + q, ceil=False, floor=[R(arr)],
-                      anchor=P(-75, 46.1))
+            # south wall at 42.8 (was 45): the 15-riser U needs the approach inside the shaft
+            arr = (-80, 42.8, -70, 46.6)
+            add_space(sh, lv, R((-80, 42.8, -70, 60)), kind='stair', zone='pav' + q, ceil=False, floor=[R(arr)],
+                      anchor=P(-75, 44.4))
             xw = P(-70, 0)[0]
-            add_door(hid, lid, 'x', xw, P(0, 40)[1], 2.4, 3.2, lv)
-            add_door(hid, sh, 'x', xw, P(0, 46.1)[1], 2.0, 3.2, lv)
+            add_door(hid, lid, 'x', xw, P(0, 40)[1], 2.4, 4.2, lv)
+            add_door(hid, sh, 'x', xw, P(0, 44.4)[1], 2.0, 4.2, lv)
             xc = P(0, 0)[0]
             ycab = P(0, 40)[1]
-            add_door(lid, cab, 'y', ycab, P(-77, 0)[0], 1.6, 2.6, lv, kind='elevator_door')
+            add_door(lid, cab, 'y', ycab, P(-77, 0)[0], 1.6, 3.6, lv, kind='elevator_door')
         # wing corridor <-> pavilion hall (wall y = +-34), x = wing corridor center
         ywall = P(0, 34)[1]
         xcorr = P(-64, 0)[0]
         wing = ('W' if sx == -1 else 'E')
         for lv in L3:
-            add_door('%s_CORR_%s' % (wing, lv), 'PAV_%s_HALL_%s' % (q, lv), 'y', ywall, xcorr, 3.2, 3.6, lv)
+            add_door('%s_CORR_%s' % (wing, lv), 'PAV_%s_HALL_%s' % (q, lv), 'y', ywall, xcorr, 3.2, 4.6, lv)
         # north wing corridor <-> pavilion hall (wall x = -+54)
         if sy == 1:
             xwall = P(-54, 0)[0]
             for lv in L3:
-                add_door('N%s_CORR_%s' % (wing, lv), 'PAV_%s_HALL_%s' % (q, lv), 'x', xwall, 40, 3.2, 3.6, lv)
+                add_door('N%s_CORR_%s' % (wing, lv), 'PAV_%s_HALL_%s' % (q, lv), 'x', xwall, 40, 3.2, 4.6, lv)
         # stairs between levels (switchback) L1->L2->L3->L4
         for k in range(3):
             lv, lv2 = ORDER[1 + k], ORDER[2 + k]
             zL = LEVELS[lv]
-            # U stair, 3.0 m flights hugging the shaft side walls (5 cm gap), 12 risers per flight, 1.2 m mid landings,
-            # 3.0 m turn landing flush with the end wall, 3.2 m arrival strip in front of the first riser
-            xA, xB, W3, Y0 = -78.05, -71.75, 3.0, 48.2
-            RS = 8.0 / 48
+            # U stair, 3.0 m flights hugging the shaft side walls (5 cm gap). 10 m rise at 1/6 m = 4 x 15.
+            # Turn landing ends 5 cm inside the north wall (y=59.55). South wall moved to 42.8 for the approach.
+            xA, xB, W3, Y0 = -78.05, -71.75, 3.0, 46.30
+            RS = (LEVELS[lv2] - LEVELS[lv]) / 60
             fl, ld = [], []
-            a1 = flight(xA, Y0, zL, 0, 1, W3, 12, RS, 0.3); e = flight_end(a1); fl.append(a1)
+            a1 = flight(xA, Y0, zL, 0, 1, W3, 15, RS, 0.3); e = flight_end(a1); fl.append(a1)
             ld.append(((xA - 1.5, e[1], xA + 1.5, e[1] + 1.2), e[2]))
-            a2 = flight(xA, e[1] + 1.2, e[2], 0, 1, W3, 12, RS, 0.3); e = flight_end(a2); fl.append(a2)
+            a2 = flight(xA, e[1] + 1.2, e[2], 0, 1, W3, 15, RS, 0.3); e = flight_end(a2); fl.append(a2)
             ld.append(((xA - 1.5, e[1], xB + 1.5, e[1] + 3.0), e[2]))
-            b1 = flight(xB, e[1], e[2], 0, -1, W3, 12, RS, 0.3); e = flight_end(b1); fl.append(b1)
+            b1 = flight(xB, e[1], e[2], 0, -1, W3, 15, RS, 0.3); e = flight_end(b1); fl.append(b1)
             ld.append(((xB - 1.5, e[1] - 1.2, xB + 1.5, e[1]), e[2]))
-            b2 = flight(xB, e[1] - 1.2, e[2], 0, -1, W3, 12, RS, 0.3); fl.append(b2)
+            b2 = flight(xB, e[1] - 1.2, e[2], 0, -1, W3, 15, RS, 0.3); fl.append(b2)
             fl = [mirror_flight(f, sx, sy) for f in fl]
             ld = [(R(r), z) for r, z in ld]
             add_stair('S_PAV_%s_%s' % (q, lv), 'PAV_%s_SHAFT_%s' % (q, lv), 'PAV_%s_SHAFT_%s' % (q, lv2), fl, ld)
@@ -426,20 +471,20 @@ def build():
             EDGES.append(dict(type='elevator', a='PAV_%s_CAB_%s' % (q, ORDER[1 + k]), b='PAV_%s_CAB_%s' % (q, ORDER[2 + k])))
         # L4 mech level (shaft top + mech hall)
         sh4 = 'PAV_%s_SHAFT_L4' % q
-        add_space(sh4, 'L4', R((-78, 44.6, -70, 58)), kind='stair', zone='pav' + q, ceil=False, h=2.6,
-                  floor=[R((-78, 44.6, -70, 48.2))], anchor=P(-74, 46.1))
-        # shaft_L3 (index 'L3') uses id with L3; shaft L4 id differs in level only -> fine
+        add_space(sh4, 'L4', R((-78, 42.8, -70, 58)), kind='stair', zone='pav' + q, ceil=False, h=4.0,
+                  floor=[R((-78, 42.8, -70, 46.6))], anchor=P(-74, 44.4))
+        # h=4.0 (was 2.6) so the 3.4 m door has its own 0.6 m lintel, not only the mech wall
         mech = 'PAV_%s_MECH' % q
         add_space(mech, 'L4', R((-70, 40, -60, 56)), kind='mech', zone='pav' + q, ceil=False, h=5.0)
-        add_door(sh4, mech, 'x', P(-70, 0)[0], P(0, 46.1)[1], 2.0, 2.4, 'L4')
+        add_door(sh4, mech, 'x', P(-70, 0)[0], P(0, 44.4)[1], 2.0, 3.4, 'L4')
         # L4 shaft spaces need the level-4 stair target; the L3->L4 stair created above targets SHAFT_L4 (OK)
     # ---------------- doors from north-wing corridors into the atrium / ring balconies
     for sx in (-1, 1):
         s = 'W' if sx == -1 else 'E'
         xwall = -14 if sx == -1 else 14
-        add_door('N%s_CORR_L1' % s, 'ATRIUM', 'x', xwall, 40, 3.2, 4.0, 'L1')
+        add_door('N%s_CORR_L1' % s, 'ATRIUM', 'x', xwall, 40, 3.2, 5.0, 'L1')
         for lv in ('L2', 'L3'):
-            add_door('N%s_CORR_%s' % (s, lv), 'R%s_%s' % (s, lv), 'x', xwall, 40, 3.2, 4.0, lv)
+            add_door('N%s_CORR_%s' % (s, lv), 'R%s_%s' % (s, lv), 'x', xwall, 40, 3.2, 5.0, lv)
     if TOWER_OPEN: open_towers()
     return SPACES
 

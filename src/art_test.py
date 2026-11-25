@@ -1,9 +1,11 @@
+import os as _os
+_REPO = _os.path.abspath(_os.path.join(_os.path.dirname(_os.path.abspath(__file__)), '..'))
 """Playwright: lazy art loading. Counts network requests at start-up, then walks into W_IN3_L1 / W_OUT0_L1 and checks that
 only nearby, in-view slots load (images via wsrv / same-origin proxy, video posters + HLS when < 8 m), E opens the info card."""
 import json, math, time, sys, re
 from playwright.sync_api import sync_playwright
 URL = sys.argv[1] if len(sys.argv) > 1 else 'http://127.0.0.1:8765/preview.html'
-SH = '/workspace/outputs/cyber_louvre/renders/art/'
+SH = _REPO + '/renders/art/'
 import os; os.makedirs(SH, exist_ok=True)
 errors, reqs = [], []
 def media_req(u): return not u.startswith('data:') and not re.search(r'(preview\.html|cdn\.jsdelivr\.net/npm/(three|three-mesh-bvh)@)', u)

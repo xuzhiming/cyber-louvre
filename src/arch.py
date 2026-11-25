@@ -130,7 +130,7 @@ def build_stairs(acc):
             # storey floor under this flight; where the flight's soffit is < 2.1 m above it, the void under the stair is
             # closed (solid stair base) - otherwise a walker could wander under the low end of a flight and get wedged
             zlo = min(f['z0'], f['z0'] + f['riser'] * f['n'])
-            zfl = max([l for l in (-6.0, 0.0, 8.0, 16.0, 24.0) if l <= zlo + 1e-6] or [zlo])
+            zfl = max([l for l in LEVELS.values() if l <= zlo + 1e-6] or [zlo])
             for i in range(1, f['n'] + 1):
                 r, zt = flight_step_rect(f, i)
                 zb = zt - abs(f['riser']) - 0.3

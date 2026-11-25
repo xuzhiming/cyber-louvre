@@ -1,8 +1,10 @@
+import os as _os
+_REPO = _os.path.abspath(_os.path.join(_os.path.dirname(_os.path.abspath(__file__)), '..'))
 """Headless-Chrome walk test: climb each corner tower (shaft L1 -> L4 mech level) and the central building (plaza -> main door ->
 lobby -> grand stairs -> L3 -> ring balcony north side).  Only W / mouse-look, no jump."""
 import json, math, time, sys, os
 from playwright.sync_api import sync_playwright
-ROOT = '/workspace/outputs/cyber_louvre/'
+ROOT = _REPO + '/'
 SH = ROOT + 'renders/walk/'
 towers = json.load(open(ROOT + 'src/test_route_towers.json'))
 central = json.load(open(ROOT + 'src/test_route_central_top.json'))['RN_L3']['pts']

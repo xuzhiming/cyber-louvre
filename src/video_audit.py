@@ -1,10 +1,12 @@
+import os as _os
+_REPO = _os.path.abspath(_os.path.join(_os.path.dirname(_os.path.abspath(__file__)), '..'))
 """All video works: camera 4 m in front of each slot, wait for the stream, check currentTime advances (t1 > t0 over 4 s).
 Then a cap test: a spot with > MAXVID videos in range -> the nearest in-view video must be among the streams.  usage: video_audit.py URL"""
 import sys, time, json
 from playwright.sync_api import sync_playwright
 url = sys.argv[1]
-S = json.load(open('/workspace/outputs/cyber_louvre/web/slots.json'))['slots']
-A = json.load(open('/workspace/outputs/cyber_louvre/web/artworks.json')); P = A['placement']; W = A['artworks']
+S = json.load(open(_REPO + '/web/slots.json'))['slots']
+A = json.load(open(_REPO + '/web/artworks.json')); P = A['placement']; W = A['artworks']
 vids = [(k, P[k]) for k in range(len(S)) if isinstance(P[k], int) and W[P[k]].get('video')]
 res, errs = [], []
 with sync_playwright() as p:

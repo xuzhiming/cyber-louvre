@@ -1,8 +1,10 @@
+import os as _os
+_REPO = _os.path.abspath(_os.path.join(_os.path.dirname(_os.path.abspath(__file__)), '..'))
 """Interior views of the corner towers (pavilions) per storey, web viewer.  usage: tower_shots.py URL TAG"""
 import sys, time
 from playwright.sync_api import sync_playwright
 url, tag = sys.argv[1], sys.argv[2]
-OUT = '/workspace/outputs/cyber_louvre/renders/tower/'
+OUT = _REPO + '/renders/tower/'
 import os; os.makedirs(OUT, exist_ok=True)
 Z = {'L1': 0.0, 'L2': 8.0, 'L3': 16.0}
 # (name, eye xy, target xy): NW tower hall looking SE to the wing / north-wing neighbour rooms; NW lobby side; SW tower

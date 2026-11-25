@@ -1,11 +1,13 @@
+import os as _os
+_REPO = _os.path.abspath(_os.path.join(_os.path.dirname(_os.path.abspath(__file__)), '..'))
 """Proximity audio + minimap test (t33u).  usage: audio_test.py URL [TAG]
 Default Chrome autoplay policy (no flag): checks the locked->click unlock path, playback near (<6 m), hysteresis (7 m keeps
 playing, quieter), stop far (>8 m) / other floor, resume; minimap floor switching, M toggle, zoom; screenshots."""
 import sys, time, json
 from playwright.sync_api import sync_playwright
 url = sys.argv[1]; tag = sys.argv[2] if len(sys.argv) > 2 else 'local'
-R = '/workspace/outputs/cyber_louvre/renders/art/'
-S = {s['id']: s for s in json.load(open('/workspace/outputs/cyber_louvre/web/slots.json'))['slots']}
+R = _REPO + '/renders/art/'
+S = {s['id']: s for s in json.load(open(_REPO + '/web/slots.json'))['slots']}
 SID = 'S129'; s = S[SID]; x, y, z = s['pos']; nx, ny = s['normal'][:2]; fz = 8.0
 import math
 yaw = math.atan2(nx, -ny)          # look against the slot normal: forward (-sin, cos) = (-nx, -ny)

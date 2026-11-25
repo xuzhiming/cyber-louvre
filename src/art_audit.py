@@ -1,10 +1,12 @@
+import os as _os
+_REPO = _os.path.abspath(_os.path.join(_os.path.dirname(_os.path.abspath(__file__)), '..'))
 """Browser audit: visit every wall face that has works, record how each work ends up (image / anim / video / card / failed)."""
 import json, time, sys, collections
 from playwright.sync_api import sync_playwright
 url = sys.argv[1]
-S = json.load(open('/workspace/outputs/cyber_louvre/web/slots.json'))['slots']
-A = json.load(open('/workspace/outputs/cyber_louvre/web/artworks.json'))['artworks']
-_P = json.load(open('/workspace/outputs/cyber_louvre/web/artworks.json')).get('placement')
+S = json.load(open(_REPO + '/web/slots.json'))['slots']
+A = json.load(open(_REPO + '/web/artworks.json'))['artworks']
+_P = json.load(open(_REPO + '/web/artworks.json')).get('placement')
 if _P: S = {w: S[k] for k, w in enumerate(_P) if isinstance(w, int)}   # work index -> its slot (artist-grouped placement)
 faces = collections.OrderedDict()
 for i, w in enumerate(A): faces.setdefault((S[i]['room'], S[i]['normal'][0], S[i]['normal'][1]), []).append(i)
@@ -28,4 +30,4 @@ with sync_playwright() as p:
 c = collections.Counter((r['media'], r['kind'], r['state']) for r in res.values())
 print(json.dumps(dict(summary={str(k): v for k, v in c.items()}, not_ok=[r for r in res.values() if r['kind'] in ('card', 'reserved') and r['media'] != 'text' or r['state'] != 'loaded'],
                       art_errors=errs, console_errors=errors[:10]), indent=1, ensure_ascii=False))
-json.dump(res, open('/workspace/outputs/cyber_louvre/renders/art/audit.json', 'w'), ensure_ascii=False, indent=1)
+json.dump(res, open(_REPO + '/renders/art/audit.json', 'w'), ensure_ascii=False, indent=1)

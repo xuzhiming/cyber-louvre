@@ -1,6 +1,8 @@
+import os as _os
+_REPO = _os.path.abspath(_os.path.join(_os.path.dirname(_os.path.abspath(__file__)), '..'))
 import time, math
 from playwright.sync_api import sync_playwright
-ROOT='/workspace/outputs/cyber_louvre/'; SH=ROOT+'renders/walk/'
+ROOT=_REPO + '/'; SH=ROOT+'renders/walk/'
 # name, door id, standing pos closed (x,y), standing pos open (x,y), look target (x,y,z)
 S=[('lobby','LOBBY',(0,-3),(0,4.0),(0,8,2.0)),('pyramid_main','PYR_MAIN',(0,-69.6),(0,-66.8),(0,-60,1.2)),
    ('pyramid_smallL','PYR_SL',(-37,-64.5),(-37,-59.5),(-37,-54,1.0)),('pyramid_smallR','PYR_SR',(37,-64.5),(37,-59.5),(37,-54,1.0))]

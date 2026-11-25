@@ -549,7 +549,7 @@ def check_slots(bvh, slots=None):
 def check_floor_props():
     """no small models / plinths on room floors any more (only ceiling lights, the atrium hologram and the L4 mech cabinet remain)"""
     spec.build(); a = Acc(); props.props(a)
-    floors = [-6.0, 0.0, 8.0, 16.0, 24.0]
+    floors = list(LEVELS.values())
     left = collections.Counter(); bad_mats = []
     for m, (V, F) in a.g.get('Props', {}).items():
         if m in props.FLOOR_PROP_MATS: bad_mats.append(m)

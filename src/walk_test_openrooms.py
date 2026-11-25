@@ -1,7 +1,9 @@
+import os as _os
+_REPO = _os.path.abspath(_os.path.join(_os.path.dirname(_os.path.abspath(__file__)), '..'))
 """Headless-Chrome walk test through the opened gallery bays: corridor -> room -> corridor (W wing 1F, NW wing 2F)."""
 import json, math, time, sys
 from playwright.sync_api import sync_playwright
-ROOT = '/workspace/outputs/cyber_louvre/'
+ROOT = _REPO + '/'
 SH = ROOT + 'renders/walk/'
 html = sys.argv[1] if len(sys.argv) > 1 else ROOT + 'web/preview.html'
 ROUTES = {

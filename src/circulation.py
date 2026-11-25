@@ -41,7 +41,7 @@ def main():
     levels = ['B1', 'L1', 'L2', 'L3', 'L4']
     for ax, lv in zip(axes.flat, levels):
         ax.set_facecolor('#0a0e1c'); ax.set_aspect('equal'); ax.set_xlim(-96, 96); ax.set_ylim(-76, 66)
-        ax.set_title({'B1': 'B1  z -6.0  (concourse under the courtyard)', 'L1': '1F  z +0.0', 'L2': '2F  z +8.0', 'L3': '3F  z +16.0', 'L4': 'Roof / mech  z +24.0'}[lv],
+        ax.set_title({'B1': 'B1  z %+.1f  (concourse under the courtyard)' % LEVELS['B1'], 'L1': '1F  z %+.1f' % LEVELS['L1'], 'L2': '2F  z %+.1f' % LEVELS['L2'], 'L3': '3F  z %+.1f' % LEVELS['L3'], 'L4': 'Roof / mech  z %+.1f' % LEVELS['L4']}[lv],
                      color='w', fontsize=15)
         ax.tick_params(colors='#667', labelsize=8)
         z = LEVELS[lv]

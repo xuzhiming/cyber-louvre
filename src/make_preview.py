@@ -1,5 +1,7 @@
+import os as _os
+_REPO = _os.path.abspath(_os.path.join(_os.path.dirname(_os.path.abspath(__file__)), '..'))
 import base64, json
-r = '/workspace/outputs/cyber_louvre/'
+r = _REPO + '/'
 t = open(r + 'src/web_template.html').read()
 g = base64.b64encode(open(r + 'web/model_web.glb', 'rb').read()).decode()
 # artworks + slots inlined (works from file:// too); web/artworks.json + web/slots.json are published alongside
@@ -14,7 +16,7 @@ import spec as SP
 SP.build()
 KC = {'gallery': 'g', 'platform': 'p', 'corridor': 'c', 'pavilion_hall': 'v', 'core_lobby': 'k', 'elevator': 'e', 'stair': 's', 'mech': 'm',
       'pyramid': 'y', 'concourse': 'b', 'hall': 'h', 'outdoor': 'o', 'lobby': 'l', 'atrium': 'a'}
-LV = {'B1': (-6.0, 0.0), 'L1': (0.0, 8.0), 'L2': (8.0, 16.0), 'L3': (16.0, 24.0), 'L4': (24.0, 32.0)}
+LV = dict(SP.BAND_Z)
 r1 = lambda v: round(float(v), 1)
 plan = {k: dict(z=LV[k][0], sp=[], st=[]) for k in LV}
 for sp in SP.SPACES.values():
